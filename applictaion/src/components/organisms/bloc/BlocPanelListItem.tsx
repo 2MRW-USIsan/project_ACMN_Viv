@@ -6,6 +6,24 @@ import SelectPanelList from "../select/SelectPanelList";
 import { SwitchPanelList } from "../switch/SwitchPanelList";
 import { TextFieldPanel } from "../../atoms/TextFieldPanel";
 
+type OrdersItem = {
+  id: number;
+  values: { key: string; label: string };
+  state: boolean;
+  onChangeForm: (label: string, value: string) => void;
+  onClick: () => void;
+  onDelete: () => void;
+};
+
+type SelectItem = {
+  id: number;
+  values: { key: string; label: string };
+  state: boolean;
+  onChangeForm: (label: string, value: string) => void;
+  onClick: () => void;
+  onDelete: () => void;
+};
+
 interface BlocPanelListItemProps {
   props: {
     id: number;
@@ -22,13 +40,13 @@ interface BlocPanelListItemProps {
       selected: boolean;
       onClick: () => void;
       onAdd: () => void;
-      data: any[];
+      data: OrdersItem[];
     };
     select: {
       selected: boolean;
       onClick: () => void;
       onAdd: () => void;
-      data: any[];
+      data: SelectItem[];
     };
     switch: {
       selected: boolean;
