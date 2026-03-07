@@ -5,8 +5,30 @@ type PanelReducer = {
   state: PanelDataStateType;
   actions: PanelDataActionsType;
 };
+type OrdersStateItem =
+  PanelReducer["state"]["panels"][number]["orders"]["data"][number];
+type SelectStateItem =
+  PanelReducer["state"]["panels"][number]["select"]["data"][number];
 type SwitchStateItem =
   PanelReducer["state"]["panels"][number]["switch"]["data"][number];
+
+type OrdersViewItem = {
+  id: number;
+  state: boolean;
+  values: { key: string; label: string };
+  onChangeForm: (label: string, value: string) => void;
+  onClick: () => void;
+  onDelete: () => void;
+};
+
+type SelectViewItem = {
+  id: number;
+  state: boolean;
+  values: { key: string; label: string };
+  onChangeForm: (label: string, value: string) => void;
+  onClick: () => void;
+  onDelete: () => void;
+};
 
 type SwitchChildViewItem = {
   id: number;
@@ -32,6 +54,24 @@ type SwitchViewItem = {
 
 export default function usePanelData(reducer: PanelReducer) {
   const { state, actions } = reducer;
+
+  const mapOrdersItems = (panelId: number, items: OrdersStateItem[]): OrdersViewItem[] =>
+    items.map((item) => ({
+      ...item,
+      onChangeForm: (key: string, label: string) =>
+        actions.changeItemForm(panelId, "orders", item.id, key, label),
+      onClick: () => actions.changeItemPanel(panelId, "orders", item.id),
+      onDelete: () => actions.deleteItemPanel(panelId, "orders", item.id),
+    }));
+
+  const mapSelectItems = (panelId: number, items: SelectStateItem[]): SelectViewItem[] =>
+    items.map((item) => ({
+      ...item,
+      onChangeForm: (key: string, label: string) =>
+        actions.changeItemForm(panelId, "select", item.id, key, label),
+      onClick: () => actions.changeItemPanel(panelId, "select", item.id),
+      onDelete: () => actions.deleteItemPanel(panelId, "select", item.id),
+    }));
 
   const mapSwitchItems = (panelId: number, items: SwitchStateItem[]): SwitchViewItem[] =>
     items.map((item) => ({
@@ -72,23 +112,13 @@ export default function usePanelData(reducer: PanelReducer) {
           actions.deletePanel(panel.id);
         },
         orders: {
-          data: panel.orders.data.map((item) => ({
-            ...item,
-            onClick: () => actions.changeItemPanel(panel.id, "orders", item.id),
-            onDelete: () =>
-              actions.deleteItemPanel(panel.id, "orders", item.id),
-          })),
+          data: mapOrdersItems(panel.id, panel.orders.data),
           selected: panel.orders.selected,
           onClick: () => actions.changeChip(panel.id, "orders"),
           onAdd: () => actions.addItemPanel(panel.id, "orders"),
         },
         select: {
-          data: panel.select.data.map((item) => ({
-            ...item,
-            onClick: () => actions.changeItemPanel(panel.id, "select", item.id),
-            onDelete: () =>
-              actions.deleteItemPanel(panel.id, "select", item.id),
-          })),
+          data: mapSelectItems(panel.id, panel.select.data),
           selected: panel.select.selected,
           onClick: () => actions.changeChip(panel.id, "select"),
           onAdd: () => actions.addItemPanel(panel.id, "select"),
