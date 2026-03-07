@@ -13,12 +13,12 @@ export function TextFieldPanel({ prop }: TextFieldPanel) {
     onChange(e.target.value);
   };
   return (
-    <ListItem sx={{ pl: 4, display: "flex", gap: 1, width: "100%" }}>
+    <ListItem sx={{ display: "flex", gap: 1, width: "100%" }}>
       <Grid container width={"100%"} alignItems={"center"}>
-        <Grid size={1}>
+        <Grid size={3}>
           <Typography variant="body2">{label}</Typography>
         </Grid>
-        <Grid size={5}>
+        <Grid size={9}>
           <TextField
             fullWidth
             size="small"

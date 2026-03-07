@@ -1,14 +1,12 @@
 "use client";
-import AddIcon from "@mui/icons-material/Add";
+
 import {
   Divider,
   List,
-  ListItem,
-  ListItemButton,
-  ListSubheader,
-  Typography,
+  ListItem, ListSubheader,
+  Typography
 } from "@mui/material";
-
+import AddButtonPanel from "./AddButtonPanel";
 interface PanelListProps {
   props: { label: string; onAddPanel: () => void };
   children: React.ReactNode;
@@ -26,9 +24,9 @@ export default function PanelList({
         <Divider sx={{ width: "100%" }} flexItem />
       </ListItem>
       {children}
-      <ListItemButton onClick={onAddPanel} sx={{ justifyContent: "center" }}>
-        <AddIcon fontSize="small" />
-      </ListItemButton>
+      <AddButtonPanel onAddPanel={onAddPanel} />
     </List>
   );
 }
+
+
