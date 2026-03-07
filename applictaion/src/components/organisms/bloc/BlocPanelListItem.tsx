@@ -1,10 +1,10 @@
 import { Divider, Grid, List, ListItem } from "@mui/material";
-import { CheckChip } from "./CheckChip";
-import OrdersPanelList from "./OrdersPanelList";
-import PanelListItem from "./PanelListItem";
-import SelectPanelList from "./SelectPanelList";
-import { SwitchPanelList } from "./SwitchPanelList";
-import { TextFieldPanel } from "./TextFieldPanel";
+import { CheckChip } from "../../atoms/CheckChip";
+import OrdersPanelList from "../orders/OrdersPanelList";
+import PanelListItem from "../../molecules/panel/PanelListItem";
+import SelectPanelList from "../select/SelectPanelList";
+import { SwitchPanelList } from "../switch/SwitchPanelList";
+import { TextFieldPanel } from "../../atoms/TextFieldPanel";
 
 interface BlocPanelListItemProps {
   props: {

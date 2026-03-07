@@ -1,5 +1,5 @@
 import { Grid } from "@mui/material";
-import { TextFieldPanel } from "./TextFieldPanel";
+import { TextFieldPanel } from "../../atoms/TextFieldPanel";
 type SwitchItemValues = {
   key: string;
   label: string;

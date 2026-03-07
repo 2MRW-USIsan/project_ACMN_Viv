@@ -6,7 +6,7 @@ import {
   ListItem, ListSubheader,
   Typography
 } from "@mui/material";
-import AddButtonPanel from "./AddButtonPanel";
+import AddButtonPanel from "../../atoms/AddButtonPanel";
 interface PanelListProps {
   props: { label: string; onAddPanel: () => void };
   children: React.ReactNode;

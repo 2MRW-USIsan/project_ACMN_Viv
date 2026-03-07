@@ -1,8 +1,8 @@
 import { Grid } from "@mui/material";
-import PanelList from "./PanelList";
-import PanelListItem from "./PanelListItem";
-import { TextFieldPanel } from "./TextFieldPanel";
-import { SwitchTextFieldPanel } from "./SwitchTextFieldPanel";
+import PanelList from "../../molecules/panel/PanelList";
+import PanelListItem from "../../molecules/panel/PanelListItem";
+import { TextFieldPanel } from "../../atoms/TextFieldPanel";
+import { SwitchTextFieldPanel } from "../../molecules/switch/SwitchTextFieldPanel";
 
 type SwitchItemValues = {
   key: string;

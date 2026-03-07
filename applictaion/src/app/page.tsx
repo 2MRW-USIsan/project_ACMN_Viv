@@ -1,7 +1,7 @@
 "use client";
 
-import { BlocPanelListItem } from "@/components/BlocPanelListItem";
-import PanelList from "@/components/PanelList";
+import { BlocPanelListItem } from "@/components/organisms/bloc/BlocPanelListItem";
+import PanelList from "@/components/molecules/panel/PanelList";
 import usePanelData from "@/hooks/usePanelData";
 import usePanelReducer from "@/hooks/usePanelReducer";
 
