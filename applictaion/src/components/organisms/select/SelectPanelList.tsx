@@ -1,4 +1,4 @@
-import PanelList from "./PanelList";
+import PanelList from "../../molecules/panel/PanelList";
 
 interface SelectPanelListProps {
   props: { onAdd: () => void; data: any[] };
