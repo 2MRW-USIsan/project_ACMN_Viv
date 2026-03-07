@@ -1,24 +1,34 @@
 "use client";
-import { List, ListItemButton } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
-import PanelListItem from "./PanelListItem";
-import { CheckChip } from "./CheckChip";
+import {
+  Divider,
+  List,
+  ListItem,
+  ListItemButton,
+  ListSubheader,
+  Typography,
+} from "@mui/material";
 
 interface PanelListProps {
-    props: { onAddPanel: () => void }
-    children: React.ReactNode
+  props: { label: string; onAddPanel: () => void };
+  children: React.ReactNode;
 }
 export default function PanelList({
-    props: { onAddPanel },
-    children
+  props: { label, onAddPanel },
+  children,
 }: PanelListProps) {
-    return (
-        <List >
-            {children}
-            <ListItemButton onClick={onAddPanel} sx={{ justifyContent: "center" }}>
-                <AddIcon fontSize="small" />
-            </ListItemButton>
-        </List>
-    );
+  return (
+    <List>
+      <ListSubheader>
+        <Typography variant="body2">{label}</Typography>
+      </ListSubheader>
+      <ListItem>
+        <Divider sx={{ width: "100%" }} flexItem />
+      </ListItem>
+      {children}
+      <ListItemButton onClick={onAddPanel} sx={{ justifyContent: "center" }}>
+        <AddIcon fontSize="small" />
+      </ListItemButton>
+    </List>
+  );
 }
-

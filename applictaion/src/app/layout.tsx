@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 export default function RootLayout({
   children,
@@ -7,9 +7,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`acmn-application`}>
-        {children}
-      </body>
+      <body className={`acmn-application`}>{children}</body>
     </html>
   );
 }
