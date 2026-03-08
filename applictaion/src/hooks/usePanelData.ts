@@ -25,9 +25,25 @@ type SelectViewItem = {
   id: number;
   state: boolean;
   values: { key: string; label: string };
+  data: SelectChildViewItem[];
+  onAddPanel: () => void;
   onChangeForm: (label: string, value: string) => void;
   onClick: () => void;
   onDelete: () => void;
+};
+
+type SelectChildViewItem = {
+  id: number;
+  values: { key: string; label: string };
+  data: SelectListViewItem[];
+  onAddPanel: () => void;
+  onChangeForm: (label: string, value: string) => void;
+};
+
+type SelectListViewItem = {
+  id: number;
+  values: { prompt: string; value: string };
+  onChangeForm: (label: string, value: string) => void;
 };
 
 type SwitchChildViewItem = {
@@ -67,6 +83,31 @@ export default function usePanelData(reducer: PanelReducer) {
   const mapSelectItems = (panelId: number, items: SelectStateItem[]): SelectViewItem[] =>
     items.map((item) => ({
       ...item,
+      data: item.data.map((child) => ({
+        ...child,
+        data: child.data.map((listItem) => ({
+          id: listItem.id,
+          values: listItem.values,
+          onChangeForm: (label: string, value: string) =>
+            actions.changeItemForm(
+              panelId,
+              "select",
+              item.id,
+              `child:${child.id}:listItem:${listItem.id}:${label}`,
+              value,
+            ),
+        })),
+        onAddPanel: () => actions.addSelectListItemPanel(panelId, item.id, child.id),
+        onChangeForm: (label: string, value: string) =>
+          actions.changeItemForm(
+            panelId,
+            "select",
+            item.id,
+            `child:${child.id}:${label}`,
+            value,
+          ),
+      })),
+      onAddPanel: () => actions.addSelectChildItemPanel(panelId, item.id),
       onChangeForm: (key: string, label: string) =>
         actions.changeItemForm(panelId, "select", item.id, key, label),
       onClick: () => actions.changeItemPanel(panelId, "select", item.id),

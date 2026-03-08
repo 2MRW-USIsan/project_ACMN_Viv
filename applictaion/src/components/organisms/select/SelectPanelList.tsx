@@ -1,16 +1,8 @@
 import { Grid } from "@mui/material";
+import { TextFieldPanel } from "../../atoms/TextFieldPanel";
 import PanelList from "../../molecules/panel/PanelList";
 import PanelListItem from "../../molecules/panel/PanelListItem";
-import { TextFieldPanel } from "../../atoms/TextFieldPanel";
-
-type SelectItem = {
-  id: number;
-  values: { key: string; label: string };
-  state: boolean;
-  onChangeForm: (label: string, value: string) => void;
-  onClick: () => void;
-  onDelete: () => void;
-};
+import { SelectTextFieldPanel } from "@/components/molecules/select/SelectTextFieldPanel";
 
 interface SelectPanelListProps {
   props: { onAdd: () => void; data: SelectItem[] };
@@ -32,7 +24,7 @@ interface SelectPanelListItemProps {
   props: SelectItem;
 }
 export function SelectPanelListItem({ props }: SelectPanelListItemProps) {
-  const { values, onChangeForm } = props;
+  const { values, data, onChangeForm, onAddPanel } = props;
 
   const keyFormProps = {
     label: "Key:",
@@ -55,6 +47,42 @@ export function SelectPanelListItem({ props }: SelectPanelListItemProps) {
           <TextFieldPanel prop={labelFormProps} />
         </Grid>
       </Grid>
+      <PanelList props={{ label: "items:", onAddPanel }}>
+        {data.map((item: SelectChildItem) => (
+          <SelectTextFieldPanel key={item.id} props={item} />
+        ))}
+      </PanelList>
     </PanelListItem>
   );
 }
+
+type SelectItem = {
+  id: number;
+  values: { key: string; label: string };
+  data: SelectChildItem[];
+  state: boolean;
+  onAddPanel: () => void;
+  onChangeForm: (label: string, value: string) => void;
+  onClick: () => void;
+  onDelete: () => void;
+};
+type SelectItemValues = {
+  key: string;
+  label: string;
+};
+type SelectChildItem = {
+  id: number;
+  values: SelectItemValues;
+  data: SelectListItemData[];
+  onAddPanel: () => void;
+  onChangeForm: (label: string, value: string) => void;
+};
+type SelectListItemData = {
+  id: number;
+  values: SelectListItemValues;
+  onChangeForm: (label: string, value: string) => void;
+};
+type SelectListItemValues = {
+  prompt: string;
+  value: string;
+};

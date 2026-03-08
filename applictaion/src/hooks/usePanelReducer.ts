@@ -27,7 +27,15 @@ type SelectPanelItem = PanelItemData & { data: SelectDataItem[] };
 type SwitchPanelItem = PanelItemData & { data: SwitchDataItem[] };
 
 type OrdersDataItem = {};
-type SelectDataItem = {};
+type SelectDataItem = {
+  id: number;
+  values: { key: string; label: string };
+  data: SelectListDataItem[];
+};
+type SelectListDataItem = {
+  id: number;
+  values: { prompt: string; value: string };
+};
 type SwitchDataItem = {
   key: string;
   label: string;
@@ -44,6 +52,7 @@ export type PanelDataActionsType = {
   addItemPanel: (id: number, key: ChipType) => void;
   addOrdersChildItemPanel: (id: number, parentItemId: number) => void;
   addSelectChildItemPanel: (id: number, parentItemId: number) => void;
+  addSelectListItemPanel: (id: number, selectItemId: number, childItemId: number) => void;
   addSwitchChildItemPanel: (id: number, parentItemId: number) => void;
   deleteOrdersChildItemPanel: (id: number, parentItemId: number) => void;
   deleteSelectChildItemPanel: (id: number, parentItemId: number) => void;
@@ -63,6 +72,7 @@ export type PanelDataActionsType = {
 
 type ItemPanelPayload = { id: number; key: ChipType; itemId: number };
 type ChildItemPayload = { id: number; parentItemId: number };
+type SelectListItemPayload = { id: number; selectItemId: number; childItemId: number };
 
 const createOrdersPanelItem = (): OrdersPanelItem => ({
   id: Date.now(),
@@ -76,6 +86,17 @@ const createSelectPanelItem = (): SelectPanelItem => ({
   state: false,
   values: { key: "", label: "--" },
   data: [],
+});
+
+const createSelectDataItem = (): SelectDataItem => ({
+  id: Date.now(),
+  values: { key: "", label: "" },
+  data: [],
+});
+
+const createSelectListDataItem = (): SelectListDataItem => ({
+  id: Date.now(),
+  values: { prompt: "", value: "" },
 });
 
 const createSwitchPanelItem = (): SwitchPanelItem => ({
@@ -218,7 +239,36 @@ const addSelectChildItemPanelState = (
             ...p.select,
             data: p.select.data.map((item) =>
               item.id === payload.parentItemId
-                ? { ...item, data: [...item.data, {}] }
+                ? { ...item, data: [...item.data, createSelectDataItem()] }
+                : item,
+            ),
+          },
+        }
+      : p,
+  ),
+});
+
+const addSelectListItemPanelState = (
+  state: PanelDataStateType,
+  payload: SelectListItemPayload,
+): PanelDataStateType => ({
+  ...state,
+  panels: state.panels.map((p) =>
+    p.id === payload.id
+      ? {
+          ...p,
+          select: {
+            ...p.select,
+            data: p.select.data.map((item) =>
+              item.id === payload.selectItemId
+                ? {
+                    ...item,
+                    data: item.data.map((child) =>
+                      child.id === payload.childItemId
+                        ? { ...child, data: [...child.data, createSelectListDataItem()] }
+                        : child,
+                    ),
+                  }
                 : item,
             ),
           },
@@ -384,6 +434,56 @@ const changeItemFormState = (
                       },
                     };
                   })
+                : payload.key === "select"
+                ? p.select.data.map((item) => {
+                    if (item.id !== payload.itemId) {
+                      return item;
+                    }
+
+                    const childMatch = payload.label.match(/^child:(\d+):(.*)$/);
+                    if (!childMatch) {
+                      return {
+                        ...item,
+                        values: { ...item.values, [payload.label]: payload.value },
+                      };
+                    }
+
+                    const childId = Number(childMatch[1]);
+                    const rest = childMatch[2];
+
+                    const listItemMatch = rest.match(/^listItem:(\d+):(.*)$/);
+                    if (!listItemMatch) {
+                      return {
+                        ...item,
+                        data: item.data.map((child) =>
+                          child.id === childId
+                            ? { ...child, values: { ...child.values, [rest]: payload.value } }
+                            : child,
+                        ),
+                      };
+                    }
+
+                    const listItemId = Number(listItemMatch[1]);
+                    const fieldLabel = listItemMatch[2];
+                    return {
+                      ...item,
+                      data: item.data.map((child) =>
+                        child.id === childId
+                          ? {
+                              ...child,
+                              data: child.data.map((listItem) =>
+                                listItem.id === listItemId
+                                  ? {
+                                      ...listItem,
+                                      values: { ...listItem.values, [fieldLabel]: payload.value },
+                                    }
+                                  : listItem,
+                              ),
+                            }
+                          : child,
+                      ),
+                    };
+                  })
                 : p[payload.key].data.map((item) =>
                     item.id === payload.itemId
                       ? {
@@ -438,6 +538,7 @@ export default function usePanelReducer(): Returns {
     | { type: "ADD_ITEM_PANEL"; payload: { id: number; key: ChipType } }
     | { type: "ADD_ORDERS_CHILD_ITEM_PANEL"; payload: ChildItemPayload }
     | { type: "ADD_SELECT_CHILD_ITEM_PANEL"; payload: ChildItemPayload }
+    | { type: "ADD_SELECT_LIST_ITEM_PANEL"; payload: SelectListItemPayload }
     | {
         type: "ADD_SWITCH_CHILD_ITEM_PANEL";
         payload: ChildItemPayload;
@@ -475,6 +576,8 @@ export default function usePanelReducer(): Returns {
         return state && addOrdersChildItemPanelState(state, action.payload);
       case "ADD_SELECT_CHILD_ITEM_PANEL":
         return state && addSelectChildItemPanelState(state, action.payload);
+      case "ADD_SELECT_LIST_ITEM_PANEL":
+        return state && addSelectListItemPanelState(state, action.payload);
       case "ADD_SWITCH_CHILD_ITEM_PANEL":
         return state && addSwitchChildItemPanelState(state, action.payload);
       case "DELETE_ORDERS_CHILD_ITEM_PANEL":
@@ -525,6 +628,11 @@ export default function usePanelReducer(): Returns {
         dispatch({
           type: "ADD_SELECT_CHILD_ITEM_PANEL",
           payload: { id, parentItemId },
+        }),
+      addSelectListItemPanel: (id: number, selectItemId: number, childItemId: number) =>
+        dispatch({
+          type: "ADD_SELECT_LIST_ITEM_PANEL",
+          payload: { id, selectItemId, childItemId },
         }),
       addSwitchChildItemPanel: (id: number, parentItemId: number) =>
         dispatch({
