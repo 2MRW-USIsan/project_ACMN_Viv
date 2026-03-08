@@ -1,7 +1,8 @@
 import { RadioGroupPanel } from "@/components/atoms/RadioGroupPanel";
 import { TextFieldPanel } from "@/components/atoms/TextFieldPanel";
 import { OrdersChildViewItem } from "@/types/orders";
-import { Grid } from "@mui/material";
+import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
+import { Grid, IconButton } from "@mui/material";
 import { OrdersItemFieldPanel } from "./OrdersItemFieldPanel";
 import PanelList from "../panel/PanelList";
 
@@ -9,7 +10,7 @@ interface OrdersTextFieldPanelProps {
   props: OrdersChildViewItem;
 }
 export function OrdersTextFieldPanel({ props }: OrdersTextFieldPanelProps) {
-  const { values, data, onAddPanel, onChangeForm } = props;
+  const { values, data, onAddPanel, onChangeForm, onDelete } = props;
 
   const keyFormProps = {
     label: "Key:",
@@ -30,11 +31,16 @@ export function OrdersTextFieldPanel({ props }: OrdersTextFieldPanelProps) {
 
   return (
     <Grid container paddingLeft={4}>
-      <Grid size={6}>
+      <Grid size="grow">
         <TextFieldPanel prop={keyFormProps} />
       </Grid>
-      <Grid size={6}>
+      <Grid size="grow">
         <TextFieldPanel prop={labelFormProps} />
+      </Grid>
+      <Grid size="auto" sx={{ display: "flex", alignItems: "center" }}>
+        <IconButton size="small" onClick={onDelete}>
+          <RemoveCircleOutlineIcon fontSize="small" />
+        </IconButton>
       </Grid>
       <Grid size={12}>
         <RadioGroupPanel prop={typeFormProps} />

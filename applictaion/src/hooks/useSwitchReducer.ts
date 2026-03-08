@@ -12,7 +12,7 @@ export type SwitchActions = {
   changeChip: (panelId: number) => void;
   addItem: (panelId: number) => void;
   addChildItem: (panelId: number, parentItemId: number) => void;
-  deleteChildItem: (panelId: number, parentItemId: number) => void;
+  deleteChildItem: (panelId: number, parentItemId: number, childIndex: number) => void;
   changeItem: (panelId: number, itemId: number) => void;
   changeItemForm: (
     panelId: number,
@@ -28,7 +28,7 @@ type Action =
   | { type: "CHANGE_CHIP"; payload: { panelId: number } }
   | { type: "ADD_ITEM"; payload: { panelId: number } }
   | { type: "ADD_CHILD_ITEM"; payload: { panelId: number; parentItemId: number } }
-  | { type: "DELETE_CHILD_ITEM"; payload: { panelId: number; parentItemId: number } }
+  | { type: "DELETE_CHILD_ITEM"; payload: { panelId: number; parentItemId: number; childIndex: number } }
   | { type: "CHANGE_ITEM"; payload: { panelId: number; itemId: number } }
   | {
       type: "CHANGE_ITEM_FORM";
@@ -107,7 +107,7 @@ function reducer(state: SwitchState, action: Action): SwitchState {
           ...chip,
           data: chip.data.map((item) =>
             item.id === action.payload.parentItemId
-              ? { ...item, data: item.data.slice(0, -1) }
+              ? { ...item, data: item.data.filter((_, index) => index !== action.payload.childIndex) }
               : item,
           ),
         },
@@ -189,10 +189,10 @@ export default function useSwitchReducer(): Returns {
         dispatch({ type: "ADD_ITEM", payload: { panelId } }),
       addChildItem: (panelId, parentItemId) =>
         dispatch({ type: "ADD_CHILD_ITEM", payload: { panelId, parentItemId } }),
-      deleteChildItem: (panelId, parentItemId) =>
+      deleteChildItem: (panelId, parentItemId, childIndex) =>
         dispatch({
           type: "DELETE_CHILD_ITEM",
-          payload: { panelId, parentItemId },
+          payload: { panelId, parentItemId, childIndex },
         }),
       changeItem: (panelId, itemId) =>
         dispatch({ type: "CHANGE_ITEM", payload: { panelId, itemId } }),

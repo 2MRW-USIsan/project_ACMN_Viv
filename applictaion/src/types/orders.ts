@@ -24,4 +24,5 @@ export type OrdersChildViewItem = {
   data: OrdersItemViewItem[];
   onAddPanel?: () => void;
   onChangeForm: (label: string, value: string) => void;
+  onDelete: () => void;
 };

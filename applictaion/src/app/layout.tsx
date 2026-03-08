@@ -1,4 +1,4 @@
-import EmotionRegistry from "@/components/EmotionRegistry";
+import ThemeRegistry from "@/components/ThemeRegistry";
 
 export default function RootLayout({
   children,
@@ -8,7 +8,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`acmn-application`}>
-        <EmotionRegistry>{children}</EmotionRegistry>
+        <ThemeRegistry>{children}</ThemeRegistry>
       </body>
     </html>
   );

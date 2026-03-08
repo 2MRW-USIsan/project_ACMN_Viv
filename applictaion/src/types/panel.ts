@@ -67,9 +67,9 @@ export type PanelDataActionsType = {
     childItemId: number,
   ) => void;
   addSwitchChildItemPanel: (id: number, parentItemId: number) => void;
-  deleteOrdersChildItemPanel: (id: number, parentItemId: number) => void;
-  deleteSelectChildItemPanel: (id: number, parentItemId: number) => void;
-  deleteSwitchChildItemPanel: (id: number, parentItemId: number) => void;
+  deleteOrdersChildItemPanel: (id: number, parentItemId: number, childItemId: number) => void;
+  deleteSelectChildItemPanel: (id: number, parentItemId: number, childItemId: number) => void;
+  deleteSwitchChildItemPanel: (id: number, parentItemId: number, childIndex: number) => void;
   changeItemPanel: (id: number, key: ChipType, itemId: number) => void;
   changeItemForm: (
     id: number,

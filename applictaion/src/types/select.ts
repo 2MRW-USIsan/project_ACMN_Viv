@@ -17,6 +17,7 @@ export type SelectChildViewItem = {
   data: SelectListViewItem[];
   onAddPanel: () => void;
   onChangeForm: (label: string, value: string) => void;
+  onDelete: () => void;
 };
 
 export type SelectListViewItem = {

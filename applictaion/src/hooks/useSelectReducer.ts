@@ -18,7 +18,7 @@ export type SelectActions = {
     selectItemId: number,
     childItemId: number,
   ) => void;
-  deleteChildItem: (panelId: number, parentItemId: number) => void;
+  deleteChildItem: (panelId: number, parentItemId: number, childItemId: number) => void;
   changeItem: (panelId: number, itemId: number) => void;
   changeItemForm: (
     panelId: number,
@@ -38,7 +38,7 @@ type Action =
       type: "ADD_LIST_ITEM";
       payload: { panelId: number; selectItemId: number; childItemId: number };
     }
-  | { type: "DELETE_CHILD_ITEM"; payload: { panelId: number; parentItemId: number } }
+  | { type: "DELETE_CHILD_ITEM"; payload: { panelId: number; parentItemId: number; childItemId: number } }
   | { type: "CHANGE_ITEM"; payload: { panelId: number; itemId: number } }
   | {
       type: "CHANGE_ITEM_FORM";
@@ -145,7 +145,7 @@ function reducer(state: SelectState, action: Action): SelectState {
           ...chip,
           data: chip.data.map((item) =>
             item.id === action.payload.parentItemId
-              ? { ...item, data: item.data.slice(0, -1) }
+              ? { ...item, data: item.data.filter((child) => child.id !== action.payload.childItemId) }
               : item,
           ),
         },
@@ -260,10 +260,10 @@ export default function useSelectReducer(): Returns {
           type: "ADD_LIST_ITEM",
           payload: { panelId, selectItemId, childItemId },
         }),
-      deleteChildItem: (panelId, parentItemId) =>
+      deleteChildItem: (panelId, parentItemId, childItemId) =>
         dispatch({
           type: "DELETE_CHILD_ITEM",
-          payload: { panelId, parentItemId },
+          payload: { panelId, parentItemId, childItemId },
         }),
       changeItem: (panelId, itemId) =>
         dispatch({ type: "CHANGE_ITEM", payload: { panelId, itemId } }),

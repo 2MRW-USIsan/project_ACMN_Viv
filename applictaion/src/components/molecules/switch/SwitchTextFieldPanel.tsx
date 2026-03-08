@@ -1,16 +1,13 @@
-import { SwitchItemValues } from "@/types/switch";
-import { Grid } from "@mui/material";
+import { SwitchChildViewItem } from "@/types/switch";
+import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
+import { Grid, IconButton } from "@mui/material";
 import { TextFieldPanel } from "../../atoms/TextFieldPanel";
 
 interface SwitchTextFieldPanelProps {
-  props: {
-    id: number;
-    values: SwitchItemValues;
-    onChangeForm: (label: string, value: string) => void;
-  };
+  props: SwitchChildViewItem;
 }
 export function SwitchTextFieldPanel({ props }: SwitchTextFieldPanelProps) {
-  const { values, onChangeForm } = props;
+  const { values, onChangeForm, onDelete } = props;
   const keyFormProps = {
     label: "Key:",
     value: values.key,
@@ -32,18 +29,23 @@ export function SwitchTextFieldPanel({ props }: SwitchTextFieldPanelProps) {
     onChange: (value: string) => onChangeForm("altValue", value),
   };
   return (
-    <Grid container>
+    <Grid container alignItems="center">
       <Grid size={2}>
         <TextFieldPanel prop={keyFormProps} />
       </Grid>
       <Grid size={2}>
         <TextFieldPanel prop={labelFormProps} />
       </Grid>
-      <Grid size={4}>
+      <Grid size={3}>
         <TextFieldPanel prop={valueFormProps} />
       </Grid>
-      <Grid size={4}>
+      <Grid size={3}>
         <TextFieldPanel prop={altValueFormProps} />
+      </Grid>
+      <Grid size="auto" sx={{ display: "flex", alignItems: "center" }}>
+        <IconButton size="small" onClick={onDelete}>
+          <RemoveCircleOutlineIcon fontSize="small" />
+        </IconButton>
       </Grid>
     </Grid>
   );

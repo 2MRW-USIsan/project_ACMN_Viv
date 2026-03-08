@@ -1,5 +1,6 @@
 import type { SelectChildViewItem, SelectListViewItem } from "@/types/select";
-import { Grid } from "@mui/material";
+import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
+import { Grid, IconButton } from "@mui/material";
 import { TextFieldPanel } from "../../atoms/TextFieldPanel";
 import PanelList from "../panel/PanelList";
 import { ListItemTextFieldPanel } from "./ListItemTextFieldPanel";
@@ -8,7 +9,7 @@ interface SelectTextFieldPanelProps {
   props: SelectChildViewItem;
 }
 export function SelectTextFieldPanel({ props }: SelectTextFieldPanelProps) {
-  const { values, data, onChangeForm, onAddPanel } = props;
+  const { values, data, onChangeForm, onAddPanel, onDelete } = props;
   const keyFormProps = {
     label: "Key:",
     value: values.key,
@@ -21,11 +22,16 @@ export function SelectTextFieldPanel({ props }: SelectTextFieldPanelProps) {
   };
   return (
     <Grid container paddingLeft={4}>
-      <Grid size={6}>
+      <Grid size="grow">
         <TextFieldPanel prop={keyFormProps} />
       </Grid>
-      <Grid size={6}>
+      <Grid size="grow">
         <TextFieldPanel prop={labelFormProps} />
+      </Grid>
+      <Grid size="auto" sx={{ display: "flex", alignItems: "center" }}>
+        <IconButton size="small" onClick={onDelete}>
+          <RemoveCircleOutlineIcon fontSize="small" />
+        </IconButton>
       </Grid>
       <Grid size={12}>
         <PanelList props={{ label: "list-items:", onAddPanel }}>
