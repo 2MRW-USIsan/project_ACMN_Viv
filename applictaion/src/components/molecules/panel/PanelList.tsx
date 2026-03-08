@@ -5,6 +5,7 @@ import {
   List,
   ListItem,
   ListSubheader,
+  Paper,
   Typography,
 } from "@mui/material";
 import AddButtonPanel from "../../atoms/AddButtonPanel";
@@ -17,15 +18,17 @@ export default function PanelList({
   children,
 }: PanelListProps) {
   return (
-    <List>
-      <ListSubheader>
-        <Typography variant="body2">{label}</Typography>
-      </ListSubheader>
-      <ListItem>
-        <Divider sx={{ width: "100%" }} flexItem />
-      </ListItem>
-      {children}
-      {onAddPanel && <AddButtonPanel onAddPanel={onAddPanel} />}
-    </List>
+    <Paper variant="outlined" sx={{ my: 0.5, overflow: "hidden" }}>
+      <List>
+        <ListSubheader sx={{ bgcolor: "background.paper" }}>
+          <Typography variant="body2">{label}</Typography>
+        </ListSubheader>
+        <ListItem>
+          <Divider sx={{ width: "100%" }} flexItem />
+        </ListItem>
+        {children}
+        {onAddPanel && <AddButtonPanel onAddPanel={onAddPanel} />}
+      </List>
+    </Paper>
   );
 }

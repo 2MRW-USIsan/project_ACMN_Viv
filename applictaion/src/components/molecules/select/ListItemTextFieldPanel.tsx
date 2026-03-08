@@ -21,10 +21,10 @@ export function ListItemTextFieldPanel({
   };
   return (
     <Grid container paddingLeft={4}>
-      <Grid size={6}>
+      <Grid size="grow">
         <TextFieldPanel prop={valueFormProps} />
       </Grid>
-      <Grid size={6}>
+      <Grid size="grow">
         <TextFieldPanel prop={promptFormProps} />
       </Grid>
       <Grid size="auto" sx={{ display: "flex", alignItems: "center" }}>
