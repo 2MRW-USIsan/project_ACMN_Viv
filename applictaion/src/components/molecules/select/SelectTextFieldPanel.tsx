@@ -20,18 +20,20 @@ export function SelectTextFieldPanel({ props }: SelectTextFieldPanelProps) {
     onChange: (value: string) => onChangeForm("label", value),
   };
   return (
-    <Grid container>
-      <Grid size={2}>
+    <Grid container paddingLeft={4}>
+      <Grid size={6}>
         <TextFieldPanel prop={keyFormProps} />
       </Grid>
-      <Grid size={2}>
+      <Grid size={6}>
         <TextFieldPanel prop={labelFormProps} />
       </Grid>
-      <PanelList props={{ label: "list-items:", onAddPanel }}>
-        {data.map((item: SelectListViewItem) => (
-          <ListItemTextFieldPanel key={item.id} props={item} />
-        ))}
-      </PanelList>
+      <Grid size={12}>
+        <PanelList props={{ label: "list-items:", onAddPanel }}>
+          {data.map((item: SelectListViewItem) => (
+            <ListItemTextFieldPanel key={item.id} props={item} />
+          ))}
+        </PanelList>
+      </Grid>
     </Grid>
   );
 }
