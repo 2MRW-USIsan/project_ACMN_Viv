@@ -18,7 +18,10 @@ export default function PanelList({
   children,
 }: PanelListProps) {
   return (
-    <Paper variant="outlined" sx={{ my: 0.5, overflow: "hidden" }}>
+    <Paper
+      variant="outlined"
+      sx={{ my: 0.5, width: "100%", overflow: "hidden" }}
+    >
       <List>
         <ListSubheader sx={{ bgcolor: "background.paper" }}>
           <Typography variant="body2">{label}</Typography>

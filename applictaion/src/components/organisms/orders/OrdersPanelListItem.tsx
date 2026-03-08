@@ -2,6 +2,7 @@ import { OrdersTextFieldPanel } from "@/components/molecules/orders/OrdersTextFi
 import PanelList from "@/components/molecules/panel/PanelList";
 import PanelListItem from "@/components/molecules/panel/PanelListItem";
 import { OrdersChildViewItem, OrdersViewItem } from "@/types/orders";
+import { ListItem } from "@mui/material";
 
 interface OrdersPanelListItemProps {
   props: OrdersViewItem;
@@ -11,11 +12,13 @@ export function OrdersPanelListItem({ props }: OrdersPanelListItemProps) {
 
   return (
     <PanelListItem props={props}>
-      <PanelList props={{ label: "items:", onAddPanel }}>
-        {data.map((item: OrdersChildViewItem) => (
-          <OrdersTextFieldPanel key={item.id} props={item} />
-        ))}
-      </PanelList>
+      <ListItem sx={{ pl: 2 }}>
+        <PanelList props={{ label: "items:", onAddPanel }}>
+          {data.map((item: OrdersChildViewItem) => (
+            <OrdersTextFieldPanel key={item.id} props={item} />
+          ))}
+        </PanelList>
+      </ListItem>
     </PanelListItem>
   );
 }

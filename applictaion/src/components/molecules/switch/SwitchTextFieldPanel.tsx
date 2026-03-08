@@ -29,7 +29,12 @@ export function SwitchTextFieldPanel({ props }: SwitchTextFieldPanelProps) {
     onChange: (value: string) => onChangeForm("altValue", value),
   };
   return (
-    <Grid container alignItems="center" sx={{ flexWrap: { xs: "wrap", md: "nowrap" } }}>
+    <Grid
+      container
+      paddingInline={2}
+      alignItems="center"
+      sx={{ flexWrap: { xs: "wrap", md: "nowrap" } }}
+    >
       <Grid size={{ xs: 6, md: "grow" }}>
         <TextFieldPanel prop={keyFormProps} />
       </Grid>
@@ -42,7 +47,10 @@ export function SwitchTextFieldPanel({ props }: SwitchTextFieldPanelProps) {
       <Grid size={{ xs: 5, md: "grow" }}>
         <TextFieldPanel prop={altValueFormProps} />
       </Grid>
-      <Grid size={{ xs: 2, md: "auto" }} sx={{ display: "flex", alignItems: "center" }}>
+      <Grid
+        size={{ xs: 2, md: "auto" }}
+        sx={{ display: "flex", alignItems: "center" }}
+      >
         <IconButton size="small" onClick={onDelete}>
           <RemoveCircleOutlineIcon fontSize="small" />
         </IconButton>

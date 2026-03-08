@@ -2,6 +2,7 @@ import PanelList from "@/components/molecules/panel/PanelList";
 import PanelListItem from "@/components/molecules/panel/PanelListItem";
 import { SelectTextFieldPanel } from "@/components/molecules/select/SelectTextFieldPanel";
 import { SelectViewItem, SelectChildViewItem } from "@/types/select";
+import { ListItem } from "@mui/material";
 
 interface SelectPanelListItemProps {
   props: SelectViewItem;
@@ -11,11 +12,13 @@ export function SelectPanelListItem({ props }: SelectPanelListItemProps) {
 
   return (
     <PanelListItem props={props}>
-      <PanelList props={{ label: "items:", onAddPanel }}>
-        {data.map((item: SelectChildViewItem) => (
-          <SelectTextFieldPanel key={item.id} props={item} />
-        ))}
-      </PanelList>
+      <ListItem sx={{ pl: 2 }}>
+        <PanelList props={{ label: "items:", onAddPanel }}>
+          {data.map((item: SelectChildViewItem) => (
+            <SelectTextFieldPanel key={item.id} props={item} />
+          ))}
+        </PanelList>
+      </ListItem>
     </PanelListItem>
   );
 }
