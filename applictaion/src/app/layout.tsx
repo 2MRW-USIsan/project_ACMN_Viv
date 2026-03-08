@@ -1,5 +1,9 @@
 "use client";
 
+import { ThemeProvider } from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
+import theme from "@/theme/theme";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -7,7 +11,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`acmn-application`}>{children}</body>
+      <body className={`acmn-application`}>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          {children}
+        </ThemeProvider>
+      </body>
     </html>
   );
 }
