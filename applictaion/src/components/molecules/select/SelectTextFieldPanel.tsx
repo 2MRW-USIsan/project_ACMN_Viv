@@ -33,7 +33,7 @@ export function SelectTextFieldPanel({ props }: SelectTextFieldPanelProps) {
           <RemoveCircleOutlineIcon fontSize="small" />
         </IconButton>
       </Grid>
-      <Grid size={12}>
+      <Grid size={12} paddingInline={2}>
         <PanelList props={{ label: "list-items:", onAddPanel }}>
           {data.map((item: SelectListViewItem) => (
             <ListItemTextFieldPanel key={item.id} props={item} />

@@ -42,7 +42,7 @@ export function OrdersTextFieldPanel({ props }: OrdersTextFieldPanelProps) {
           <RemoveCircleOutlineIcon fontSize="small" />
         </IconButton>
       </Grid>
-      <Grid size={12}>
+      <Grid size={12} paddingLeft={2}>
         <RadioGroupPanel prop={typeFormProps} />
       </Grid>
       {values.type === "Scripts" ? (
@@ -59,7 +59,7 @@ export function OrdersTextFieldPanel({ props }: OrdersTextFieldPanelProps) {
         </Grid>
       ) : (
         <>
-          <Grid size={12}>
+          <Grid size={12} paddingInline={2}>
             <PanelList props={{ label: "items:", onAddPanel }}>
               {data.map((item) => (
                 <OrdersItemFieldPanel key={item.id} props={item} />

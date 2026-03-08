@@ -37,6 +37,7 @@ export type SelectActions = {
     value: string,
   ) => void;
   deleteItem: (panelId: number, itemId: number) => void;
+  toggleShuffle: (panelId: number, itemId: number) => void;
 };
 
 type Action =
@@ -74,7 +75,8 @@ type Action =
         value: string;
       };
     }
-  | { type: "DELETE_ITEM"; payload: { panelId: number; itemId: number } };
+  | { type: "DELETE_ITEM"; payload: { panelId: number; itemId: number } }
+  | { type: "TOGGLE_SHUFFLE"; payload: { panelId: number; itemId: number } };
 
 const initialState: SelectState = {};
 
@@ -84,6 +86,7 @@ const getChip = (state: SelectState, panelId: number): SelectPanelChip =>
 const createSelectPanelItem = (): SelectPanelItem => ({
   id: Date.now(),
   state: false,
+  shuffle: false,
   values: { key: "", label: "--" },
   data: [],
 });
@@ -294,6 +297,20 @@ function reducer(state: SelectState, action: Action): SelectState {
         },
       };
     }
+    case "TOGGLE_SHUFFLE": {
+      const chip = getChip(state, action.payload.panelId);
+      return {
+        ...state,
+        [action.payload.panelId]: {
+          ...chip,
+          data: chip.data.map((item) =>
+            item.id === action.payload.itemId
+              ? { ...item, shuffle: !item.shuffle }
+              : item,
+          ),
+        },
+      };
+    }
     default:
       return state;
   }
@@ -344,6 +361,8 @@ export default function useSelectReducer(): Returns {
         }),
       deleteItem: (panelId, itemId) =>
         dispatch({ type: "DELETE_ITEM", payload: { panelId, itemId } }),
+      toggleShuffle: (panelId, itemId) =>
+        dispatch({ type: "TOGGLE_SHUFFLE", payload: { panelId, itemId } }),
     }),
     [],
   );
