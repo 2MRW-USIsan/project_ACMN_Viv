@@ -1,13 +1,15 @@
 import { TextFieldPanel } from "@/components/atoms/TextFieldPanel";
+import { OrdersTextFieldPanel } from "@/components/molecules/orders/OrdersTextFieldPanel";
+import PanelList from "@/components/molecules/panel/PanelList";
 import PanelListItem from "@/components/molecules/panel/PanelListItem";
-import { OrdersViewItem } from "@/types/orders";
+import { OrdersChildViewItem, OrdersViewItem } from "@/types/orders";
 import { Grid } from "@mui/material";
 
 interface OrdersPanelListItemProps {
   props: OrdersViewItem;
 }
 export function OrdersPanelListItem({ props }: OrdersPanelListItemProps) {
-  const { values, onChangeForm } = props;
+  const { values, data, onChangeForm, onAddPanel } = props;
 
   const keyFormProps = {
     label: "Key:",
@@ -20,6 +22,7 @@ export function OrdersPanelListItem({ props }: OrdersPanelListItemProps) {
     onChange: (value: string) => onChangeForm("label", value),
   };
 
+
   return (
     <PanelListItem props={{ ...props, label: values.label }}>
       <Grid container>
@@ -30,6 +33,11 @@ export function OrdersPanelListItem({ props }: OrdersPanelListItemProps) {
           <TextFieldPanel prop={labelFormProps} />
         </Grid>
       </Grid>
+      <PanelList props={{ label: "items:", onAddPanel }}>
+        {data.map((item: OrdersChildViewItem) => (
+          <OrdersTextFieldPanel key={item.id} props={item} />
+        ))}
+      </PanelList>
     </PanelListItem>
   );
 }

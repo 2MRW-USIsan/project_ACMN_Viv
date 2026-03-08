@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import AddButtonPanel from "../../atoms/AddButtonPanel";
 interface PanelListProps {
-  props: { label: string; onAddPanel: () => void };
+  props: { label: string; onAddPanel?: () => void };
   children: React.ReactNode;
 }
 export default function PanelList({
@@ -25,7 +25,7 @@ export default function PanelList({
         <Divider sx={{ width: "100%" }} flexItem />
       </ListItem>
       {children}
-      <AddButtonPanel onAddPanel={onAddPanel} />
+      {onAddPanel && <AddButtonPanel onAddPanel={onAddPanel} />}
     </List>
   );
 }

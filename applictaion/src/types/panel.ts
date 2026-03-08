@@ -26,7 +26,15 @@ export type OrdersPanelItem = PanelItemData & { data: OrdersDataItem[] };
 export type SelectPanelItem = PanelItemData & { data: SelectDataItem[] };
 export type SwitchPanelItem = PanelItemData & { data: SwitchDataItem[] };
 
-export type OrdersDataItem = {};
+export type OrdersItemData = {
+  id: number;
+  values: { value: string; prompt: string; weight: string };
+};
+export type OrdersDataItem = {
+  id: number;
+  values: { key: string; label: string; type: string; param: string };
+  data: OrdersItemData[];
+};
 export type SelectDataItem = {
   id: number;
   values: { key: string; label: string };
@@ -51,6 +59,7 @@ export type PanelDataActionsType = {
   changeForm: (id: number, label: string, value: string) => void;
   addItemPanel: (id: number, key: ChipType) => void;
   addOrdersChildItemPanel: (id: number, parentItemId: number) => void;
+  addOrdersItemDataPanel: (id: number, parentItemId: number, childItemId: number) => void;
   addSelectChildItemPanel: (id: number, parentItemId: number) => void;
   addSelectListItemPanel: (
     id: number,

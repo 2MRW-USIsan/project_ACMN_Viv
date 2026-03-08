@@ -8,6 +8,7 @@ export type OrdersActions = {
   changeChip: (panelId: number) => void;
   addItem: (panelId: number) => void;
   addChildItem: (panelId: number, parentItemId: number) => void;
+  addItemData: (panelId: number, parentItemId: number, childItemId: number) => void;
   deleteChildItem: (panelId: number, parentItemId: number) => void;
   changeItem: (panelId: number, itemId: number) => void;
   changeItemForm: (
@@ -24,6 +25,7 @@ type Action =
   | { type: "CHANGE_CHIP"; payload: { panelId: number } }
   | { type: "ADD_ITEM"; payload: { panelId: number } }
   | { type: "ADD_CHILD_ITEM"; payload: { panelId: number; parentItemId: number } }
+  | { type: "ADD_ITEM_DATA"; payload: { panelId: number; parentItemId: number; childItemId: number } }
   | { type: "DELETE_CHILD_ITEM"; payload: { panelId: number; parentItemId: number } }
   | { type: "CHANGE_ITEM"; payload: { panelId: number; itemId: number } }
   | {
@@ -82,7 +84,40 @@ function reducer(state: OrdersState, action: Action): OrdersState {
           ...chip,
           data: chip.data.map((item) =>
             item.id === action.payload.parentItemId
-              ? { ...item, data: [...item.data, {}] }
+              ? {
+                  ...item,
+                  data: [
+                    ...item.data,
+                    { id: Date.now(), values: { key: "", label: "", type: "Random", param: "" }, data: [] },
+                  ],
+                }
+              : item,
+          ),
+        },
+      };
+    }
+    case "ADD_ITEM_DATA": {
+      const chip = getChip(state, action.payload.panelId);
+      return {
+        ...state,
+        [action.payload.panelId]: {
+          ...chip,
+          data: chip.data.map((item) =>
+            item.id === action.payload.parentItemId
+              ? {
+                  ...item,
+                  data: item.data.map((child) =>
+                    child.id === action.payload.childItemId
+                      ? {
+                          ...child,
+                          data: [
+                            ...child.data,
+                            { id: Date.now(), values: { value: "", prompt: "", weight: "0" } },
+                          ],
+                        }
+                      : child,
+                  ),
+                }
               : item,
           ),
         },
@@ -119,6 +154,59 @@ function reducer(state: OrdersState, action: Action): OrdersState {
     case "CHANGE_ITEM_FORM": {
       const chip = getChip(state, action.payload.panelId);
       const { itemId, label, value } = action.payload;
+      const childMatch = label.match(/^child:(\d+):(.+)$/);
+      if (childMatch) {
+        const childId = Number(childMatch[1]);
+        const childLabel = childMatch[2];
+        const itemMatch = childLabel.match(/^item:(\d+):(.+)$/);
+        if (itemMatch) {
+          const itemDataId = Number(itemMatch[1]);
+          const itemLabel = itemMatch[2];
+          return {
+            ...state,
+            [action.payload.panelId]: {
+              ...chip,
+              data: chip.data.map((item) =>
+                item.id === itemId
+                  ? {
+                      ...item,
+                      data: item.data.map((child) =>
+                        child.id === childId
+                          ? {
+                              ...child,
+                              data: child.data.map((itemData) =>
+                                itemData.id === itemDataId
+                                  ? { ...itemData, values: { ...itemData.values, [itemLabel]: value } }
+                                  : itemData,
+                              ),
+                            }
+                          : child,
+                      ),
+                    }
+                  : item,
+              ),
+            },
+          };
+        }
+        return {
+          ...state,
+          [action.payload.panelId]: {
+            ...chip,
+            data: chip.data.map((item) =>
+              item.id === itemId
+                ? {
+                    ...item,
+                    data: item.data.map((child) =>
+                      child.id === childId
+                        ? { ...child, values: { ...child.values, [childLabel]: value } }
+                        : child,
+                    ),
+                  }
+                : item,
+            ),
+          },
+        };
+      }
       return {
         ...state,
         [action.payload.panelId]: {
@@ -164,6 +252,8 @@ export default function useOrdersReducer(): Returns {
         dispatch({ type: "ADD_ITEM", payload: { panelId } }),
       addChildItem: (panelId, parentItemId) =>
         dispatch({ type: "ADD_CHILD_ITEM", payload: { panelId, parentItemId } }),
+      addItemData: (panelId, parentItemId, childItemId) =>
+        dispatch({ type: "ADD_ITEM_DATA", payload: { panelId, parentItemId, childItemId } }),
       deleteChildItem: (panelId, parentItemId) =>
         dispatch({
           type: "DELETE_CHILD_ITEM",

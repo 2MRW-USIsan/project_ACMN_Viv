@@ -25,6 +25,35 @@ export default function usePanelData(reducer: PanelReducer): BlocViewItem[] {
   ): OrdersViewItem[] =>
     items.map((item) => ({
       ...item,
+      data: item.data.map((child) => ({
+        id: child.id,
+        values: child.values,
+        data: child.data.map((itemData) => ({
+          id: itemData.id,
+          values: itemData.values,
+          disabled: ["Scripts", "Color"].includes(child.values.type),
+          onChangeForm: (label: string, value: string) =>
+            actions.changeItemForm(
+              panelId,
+              "orders",
+              item.id,
+              `child:${child.id}:item:${itemData.id}:${label}`,
+              value,
+            ),
+        })),
+        onAddPanel: ["Random", "Complex"].includes(child.values.type)
+          ? () => actions.addOrdersItemDataPanel(panelId, item.id, child.id)
+          : undefined,
+        onChangeForm: (label: string, value: string) =>
+          actions.changeItemForm(
+            panelId,
+            "orders",
+            item.id,
+            `child:${child.id}:${label}`,
+            value,
+          ),
+      })),
+      onAddPanel: () => actions.addOrdersChildItemPanel(panelId, item.id),
       onChangeForm: (key: string, label: string) =>
         actions.changeItemForm(panelId, "orders", item.id, key, label),
       onClick: () => actions.changeItemPanel(panelId, "orders", item.id),
