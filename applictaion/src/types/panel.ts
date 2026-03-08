@@ -23,8 +23,14 @@ export type SelectPanelChip = { selected: boolean; data: SelectPanelItem[] };
 export type SwitchPanelChip = { selected: boolean; data: SwitchPanelItem[] };
 
 export type OrdersPanelItem = PanelItemData & { data: OrdersDataItem[] };
-export type SelectPanelItem = PanelItemData & { data: SelectDataItem[] };
-export type SwitchPanelItem = PanelItemData & { data: SwitchDataItem[] };
+export type SelectPanelItem = PanelItemData & {
+  shuffle: boolean;
+  data: SelectDataItem[];
+};
+export type SwitchPanelItem = PanelItemData & {
+  randomize: boolean;
+  data: SwitchDataItem[];
+};
 
 export type OrdersComplexItemData = {
   id: number;
@@ -125,4 +131,6 @@ export type PanelDataActionsType = {
     value: string,
   ) => void;
   deleteItemPanel: (id: number, key: ChipType, itemId: number) => void;
+  toggleSelectShuffle: (id: number, itemId: number) => void;
+  toggleSwitchRandomize: (id: number, itemId: number) => void;
 };

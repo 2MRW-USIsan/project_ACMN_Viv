@@ -10,11 +10,13 @@ export type SwitchItemValues = {
 export type SwitchViewItem = {
   id: number;
   state: boolean;
+  randomize: boolean;
   values: { key: string; label: string };
   data: SwitchChildViewItem[];
   onAddPanel: () => void;
   onChangeForm: (label: string, value: string) => void;
   onClick: () => void;
+  onToggleRandomize: () => void;
   onDelete: () => void;
 };
 

@@ -147,6 +147,7 @@ export default function usePanelData(reducer: PanelReducer): BlocViewItem[] {
       onChangeForm: (key: string, label: string) =>
         actions.changeItemForm(panelId, "select", item.id, key, label),
       onClick: () => actions.changeItemPanel(panelId, "select", item.id),
+      onToggleShuffle: () => actions.toggleSelectShuffle(panelId, item.id),
       onDelete: () => actions.deleteItemPanel(panelId, "select", item.id),
     }));
 
@@ -174,6 +175,7 @@ export default function usePanelData(reducer: PanelReducer): BlocViewItem[] {
       onChangeForm: (key: string, label: string) =>
         actions.changeItemForm(panelId, "switch", item.id, key, label),
       onClick: () => actions.changeItemPanel(panelId, "switch", item.id),
+      onToggleRandomize: () => actions.toggleSwitchRandomize(panelId, item.id),
       onDelete: () => actions.deleteItemPanel(panelId, "switch", item.id),
     }));
 

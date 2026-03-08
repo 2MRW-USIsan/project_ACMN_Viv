@@ -3,11 +3,13 @@
 export type SelectViewItem = {
   id: number;
   state: boolean;
+  shuffle: boolean;
   values: { key: string; label: string };
   data: SelectChildViewItem[];
   onAddPanel: () => void;
   onChangeForm: (label: string, value: string) => void;
   onClick: () => void;
+  onToggleShuffle: () => void;
   onDelete: () => void;
 };
 

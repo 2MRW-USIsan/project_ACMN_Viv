@@ -99,6 +99,10 @@ export default function usePanelReducer(): Returns {
         else if (key === "select") selectActions.deleteItem(id, itemId);
         else switchActions.deleteItem(id, itemId);
       },
+      toggleSelectShuffle: (id, itemId) =>
+        selectActions.toggleShuffle(id, itemId),
+      toggleSwitchRandomize: (id, itemId) =>
+        switchActions.toggleRandomize(id, itemId),
     },
   };
 }

@@ -25,6 +25,7 @@ export type SwitchActions = {
     value: string,
   ) => void;
   deleteItem: (panelId: number, itemId: number) => void;
+  toggleRandomize: (panelId: number, itemId: number) => void;
 };
 
 type Action =
@@ -49,7 +50,8 @@ type Action =
         value: string;
       };
     }
-  | { type: "DELETE_ITEM"; payload: { panelId: number; itemId: number } };
+  | { type: "DELETE_ITEM"; payload: { panelId: number; itemId: number } }
+  | { type: "TOGGLE_RANDOMIZE"; payload: { panelId: number; itemId: number } };
 
 const initialState: SwitchState = {};
 
@@ -59,6 +61,7 @@ const getChip = (state: SwitchState, panelId: number): SwitchPanelChip =>
 const createSwitchPanelItem = (): SwitchPanelItem => ({
   id: Date.now(),
   state: false,
+  randomize: false,
   values: { key: "", label: "--" },
   data: [],
 });
@@ -186,6 +189,20 @@ function reducer(state: SwitchState, action: Action): SwitchState {
         },
       };
     }
+    case "TOGGLE_RANDOMIZE": {
+      const chip = getChip(state, action.payload.panelId);
+      return {
+        ...state,
+        [action.payload.panelId]: {
+          ...chip,
+          data: chip.data.map((item) =>
+            item.id === action.payload.itemId
+              ? { ...item, randomize: !item.randomize }
+              : item,
+          ),
+        },
+      };
+    }
     default:
       return state;
   }
@@ -226,6 +243,8 @@ export default function useSwitchReducer(): Returns {
         }),
       deleteItem: (panelId, itemId) =>
         dispatch({ type: "DELETE_ITEM", payload: { panelId, itemId } }),
+      toggleRandomize: (panelId, itemId) =>
+        dispatch({ type: "TOGGLE_RANDOMIZE", payload: { panelId, itemId } }),
     }),
     [],
   );
