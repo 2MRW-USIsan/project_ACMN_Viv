@@ -5,12 +5,14 @@ export type ChipType = "orders" | "select" | "switch";
 export type PanelDataStateType = {
   panels: PanelItem[];
 };
-
-export type PanelItem = {
+export type PanelItemData = {
   id: number;
-  label: string;
-  value: { key: string; label: string };
   state: boolean;
+  values: { key: string; label: string };
+};
+
+export type PanelItem = PanelItemData & {
+  label: string;
   orders: OrdersPanelChip;
   select: SelectPanelChip;
   switch: SwitchPanelChip;
@@ -19,12 +21,6 @@ export type PanelItem = {
 export type OrdersPanelChip = { selected: boolean; data: OrdersPanelItem[] };
 export type SelectPanelChip = { selected: boolean; data: SelectPanelItem[] };
 export type SwitchPanelChip = { selected: boolean; data: SwitchPanelItem[] };
-
-export type PanelItemData = {
-  id: number;
-  state: boolean;
-  values: { key: string; label: string };
-};
 
 export type OrdersPanelItem = PanelItemData & { data: OrdersDataItem[] };
 export type SelectPanelItem = PanelItemData & { data: SelectDataItem[] };

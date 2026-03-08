@@ -1,24 +1,18 @@
-import { useEffect, useReducer } from "react";
 import type {
   ChipType,
-  PanelDataStateType,
-  PanelDataActionsType,
-  PanelItem,
-  OrdersPanelChip,
-  SelectPanelChip,
-  SwitchPanelChip,
-  PanelItemData,
   OrdersPanelItem,
-  SelectPanelItem,
-  SwitchPanelItem,
-  OrdersDataItem,
+  PanelDataActionsType,
+  PanelDataStateType,
   SelectDataItem,
   SelectListDataItem,
+  SelectPanelItem,
   SwitchDataItem,
+  SwitchPanelItem,
 } from "@/types/panel";
+import { useEffect, useReducer } from "react";
 
 // Re-export for backward compatibility
-export type { PanelDataStateType, PanelDataActionsType };
+export type { PanelDataActionsType, PanelDataStateType };
 
 type ItemPanelPayload = { id: number; key: ChipType; itemId: number };
 type ChildItemPayload = { id: number; parentItemId: number };
@@ -74,7 +68,7 @@ const addPanelState = (state: PanelDataStateType): PanelDataStateType => ({
     {
       id: Date.now(),
       label: `Panel ${state.panels.length + 1}`,
-      value: { key: `key-${Date.now()}`, label: `label-${Date.now()}` },
+      values: { key: `key-${Date.now()}`, label: `label-${Date.now()}` },
       state: false,
       orders: { selected: false, data: [] },
       select: { selected: false, data: [] },
@@ -127,7 +121,7 @@ const changeFormState = (
   ...state,
   panels: state.panels.map((p) =>
     p.id === payload.id
-      ? { ...p, value: { ...p.value, [payload.label]: payload.value } }
+      ? { ...p, value: { ...p.values, [payload.label]: payload.value } }
       : p,
   ),
 });
