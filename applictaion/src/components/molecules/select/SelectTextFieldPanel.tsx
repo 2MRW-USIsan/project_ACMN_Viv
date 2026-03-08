@@ -1,19 +1,10 @@
 import { Grid } from "@mui/material";
 import { TextFieldPanel } from "../../atoms/TextFieldPanel";
 import PanelList from "../panel/PanelList";
-type SelectItemValues = {
-  key: string;
-  label: string;
-};
-type SelectChildItem = {
-  id: number;
-  values: SelectItemValues;
-  data: SelectListItemData[];
-  onAddPanel: () => void;
-  onChangeForm: (label: string, value: string) => void;
-};
+import type { SelectChildViewItem, SelectListViewItem } from "@/types/select";
+
 interface SelectTextFieldPanelProps {
-  props: SelectChildItem;
+  props: SelectChildViewItem;
 }
 export function SelectTextFieldPanel({ props }: SelectTextFieldPanelProps) {
   const { values, data, onChangeForm, onAddPanel } = props;
@@ -36,7 +27,7 @@ export function SelectTextFieldPanel({ props }: SelectTextFieldPanelProps) {
         <TextFieldPanel prop={labelFormProps} />
       </Grid>
       <PanelList props={{ label: "list-items:", onAddPanel }}>
-        {data.map((item: SelectListItemData) => (
+        {data.map((item: SelectListViewItem) => (
           <ListItemTextFieldPanel key={item.id} props={item} />
         ))}
       </PanelList>
@@ -44,17 +35,8 @@ export function SelectTextFieldPanel({ props }: SelectTextFieldPanelProps) {
   );
 }
 
-type SelectListItemData = {
-  id: number;
-  values: SelectListItemValues;
-  onChangeForm: (label: string, value: string) => void;
-};
-type SelectListItemValues = {
-  prompt: string;
-  value: string;
-};
 interface ListItemTextFieldPanelProps {
-  props: SelectListItemData;
+  props: SelectListViewItem;
 }
 export function ListItemTextFieldPanel({
   props: { values, onChangeForm },

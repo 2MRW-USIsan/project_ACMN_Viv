@@ -3,9 +3,10 @@ import { TextFieldPanel } from "../../atoms/TextFieldPanel";
 import PanelList from "../../molecules/panel/PanelList";
 import PanelListItem from "../../molecules/panel/PanelListItem";
 import { SelectTextFieldPanel } from "@/components/molecules/select/SelectTextFieldPanel";
+import type { SelectViewItem, SelectChildViewItem } from "@/types/select";
 
 interface SelectPanelListProps {
-  props: { onAdd: () => void; data: SelectItem[] };
+  props: { onAdd: () => void; data: SelectViewItem[] };
 }
 
 export default function SelectPanelList({
@@ -21,7 +22,7 @@ export default function SelectPanelList({
 }
 
 interface SelectPanelListItemProps {
-  props: SelectItem;
+  props: SelectViewItem;
 }
 export function SelectPanelListItem({ props }: SelectPanelListItemProps) {
   const { values, data, onChangeForm, onAddPanel } = props;
@@ -48,41 +49,10 @@ export function SelectPanelListItem({ props }: SelectPanelListItemProps) {
         </Grid>
       </Grid>
       <PanelList props={{ label: "items:", onAddPanel }}>
-        {data.map((item: SelectChildItem) => (
+        {data.map((item: SelectChildViewItem) => (
           <SelectTextFieldPanel key={item.id} props={item} />
         ))}
       </PanelList>
     </PanelListItem>
   );
 }
-
-type SelectItem = {
-  id: number;
-  values: { key: string; label: string };
-  data: SelectChildItem[];
-  state: boolean;
-  onAddPanel: () => void;
-  onChangeForm: (label: string, value: string) => void;
-  onClick: () => void;
-  onDelete: () => void;
-};
-type SelectItemValues = {
-  key: string;
-  label: string;
-};
-type SelectChildItem = {
-  id: number;
-  values: SelectItemValues;
-  data: SelectListItemData[];
-  onAddPanel: () => void;
-  onChangeForm: (label: string, value: string) => void;
-};
-type SelectListItemData = {
-  id: number;
-  values: SelectListItemValues;
-  onChangeForm: (label: string, value: string) => void;
-};
-type SelectListItemValues = {
-  prompt: string;
-  value: string;
-};

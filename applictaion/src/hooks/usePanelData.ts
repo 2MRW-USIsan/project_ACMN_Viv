@@ -1,5 +1,13 @@
 import { useMemo } from "react";
-import { PanelDataActionsType, PanelDataStateType } from "./usePanelReducer";
+import type { PanelDataActionsType, PanelDataStateType } from "@/types/panel";
+import type { OrdersViewItem } from "@/types/orders";
+import type {
+  SelectViewItem,
+  SelectChildViewItem,
+  SelectListViewItem,
+} from "@/types/select";
+import type { SwitchViewItem, SwitchChildViewItem } from "@/types/switch";
+import type { BlocViewItem } from "@/types/bloc";
 
 type PanelReducer = {
   state: PanelDataStateType;
@@ -12,66 +20,13 @@ type SelectStateItem =
 type SwitchStateItem =
   PanelReducer["state"]["panels"][number]["switch"]["data"][number];
 
-type OrdersViewItem = {
-  id: number;
-  state: boolean;
-  values: { key: string; label: string };
-  onChangeForm: (label: string, value: string) => void;
-  onClick: () => void;
-  onDelete: () => void;
-};
-
-type SelectViewItem = {
-  id: number;
-  state: boolean;
-  values: { key: string; label: string };
-  data: SelectChildViewItem[];
-  onAddPanel: () => void;
-  onChangeForm: (label: string, value: string) => void;
-  onClick: () => void;
-  onDelete: () => void;
-};
-
-type SelectChildViewItem = {
-  id: number;
-  values: { key: string; label: string };
-  data: SelectListViewItem[];
-  onAddPanel: () => void;
-  onChangeForm: (label: string, value: string) => void;
-};
-
-type SelectListViewItem = {
-  id: number;
-  values: { prompt: string; value: string };
-  onChangeForm: (label: string, value: string) => void;
-};
-
-type SwitchChildViewItem = {
-  id: number;
-  values: {
-    key: string;
-    label: string;
-    value: string;
-    altValue: string;
-  };
-  onChangeForm: (label: string, value: string) => void;
-};
-
-type SwitchViewItem = {
-  id: number;
-  state: boolean;
-  values: { key: string; label: string };
-  data: SwitchChildViewItem[];
-  onAddPanel: () => void;
-  onChangeForm: (label: string, value: string) => void;
-  onClick: () => void;
-  onDelete: () => void;
-};
-
-export default function usePanelData(reducer: PanelReducer) {
+export default function usePanelData(reducer: PanelReducer): BlocViewItem[] {
   const { state, actions } = reducer;
 
-  const mapOrdersItems = (panelId: number, items: OrdersStateItem[]): OrdersViewItem[] =>
+  const mapOrdersItems = (
+    panelId: number,
+    items: OrdersStateItem[],
+  ): OrdersViewItem[] =>
     items.map((item) => ({
       ...item,
       onChangeForm: (key: string, label: string) =>
@@ -80,7 +35,10 @@ export default function usePanelData(reducer: PanelReducer) {
       onDelete: () => actions.deleteItemPanel(panelId, "orders", item.id),
     }));
 
-  const mapSelectItems = (panelId: number, items: SelectStateItem[]): SelectViewItem[] =>
+  const mapSelectItems = (
+    panelId: number,
+    items: SelectStateItem[],
+  ): SelectViewItem[] =>
     items.map((item) => ({
       ...item,
       data: item.data.map((child) => ({
@@ -97,7 +55,8 @@ export default function usePanelData(reducer: PanelReducer) {
               value,
             ),
         })),
-        onAddPanel: () => actions.addSelectListItemPanel(panelId, item.id, child.id),
+        onAddPanel: () =>
+          actions.addSelectListItemPanel(panelId, item.id, child.id),
         onChangeForm: (label: string, value: string) =>
           actions.changeItemForm(
             panelId,
@@ -114,7 +73,10 @@ export default function usePanelData(reducer: PanelReducer) {
       onDelete: () => actions.deleteItemPanel(panelId, "select", item.id),
     }));
 
-  const mapSwitchItems = (panelId: number, items: SwitchStateItem[]): SwitchViewItem[] =>
+  const mapSwitchItems = (
+    panelId: number,
+    items: SwitchStateItem[],
+  ): SwitchViewItem[] =>
     items.map((item) => ({
       ...item,
       data: item.data.map((child, index) => ({

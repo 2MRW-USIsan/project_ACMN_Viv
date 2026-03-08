@@ -26,7 +26,7 @@ export default function PanelListItem({
   children,
 }: PanelListItemProps) {
   return (
-    <List key={id} component="div" disablePadding sx={{pl:4}}>
+    <List key={id} component="div" disablePadding sx={{ pl: 4 }}>
       <ListItemButton onClick={onClick} sx={{ justifyContent: "center" }}>
         <ListItemText primary={label} />
         <IconButton onClick={onDelete}>

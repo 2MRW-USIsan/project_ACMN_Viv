@@ -5,99 +5,11 @@ import PanelListItem from "../../molecules/panel/PanelListItem";
 import SelectPanelList from "../select/SelectPanelList";
 import { SwitchPanelList } from "../switch/SwitchPanelList";
 import { TextFieldPanel } from "../../atoms/TextFieldPanel";
-
-type OrdersItem = {
-  id: number;
-  values: { key: string; label: string };
-  state: boolean;
-  onChangeForm: (label: string, value: string) => void;
-  onClick: () => void;
-  onDelete: () => void;
-};
-type SelectItemValues = {
-  key: string;
-  label: string;
-};
-type SelectChildItem = {
-  id: number;
-  values: SelectItemValues;
-  data: SelectListItemData[];
-  onAddPanel: () => void;
-  onChangeForm: (label: string, value: string) => void;
-};
-type SelectListItemData = {
-  id: number;
-  values: SelectListItemValues;
-  onChangeForm: (label: string, value: string) => void;
-};
-type SelectListItemValues = {
-  prompt: string;
-  value: string;
-};
-type SelectItem = {
-  id: number;
-  values: { key: string; label: string };
-  data: SelectChildItem[];
-  state: boolean;
-  onAddPanel: () => void;
-  onChangeForm: (label: string, value: string) => void;
-  onClick: () => void;
-  onDelete: () => void;
-};
+import type { BlocViewItem } from "@/types/bloc";
 
 interface BlocPanelListItemProps {
-  props: {
-    id: number;
-    label: string;
-    state: boolean;
-    onChange: (label: string, value: string) => void;
-    onClick: () => void;
-    onDelete: () => void;
-    value: {
-      key: string;
-      label: string;
-    };
-    orders: {
-      selected: boolean;
-      onClick: () => void;
-      onAdd: () => void;
-      data: OrdersItem[];
-    };
-    select: {
-      selected: boolean;
-      onClick: () => void;
-      onAdd: () => void;
-      data: SelectItem[];
-    };
-    switch: {
-      selected: boolean;
-      onClick: () => void;
-      onAdd: () => void;
-      data: SwitchItem[];
-    };
-  };
+  props: BlocViewItem;
 }
-type SwitchItem = {
-  id: number;
-  values: { key: string; label: string };
-  state: boolean;
-  data: SwitchChildItem[];
-  onAddPanel: () => void;
-  onChangeForm: (label: string, value: string) => void;
-  onClick: () => void;
-  onDelete: () => void;
-};
-type SwitchChildItem = {
-  id: number;
-  values: SwitchItemValues;
-  onChangeForm: (label: string, value: string) => void;
-};
-type SwitchItemValues = {
-  key: string;
-  label: string;
-  value: string;
-  altValue: string;
-};
 export function BlocPanelListItem({ props: item }: BlocPanelListItemProps) {
   const handlerChange = (label: string, value: string) => {
     item.onChange(label, value);

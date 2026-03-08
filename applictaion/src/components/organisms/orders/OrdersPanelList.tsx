@@ -2,18 +2,10 @@ import { Grid } from "@mui/material";
 import PanelList from "../../molecules/panel/PanelList";
 import PanelListItem from "../../molecules/panel/PanelListItem";
 import { TextFieldPanel } from "../../atoms/TextFieldPanel";
-
-type OrdersItem = {
-  id: number;
-  values: { key: string; label: string };
-  state: boolean;
-  onChangeForm: (label: string, value: string) => void;
-  onClick: () => void;
-  onDelete: () => void;
-};
+import type { OrdersViewItem } from "@/types/orders";
 
 interface OrdersPanelListProps {
-  props: { onAdd: () => void; data: OrdersItem[] };
+  props: { onAdd: () => void; data: OrdersViewItem[] };
 }
 export default function OrdersPanelList({
   props: { onAdd, data },
@@ -28,7 +20,7 @@ export default function OrdersPanelList({
 }
 
 interface OrdersPanelListItemProps {
-  props: OrdersItem;
+  props: OrdersViewItem;
 }
 export function OrdersPanelListItem({ props }: OrdersPanelListItemProps) {
   const { values, onChangeForm } = props;

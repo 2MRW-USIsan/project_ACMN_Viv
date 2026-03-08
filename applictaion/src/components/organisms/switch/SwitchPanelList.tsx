@@ -3,35 +3,12 @@ import PanelList from "../../molecules/panel/PanelList";
 import PanelListItem from "../../molecules/panel/PanelListItem";
 import { TextFieldPanel } from "../../atoms/TextFieldPanel";
 import { SwitchTextFieldPanel } from "../../molecules/switch/SwitchTextFieldPanel";
-
-type SwitchItemValues = {
-  key: string;
-  label: string;
-  value: string;
-  altValue: string;
-};
-
-type SwitchItem = {
-  id: number;
-  values: { key: string; label: string };
-  state: boolean;
-  data: SwitchChildItem[];
-  onAddPanel: () => void;
-  onChangeForm: (label: string, value: string) => void;
-  onClick: () => void;
-  onDelete: () => void;
-};
-
-type SwitchChildItem = {
-  id: number;
-  values: SwitchItemValues;
-  onChangeForm: (label: string, value: string) => void;
-};
+import type { SwitchViewItem, SwitchChildViewItem } from "@/types/switch";
 
 interface SwitchPanelListProps {
   props: {
     onAdd: () => void;
-    data: SwitchItem[];
+    data: SwitchViewItem[];
   };
 }
 export function SwitchPanelList({
@@ -46,7 +23,7 @@ export function SwitchPanelList({
   );
 }
 interface SwitchPanelListItemProps {
-  props: SwitchItem;
+  props: SwitchViewItem;
 }
 export function SwitchPanelListItem({ props }: SwitchPanelListItemProps) {
   const { values, data = [], onAddPanel, onChangeForm } = props;
@@ -73,7 +50,7 @@ export function SwitchPanelListItem({ props }: SwitchPanelListItemProps) {
         </Grid>
       </Grid>
       <PanelList props={{ label: "items:", onAddPanel }}>
-        {data.map((item: SwitchChildItem) => (
+        {data.map((item: SwitchChildViewItem) => (
           <SwitchTextFieldPanel key={item.id} props={item} />
         ))}
       </PanelList>
