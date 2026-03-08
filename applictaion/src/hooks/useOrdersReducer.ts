@@ -54,9 +54,14 @@ function reducer(state: OrdersState, action: Action): OrdersState {
       ) as OrdersState;
     case "CHANGE_CHIP": {
       const chip = getChip(state, action.payload.panelId);
+      const selected = !chip.selected;
       return {
         ...state,
-        [action.payload.panelId]: { ...chip, selected: !chip.selected },
+        [action.payload.panelId]: {
+          ...chip,
+          selected,
+          data: selected ? chip.data : [],
+        },
       };
     }
     case "ADD_ITEM": {
