@@ -1,11 +1,6 @@
+import { SwitchItemValues } from "@/types/switch";
 import { Grid } from "@mui/material";
 import { TextFieldPanel } from "../../atoms/TextFieldPanel";
-type SwitchItemValues = {
-  key: string;
-  label: string;
-  value: string;
-  altValue: string;
-};
 
 interface SwitchTextFieldPanelProps {
   props: {

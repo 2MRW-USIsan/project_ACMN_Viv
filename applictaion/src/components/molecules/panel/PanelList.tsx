@@ -3,8 +3,9 @@
 import {
   Divider,
   List,
-  ListItem, ListSubheader,
-  Typography
+  ListItem,
+  ListSubheader,
+  Typography,
 } from "@mui/material";
 import AddButtonPanel from "../../atoms/AddButtonPanel";
 interface PanelListProps {
@@ -28,5 +29,3 @@ export default function PanelList({
     </List>
   );
 }
-
-

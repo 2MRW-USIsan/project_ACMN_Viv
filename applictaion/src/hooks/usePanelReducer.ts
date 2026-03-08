@@ -1,68 +1,26 @@
+import type {
+  ChipType,
+  OrdersPanelItem,
+  PanelDataActionsType,
+  PanelDataStateType,
+  SelectDataItem,
+  SelectListDataItem,
+  SelectPanelItem,
+  SwitchDataItem,
+  SwitchPanelItem,
+} from "@/types/panel";
 import { useEffect, useReducer } from "react";
 
-type ChipType = "orders" | "select" | "switch";
-export type PanelDataStateType = {
-  panels: PanelItem[];
-};
-type PanelItem = {
-  id: number;
-  label: string;
-  value: { key: string; label: string };
-  state: boolean;
-  orders: OrdersPanelChip;
-  select: SelectPanelChip;
-  switch: SwitchPanelChip;
-};
-type OrdersPanelChip = { selected: boolean; data: OrdersPanelItem[] };
-type SelectPanelChip = { selected: boolean; data: SelectPanelItem[] };
-type SwitchPanelChip = { selected: boolean; data: SwitchPanelItem[] };
-
-type PanelItemData = {
-  id: number;
-  state: boolean;
-  values: { key: string; label: string };
-};
-type OrdersPanelItem = PanelItemData & { data: OrdersDataItem[] };
-type SelectPanelItem = PanelItemData & { data: SelectDataItem[] };
-type SwitchPanelItem = PanelItemData & { data: SwitchDataItem[] };
-
-type OrdersDataItem = {};
-type SelectDataItem = {};
-type SwitchDataItem = {
-  key: string;
-  label: string;
-  value: string;
-  altValue: string;
-};
-
-export type PanelDataActionsType = {
-  addPanel: () => void;
-  changePanel: (id: number) => void;
-  deletePanel: (id: number) => void;
-  changeChip: (id: number, chipType: ChipType) => void;
-  changeForm: (id: number, label: string, value: string) => void;
-  addItemPanel: (id: number, key: ChipType) => void;
-  addOrdersChildItemPanel: (id: number, parentItemId: number) => void;
-  addSelectChildItemPanel: (id: number, parentItemId: number) => void;
-  addSwitchChildItemPanel: (id: number, parentItemId: number) => void;
-  deleteOrdersChildItemPanel: (id: number, parentItemId: number) => void;
-  deleteSelectChildItemPanel: (id: number, parentItemId: number) => void;
-  deleteSwitchChildItemPanel: (id: number, parentItemId: number) => void;
-  changeItemPanel: (id: number, key: ChipType, itemId: number) => void;
-  changeItemForm: (
-    id: number,
-    key: ChipType,
-    itemId: number,
-    label: string,
-    value: string,
-  ) => void;
-  deleteItemPanel: (id: number, key: ChipType, itemId: number) => void;
-};
-
-
+// Re-export for backward compatibility
+export type { PanelDataActionsType, PanelDataStateType };
 
 type ItemPanelPayload = { id: number; key: ChipType; itemId: number };
 type ChildItemPayload = { id: number; parentItemId: number };
+type SelectListItemPayload = {
+  id: number;
+  selectItemId: number;
+  childItemId: number;
+};
 
 const createOrdersPanelItem = (): OrdersPanelItem => ({
   id: Date.now(),
@@ -76,6 +34,17 @@ const createSelectPanelItem = (): SelectPanelItem => ({
   state: false,
   values: { key: "", label: "--" },
   data: [],
+});
+
+const createSelectDataItem = (): SelectDataItem => ({
+  id: Date.now(),
+  values: { key: "", label: "" },
+  data: [],
+});
+
+const createSelectListDataItem = (): SelectListDataItem => ({
+  id: Date.now(),
+  values: { prompt: "", value: "" },
 });
 
 const createSwitchPanelItem = (): SwitchPanelItem => ({
@@ -99,7 +68,7 @@ const addPanelState = (state: PanelDataStateType): PanelDataStateType => ({
     {
       id: Date.now(),
       label: `Panel ${state.panels.length + 1}`,
-      value: { key: `key-${Date.now()}`, label: `label-${Date.now()}` },
+      values: { key: `key-${Date.now()}`, label: `label-${Date.now()}` },
       state: false,
       orders: { selected: false, data: [] },
       select: { selected: false, data: [] },
@@ -152,7 +121,7 @@ const changeFormState = (
   ...state,
   panels: state.panels.map((p) =>
     p.id === payload.id
-      ? { ...p, value: { ...p.value, [payload.label]: payload.value } }
+      ? { ...p, value: { ...p.values, [payload.label]: payload.value } }
       : p,
   ),
 });
@@ -218,7 +187,39 @@ const addSelectChildItemPanelState = (
             ...p.select,
             data: p.select.data.map((item) =>
               item.id === payload.parentItemId
-                ? { ...item, data: [...item.data, {}] }
+                ? { ...item, data: [...item.data, createSelectDataItem()] }
+                : item,
+            ),
+          },
+        }
+      : p,
+  ),
+});
+
+const addSelectListItemPanelState = (
+  state: PanelDataStateType,
+  payload: SelectListItemPayload,
+): PanelDataStateType => ({
+  ...state,
+  panels: state.panels.map((p) =>
+    p.id === payload.id
+      ? {
+          ...p,
+          select: {
+            ...p.select,
+            data: p.select.data.map((item) =>
+              item.id === payload.selectItemId
+                ? {
+                    ...item,
+                    data: item.data.map((child) =>
+                      child.id === payload.childItemId
+                        ? {
+                            ...child,
+                            data: [...child.data, createSelectListDataItem()],
+                          }
+                        : child,
+                    ),
+                  }
                 : item,
             ),
           },
@@ -326,12 +327,11 @@ const changeItemPanelState = (
           ...p,
           [payload.key]: {
             ...p[payload.key],
-            data:
-              p[payload.key].data.map((item) =>
-                item.id === payload.itemId
-                  ? { ...item, state: !item.state }
-                  : item,
-              ),
+            data: p[payload.key].data.map((item) =>
+              item.id === payload.itemId
+                ? { ...item, state: !item.state }
+                : item,
+            ),
           },
         }
       : p,
@@ -362,7 +362,8 @@ const changeItemFormState = (
                       return item;
                     }
 
-                    const childMatch = payload.label.match(/^child:(\d+):(.*)$/);
+                    const childMatch =
+                      payload.label.match(/^child:(\d+):(.*)$/);
                     if (childMatch) {
                       const childIndex = Number(childMatch[1]);
                       const childLabel = childMatch[2] as keyof SwitchDataItem;
@@ -384,17 +385,80 @@ const changeItemFormState = (
                       },
                     };
                   })
-                : p[payload.key].data.map((item) =>
-                    item.id === payload.itemId
-                      ? {
+                : payload.key === "select"
+                  ? p.select.data.map((item) => {
+                      if (item.id !== payload.itemId) {
+                        return item;
+                      }
+
+                      const childMatch =
+                        payload.label.match(/^child:(\d+):(.*)$/);
+                      if (!childMatch) {
+                        return {
                           ...item,
                           values: {
                             ...item.values,
                             [payload.label]: payload.value,
                           },
-                        }
-                      : item,
-                  ),
+                        };
+                      }
+
+                      const childId = Number(childMatch[1]);
+                      const rest = childMatch[2];
+
+                      const listItemMatch = rest.match(/^listItem:(\d+):(.*)$/);
+                      if (!listItemMatch) {
+                        return {
+                          ...item,
+                          data: item.data.map((child) =>
+                            child.id === childId
+                              ? {
+                                  ...child,
+                                  values: {
+                                    ...child.values,
+                                    [rest]: payload.value,
+                                  },
+                                }
+                              : child,
+                          ),
+                        };
+                      }
+
+                      const listItemId = Number(listItemMatch[1]);
+                      const fieldLabel = listItemMatch[2];
+                      return {
+                        ...item,
+                        data: item.data.map((child) =>
+                          child.id === childId
+                            ? {
+                                ...child,
+                                data: child.data.map((listItem) =>
+                                  listItem.id === listItemId
+                                    ? {
+                                        ...listItem,
+                                        values: {
+                                          ...listItem.values,
+                                          [fieldLabel]: payload.value,
+                                        },
+                                      }
+                                    : listItem,
+                                ),
+                              }
+                            : child,
+                        ),
+                      };
+                    })
+                  : p[payload.key].data.map((item) =>
+                      item.id === payload.itemId
+                        ? {
+                            ...item,
+                            values: {
+                              ...item.values,
+                              [payload.label]: payload.value,
+                            },
+                          }
+                        : item,
+                    ),
           },
         }
       : p,
@@ -412,8 +476,9 @@ const deleteItemPanelState = (
           ...p,
           [payload.key]: {
             ...p[payload.key],
-            data:
-              p[payload.key].data.filter((item) => item.id !== payload.itemId),
+            data: p[payload.key].data.filter(
+              (item) => item.id !== payload.itemId,
+            ),
           },
         }
       : p,
@@ -438,6 +503,7 @@ export default function usePanelReducer(): Returns {
     | { type: "ADD_ITEM_PANEL"; payload: { id: number; key: ChipType } }
     | { type: "ADD_ORDERS_CHILD_ITEM_PANEL"; payload: ChildItemPayload }
     | { type: "ADD_SELECT_CHILD_ITEM_PANEL"; payload: ChildItemPayload }
+    | { type: "ADD_SELECT_LIST_ITEM_PANEL"; payload: SelectListItemPayload }
     | {
         type: "ADD_SWITCH_CHILD_ITEM_PANEL";
         payload: ChildItemPayload;
@@ -475,6 +541,8 @@ export default function usePanelReducer(): Returns {
         return state && addOrdersChildItemPanelState(state, action.payload);
       case "ADD_SELECT_CHILD_ITEM_PANEL":
         return state && addSelectChildItemPanelState(state, action.payload);
+      case "ADD_SELECT_LIST_ITEM_PANEL":
+        return state && addSelectListItemPanelState(state, action.payload);
       case "ADD_SWITCH_CHILD_ITEM_PANEL":
         return state && addSwitchChildItemPanelState(state, action.payload);
       case "DELETE_ORDERS_CHILD_ITEM_PANEL":
@@ -525,6 +593,15 @@ export default function usePanelReducer(): Returns {
         dispatch({
           type: "ADD_SELECT_CHILD_ITEM_PANEL",
           payload: { id, parentItemId },
+        }),
+      addSelectListItemPanel: (
+        id: number,
+        selectItemId: number,
+        childItemId: number,
+      ) =>
+        dispatch({
+          type: "ADD_SELECT_LIST_ITEM_PANEL",
+          payload: { id, selectItemId, childItemId },
         }),
       addSwitchChildItemPanel: (id: number, parentItemId: number) =>
         dispatch({

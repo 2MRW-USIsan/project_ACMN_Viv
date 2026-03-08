@@ -1,39 +1,78 @@
+import type { BlocViewItem } from "@/types/bloc";
+import type { OrdersViewItem } from "@/types/orders";
+import type { PanelDataActionsType, PanelDataStateType } from "@/types/panel";
+import type { SelectViewItem } from "@/types/select";
+import type { SwitchViewItem } from "@/types/switch";
 import { useMemo } from "react";
-import { PanelDataActionsType, PanelDataStateType } from "./usePanelReducer";
 
 type PanelReducer = {
   state: PanelDataStateType;
   actions: PanelDataActionsType;
 };
+type OrdersStateItem =
+  PanelReducer["state"]["panels"][number]["orders"]["data"][number];
+type SelectStateItem =
+  PanelReducer["state"]["panels"][number]["select"]["data"][number];
 type SwitchStateItem =
   PanelReducer["state"]["panels"][number]["switch"]["data"][number];
 
-type SwitchChildViewItem = {
-  id: number;
-  values: {
-    key: string;
-    label: string;
-    value: string;
-    altValue: string;
-  };
-  onChangeForm: (label: string, value: string) => void;
-};
-
-type SwitchViewItem = {
-  id: number;
-  state: boolean;
-  values: { key: string; label: string };
-  data: SwitchChildViewItem[];
-  onAddPanel: () => void;
-  onChangeForm: (label: string, value: string) => void;
-  onClick: () => void;
-  onDelete: () => void;
-};
-
-export default function usePanelData(reducer: PanelReducer) {
+export default function usePanelData(reducer: PanelReducer): BlocViewItem[] {
   const { state, actions } = reducer;
 
-  const mapSwitchItems = (panelId: number, items: SwitchStateItem[]): SwitchViewItem[] =>
+  const mapOrdersItems = (
+    panelId: number,
+    items: OrdersStateItem[],
+  ): OrdersViewItem[] =>
+    items.map((item) => ({
+      ...item,
+      onChangeForm: (key: string, label: string) =>
+        actions.changeItemForm(panelId, "orders", item.id, key, label),
+      onClick: () => actions.changeItemPanel(panelId, "orders", item.id),
+      onDelete: () => actions.deleteItemPanel(panelId, "orders", item.id),
+    }));
+
+  const mapSelectItems = (
+    panelId: number,
+    items: SelectStateItem[],
+  ): SelectViewItem[] =>
+    items.map((item) => ({
+      ...item,
+      data: item.data.map((child) => ({
+        ...child,
+        data: child.data.map((listItem) => ({
+          id: listItem.id,
+          values: listItem.values,
+          onChangeForm: (label: string, value: string) =>
+            actions.changeItemForm(
+              panelId,
+              "select",
+              item.id,
+              `child:${child.id}:listItem:${listItem.id}:${label}`,
+              value,
+            ),
+        })),
+        onAddPanel: () =>
+          actions.addSelectListItemPanel(panelId, item.id, child.id),
+        onChangeForm: (label: string, value: string) =>
+          actions.changeItemForm(
+            panelId,
+            "select",
+            item.id,
+            `child:${child.id}:${label}`,
+            value,
+          ),
+      })),
+      onAddPanel: () => actions.addSelectChildItemPanel(panelId, item.id),
+      onChangeForm: (key: string, label: string) =>
+        actions.changeItemForm(panelId, "select", item.id, key, label),
+      onClick: () => actions.changeItemPanel(panelId, "select", item.id),
+      onDelete: () => actions.deleteItemPanel(panelId, "select", item.id),
+    }));
+
+  const mapSwitchItems = (
+    panelId: number,
+    items: SwitchStateItem[],
+  ): SwitchViewItem[] =>
     items.map((item) => ({
       ...item,
       data: item.data.map((child, index) => ({
@@ -72,23 +111,13 @@ export default function usePanelData(reducer: PanelReducer) {
           actions.deletePanel(panel.id);
         },
         orders: {
-          data: panel.orders.data.map((item) => ({
-            ...item,
-            onClick: () => actions.changeItemPanel(panel.id, "orders", item.id),
-            onDelete: () =>
-              actions.deleteItemPanel(panel.id, "orders", item.id),
-          })),
+          data: mapOrdersItems(panel.id, panel.orders.data),
           selected: panel.orders.selected,
           onClick: () => actions.changeChip(panel.id, "orders"),
           onAdd: () => actions.addItemPanel(panel.id, "orders"),
         },
         select: {
-          data: panel.select.data.map((item) => ({
-            ...item,
-            onClick: () => actions.changeItemPanel(panel.id, "select", item.id),
-            onDelete: () =>
-              actions.deleteItemPanel(panel.id, "select", item.id),
-          })),
+          data: mapSelectItems(panel.id, panel.select.data),
           selected: panel.select.selected,
           onClick: () => actions.changeChip(panel.id, "select"),
           onAdd: () => actions.addItemPanel(panel.id, "select"),
