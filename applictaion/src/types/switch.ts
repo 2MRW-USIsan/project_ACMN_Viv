@@ -22,4 +22,5 @@ export type SwitchChildViewItem = {
   id: number;
   values: SwitchItemValues;
   onChangeForm: (label: string, value: string) => void;
+  onDelete: () => void;
 };

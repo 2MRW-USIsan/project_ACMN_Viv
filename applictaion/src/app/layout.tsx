@@ -1,5 +1,9 @@
 import EmotionRegistry from "@/components/EmotionRegistry";
 
+import { ThemeProvider } from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
+import theme from "@/theme/theme";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -8,7 +12,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`acmn-application`}>
-        <EmotionRegistry>{children}</EmotionRegistry>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );
