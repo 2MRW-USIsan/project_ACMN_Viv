@@ -19,7 +19,7 @@ export function ListItemTextFieldPanel({
     onChange: (value: string) => onChangeForm("value", value),
   };
   return (
-    <Grid container>
+    <Grid container paddingLeft={4}>
       <Grid size={6}>
         <TextFieldPanel prop={valueFormProps} />
       </Grid>

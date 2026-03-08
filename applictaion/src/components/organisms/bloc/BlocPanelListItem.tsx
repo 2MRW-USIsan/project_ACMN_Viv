@@ -17,12 +17,12 @@ export function BlocPanelListItem({ props: item }: BlocPanelListItemProps) {
 
   const keyFormProps = {
     label: "Key:",
-    value: item.value.key,
+    value: item.values.key,
     onChange: (value: string) => handlerChange("key", value),
   };
   const labelFormProps = {
     label: "Label:",
-    value: item.value.label,
+    value: item.values.label,
     onChange: (value: string) => handlerChange("label", value),
   };
   const ordersChipProps = {

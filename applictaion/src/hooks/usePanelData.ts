@@ -100,7 +100,7 @@ export default function usePanelData(reducer: PanelReducer): BlocViewItem[] {
         id: panel.id,
         label: panel.label,
         state: panel.state,
-        value: panel.value,
+        values: panel.values,
         onChange: (key: string, label: string) => {
           actions.changeForm(panel.id, key, label);
         },

@@ -8,7 +8,7 @@ export type BlocViewItem = {
   id: number;
   label: string;
   state: boolean;
-  value: { key: string; label: string };
+  values: { key: string; label: string };
   onChange: (label: string, value: string) => void;
   onClick: () => void;
   onDelete: () => void;
