@@ -34,6 +34,7 @@ export type OrdersDataItem = {
   id: number;
   values: { key: string; label: string; type: string; param: string };
   data: OrdersItemData[];
+  complexData: OrdersItemData[];
 };
 export type SelectDataItem = {
   id: number;
@@ -60,6 +61,11 @@ export type PanelDataActionsType = {
   addItemPanel: (id: number, key: ChipType) => void;
   addOrdersChildItemPanel: (id: number, parentItemId: number) => void;
   addOrdersItemDataPanel: (
+    id: number,
+    parentItemId: number,
+    childItemId: number,
+  ) => void;
+  addOrdersComplexItemDataPanel: (
     id: number,
     parentItemId: number,
     childItemId: number,

@@ -32,6 +32,7 @@ export default function usePanelData(reducer: PanelReducer): BlocViewItem[] {
           id: itemData.id,
           values: itemData.values,
           disabled: ["Scripts", "Color"].includes(child.values.type),
+          hidePrompt: child.values.type === "Complex",
           onChangeForm: (label: string, value: string) =>
             actions.changeItemForm(
               panelId,
@@ -41,9 +42,32 @@ export default function usePanelData(reducer: PanelReducer): BlocViewItem[] {
               value,
             ),
         })),
+        complexData: (child.complexData ?? []).map((complexItemData) => ({
+          id: complexItemData.id,
+          values: complexItemData.values,
+          disabled: false,
+          hidePrompt: false,
+          onChangeForm: (label: string, value: string) =>
+            actions.changeItemForm(
+              panelId,
+              "orders",
+              item.id,
+              `child:${child.id}:complexItem:${complexItemData.id}:${label}`,
+              value,
+            ),
+        })),
         onAddPanel: ["Random", "Complex"].includes(child.values.type)
           ? () => actions.addOrdersItemDataPanel(panelId, item.id, child.id)
           : undefined,
+        onAddComplexPanel:
+          child.values.type === "Complex"
+            ? () =>
+                actions.addOrdersComplexItemDataPanel(
+                  panelId,
+                  item.id,
+                  child.id,
+                )
+            : undefined,
         onChangeForm: (label: string, value: string) =>
           actions.changeItemForm(
             panelId,

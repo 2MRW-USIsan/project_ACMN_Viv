@@ -2,7 +2,7 @@ import { RadioGroupPanel } from "@/components/atoms/RadioGroupPanel";
 import { TextFieldPanel } from "@/components/atoms/TextFieldPanel";
 import { OrdersChildViewItem } from "@/types/orders";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
-import { Grid, IconButton } from "@mui/material";
+import { Grid, IconButton, Typography } from "@mui/material";
 import { OrdersItemFieldPanel } from "./OrdersItemFieldPanel";
 import PanelList from "../panel/PanelList";
 
@@ -10,7 +10,7 @@ interface OrdersTextFieldPanelProps {
   props: OrdersChildViewItem;
 }
 export function OrdersTextFieldPanel({ props }: OrdersTextFieldPanelProps) {
-  const { values, data, onAddPanel, onChangeForm, onDelete } = props;
+  const { values, data, complexData, onAddPanel, onAddComplexPanel, onChangeForm, onDelete } = props;
 
   const keyFormProps = {
     label: "Key:",
@@ -45,13 +45,38 @@ export function OrdersTextFieldPanel({ props }: OrdersTextFieldPanelProps) {
       <Grid size={12}>
         <RadioGroupPanel prop={typeFormProps} />
       </Grid>
-      <Grid size={12}>
-        <PanelList props={{ label: "items:", onAddPanel }}>
-          {data.map((item) => (
-            <OrdersItemFieldPanel key={item.id} props={item} />
-          ))}
-        </PanelList>
-      </Grid>
+      {values.type === "Scripts" ? (
+        <Grid size={12} sx={{ pl: 1 }}>
+          <Typography variant="caption" color="text.secondary">
+            Request: Intend to include an appropriate text.
+          </Typography>
+        </Grid>
+      ) : values.type === "Color" ? (
+        <Grid size={12} sx={{ pl: 1 }}>
+          <Typography variant="caption" color="text.secondary">
+            Request: Intend to include appropriate color information [#RRGGBB].
+          </Typography>
+        </Grid>
+      ) : (
+        <>
+          <Grid size={12}>
+            <PanelList props={{ label: "items:", onAddPanel }}>
+              {data.map((item) => (
+                <OrdersItemFieldPanel key={item.id} props={item} />
+              ))}
+            </PanelList>
+          </Grid>
+          {values.type === "Complex" && (
+            <Grid size={12}>
+              <PanelList props={{ label: "complex items:", onAddPanel: onAddComplexPanel }}>
+                {complexData.map((item) => (
+                  <OrdersItemFieldPanel key={item.id} props={item} />
+                ))}
+              </PanelList>
+            </Grid>
+          )}
+        </>
+      )}
     </Grid>
   );
 }

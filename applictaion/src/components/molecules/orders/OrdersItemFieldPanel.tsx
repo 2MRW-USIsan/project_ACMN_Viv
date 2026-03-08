@@ -5,7 +5,7 @@ interface OrdersItemFieldPanelProps {
   props: OrdersItemViewItem;
 }
 export function OrdersItemFieldPanel({ props }: OrdersItemFieldPanelProps) {
-  const { values, disabled, onChangeForm } = props;
+  const { values, disabled, hidePrompt, onChangeForm } = props;
 
   return (
     <ListItem sx={{ width: "100%", pl: 4 }}>
@@ -20,16 +20,18 @@ export function OrdersItemFieldPanel({ props }: OrdersItemFieldPanelProps) {
             onChange={(e) => onChangeForm("value", e.target.value)}
           />
         </Grid>
-        <Grid size="grow">
-          <TextField
-            fullWidth
-            size="small"
-            label="Prompt"
-            disabled={disabled}
-            value={values.prompt}
-            onChange={(e) => onChangeForm("prompt", e.target.value)}
-          />
-        </Grid>
+        {!hidePrompt && (
+          <Grid size="grow">
+            <TextField
+              fullWidth
+              size="small"
+              label="Prompt"
+              disabled={disabled}
+              value={values.prompt}
+              onChange={(e) => onChangeForm("prompt", e.target.value)}
+            />
+          </Grid>
+        )}
         <Grid size={3}>
           <TextField
             fullWidth

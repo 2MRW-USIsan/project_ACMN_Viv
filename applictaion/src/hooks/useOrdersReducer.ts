@@ -13,6 +13,11 @@ export type OrdersActions = {
     parentItemId: number,
     childItemId: number,
   ) => void;
+  addComplexItemData: (
+    panelId: number,
+    parentItemId: number,
+    childItemId: number,
+  ) => void;
   deleteChildItem: (
     panelId: number,
     parentItemId: number,
@@ -38,6 +43,10 @@ type Action =
     }
   | {
       type: "ADD_ITEM_DATA";
+      payload: { panelId: number; parentItemId: number; childItemId: number };
+    }
+  | {
+      type: "ADD_COMPLEX_ITEM_DATA";
       payload: { panelId: number; parentItemId: number; childItemId: number };
     }
   | {
@@ -114,6 +123,7 @@ function reducer(state: OrdersState, action: Action): OrdersState {
                       id: Date.now(),
                       values: { key: "", label: "", type: "Random", param: "" },
                       data: [],
+                      complexData: [],
                     },
                   ],
                 }
@@ -138,6 +148,36 @@ function reducer(state: OrdersState, action: Action): OrdersState {
                           ...child,
                           data: [
                             ...child.data,
+                            {
+                              id: Date.now(),
+                              values: { value: "", prompt: "", weight: "0" },
+                            },
+                          ],
+                        }
+                      : child,
+                  ),
+                }
+              : item,
+          ),
+        },
+      };
+    }
+    case "ADD_COMPLEX_ITEM_DATA": {
+      const chip = getChip(state, action.payload.panelId);
+      return {
+        ...state,
+        [action.payload.panelId]: {
+          ...chip,
+          data: chip.data.map((item) =>
+            item.id === action.payload.parentItemId
+              ? {
+                  ...item,
+                  data: item.data.map((child) =>
+                    child.id === action.payload.childItemId
+                      ? {
+                          ...child,
+                          complexData: [
+                            ...(child.complexData ?? []),
                             {
                               id: Date.now(),
                               values: { value: "", prompt: "", weight: "0" },
@@ -228,6 +268,43 @@ function reducer(state: OrdersState, action: Action): OrdersState {
             },
           };
         }
+        const complexItemMatch = childLabel.match(/^complexItem:(\d+):(.+)$/);
+        if (complexItemMatch) {
+          const complexItemId = Number(complexItemMatch[1]);
+          const complexItemLabel = complexItemMatch[2];
+          return {
+            ...state,
+            [action.payload.panelId]: {
+              ...chip,
+              data: chip.data.map((item) =>
+                item.id === itemId
+                  ? {
+                      ...item,
+                      data: item.data.map((child) =>
+                        child.id === childId
+                          ? {
+                              ...child,
+                              complexData: (child.complexData ?? []).map(
+                                (complexItem) =>
+                                  complexItem.id === complexItemId
+                                    ? {
+                                        ...complexItem,
+                                        values: {
+                                          ...complexItem.values,
+                                          [complexItemLabel]: value,
+                                        },
+                                      }
+                                    : complexItem,
+                              ),
+                            }
+                          : child,
+                      ),
+                    }
+                  : item,
+              ),
+            },
+          };
+        }
         return {
           ...state,
           [action.payload.panelId]: {
@@ -301,6 +378,11 @@ export default function useOrdersReducer(): Returns {
       addItemData: (panelId, parentItemId, childItemId) =>
         dispatch({
           type: "ADD_ITEM_DATA",
+          payload: { panelId, parentItemId, childItemId },
+        }),
+      addComplexItemData: (panelId, parentItemId, childItemId) =>
+        dispatch({
+          type: "ADD_COMPLEX_ITEM_DATA",
           payload: { panelId, parentItemId, childItemId },
         }),
       deleteChildItem: (panelId, parentItemId, childItemId) =>

@@ -72,6 +72,7 @@ export default function usePanelReducer(): Returns {
       },
       addOrdersChildItemPanel: ordersActions.addChildItem,
       addOrdersItemDataPanel: ordersActions.addItemData,
+      addOrdersComplexItemDataPanel: ordersActions.addComplexItemData,
       addSelectChildItemPanel: selectActions.addChildItem,
       addSelectListItemPanel: selectActions.addListItem,
       addSwitchChildItemPanel: switchActions.addChildItem,
