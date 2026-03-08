@@ -6,7 +6,7 @@ import {
   IconButton,
   List,
   ListItemButton,
-  ListItemText
+  ListItemText,
 } from "@mui/material";
 
 interface PanelListItemProps {

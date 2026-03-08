@@ -18,7 +18,10 @@ type Action =
   | { type: "ADD_PANEL" }
   | { type: "CHANGE_PANEL"; payload: { id: number } }
   | { type: "DELETE_PANEL"; payload: { id: number } }
-  | { type: "CHANGE_FORM"; payload: { id: number; label: string; value: string } };
+  | {
+      type: "CHANGE_FORM";
+      payload: { id: number; label: string; value: string };
+    };
 
 const initialState: PanelBaseState = { panels: [] };
 
@@ -56,7 +59,10 @@ function reducer(state: PanelBaseState, action: Action): PanelBaseState {
           p.id === action.payload.id
             ? {
                 ...p,
-                value: { ...p.values, [action.payload.label]: action.payload.value },
+                value: {
+                  ...p.values,
+                  [action.payload.label]: action.payload.value,
+                },
               }
             : p,
         ),

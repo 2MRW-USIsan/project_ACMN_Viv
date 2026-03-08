@@ -17,7 +17,11 @@ export function RadioGroupPanel({
 }: RadioGroupPanelProps) {
   return (
     <FormControl>
-      <RadioGroup row value={value ?? ""} onChange={(e) => onChange(e.target.value)}>
+      <RadioGroup
+        row
+        value={value ?? ""}
+        onChange={(e) => onChange(e.target.value)}
+      >
         {options.map((option) => (
           <FormControlLabel
             key={option}

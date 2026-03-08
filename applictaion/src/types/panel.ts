@@ -59,7 +59,11 @@ export type PanelDataActionsType = {
   changeForm: (id: number, label: string, value: string) => void;
   addItemPanel: (id: number, key: ChipType) => void;
   addOrdersChildItemPanel: (id: number, parentItemId: number) => void;
-  addOrdersItemDataPanel: (id: number, parentItemId: number, childItemId: number) => void;
+  addOrdersItemDataPanel: (
+    id: number,
+    parentItemId: number,
+    childItemId: number,
+  ) => void;
   addSelectChildItemPanel: (id: number, parentItemId: number) => void;
   addSelectListItemPanel: (
     id: number,
@@ -67,9 +71,21 @@ export type PanelDataActionsType = {
     childItemId: number,
   ) => void;
   addSwitchChildItemPanel: (id: number, parentItemId: number) => void;
-  deleteOrdersChildItemPanel: (id: number, parentItemId: number, childItemId: number) => void;
-  deleteSelectChildItemPanel: (id: number, parentItemId: number, childItemId: number) => void;
-  deleteSwitchChildItemPanel: (id: number, parentItemId: number, childIndex: number) => void;
+  deleteOrdersChildItemPanel: (
+    id: number,
+    parentItemId: number,
+    childItemId: number,
+  ) => void;
+  deleteSelectChildItemPanel: (
+    id: number,
+    parentItemId: number,
+    childItemId: number,
+  ) => void;
+  deleteSwitchChildItemPanel: (
+    id: number,
+    parentItemId: number,
+    childIndex: number,
+  ) => void;
   changeItemPanel: (id: number, key: ChipType, itemId: number) => void;
   changeItemForm: (
     id: number,

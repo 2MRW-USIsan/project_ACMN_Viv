@@ -22,7 +22,6 @@ export function OrdersPanelListItem({ props }: OrdersPanelListItemProps) {
     onChange: (value: string) => onChangeForm("label", value),
   };
 
-
   return (
     <PanelListItem props={{ ...props, label: values.label }}>
       <Grid container>

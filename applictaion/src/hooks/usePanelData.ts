@@ -52,7 +52,8 @@ export default function usePanelData(reducer: PanelReducer): BlocViewItem[] {
             `child:${child.id}:${label}`,
             value,
           ),
-        onDelete: () => actions.deleteOrdersChildItemPanel(panelId, item.id, child.id),
+        onDelete: () =>
+          actions.deleteOrdersChildItemPanel(panelId, item.id, child.id),
       })),
       onAddPanel: () => actions.addOrdersChildItemPanel(panelId, item.id),
       onChangeForm: (key: string, label: string) =>
@@ -91,7 +92,8 @@ export default function usePanelData(reducer: PanelReducer): BlocViewItem[] {
             `child:${child.id}:${label}`,
             value,
           ),
-        onDelete: () => actions.deleteSelectChildItemPanel(panelId, item.id, child.id),
+        onDelete: () =>
+          actions.deleteSelectChildItemPanel(panelId, item.id, child.id),
       })),
       onAddPanel: () => actions.addSelectChildItemPanel(panelId, item.id),
       onChangeForm: (key: string, label: string) =>
@@ -117,7 +119,8 @@ export default function usePanelData(reducer: PanelReducer): BlocViewItem[] {
             `child:${index}:${label}`,
             value,
           ),
-        onDelete: () => actions.deleteSwitchChildItemPanel(panelId, item.id, index),
+        onDelete: () =>
+          actions.deleteSwitchChildItemPanel(panelId, item.id, index),
       })),
       onAddPanel: () => actions.addSwitchChildItemPanel(panelId, item.id),
       onChangeForm: (key: string, label: string) =>

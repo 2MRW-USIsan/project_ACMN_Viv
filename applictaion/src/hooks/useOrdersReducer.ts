@@ -8,8 +8,16 @@ export type OrdersActions = {
   changeChip: (panelId: number) => void;
   addItem: (panelId: number) => void;
   addChildItem: (panelId: number, parentItemId: number) => void;
-  addItemData: (panelId: number, parentItemId: number, childItemId: number) => void;
-  deleteChildItem: (panelId: number, parentItemId: number, childItemId: number) => void;
+  addItemData: (
+    panelId: number,
+    parentItemId: number,
+    childItemId: number,
+  ) => void;
+  deleteChildItem: (
+    panelId: number,
+    parentItemId: number,
+    childItemId: number,
+  ) => void;
   changeItem: (panelId: number, itemId: number) => void;
   changeItemForm: (
     panelId: number,
@@ -24,13 +32,27 @@ type Action =
   | { type: "REMOVE_PANEL"; payload: { panelId: number } }
   | { type: "CHANGE_CHIP"; payload: { panelId: number } }
   | { type: "ADD_ITEM"; payload: { panelId: number } }
-  | { type: "ADD_CHILD_ITEM"; payload: { panelId: number; parentItemId: number } }
-  | { type: "ADD_ITEM_DATA"; payload: { panelId: number; parentItemId: number; childItemId: number } }
-  | { type: "DELETE_CHILD_ITEM"; payload: { panelId: number; parentItemId: number; childItemId: number } }
+  | {
+      type: "ADD_CHILD_ITEM";
+      payload: { panelId: number; parentItemId: number };
+    }
+  | {
+      type: "ADD_ITEM_DATA";
+      payload: { panelId: number; parentItemId: number; childItemId: number };
+    }
+  | {
+      type: "DELETE_CHILD_ITEM";
+      payload: { panelId: number; parentItemId: number; childItemId: number };
+    }
   | { type: "CHANGE_ITEM"; payload: { panelId: number; itemId: number } }
   | {
       type: "CHANGE_ITEM_FORM";
-      payload: { panelId: number; itemId: number; label: string; value: string };
+      payload: {
+        panelId: number;
+        itemId: number;
+        label: string;
+        value: string;
+      };
     }
   | { type: "DELETE_ITEM"; payload: { panelId: number; itemId: number } };
 
@@ -88,7 +110,11 @@ function reducer(state: OrdersState, action: Action): OrdersState {
                   ...item,
                   data: [
                     ...item.data,
-                    { id: Date.now(), values: { key: "", label: "", type: "Random", param: "" }, data: [] },
+                    {
+                      id: Date.now(),
+                      values: { key: "", label: "", type: "Random", param: "" },
+                      data: [],
+                    },
                   ],
                 }
               : item,
@@ -112,7 +138,10 @@ function reducer(state: OrdersState, action: Action): OrdersState {
                           ...child,
                           data: [
                             ...child.data,
-                            { id: Date.now(), values: { value: "", prompt: "", weight: "0" } },
+                            {
+                              id: Date.now(),
+                              values: { value: "", prompt: "", weight: "0" },
+                            },
                           ],
                         }
                       : child,
@@ -131,7 +160,12 @@ function reducer(state: OrdersState, action: Action): OrdersState {
           ...chip,
           data: chip.data.map((item) =>
             item.id === action.payload.parentItemId
-              ? { ...item, data: item.data.filter((child) => child.id !== action.payload.childItemId) }
+              ? {
+                  ...item,
+                  data: item.data.filter(
+                    (child) => child.id !== action.payload.childItemId,
+                  ),
+                }
               : item,
           ),
         },
@@ -176,7 +210,13 @@ function reducer(state: OrdersState, action: Action): OrdersState {
                               ...child,
                               data: child.data.map((itemData) =>
                                 itemData.id === itemDataId
-                                  ? { ...itemData, values: { ...itemData.values, [itemLabel]: value } }
+                                  ? {
+                                      ...itemData,
+                                      values: {
+                                        ...itemData.values,
+                                        [itemLabel]: value,
+                                      },
+                                    }
                                   : itemData,
                               ),
                             }
@@ -198,7 +238,10 @@ function reducer(state: OrdersState, action: Action): OrdersState {
                     ...item,
                     data: item.data.map((child) =>
                       child.id === childId
-                        ? { ...child, values: { ...child.values, [childLabel]: value } }
+                        ? {
+                            ...child,
+                            values: { ...child.values, [childLabel]: value },
+                          }
                         : child,
                     ),
                   }
@@ -251,9 +294,15 @@ export default function useOrdersReducer(): Returns {
       addItem: (panelId) =>
         dispatch({ type: "ADD_ITEM", payload: { panelId } }),
       addChildItem: (panelId, parentItemId) =>
-        dispatch({ type: "ADD_CHILD_ITEM", payload: { panelId, parentItemId } }),
+        dispatch({
+          type: "ADD_CHILD_ITEM",
+          payload: { panelId, parentItemId },
+        }),
       addItemData: (panelId, parentItemId, childItemId) =>
-        dispatch({ type: "ADD_ITEM_DATA", payload: { panelId, parentItemId, childItemId } }),
+        dispatch({
+          type: "ADD_ITEM_DATA",
+          payload: { panelId, parentItemId, childItemId },
+        }),
       deleteChildItem: (panelId, parentItemId, childItemId) =>
         dispatch({
           type: "DELETE_CHILD_ITEM",

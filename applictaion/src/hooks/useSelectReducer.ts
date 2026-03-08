@@ -18,7 +18,11 @@ export type SelectActions = {
     selectItemId: number,
     childItemId: number,
   ) => void;
-  deleteChildItem: (panelId: number, parentItemId: number, childItemId: number) => void;
+  deleteChildItem: (
+    panelId: number,
+    parentItemId: number,
+    childItemId: number,
+  ) => void;
   changeItem: (panelId: number, itemId: number) => void;
   changeItemForm: (
     panelId: number,
@@ -33,16 +37,27 @@ type Action =
   | { type: "REMOVE_PANEL"; payload: { panelId: number } }
   | { type: "CHANGE_CHIP"; payload: { panelId: number } }
   | { type: "ADD_ITEM"; payload: { panelId: number } }
-  | { type: "ADD_CHILD_ITEM"; payload: { panelId: number; parentItemId: number } }
+  | {
+      type: "ADD_CHILD_ITEM";
+      payload: { panelId: number; parentItemId: number };
+    }
   | {
       type: "ADD_LIST_ITEM";
       payload: { panelId: number; selectItemId: number; childItemId: number };
     }
-  | { type: "DELETE_CHILD_ITEM"; payload: { panelId: number; parentItemId: number; childItemId: number } }
+  | {
+      type: "DELETE_CHILD_ITEM";
+      payload: { panelId: number; parentItemId: number; childItemId: number };
+    }
   | { type: "CHANGE_ITEM"; payload: { panelId: number; itemId: number } }
   | {
       type: "CHANGE_ITEM_FORM";
-      payload: { panelId: number; itemId: number; label: string; value: string };
+      payload: {
+        panelId: number;
+        itemId: number;
+        label: string;
+        value: string;
+      };
     }
   | { type: "DELETE_ITEM"; payload: { panelId: number; itemId: number } };
 
@@ -145,7 +160,12 @@ function reducer(state: SelectState, action: Action): SelectState {
           ...chip,
           data: chip.data.map((item) =>
             item.id === action.payload.parentItemId
-              ? { ...item, data: item.data.filter((child) => child.id !== action.payload.childItemId) }
+              ? {
+                  ...item,
+                  data: item.data.filter(
+                    (child) => child.id !== action.payload.childItemId,
+                  ),
+                }
               : item,
           ),
         },
@@ -254,7 +274,10 @@ export default function useSelectReducer(): Returns {
       addItem: (panelId) =>
         dispatch({ type: "ADD_ITEM", payload: { panelId } }),
       addChildItem: (panelId, parentItemId) =>
-        dispatch({ type: "ADD_CHILD_ITEM", payload: { panelId, parentItemId } }),
+        dispatch({
+          type: "ADD_CHILD_ITEM",
+          payload: { panelId, parentItemId },
+        }),
       addListItem: (panelId, selectItemId, childItemId) =>
         dispatch({
           type: "ADD_LIST_ITEM",
