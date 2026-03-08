@@ -73,6 +73,16 @@ const theme = createTheme({
         },
       },
     },
+    MuiOutlinedInput: {
+      styleOverrides: {
+        input: {
+          paddingTop: 0,
+          paddingBottom: 0,
+          paddingLeft: 8,
+          paddingRight: 4,
+        },
+      },
+    },
     MuiChip: {
       defaultProps: {
         size: "small",
