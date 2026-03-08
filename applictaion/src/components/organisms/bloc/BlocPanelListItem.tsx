@@ -14,11 +14,32 @@ type OrdersItem = {
   onClick: () => void;
   onDelete: () => void;
 };
-
+type SelectItemValues = {
+  key: string;
+  label: string;
+};
+type SelectChildItem = {
+  id: number;
+  values: SelectItemValues;
+  data: SelectListItemData[];
+  onAddPanel: () => void;
+  onChangeForm: (label: string, value: string) => void;
+};
+type SelectListItemData = {
+  id: number;
+  values: SelectListItemValues;
+  onChangeForm: (label: string, value: string) => void;
+};
+type SelectListItemValues = {
+  prompt: string;
+  value: string;
+};
 type SelectItem = {
   id: number;
   values: { key: string; label: string };
+  data: SelectChildItem[];
   state: boolean;
+  onAddPanel: () => void;
   onChangeForm: (label: string, value: string) => void;
   onClick: () => void;
   onDelete: () => void;
