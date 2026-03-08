@@ -1,30 +1,15 @@
-import { Divider, Grid, List, ListItem } from "@mui/material";
+import { Divider, List, ListItem } from "@mui/material";
 import { CheckChip } from "../../atoms/CheckChip";
 import OrdersPanelList from "../orders/OrdersPanelList";
 import PanelListItem from "../../molecules/panel/PanelListItem";
 import SelectPanelList from "../select/SelectPanelList";
 import { SwitchPanelList } from "../switch/SwitchPanelList";
-import { TextFieldPanel } from "../../atoms/TextFieldPanel";
 import type { BlocViewItem } from "@/types/bloc";
 
 interface BlocPanelListItemProps {
   props: BlocViewItem;
 }
 export function BlocPanelListItem({ props: item }: BlocPanelListItemProps) {
-  const handlerChange = (label: string, value: string) => {
-    item.onChange(label, value);
-  };
-
-  const keyFormProps = {
-    label: "Key:",
-    value: item.values.key,
-    onChange: (value: string) => handlerChange("key", value),
-  };
-  const labelFormProps = {
-    label: "Label:",
-    value: item.values.label,
-    onChange: (value: string) => handlerChange("label", value),
-  };
   const ordersChipProps = {
     label: "Orders",
     selected: item.orders.selected,
@@ -45,15 +30,10 @@ export function BlocPanelListItem({ props: item }: BlocPanelListItemProps) {
   const switchPanelProps = { onAdd: item.switch.onAdd, data: item.switch.data };
 
   return (
-    <PanelListItem key={item.id} props={item}>
-      <Grid container>
-        <Grid size={6}>
-          <TextFieldPanel prop={keyFormProps} />
-        </Grid>
-        <Grid size={6}>
-          <TextFieldPanel prop={labelFormProps} />
-        </Grid>
-      </Grid>
+    <PanelListItem
+      key={item.id}
+      props={{ ...item, onChangeForm: item.onChange }}
+    >
       <ListItem sx={{ pl: 4, display: "flex", gap: 1 }}>
         <CheckChip props={ordersChipProps} />
         <CheckChip props={selectChipProps} />
