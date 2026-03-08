@@ -5,10 +5,8 @@ import {
   Collapse,
   IconButton,
   List,
-  ListItem,
   ListItemButton,
-  ListItemIcon,
-  ListItemText,
+  ListItemText
 } from "@mui/material";
 
 interface PanelListItemProps {
