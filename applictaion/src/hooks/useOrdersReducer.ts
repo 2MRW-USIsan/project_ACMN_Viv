@@ -17,6 +17,20 @@ export type OrdersActions = {
     panelId: number,
     parentItemId: number,
     childItemId: number,
+    itemDataId: number,
+  ) => void;
+  deleteItemData: (
+    panelId: number,
+    parentItemId: number,
+    childItemId: number,
+    itemDataId: number,
+  ) => void;
+  deleteComplexItemData: (
+    panelId: number,
+    parentItemId: number,
+    childItemId: number,
+    itemDataId: number,
+    complexItemId: number,
   ) => void;
   deleteChildItem: (
     panelId: number,
@@ -47,7 +61,31 @@ type Action =
     }
   | {
       type: "ADD_COMPLEX_ITEM_DATA";
-      payload: { panelId: number; parentItemId: number; childItemId: number };
+      payload: {
+        panelId: number;
+        parentItemId: number;
+        childItemId: number;
+        itemDataId: number;
+      };
+    }
+  | {
+      type: "DELETE_ITEM_DATA";
+      payload: {
+        panelId: number;
+        parentItemId: number;
+        childItemId: number;
+        itemDataId: number;
+      };
+    }
+  | {
+      type: "DELETE_COMPLEX_ITEM_DATA";
+      payload: {
+        panelId: number;
+        parentItemId: number;
+        childItemId: number;
+        itemDataId: number;
+        complexItemId: number;
+      };
     }
   | {
       type: "DELETE_CHILD_ITEM";
@@ -123,7 +161,6 @@ function reducer(state: OrdersState, action: Action): OrdersState {
                       id: Date.now(),
                       values: { key: "", label: "", type: "Random", param: "" },
                       data: [],
-                      complexData: [],
                     },
                   ],
                 }
@@ -151,6 +188,7 @@ function reducer(state: OrdersState, action: Action): OrdersState {
                             {
                               id: Date.now(),
                               values: { value: "", prompt: "", weight: "0" },
+                              complexData: [],
                             },
                           ],
                         }
@@ -164,25 +202,102 @@ function reducer(state: OrdersState, action: Action): OrdersState {
     }
     case "ADD_COMPLEX_ITEM_DATA": {
       const chip = getChip(state, action.payload.panelId);
+      const { parentItemId, childItemId, itemDataId } = action.payload;
       return {
         ...state,
         [action.payload.panelId]: {
           ...chip,
           data: chip.data.map((item) =>
-            item.id === action.payload.parentItemId
+            item.id === parentItemId
               ? {
                   ...item,
                   data: item.data.map((child) =>
-                    child.id === action.payload.childItemId
+                    child.id === childItemId
                       ? {
                           ...child,
-                          complexData: [
-                            ...(child.complexData ?? []),
-                            {
-                              id: Date.now(),
-                              values: { value: "", prompt: "", weight: "0" },
-                            },
-                          ],
+                          data: child.data.map((itemData) =>
+                            itemData.id === itemDataId
+                              ? {
+                                  ...itemData,
+                                  complexData: [
+                                    ...(itemData.complexData ?? []),
+                                    {
+                                      id: Date.now(),
+                                      values: {
+                                        value: "",
+                                        prompt: "",
+                                        weight: "0",
+                                      },
+                                    },
+                                  ],
+                                }
+                              : itemData,
+                          ),
+                        }
+                      : child,
+                  ),
+                }
+              : item,
+          ),
+        },
+      };
+    }
+    case "DELETE_ITEM_DATA": {
+      const chip = getChip(state, action.payload.panelId);
+      const { parentItemId, childItemId, itemDataId } = action.payload;
+      return {
+        ...state,
+        [action.payload.panelId]: {
+          ...chip,
+          data: chip.data.map((item) =>
+            item.id === parentItemId
+              ? {
+                  ...item,
+                  data: item.data.map((child) =>
+                    child.id === childItemId
+                      ? {
+                          ...child,
+                          data: child.data.filter(
+                            (itemData) => itemData.id !== itemDataId,
+                          ),
+                        }
+                      : child,
+                  ),
+                }
+              : item,
+          ),
+        },
+      };
+    }
+    case "DELETE_COMPLEX_ITEM_DATA": {
+      const chip = getChip(state, action.payload.panelId);
+      const { parentItemId, childItemId, itemDataId, complexItemId } =
+        action.payload;
+      return {
+        ...state,
+        [action.payload.panelId]: {
+          ...chip,
+          data: chip.data.map((item) =>
+            item.id === parentItemId
+              ? {
+                  ...item,
+                  data: item.data.map((child) =>
+                    child.id === childItemId
+                      ? {
+                          ...child,
+                          data: child.data.map((itemData) =>
+                            itemData.id === itemDataId
+                              ? {
+                                  ...itemData,
+                                  complexData: (
+                                    itemData.complexData ?? []
+                                  ).filter(
+                                    (complexItem) =>
+                                      complexItem.id !== complexItemId,
+                                  ),
+                                }
+                              : itemData,
+                          ),
                         }
                       : child,
                   ),
@@ -236,6 +351,53 @@ function reducer(state: OrdersState, action: Action): OrdersState {
         if (itemMatch) {
           const itemDataId = Number(itemMatch[1]);
           const itemLabel = itemMatch[2];
+          const nestedComplexMatch = itemLabel.match(
+            /^complexItem:(\d+):(.+)$/,
+          );
+          if (nestedComplexMatch) {
+            const complexItemId = Number(nestedComplexMatch[1]);
+            const complexItemField = nestedComplexMatch[2];
+            return {
+              ...state,
+              [action.payload.panelId]: {
+                ...chip,
+                data: chip.data.map((item) =>
+                  item.id === itemId
+                    ? {
+                        ...item,
+                        data: item.data.map((child) =>
+                          child.id === childId
+                            ? {
+                                ...child,
+                                data: child.data.map((itemData) =>
+                                  itemData.id === itemDataId
+                                    ? {
+                                        ...itemData,
+                                        complexData: (
+                                          itemData.complexData ?? []
+                                        ).map((complexItem) =>
+                                          complexItem.id === complexItemId
+                                            ? {
+                                                ...complexItem,
+                                                values: {
+                                                  ...complexItem.values,
+                                                  [complexItemField]: value,
+                                                },
+                                              }
+                                            : complexItem,
+                                        ),
+                                      }
+                                    : itemData,
+                                ),
+                              }
+                            : child,
+                        ),
+                      }
+                    : item,
+                ),
+              },
+            };
+          }
           return {
             ...state,
             [action.payload.panelId]: {
@@ -268,43 +430,6 @@ function reducer(state: OrdersState, action: Action): OrdersState {
             },
           };
         }
-        const complexItemMatch = childLabel.match(/^complexItem:(\d+):(.+)$/);
-        if (complexItemMatch) {
-          const complexItemId = Number(complexItemMatch[1]);
-          const complexItemLabel = complexItemMatch[2];
-          return {
-            ...state,
-            [action.payload.panelId]: {
-              ...chip,
-              data: chip.data.map((item) =>
-                item.id === itemId
-                  ? {
-                      ...item,
-                      data: item.data.map((child) =>
-                        child.id === childId
-                          ? {
-                              ...child,
-                              complexData: (child.complexData ?? []).map(
-                                (complexItem) =>
-                                  complexItem.id === complexItemId
-                                    ? {
-                                        ...complexItem,
-                                        values: {
-                                          ...complexItem.values,
-                                          [complexItemLabel]: value,
-                                        },
-                                      }
-                                    : complexItem,
-                              ),
-                            }
-                          : child,
-                      ),
-                    }
-                  : item,
-              ),
-            },
-          };
-        }
         return {
           ...state,
           [action.payload.panelId]: {
@@ -318,6 +443,9 @@ function reducer(state: OrdersState, action: Action): OrdersState {
                         ? {
                             ...child,
                             values: { ...child.values, [childLabel]: value },
+                            ...(childLabel === "type" && {
+                              data: [],
+                            }),
                           }
                         : child,
                     ),
@@ -380,10 +508,32 @@ export default function useOrdersReducer(): Returns {
           type: "ADD_ITEM_DATA",
           payload: { panelId, parentItemId, childItemId },
         }),
-      addComplexItemData: (panelId, parentItemId, childItemId) =>
+      addComplexItemData: (panelId, parentItemId, childItemId, itemDataId) =>
         dispatch({
           type: "ADD_COMPLEX_ITEM_DATA",
-          payload: { panelId, parentItemId, childItemId },
+          payload: { panelId, parentItemId, childItemId, itemDataId },
+        }),
+      deleteItemData: (panelId, parentItemId, childItemId, itemDataId) =>
+        dispatch({
+          type: "DELETE_ITEM_DATA",
+          payload: { panelId, parentItemId, childItemId, itemDataId },
+        }),
+      deleteComplexItemData: (
+        panelId,
+        parentItemId,
+        childItemId,
+        itemDataId,
+        complexItemId,
+      ) =>
+        dispatch({
+          type: "DELETE_COMPLEX_ITEM_DATA",
+          payload: {
+            panelId,
+            parentItemId,
+            childItemId,
+            itemDataId,
+            complexItemId,
+          },
         }),
       deleteChildItem: (panelId, parentItemId, childItemId) =>
         dispatch({

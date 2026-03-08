@@ -11,21 +11,29 @@ export type OrdersViewItem = {
   onDelete: () => void;
 };
 
+export type OrdersComplexItemViewItem = {
+  id: number;
+  values: { value: string; prompt: string; weight: string };
+  onChangeForm: (label: string, value: string) => void;
+  onDelete: () => void;
+};
+
 export type OrdersItemViewItem = {
   id: number;
   values: { value: string; prompt: string; weight: string };
   disabled: boolean;
   hidePrompt: boolean;
+  complexData: OrdersComplexItemViewItem[];
+  onAddComplexPanel?: () => void;
   onChangeForm: (label: string, value: string) => void;
+  onDelete: () => void;
 };
 
 export type OrdersChildViewItem = {
   id: number;
   values: { key: string; label: string; type: string; param: string };
   data: OrdersItemViewItem[];
-  complexData: OrdersItemViewItem[];
   onAddPanel?: () => void;
-  onAddComplexPanel?: () => void;
   onChangeForm: (label: string, value: string) => void;
   onDelete: () => void;
 };

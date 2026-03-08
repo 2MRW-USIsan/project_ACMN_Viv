@@ -18,6 +18,12 @@ export type SelectActions = {
     selectItemId: number,
     childItemId: number,
   ) => void;
+  deleteListItem: (
+    panelId: number,
+    selectItemId: number,
+    childItemId: number,
+    listItemId: number,
+  ) => void;
   deleteChildItem: (
     panelId: number,
     parentItemId: number,
@@ -44,6 +50,15 @@ type Action =
   | {
       type: "ADD_LIST_ITEM";
       payload: { panelId: number; selectItemId: number; childItemId: number };
+    }
+  | {
+      type: "DELETE_LIST_ITEM";
+      payload: {
+        panelId: number;
+        selectItemId: number;
+        childItemId: number;
+        listItemId: number;
+      };
     }
   | {
       type: "DELETE_CHILD_ITEM";
@@ -143,6 +158,33 @@ function reducer(state: SelectState, action: Action): SelectState {
                       ? {
                           ...child,
                           data: [...child.data, createSelectListDataItem()],
+                        }
+                      : child,
+                  ),
+                }
+              : item,
+          ),
+        },
+      };
+    }
+    case "DELETE_LIST_ITEM": {
+      const chip = getChip(state, action.payload.panelId);
+      return {
+        ...state,
+        [action.payload.panelId]: {
+          ...chip,
+          data: chip.data.map((item) =>
+            item.id === action.payload.selectItemId
+              ? {
+                  ...item,
+                  data: item.data.map((child) =>
+                    child.id === action.payload.childItemId
+                      ? {
+                          ...child,
+                          data: child.data.filter(
+                            (listItem) =>
+                              listItem.id !== action.payload.listItemId,
+                          ),
                         }
                       : child,
                   ),
@@ -282,6 +324,11 @@ export default function useSelectReducer(): Returns {
         dispatch({
           type: "ADD_LIST_ITEM",
           payload: { panelId, selectItemId, childItemId },
+        }),
+      deleteListItem: (panelId, selectItemId, childItemId, listItemId) =>
+        dispatch({
+          type: "DELETE_LIST_ITEM",
+          payload: { panelId, selectItemId, childItemId, listItemId },
         }),
       deleteChildItem: (panelId, parentItemId, childItemId) =>
         dispatch({

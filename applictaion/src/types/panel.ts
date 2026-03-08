@@ -26,15 +26,19 @@ export type OrdersPanelItem = PanelItemData & { data: OrdersDataItem[] };
 export type SelectPanelItem = PanelItemData & { data: SelectDataItem[] };
 export type SwitchPanelItem = PanelItemData & { data: SwitchDataItem[] };
 
+export type OrdersComplexItemData = {
+  id: number;
+  values: { value: string; prompt: string; weight: string };
+};
 export type OrdersItemData = {
   id: number;
   values: { value: string; prompt: string; weight: string };
+  complexData: OrdersComplexItemData[];
 };
 export type OrdersDataItem = {
   id: number;
   values: { key: string; label: string; type: string; param: string };
   data: OrdersItemData[];
-  complexData: OrdersItemData[];
 };
 export type SelectDataItem = {
   id: number;
@@ -69,12 +73,32 @@ export type PanelDataActionsType = {
     id: number,
     parentItemId: number,
     childItemId: number,
+    itemDataId: number,
+  ) => void;
+  deleteOrdersItemDataPanel: (
+    id: number,
+    parentItemId: number,
+    childItemId: number,
+    itemDataId: number,
+  ) => void;
+  deleteOrdersComplexItemDataPanel: (
+    id: number,
+    parentItemId: number,
+    childItemId: number,
+    itemDataId: number,
+    complexItemId: number,
   ) => void;
   addSelectChildItemPanel: (id: number, parentItemId: number) => void;
   addSelectListItemPanel: (
     id: number,
     selectItemId: number,
     childItemId: number,
+  ) => void;
+  deleteSelectListItemPanel: (
+    id: number,
+    selectItemId: number,
+    childItemId: number,
+    listItemId: number,
   ) => void;
   addSwitchChildItemPanel: (id: number, parentItemId: number) => void;
   deleteOrdersChildItemPanel: (

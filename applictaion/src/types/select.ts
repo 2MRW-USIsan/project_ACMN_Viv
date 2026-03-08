@@ -24,4 +24,5 @@ export type SelectListViewItem = {
   id: number;
   values: { prompt: string; value: string };
   onChangeForm: (label: string, value: string) => void;
+  onDelete: () => void;
 };

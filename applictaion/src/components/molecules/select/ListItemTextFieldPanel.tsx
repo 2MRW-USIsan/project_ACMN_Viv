@@ -1,12 +1,13 @@
 import { TextFieldPanel } from "@/components/atoms/TextFieldPanel";
 import { SelectListViewItem } from "@/types/select";
-import { Grid } from "@mui/material";
+import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
+import { Grid, IconButton } from "@mui/material";
 
 interface ListItemTextFieldPanelProps {
   props: SelectListViewItem;
 }
 export function ListItemTextFieldPanel({
-  props: { values, onChangeForm },
+  props: { values, onChangeForm, onDelete },
 }: ListItemTextFieldPanelProps) {
   const promptFormProps = {
     label: "Prompt:",
@@ -25,6 +26,11 @@ export function ListItemTextFieldPanel({
       </Grid>
       <Grid size={6}>
         <TextFieldPanel prop={promptFormProps} />
+      </Grid>
+      <Grid size="auto" sx={{ display: "flex", alignItems: "center" }}>
+        <IconButton size="small" onClick={onDelete}>
+          <RemoveCircleOutlineIcon fontSize="small" />
+        </IconButton>
       </Grid>
     </Grid>
   );

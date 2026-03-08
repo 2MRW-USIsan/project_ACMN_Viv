@@ -10,7 +10,7 @@ interface OrdersTextFieldPanelProps {
   props: OrdersChildViewItem;
 }
 export function OrdersTextFieldPanel({ props }: OrdersTextFieldPanelProps) {
-  const { values, data, complexData, onAddPanel, onAddComplexPanel, onChangeForm, onDelete } = props;
+  const { values, data, onAddPanel, onChangeForm, onDelete } = props;
 
   const keyFormProps = {
     label: "Key:",
@@ -66,15 +66,6 @@ export function OrdersTextFieldPanel({ props }: OrdersTextFieldPanelProps) {
               ))}
             </PanelList>
           </Grid>
-          {values.type === "Complex" && (
-            <Grid size={12}>
-              <PanelList props={{ label: "complex items:", onAddPanel: onAddComplexPanel }}>
-                {complexData.map((item) => (
-                  <OrdersItemFieldPanel key={item.id} props={item} />
-                ))}
-              </PanelList>
-            </Grid>
-          )}
         </>
       )}
     </Grid>
