@@ -77,7 +77,7 @@ type Returns = {
   actions: PanelBaseActions;
 };
 
-export default function usePanelBaseReducer(): Returns {
+export function usePanelBaseReducer(): Returns {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const actions = useMemo(

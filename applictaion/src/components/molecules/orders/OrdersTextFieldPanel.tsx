@@ -4,7 +4,7 @@ import { OrdersChildViewItem } from "@/types/orders";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import { Grid, IconButton, Typography } from "@mui/material";
 import { OrdersItemFieldPanel } from "./OrdersItemFieldPanel";
-import PanelList from "../panel/PanelList";
+import { PanelList } from "../panel/PanelList";
 
 interface OrdersTextFieldPanelProps {
   props: OrdersChildViewItem;
@@ -29,6 +29,33 @@ export function OrdersTextFieldPanel({ props }: OrdersTextFieldPanelProps) {
     onChange: (value: string) => onChangeForm("type", value),
   };
 
+  const typeContentMap: Record<string, React.ReactNode> = {
+    Scripts: (
+      <Grid size={12} sx={{ pl: 1 }}>
+        <Typography variant="caption" color="text.secondary">
+          Request: Intend to include an appropriate text.
+        </Typography>
+      </Grid>
+    ),
+    Color: (
+      <Grid size={12} sx={{ pl: 1 }}>
+        <Typography variant="caption" color="text.secondary">
+          Request: Intend to include appropriate color information [#RRGGBB].
+        </Typography>
+      </Grid>
+    ),
+  };
+
+  const typeContent = typeContentMap[values.type] ?? (
+    <Grid size={12} paddingInline={2}>
+      <PanelList props={{ label: "items:", onAddPanel }}>
+        {data.map((item) => (
+          <OrdersItemFieldPanel key={item.id} props={item} />
+        ))}
+      </PanelList>
+    </Grid>
+  );
+
   return (
     <Grid container paddingLeft={4}>
       <Grid size="grow">
@@ -45,29 +72,7 @@ export function OrdersTextFieldPanel({ props }: OrdersTextFieldPanelProps) {
       <Grid size={12} paddingLeft={2}>
         <RadioGroupPanel prop={typeFormProps} />
       </Grid>
-      {values.type === "Scripts" ? (
-        <Grid size={12} sx={{ pl: 1 }}>
-          <Typography variant="caption" color="text.secondary">
-            Request: Intend to include an appropriate text.
-          </Typography>
-        </Grid>
-      ) : values.type === "Color" ? (
-        <Grid size={12} sx={{ pl: 1 }}>
-          <Typography variant="caption" color="text.secondary">
-            Request: Intend to include appropriate color information [#RRGGBB].
-          </Typography>
-        </Grid>
-      ) : (
-        <>
-          <Grid size={12} paddingInline={2}>
-            <PanelList props={{ label: "items:", onAddPanel }}>
-              {data.map((item) => (
-                <OrdersItemFieldPanel key={item.id} props={item} />
-              ))}
-            </PanelList>
-          </Grid>
-        </>
-      )}
+      {typeContent}
     </Grid>
   );
 }

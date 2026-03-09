@@ -1,4 +1,4 @@
-import ThemeRegistry from "@/components/ThemeRegistry";
+import { ThemeRegistry } from "@/components/providers/ThemeRegistry";
 
 export default function RootLayout({
   children,

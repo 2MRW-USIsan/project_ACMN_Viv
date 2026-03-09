@@ -487,7 +487,7 @@ type Returns = {
   actions: OrdersActions;
 };
 
-export default function useOrdersReducer(): Returns {
+export function useOrdersReducer(): Returns {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const actions = useMemo(

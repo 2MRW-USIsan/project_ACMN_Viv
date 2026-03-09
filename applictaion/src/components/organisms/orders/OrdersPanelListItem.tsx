@@ -1,6 +1,6 @@
 import { OrdersTextFieldPanel } from "@/components/molecules/orders/OrdersTextFieldPanel";
-import PanelList from "@/components/molecules/panel/PanelList";
-import PanelListItem from "@/components/molecules/panel/PanelListItem";
+import { PanelList } from "@/components/molecules/panel/PanelList";
+import { PanelListItem } from "@/components/molecules/panel/PanelListItem";
 import { OrdersChildViewItem, OrdersViewItem } from "@/types/orders";
 import { ListItem } from "@mui/material";
 

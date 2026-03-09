@@ -1,5 +1,5 @@
 import type { SwitchViewItem } from "@/types/switch";
-import PanelList from "../../molecules/panel/PanelList";
+import { PanelList } from "../../molecules/panel/PanelList";
 import { SwitchPanelListItem } from "./SwitchPanelListItem";
 
 interface SwitchPanelListProps {

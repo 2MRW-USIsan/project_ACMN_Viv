@@ -1,12 +1,12 @@
 import type { SelectViewItem } from "@/types/select";
-import PanelList from "../../molecules/panel/PanelList";
+import { PanelList } from "../../molecules/panel/PanelList";
 import { SelectPanelListItem } from "./SelectPanelListItem";
 
 interface SelectPanelListProps {
   props: { onAdd: () => void; data: SelectViewItem[] };
 }
 
-export default function SelectPanelList({
+export function SelectPanelList({
   props: { onAdd, data },
 }: SelectPanelListProps) {
   return (
