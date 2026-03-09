@@ -1,0 +1,37 @@
+"use client";
+
+import {
+  Divider,
+  List,
+  ListItem,
+  ListSubheader,
+  Paper,
+  Typography,
+} from "@mui/material";
+import { AddButtonPanel } from "../../atoms/AddButtonPanel";
+interface PanelListProps {
+  props: { label: string; onAddPanel?: () => void };
+  children: React.ReactNode;
+}
+export function PanelList({
+  props: { label, onAddPanel },
+  children,
+}: PanelListProps) {
+  return (
+    <Paper
+      variant="outlined"
+      sx={{ my: 0.5, width: "100%", overflow: "hidden" }}
+    >
+      <List>
+        <ListSubheader sx={{ bgcolor: "background.paper" }}>
+          <Typography variant="body2">{label}</Typography>
+        </ListSubheader>
+        <ListItem>
+          <Divider sx={{ width: "100%" }} flexItem />
+        </ListItem>
+        {children}
+        {onAddPanel && <AddButtonPanel onAddPanel={onAddPanel} />}
+      </List>
+    </Paper>
+  );
+}
