@@ -6,7 +6,7 @@ import { PanelList } from "@/components/molecules/panel/PanelList";
 import { usePanelData } from "@/hooks/usePanelData";
 import { usePanelReducer } from "@/hooks/usePanelReducer";
 import { generateYaml } from "@/utils/generateYaml";
-import { Button } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { useState } from "react";
 
 export default function EditorPage() {
@@ -20,6 +20,11 @@ export default function EditorPage() {
 
   return (
     <>
+      <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+        <Button variant="contained" onClick={handleGenerateYaml} sx={{ m: 2 }}>
+          Generate YAML
+        </Button>
+      </Box>
       <PanelList
         props={{
           label: "#BlocList ====",
@@ -30,9 +35,6 @@ export default function EditorPage() {
           <BlocPanelListItem key={item.id} props={item} />
         ))}
       </PanelList>
-      <Button variant="contained" onClick={handleGenerateYaml} sx={{ m: 2 }}>
-        Generate YAML
-      </Button>
       <YamlPreviewDialog
         open={yamlOpen}
         yaml={generateYaml(reducer.state)}
