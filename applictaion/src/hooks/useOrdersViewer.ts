@@ -48,7 +48,7 @@ const loadYamlFromStorage = (): string => {
   return window.localStorage.getItem(STORAGE_KEY) ?? "";
 };
 
-export const useOrdersViewer = () => {
+export function useOrdersViewer() {
   const [state, dispatch] = useReducer(reducer, {
     leftText: "",
     rightText: "",
@@ -76,4 +76,4 @@ export const useOrdersViewer = () => {
     refresh,
     applyRight,
   };
-};
+}

@@ -148,7 +148,8 @@ export function MyComponent({ value, onChange }: MyComponentProps) { ... }
 - すべてのコンポーネントは関数コンポーネントとして実装する（クラスコンポーネント禁止）。
 - クライアントサイドの状態を持つコンポーネントには `"use client"` ディレクティブを付与する。
 - カスタムフックは `hooks/` ディレクトリに配置し、`use` プレフィックスを付ける。
-- `useMemo` を使ってアクション関数とデータ変換のコストを最小化する。
+- `useMemo` を使ってアクション関数とデータ変換のコストを最小化する。React 19 Compiler と競合しないよう、`useMemo` 内で参照する補助関数はクロージャ内に同居させること。
+- 画面ごとに **ViewModel フック**（`use<Screen>ViewModel.ts`）を作成し、各 hooks を束ねて画面コンポーネントが参照する単一インターフェースとして提供する（MVVM パターン）。
 
 ```ts
 // ✅ Good — アクションを useMemo でメモ化
@@ -194,14 +195,18 @@ export function OrdersPanelListItem({ props }: OrdersPanelListItemProps) { ... }
 |---|---|
 | UI コンポーネント（基本要素） | `components/atoms/` |
 | UI コンポーネント（複合） | `components/molecules/<domain>/` |
-| UI コンポーネント（複雑） | `components/organisms/<domain>/` |
+| UI コンポーネント（複雑・ドメイン） | `components/organisms/<domain>/` |
+| UI コンポーネント（複雑・画面固有） | `components/organisms/<screen>/` |
 | アプリ全体のプロバイダー | `components/providers/` |
 | カスタムフック | `hooks/` |
+| 画面 ViewModel フック | `hooks/use<Screen>ViewModel.ts` |
 | 型定義 | `types/` |
 | ユーティリティ（純粋関数） | `utils/` |
 | MUI テーマ | `theme/` |
+| ビジネスロジック（サーバーサイド） | `business/` |
 
 - molecules・organisms はドメイン（`orders/`, `select/`, `switch/`, `panel/`, `bloc/`）ごとにサブディレクトリを切る。
+- 特定の画面にのみ使われる Organism は画面名のサブディレクトリ（`editor/`, `viewer/`）に配置する。
 
 ---
 

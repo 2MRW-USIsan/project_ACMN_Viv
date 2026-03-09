@@ -8,7 +8,7 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { useYamlEditor } from "@/hooks/useYamlEditor";
 
-export const YamlEditorPanel = () => {
+export function YamlEditorPanel() {
   const { content, savedMessage, setContent, save, createNew, download } = useYamlEditor();
 
   return (
@@ -47,4 +47,4 @@ export const YamlEditorPanel = () => {
       />
     </Box>
   );
-};
+}
