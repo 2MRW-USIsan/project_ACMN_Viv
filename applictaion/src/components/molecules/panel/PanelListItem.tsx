@@ -21,7 +21,7 @@ interface PanelListItemProps {
   };
   children: React.ReactNode;
 }
-export default function PanelListItem({
+export function PanelListItem({
   props: { id, values, onChangeForm, onClick, onDelete, state },
   children,
 }: PanelListItemProps) {

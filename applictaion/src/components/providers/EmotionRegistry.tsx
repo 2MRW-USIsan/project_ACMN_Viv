@@ -4,7 +4,7 @@ import { CacheProvider } from "@emotion/react";
 import { useServerInsertedHTML } from "next/navigation";
 import { useState } from "react";
 
-export default function EmotionRegistry({
+export function EmotionRegistry({
   children,
 }: {
   children: React.ReactNode;

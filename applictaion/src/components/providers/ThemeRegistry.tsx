@@ -2,10 +2,10 @@
 
 import CssBaseline from "@mui/material/CssBaseline";
 import { ThemeProvider } from "@mui/material/styles";
-import theme from "@/theme/theme";
-import EmotionRegistry from "./EmotionRegistry";
+import { theme } from "@/theme/theme";
+import { EmotionRegistry } from "./EmotionRegistry";
 
-export default function ThemeRegistry({
+export function ThemeRegistry({
   children,
 }: {
   children: React.ReactNode;

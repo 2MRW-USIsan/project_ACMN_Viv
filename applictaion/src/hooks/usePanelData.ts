@@ -16,7 +16,7 @@ type SelectStateItem =
 type SwitchStateItem =
   PanelReducer["state"]["panels"][number]["switch"]["data"][number];
 
-export default function usePanelData(reducer: PanelReducer): BlocViewItem[] {
+export function usePanelData(reducer: PanelReducer): BlocViewItem[] {
   const { state, actions } = reducer;
 
   const mapOrdersItems = (

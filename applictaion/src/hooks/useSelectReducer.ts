@@ -321,7 +321,7 @@ type Returns = {
   actions: SelectActions;
 };
 
-export default function useSelectReducer(): Returns {
+export function useSelectReducer(): Returns {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const actions = useMemo(

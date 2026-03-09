@@ -2,7 +2,7 @@ import type { SelectChildViewItem, SelectListViewItem } from "@/types/select";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import { Grid, IconButton } from "@mui/material";
 import { TextFieldPanel } from "../../atoms/TextFieldPanel";
-import PanelList from "../panel/PanelList";
+import { PanelList } from "../panel/PanelList";
 import { ListItemTextFieldPanel } from "./ListItemTextFieldPanel";
 
 interface SelectTextFieldPanelProps {

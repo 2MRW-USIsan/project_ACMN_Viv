@@ -1,6 +1,6 @@
 import { CheckChip } from "@/components/atoms/CheckChip";
-import PanelList from "@/components/molecules/panel/PanelList";
-import PanelListItem from "@/components/molecules/panel/PanelListItem";
+import { PanelList } from "@/components/molecules/panel/PanelList";
+import { PanelListItem } from "@/components/molecules/panel/PanelListItem";
 import { SwitchTextFieldPanel } from "@/components/molecules/switch/SwitchTextFieldPanel";
 import { SwitchChildViewItem, SwitchViewItem } from "@/types/switch";
 import { ListItem } from "@mui/material";

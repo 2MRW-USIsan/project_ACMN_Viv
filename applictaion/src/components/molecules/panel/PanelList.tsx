@@ -8,12 +8,12 @@ import {
   Paper,
   Typography,
 } from "@mui/material";
-import AddButtonPanel from "../../atoms/AddButtonPanel";
+import { AddButtonPanel } from "../../atoms/AddButtonPanel";
 interface PanelListProps {
   props: { label: string; onAddPanel?: () => void };
   children: React.ReactNode;
 }
-export default function PanelList({
+export function PanelList({
   props: { label, onAddPanel },
   children,
 }: PanelListProps) {

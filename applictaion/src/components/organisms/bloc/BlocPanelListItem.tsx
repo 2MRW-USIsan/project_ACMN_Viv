@@ -1,8 +1,8 @@
 import { Divider, List, ListItem } from "@mui/material";
 import { CheckChip } from "../../atoms/CheckChip";
-import OrdersPanelList from "../orders/OrdersPanelList";
-import PanelListItem from "../../molecules/panel/PanelListItem";
-import SelectPanelList from "../select/SelectPanelList";
+import { OrdersPanelList } from "../orders/OrdersPanelList";
+import { PanelListItem } from "../../molecules/panel/PanelListItem";
+import { SelectPanelList } from "../select/SelectPanelList";
 import { SwitchPanelList } from "../switch/SwitchPanelList";
 import type { BlocViewItem } from "@/types/bloc";
 

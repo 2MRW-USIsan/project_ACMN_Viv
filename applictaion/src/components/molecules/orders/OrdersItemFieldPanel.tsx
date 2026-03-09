@@ -1,7 +1,7 @@
 import { OrdersItemViewItem } from "@/types/orders";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import { Grid, IconButton, ListItem, TextField } from "@mui/material";
-import PanelList from "../panel/PanelList";
+import { PanelList } from "../panel/PanelList";
 
 interface OrdersItemFieldPanelProps {
   props: OrdersItemViewItem;

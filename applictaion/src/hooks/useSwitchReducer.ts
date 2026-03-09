@@ -213,7 +213,7 @@ type Returns = {
   actions: SwitchActions;
 };
 
-export default function useSwitchReducer(): Returns {
+export function useSwitchReducer(): Returns {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const actions = useMemo(

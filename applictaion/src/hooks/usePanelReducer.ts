@@ -1,9 +1,9 @@
-import type { PanelDataActionsType, PanelDataStateType } from "@/types/panel";
+import type { ChipType, PanelDataActionsType, PanelDataStateType } from "@/types/panel";
 import { useEffect } from "react";
-import useOrdersReducer from "./useOrdersReducer";
-import usePanelBaseReducer from "./usePanelBaseReducer";
-import useSelectReducer from "./useSelectReducer";
-import useSwitchReducer from "./useSwitchReducer";
+import { useOrdersReducer } from "./useOrdersReducer";
+import { usePanelBaseReducer } from "./usePanelBaseReducer";
+import { useSelectReducer } from "./useSelectReducer";
+import { useSwitchReducer } from "./useSwitchReducer";
 
 // Re-export for backward compatibility
 export type { PanelDataActionsType, PanelDataStateType };
@@ -13,7 +13,7 @@ interface Returns {
   actions: PanelDataActionsType;
 }
 
-export default function usePanelReducer(): Returns {
+export function usePanelReducer(): Returns {
   const { state: panelBaseState, actions: panelBaseActions } =
     usePanelBaseReducer();
   const { state: ordersState, actions: ordersActions } = useOrdersReducer();
@@ -61,14 +61,20 @@ export default function usePanelReducer(): Returns {
       deletePanel: panelBaseActions.deletePanel,
       changeForm: panelBaseActions.changeForm,
       changeChip: (id, chipType) => {
-        if (chipType === "orders") ordersActions.changeChip(id);
-        else if (chipType === "select") selectActions.changeChip(id);
-        else switchActions.changeChip(id);
+        const chipActionMap: Record<ChipType, (id: number) => void> = {
+          orders: ordersActions.changeChip,
+          select: selectActions.changeChip,
+          switch: switchActions.changeChip,
+        };
+        chipActionMap[chipType](id);
       },
       addItemPanel: (id, key) => {
-        if (key === "orders") ordersActions.addItem(id);
-        else if (key === "select") selectActions.addItem(id);
-        else switchActions.addItem(id);
+        const addItemMap: Record<ChipType, (id: number) => void> = {
+          orders: ordersActions.addItem,
+          select: selectActions.addItem,
+          switch: switchActions.addItem,
+        };
+        addItemMap[key](id);
       },
       addOrdersChildItemPanel: ordersActions.addChildItem,
       addOrdersItemDataPanel: ordersActions.addItemData,
@@ -83,21 +89,28 @@ export default function usePanelReducer(): Returns {
       deleteSelectChildItemPanel: selectActions.deleteChildItem,
       deleteSwitchChildItemPanel: switchActions.deleteChildItem,
       changeItemPanel: (id, key, itemId) => {
-        if (key === "orders") ordersActions.changeItem(id, itemId);
-        else if (key === "select") selectActions.changeItem(id, itemId);
-        else switchActions.changeItem(id, itemId);
+        const changeItemMap: Record<ChipType, (id: number, itemId: number) => void> = {
+          orders: ordersActions.changeItem,
+          select: selectActions.changeItem,
+          switch: switchActions.changeItem,
+        };
+        changeItemMap[key](id, itemId);
       },
       changeItemForm: (id, key, itemId, label, value) => {
-        if (key === "orders")
-          ordersActions.changeItemForm(id, itemId, label, value);
-        else if (key === "select")
-          selectActions.changeItemForm(id, itemId, label, value);
-        else switchActions.changeItemForm(id, itemId, label, value);
+        const changeItemFormMap: Record<ChipType, (id: number, itemId: number, label: string, value: string) => void> = {
+          orders: ordersActions.changeItemForm,
+          select: selectActions.changeItemForm,
+          switch: switchActions.changeItemForm,
+        };
+        changeItemFormMap[key](id, itemId, label, value);
       },
       deleteItemPanel: (id, key, itemId) => {
-        if (key === "orders") ordersActions.deleteItem(id, itemId);
-        else if (key === "select") selectActions.deleteItem(id, itemId);
-        else switchActions.deleteItem(id, itemId);
+        const deleteItemMap: Record<ChipType, (id: number, itemId: number) => void> = {
+          orders: ordersActions.deleteItem,
+          select: selectActions.deleteItem,
+          switch: switchActions.deleteItem,
+        };
+        deleteItemMap[key](id, itemId);
       },
       toggleSelectShuffle: (id, itemId) =>
         selectActions.toggleShuffle(id, itemId),
