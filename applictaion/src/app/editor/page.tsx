@@ -2,42 +2,49 @@
 
 import { BlocPanelListItem } from "@/components/organisms/bloc/BlocPanelListItem";
 import { YamlPreviewDialog } from "@/components/organisms/YamlPreviewDialog";
+import { SaveLoadToolbar } from "@/components/organisms/SaveLoadToolbar";
 import { PanelList } from "@/components/molecules/panel/PanelList";
-import { usePanelData } from "@/hooks/usePanelData";
-import { usePanelReducer } from "@/hooks/usePanelReducer";
-import { generateYaml } from "@/utils/generateYaml";
-import { Button } from "@mui/material";
-import { useState } from "react";
+import { useEditorViewModel } from "@/hooks/useEditorViewModel";
+import { Box, Button } from "@mui/material";
 
 export default function EditorPage() {
-  const reducer = usePanelReducer();
-  const panelData = usePanelData(reducer);
-  const [yamlOpen, setYamlOpen] = useState(false);
-
-  const handleGenerateYaml = () => {
-    setYamlOpen(true);
-  };
+  const vm = useEditorViewModel();
 
   return (
     <>
+      <Box
+        sx={{ display: "flex", justifyContent: "flex-end", alignItems: "center" }}
+      >
+        <Button variant="contained" onClick={vm.onOpenYaml} sx={{ m: 2 }}>
+          Generate YAML
+        </Button>
+        <SaveLoadToolbar
+          saveList={vm.saveList}
+          selectedSaveId={vm.selectedSaveId}
+          isLoading={vm.isSaveLoading}
+          onSelect={vm.onSelectSave}
+          onLoad={vm.onLoadSave}
+        />
+      </Box>
       <PanelList
         props={{
           label: "#BlocList ====",
-          onAddPanel: reducer.actions.addPanel,
+          onAddPanel: vm.onAddPanel,
         }}
       >
-        {panelData.map((item) => (
+        {vm.panelData.map((item) => (
           <BlocPanelListItem key={item.id} props={item} />
         ))}
       </PanelList>
-      <Button variant="contained" onClick={handleGenerateYaml} sx={{ m: 2 }}>
-        Generate YAML
-      </Button>
       <YamlPreviewDialog
-        open={yamlOpen}
-        yaml={generateYaml(reducer.state)}
-        onClose={() => setYamlOpen(false)}
+        open={vm.yamlOpen}
+        yaml={vm.yaml}
+        hasDiff={vm.hasDiff}
+        onClose={vm.onCloseYaml}
+        onRegister={vm.onRegister}
       />
     </>
   );
 }
+
+

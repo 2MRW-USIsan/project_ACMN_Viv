@@ -8,6 +8,7 @@ type PanelBaseState = {
 };
 
 export type PanelBaseActions = {
+  loadState: (panels: PanelBaseItem[]) => void;
   addPanel: () => void;
   changePanel: (id: number) => void;
   deletePanel: (id: number) => void;
@@ -21,7 +22,8 @@ type Action =
   | {
       type: "CHANGE_FORM";
       payload: { id: number; label: string; value: string };
-    };
+    }
+  | { type: "LOAD_STATE"; payload: { panels: PanelBaseItem[] } };
 
 const initialState: PanelBaseState = { panels: [] };
 
@@ -67,6 +69,8 @@ function reducer(state: PanelBaseState, action: Action): PanelBaseState {
             : p,
         ),
       };
+    case "LOAD_STATE":
+      return { panels: action.payload.panels };
     default:
       return state;
   }
@@ -82,6 +86,8 @@ export function usePanelBaseReducer(): Returns {
 
   const actions = useMemo(
     (): PanelBaseActions => ({
+      loadState: (panels) =>
+        dispatch({ type: "LOAD_STATE", payload: { panels } }),
       addPanel: () => dispatch({ type: "ADD_PANEL" }),
       changePanel: (id) => dispatch({ type: "CHANGE_PANEL", payload: { id } }),
       deletePanel: (id) => dispatch({ type: "DELETE_PANEL", payload: { id } }),

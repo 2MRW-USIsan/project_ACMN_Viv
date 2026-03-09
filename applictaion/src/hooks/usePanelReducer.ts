@@ -60,6 +60,25 @@ export function usePanelReducer(): Returns {
   return {
     state,
     actions: {
+      loadState: (newState) => {
+        panelBaseActions.loadState(
+          newState.panels.map((p) => ({
+            id: p.id,
+            label: p.label,
+            state: p.state,
+            values: p.values,
+          })),
+        );
+        ordersActions.loadState(
+          Object.fromEntries(newState.panels.map((p) => [p.id, p.orders])),
+        );
+        selectActions.loadState(
+          Object.fromEntries(newState.panels.map((p) => [p.id, p.select])),
+        );
+        switchActions.loadState(
+          Object.fromEntries(newState.panels.map((p) => [p.id, p.switch])),
+        );
+      },
       addPanel: panelBaseActions.addPanel,
       changePanel: panelBaseActions.changePanel,
       deletePanel: panelBaseActions.deletePanel,

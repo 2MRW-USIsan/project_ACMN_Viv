@@ -4,6 +4,7 @@ import { useMemo, useReducer } from "react";
 type OrdersState = Record<number, OrdersPanelChip>;
 
 export type OrdersActions = {
+  loadState: (state: OrdersState) => void;
   removePanel: (panelId: number) => void;
   changeChip: (panelId: number) => void;
   addItem: (panelId: number) => void;
@@ -101,7 +102,8 @@ type Action =
         value: string;
       };
     }
-  | { type: "DELETE_ITEM"; payload: { panelId: number; itemId: number } };
+  | { type: "DELETE_ITEM"; payload: { panelId: number; itemId: number } }
+  | { type: "LOAD_STATE"; payload: OrdersState };
 
 const initialState: OrdersState = {};
 
@@ -477,6 +479,8 @@ function reducer(state: OrdersState, action: Action): OrdersState {
         },
       };
     }
+    case "LOAD_STATE":
+      return action.payload;
     default:
       return state;
   }
@@ -492,6 +496,8 @@ export function useOrdersReducer(): Returns {
 
   const actions = useMemo(
     (): OrdersActions => ({
+      loadState: (newState) =>
+        dispatch({ type: "LOAD_STATE", payload: newState }),
       removePanel: (panelId) =>
         dispatch({ type: "REMOVE_PANEL", payload: { panelId } }),
       changeChip: (panelId) =>

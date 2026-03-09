@@ -8,6 +8,7 @@ import { useMemo, useReducer } from "react";
 type SwitchState = Record<number, SwitchPanelChip>;
 
 export type SwitchActions = {
+  loadState: (state: SwitchState) => void;
   removePanel: (panelId: number) => void;
   changeChip: (panelId: number) => void;
   addItem: (panelId: number) => void;
@@ -51,7 +52,8 @@ type Action =
       };
     }
   | { type: "DELETE_ITEM"; payload: { panelId: number; itemId: number } }
-  | { type: "TOGGLE_RANDOMIZE"; payload: { panelId: number; itemId: number } };
+  | { type: "TOGGLE_RANDOMIZE"; payload: { panelId: number; itemId: number } }
+  | { type: "LOAD_STATE"; payload: SwitchState };
 
 const initialState: SwitchState = {};
 
@@ -203,6 +205,8 @@ function reducer(state: SwitchState, action: Action): SwitchState {
         },
       };
     }
+    case "LOAD_STATE":
+      return action.payload;
     default:
       return state;
   }
@@ -218,6 +222,8 @@ export function useSwitchReducer(): Returns {
 
   const actions = useMemo(
     (): SwitchActions => ({
+      loadState: (newState) =>
+        dispatch({ type: "LOAD_STATE", payload: newState }),
       removePanel: (panelId) =>
         dispatch({ type: "REMOVE_PANEL", payload: { panelId } }),
       changeChip: (panelId) =>
