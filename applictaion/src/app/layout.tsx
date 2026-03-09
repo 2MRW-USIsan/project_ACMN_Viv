@@ -1,3 +1,4 @@
+import { NavigationBar } from "@/components/NavigationBar";
 import { ThemeRegistry } from "@/components/providers/ThemeRegistry";
 
 export default function RootLayout({
@@ -8,7 +9,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`acmn-application`}>
-        <ThemeRegistry>{children}</ThemeRegistry>
+        <ThemeRegistry>
+          <NavigationBar />
+          {children}
+        </ThemeRegistry>
+        {children}
       </body>
     </html>
   );
