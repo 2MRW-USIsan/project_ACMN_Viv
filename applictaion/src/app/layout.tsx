@@ -8,12 +8,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`acmn-application`}>
+      <body className="acmn-application">
         <ThemeRegistry>
           <NavigationBar />
           {children}
         </ThemeRegistry>
-        {children}
       </body>
     </html>
   );
