@@ -1,4 +1,8 @@
-import type { ChipType, PanelDataActionsType, PanelDataStateType } from "@/types/panel";
+import type {
+  ChipType,
+  PanelDataActionsType,
+  PanelDataStateType,
+} from "@/types/panel";
 import { useEffect } from "react";
 import { useOrdersReducer } from "./useOrdersReducer";
 import { usePanelBaseReducer } from "./usePanelBaseReducer";
@@ -89,7 +93,10 @@ export function usePanelReducer(): Returns {
       deleteSelectChildItemPanel: selectActions.deleteChildItem,
       deleteSwitchChildItemPanel: switchActions.deleteChildItem,
       changeItemPanel: (id, key, itemId) => {
-        const changeItemMap: Record<ChipType, (id: number, itemId: number) => void> = {
+        const changeItemMap: Record<
+          ChipType,
+          (id: number, itemId: number) => void
+        > = {
           orders: ordersActions.changeItem,
           select: selectActions.changeItem,
           switch: switchActions.changeItem,
@@ -97,7 +104,10 @@ export function usePanelReducer(): Returns {
         changeItemMap[key](id, itemId);
       },
       changeItemForm: (id, key, itemId, label, value) => {
-        const changeItemFormMap: Record<ChipType, (id: number, itemId: number, label: string, value: string) => void> = {
+        const changeItemFormMap: Record<
+          ChipType,
+          (id: number, itemId: number, label: string, value: string) => void
+        > = {
           orders: ordersActions.changeItemForm,
           select: selectActions.changeItemForm,
           switch: switchActions.changeItemForm,
@@ -105,7 +115,10 @@ export function usePanelReducer(): Returns {
         changeItemFormMap[key](id, itemId, label, value);
       },
       deleteItemPanel: (id, key, itemId) => {
-        const deleteItemMap: Record<ChipType, (id: number, itemId: number) => void> = {
+        const deleteItemMap: Record<
+          ChipType,
+          (id: number, itemId: number) => void
+        > = {
           orders: ordersActions.deleteItem,
           select: selectActions.deleteItem,
           switch: switchActions.deleteItem,

@@ -21,17 +21,16 @@ export default function Home() {
   return (
     <>
       <PanelList
-        props={{ label: "#BlocList ====", onAddPanel: reducer.actions.addPanel }}
+        props={{
+          label: "#BlocList ====",
+          onAddPanel: reducer.actions.addPanel,
+        }}
       >
         {panelData.map((item) => (
           <BlocPanelListItem key={item.id} props={item} />
         ))}
       </PanelList>
-      <Button
-        variant="contained"
-        onClick={handleGenerateYaml}
-        sx={{ m: 2 }}
-      >
+      <Button variant="contained" onClick={handleGenerateYaml} sx={{ m: 2 }}>
         Generate YAML
       </Button>
       <YamlPreviewDialog

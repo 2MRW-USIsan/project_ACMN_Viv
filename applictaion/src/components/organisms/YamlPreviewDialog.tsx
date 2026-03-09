@@ -54,7 +54,11 @@ export function YamlPreviewDialog({
     <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth>
       <DialogTitle sx={{ display: "flex", alignItems: "center", gap: 1 }}>
         YAML Preview
-        <Tooltip title={copied ? "Copied!" : copyError ? "Copy failed" : "Copy to clipboard"}>
+        <Tooltip
+          title={
+            copied ? "Copied!" : copyError ? "Copy failed" : "Copy to clipboard"
+          }
+        >
           <IconButton onClick={handleCopy} size="small">
             <ContentCopyIcon fontSize="small" />
           </IconButton>
