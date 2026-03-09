@@ -63,6 +63,7 @@ export type SwitchDataItem = {
 };
 
 export type PanelDataActionsType = {
+  loadState: (state: PanelDataStateType) => void;
   addPanel: () => void;
   changePanel: (id: number) => void;
   deletePanel: (id: number) => void;

@@ -9,6 +9,7 @@ import { useMemo, useReducer } from "react";
 type SelectState = Record<number, SelectPanelChip>;
 
 export type SelectActions = {
+  loadState: (state: SelectState) => void;
   removePanel: (panelId: number) => void;
   changeChip: (panelId: number) => void;
   addItem: (panelId: number) => void;
@@ -76,7 +77,8 @@ type Action =
       };
     }
   | { type: "DELETE_ITEM"; payload: { panelId: number; itemId: number } }
-  | { type: "TOGGLE_SHUFFLE"; payload: { panelId: number; itemId: number } };
+  | { type: "TOGGLE_SHUFFLE"; payload: { panelId: number; itemId: number } }
+  | { type: "LOAD_STATE"; payload: SelectState };
 
 const initialState: SelectState = {};
 
@@ -311,6 +313,8 @@ function reducer(state: SelectState, action: Action): SelectState {
         },
       };
     }
+    case "LOAD_STATE":
+      return action.payload;
     default:
       return state;
   }
@@ -326,6 +330,8 @@ export function useSelectReducer(): Returns {
 
   const actions = useMemo(
     (): SelectActions => ({
+      loadState: (newState) =>
+        dispatch({ type: "LOAD_STATE", payload: newState }),
       removePanel: (panelId) =>
         dispatch({ type: "REMOVE_PANEL", payload: { panelId } }),
       changeChip: (panelId) =>
