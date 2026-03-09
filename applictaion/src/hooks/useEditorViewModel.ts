@@ -16,8 +16,11 @@ export type EditorViewModel = {
   saveList: PanelSaveItem[];
   selectedSaveId: string;
   isSaveLoading: boolean;
+  isLoaded: boolean;
+  loadedSaveName: string;
   onSelectSave: (id: string) => void;
   onLoadSave: () => void;
+  onResetLoad: () => void;
   // YAML preview dialog
   yamlOpen: boolean;
   yaml: string;
@@ -54,8 +57,11 @@ export function useEditorViewModel(): EditorViewModel {
     saveList: savedPanels.saveList,
     selectedSaveId: savedPanels.selectedSaveId,
     isSaveLoading: savedPanels.isLoading,
+    isLoaded: savedPanels.loadedState !== null,
+    loadedSaveName: savedPanels.loadedSaveName,
     onSelectSave: savedPanels.actions.selectSave,
     onLoadSave: savedPanels.actions.loadSave,
+    onResetLoad: savedPanels.actions.resetLoad,
     yamlOpen,
     yaml,
     hasDiff,

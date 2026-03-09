@@ -7,6 +7,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 export type SavedPanelsActions = {
   selectSave: (id: string) => void;
   loadSave: () => Promise<void>;
+  resetLoad: () => void;
   registerSave: (name: string, data: PanelDataStateType) => Promise<void>;
   refreshList: () => Promise<void>;
 };
@@ -15,6 +16,7 @@ type Returns = {
   saveList: PanelSaveItem[];
   selectedSaveId: string;
   loadedState: PanelDataStateType | null;
+  loadedSaveName: string;
   isLoading: boolean;
   actions: SavedPanelsActions;
 };
@@ -28,6 +30,11 @@ export function useSavedPanels(
     null,
   );
   const [isLoading, setIsLoading] = useState(false);
+
+  const loadedSaveName = useMemo(
+    () => saveList.find((s) => s.id === selectedSaveId)?.name ?? "",
+    [saveList, selectedSaveId],
+  );
 
   const refreshList = useCallback(async () => {
     const res = await fetch("/api/panelSaves");
@@ -60,6 +67,7 @@ export function useSavedPanels(
           setIsLoading(false);
         }
       },
+      resetLoad: () => setLoadedState(null),
       registerSave: async (name, data) => {
         const res = await fetch("/api/panelSaves", {
           method: "POST",
@@ -76,5 +84,5 @@ export function useSavedPanels(
     [selectedSaveId, loadStateFn, refreshList],
   );
 
-  return { saveList, selectedSaveId, loadedState, isLoading, actions };
+  return { saveList, selectedSaveId, loadedState, loadedSaveName, isLoading, actions };
 }
