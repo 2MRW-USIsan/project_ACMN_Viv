@@ -31,7 +31,7 @@ export type OrdersItemViewItem = {
 
 export type OrdersChildViewItem = {
   id: number;
-  values: { key: string; label: string; type: string; param: string };
+  values: { key: string; label: string; type: string };
   data: OrdersItemViewItem[];
   onAddPanel?: () => void;
   onChangeForm: (label: string, value: string) => void;

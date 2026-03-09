@@ -159,7 +159,7 @@ function reducer(state: OrdersState, action: Action): OrdersState {
                     ...item.data,
                     {
                       id: Date.now(),
-                      values: { key: "", label: "", type: "Random", param: "" },
+                      values: { key: "", label: "", type: "Random" },
                       data: [],
                     },
                   ],

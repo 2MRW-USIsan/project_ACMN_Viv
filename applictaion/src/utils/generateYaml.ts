@@ -31,7 +31,6 @@ type YamlOrdersField = {
   key: string;
   label: string;
   type: string;
-  param?: string;
   options?: YamlOrdersOption[];
 };
 
@@ -114,7 +113,6 @@ function serializeOrdersDataItem(item: OrdersDataItem): YamlOrdersField {
     key: item.values.key,
     label: item.values.label,
     type: item.values.type,
-    ...(item.values.param && { param: item.values.param }),
   };
   if (item.data && item.data.length > 0) {
     field.options = item.data.map(serializeOrdersItemData);
