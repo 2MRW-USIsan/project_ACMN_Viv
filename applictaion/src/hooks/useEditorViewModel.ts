@@ -16,8 +16,11 @@ export type EditorViewModel = {
   saveList: PanelSaveItem[];
   selectedSaveId: string;
   isSaveLoading: boolean;
+  isLoaded: boolean;
+  loadedSaveName: string;
   onSelectSave: (id: string) => void;
   onLoadSave: () => void;
+  onReselectSave: () => void;
   // YAML preview dialog
   yamlOpen: boolean;
   yaml: string;
@@ -41,6 +44,15 @@ export function useEditorViewModel(): EditorViewModel {
     [reducer.state, savedPanels.loadedState],
   );
 
+  const isLoaded = savedPanels.loadedState !== null;
+
+  const loadedSaveName = useMemo(
+    () =>
+      savedPanels.saveList.find((s) => s.id === savedPanels.selectedSaveId)
+        ?.name ?? "",
+    [savedPanels.saveList, savedPanels.selectedSaveId],
+  );
+
   const yaml = useMemo(() => generateYaml(reducer.state), [reducer.state]);
 
   const onRegister = async () => {
@@ -54,8 +66,11 @@ export function useEditorViewModel(): EditorViewModel {
     saveList: savedPanels.saveList,
     selectedSaveId: savedPanels.selectedSaveId,
     isSaveLoading: savedPanels.isLoading,
+    isLoaded,
+    loadedSaveName,
     onSelectSave: savedPanels.actions.selectSave,
     onLoadSave: savedPanels.actions.loadSave,
+    onReselectSave: savedPanels.actions.reselectSave,
     yamlOpen,
     yaml,
     hasDiff,

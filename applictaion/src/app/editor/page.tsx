@@ -22,8 +22,11 @@ export default function EditorPage() {
           saveList={vm.saveList}
           selectedSaveId={vm.selectedSaveId}
           isLoading={vm.isSaveLoading}
+          isLoaded={vm.isLoaded}
+          loadedSaveName={vm.loadedSaveName}
           onSelect={vm.onSelectSave}
           onLoad={vm.onLoadSave}
+          onReselect={vm.onReselectSave}
         />
       </Box>
       <PanelList
