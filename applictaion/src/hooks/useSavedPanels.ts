@@ -9,6 +9,7 @@ export type SavedPanelsActions = {
   loadSave: () => Promise<void>;
   registerSave: (name: string, data: PanelDataStateType) => Promise<void>;
   refreshList: () => Promise<void>;
+  reselectSave: () => void;
 };
 
 type Returns = {
@@ -59,6 +60,10 @@ export function useSavedPanels(
         } finally {
           setIsLoading(false);
         }
+      },
+      reselectSave: () => {
+        setSelectedSaveId("");
+        setLoadedState(null);
       },
       registerSave: async (name, data) => {
         const res = await fetch("/api/panelSaves", {
