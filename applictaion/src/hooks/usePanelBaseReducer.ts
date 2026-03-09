@@ -59,7 +59,7 @@ function reducer(state: PanelBaseState, action: Action): PanelBaseState {
           p.id === action.payload.id
             ? {
                 ...p,
-                value: {
+                values: {
                   ...p.values,
                   [action.payload.label]: action.payload.value,
                 },
