@@ -43,7 +43,7 @@ export type OrdersItemData = {
 };
 export type OrdersDataItem = {
   id: number;
-  values: { key: string; label: string; type: string; param: string };
+  values: { key: string; label: string; type: string };
   data: OrdersItemData[];
 };
 export type SelectDataItem = {

@@ -31,7 +31,6 @@ type YamlOrdersField = {
   key: string;
   label: string;
   type: string;
-  param: string;
   options?: YamlOrdersOption[];
 };
 
@@ -55,6 +54,7 @@ type YamlSelectField = {
 type YamlSelectItem = {
   key: string;
   label: string;
+  shuffle: boolean;
   fields: YamlSelectField[];
 };
 
@@ -68,6 +68,7 @@ type YamlSwitchField = {
 type YamlSwitchItem = {
   key: string;
   label: string;
+  randomize: boolean;
   fields: YamlSwitchField[];
 };
 
@@ -112,7 +113,6 @@ function serializeOrdersDataItem(item: OrdersDataItem): YamlOrdersField {
     key: item.values.key,
     label: item.values.label,
     type: item.values.type,
-    param: item.values.param,
   };
   if (item.data && item.data.length > 0) {
     field.options = item.data.map(serializeOrdersItemData);
@@ -149,6 +149,7 @@ function serializeSelectPanelItem(item: SelectPanelItem): YamlSelectItem {
   return {
     key: item.values.key,
     label: item.values.label,
+    shuffle: item.shuffle,
     fields: item.data.map(serializeSelectDataItem),
   };
 }
@@ -166,6 +167,7 @@ function serializeSwitchPanelItem(item: SwitchPanelItem): YamlSwitchItem {
   return {
     key: item.values.key,
     label: item.values.label,
+    randomize: item.randomize,
     fields: item.data.map(serializeSwitchDataItem),
   };
 }
