@@ -26,8 +26,19 @@
 ```
 applictaion/src/
 ├── app/                         # Next.js App Router エントリポイント
+│   ├── api/
+│   │   └── panelSaves/          # パネル保存 REST API
+│   │       ├── route.ts         # GET（一覧）/ POST（作成）
+│   │       └── [id]/route.ts    # GET（詳細）
+│   ├── editor/
+│   │   └── page.tsx             # /editor 画面（Bloc リストエディタ）
+│   ├── viewer/
+│   │   └── page.tsx             # /viewer 画面（オーダービュー）
 │   ├── layout.tsx               # ルートレイアウト（ThemeRegistry を適用）
-│   └── page.tsx                 # メインページ（唯一のページ）
+│   └── page.tsx                 # ルートページ（ホーム）
+│
+├── business/                    # ビジネスロジック（サーバーサイド）
+│   └── panelSave.ts             # パネル保存 CRUD（現在はインメモリモック）
 │
 ├── components/                  # Atomic Design に基づく UI コンポーネント
 │   ├── atoms/                   # 最小単位の UI 要素
@@ -38,28 +49,39 @@ applictaion/src/
 │   │   └── switch/
 │   ├── organisms/               # 複雑なビジネスロジックを持つコンポーネント
 │   │   ├── bloc/
+│   │   ├── editor/              # /editor 画面固有のオーガニズム
+│   │   │   └── YamlEditorPanel.tsx
 │   │   ├── orders/
 │   │   ├── select/
 │   │   ├── switch/
+│   │   ├── viewer/              # /viewer 画面固有のオーガニズム
+│   │   │   └── OrdersViewerPanel.tsx
+│   │   ├── SaveLoadToolbar.tsx
 │   │   └── YamlPreviewDialog.tsx
 │   └── providers/               # アプリ全体に横断するプロバイダー
 │       ├── EmotionRegistry.tsx
 │       └── ThemeRegistry.tsx
 │
 ├── hooks/                       # 状態管理・データ変換カスタムフック
-│   ├── usePanelBaseReducer.ts   # パネルリスト基本状態
-│   ├── useOrdersReducer.ts      # Orders ドメイン状態
-│   ├── useSelectReducer.ts      # Select ドメイン状態
-│   ├── useSwitchReducer.ts      # Switch ドメイン状態
+│   ├── usePanelBaseReducer.ts   # パネルリスト基本状態（ドメインリデューサー）
+│   ├── useOrdersReducer.ts      # Orders ドメイン状態（ドメインリデューサー）
+│   ├── useSelectReducer.ts      # Select ドメイン状態（ドメインリデューサー）
+│   ├── useSwitchReducer.ts      # Switch ドメイン状態（ドメインリデューサー）
 │   ├── usePanelReducer.ts       # 4つのリデューサーを束ねるオーケストレーター
-│   └── usePanelData.ts          # State → View へのデータ変換（Presenter）
+│   ├── usePanelData.ts          # State → View へのデータ変換（Presenter）
+│   ├── useSavedPanels.ts        # パネル保存・ロード（インフラ層）
+│   ├── useEditorViewModel.ts    # /editor 画面の ViewModel（MVVM）
+│   ├── useYamlEditor.ts         # YAML テキストエディタ状態管理
+│   └── useOrdersViewer.ts       # オーダービュー状態管理
 │
 ├── types/                       # TypeScript 型定義
 │   ├── panel.ts                 # 状態型（State types）
 │   ├── bloc.ts                  # ビュー型（View types）— Bloc
 │   ├── orders.ts                # ビュー型（View types）— Orders
 │   ├── select.ts                # ビュー型（View types）— Select
-│   └── switch.ts                # ビュー型（View types）— Switch
+│   ├── switch.ts                # ビュー型（View types）— Switch
+│   ├── panelSave.ts             # 保存データ型（PanelSaveItem, PanelSaveDetail）
+│   └── yamlData.ts              # YAML パース用データ型
 │
 ├── utils/
 │   └── generateYaml.ts          # 状態 → YAML 文字列変換（純粋関数）
@@ -81,20 +103,23 @@ import { PanelList } from "@/components/molecules/panel/PanelList";
 ## 3. アーキテクチャの全体像
 
 ```
-┌─────────────────────────────────────────────────────┐
-│  app/page.tsx  （"use client" — メインエントリ）       │
-│                                                     │
-│   usePanelReducer()  ←─ State & Actions             │
-│   usePanelData(reducer)  ←─ BlocViewItem[]          │
-│                                                     │
-│   └── <PanelList>                                   │
-│         └── <BlocPanelListItem> ×n                  │
-│               ├── <OrdersPanelList>                 │
-│               ├── <SelectPanelList>                 │
-│               └── <SwitchPanelList>                 │
-│                                                     │
-│   <YamlPreviewDialog>  ←─ generateYaml(state)       │
-└─────────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────────────────────────┐
+│  app/editor/page.tsx  （"use client" — View エントリ）            │
+│                                                                 │
+│   useEditorViewModel()  ←─ EditorViewModel（MVVM ViewModel）    │
+│     ├── usePanelReducer()    ←─ State & Actions                 │
+│     ├── usePanelData(reducer)  ←─ BlocViewItem[]（Presenter）   │
+│     └── useSavedPanels(loadState)  ←─ 保存・ロード              │
+│                                                                 │
+│   └── <PanelList>                                               │
+│         └── <BlocPanelListItem> ×n                              │
+│               ├── <OrdersPanelList>                             │
+│               ├── <SelectPanelList>                             │
+│               └── <SwitchPanelList>                             │
+│                                                                 │
+│   <SaveLoadToolbar>  ←─ vm.saveList / vm.onLoadSave など        │
+│   <YamlPreviewDialog>  ←─ generateYaml(state)                  │
+└─────────────────────────────────────────────────────────────────┘
 ```
 
 データフローは一方向：
@@ -153,7 +178,27 @@ state.panels ──→ usePanelData ──→ BlocViewItem[]
                                    └── switch.data: SwitchViewItem[]  （コールバック付き）
 ```
 
-### 4-4. ネストフィールドのラベルパース方式
+### 4-4. インフラ層（`useSavedPanels`）
+
+`useSavedPanels(loadStateFn)` はパネル状態の永続化（API 経由の保存・ロード）を担当します。
+
+- `/api/panelSaves` エンドポイントを通じて保存一覧の取得・新規登録を行う。
+- ロード済みの状態を `loadedState` として保持し、差分検知（`hasDiff`）に利用。
+- API 通信のビジネスロジックは `business/panelSave.ts` に集約（現在はインメモリモック）。
+
+### 4-5. ViewModel（`useEditorViewModel`）
+
+`useEditorViewModel()` は `usePanelReducer`・`usePanelData`・`useSavedPanels` を束ね、`app/editor/page.tsx`（View）に渡すデータとコールバックを一元管理します（**MVVM パターン**）。
+
+```ts
+export function useEditorViewModel(): EditorViewModel
+```
+
+- View は `vm.panelData`・`vm.onAddPanel`・`vm.yaml` などのプロパティのみを参照する。
+- 状態管理・データ変換・API 通信の詳細はすべて ViewModel 内に隠蔽される。
+- 返却型 `EditorViewModel` は `types/` ではなく `useEditorViewModel.ts` 内で定義（画面固有の型のため）。
+
+### 4-6. ネストフィールドのラベルパース方式
 
 Orders / Select の子アイテム更新には、ネストパスをラベル文字列としてエンコードするパターンを採用しています。
 
@@ -203,12 +248,15 @@ Atoms を組み合わせた中粒度のコンポーネント。ドメイン（`o
 | ファイル | 役割 |
 |---|---|
 | `bloc/BlocPanelListItem` | Bloc パネル 1 件（Orders/Select/Switch の切替チップを持つ） |
+| `editor/YamlEditorPanel` | YAML テキストエディタパネル（`/editor` 画面固有） |
 | `orders/OrdersPanelList` | Orders パネルのリスト |
 | `orders/OrdersPanelListItem` | Orders パネル 1 件 |
 | `select/SelectPanelList` | Select パネルのリスト |
 | `select/SelectPanelListItem` | Select パネル 1 件（Shuffle チップ付き） |
 | `switch/SwitchPanelList` | Switch パネルのリスト |
 | `switch/SwitchPanelListItem` | Switch パネル 1 件（Randomize チップ付き） |
+| `viewer/OrdersViewerPanel` | オーダービューパネル（`/viewer` 画面固有） |
+| `SaveLoadToolbar` | 保存・ロード UI（保存選択ドロップダウン + ロードボタン） |
 | `YamlPreviewDialog` | YAML プレビューダイアログ（コピー・ダウンロード機能付き） |
 
 ### Providers — アプリ全体横断プロバイダー
@@ -235,6 +283,10 @@ panel.ts (State)       →   usePanelData (変換)   →   bloc.ts / orders.ts /
 PanelDataStateType         BlocViewItem[]              コールバック付き View 型
 ```
 
+**`types/panelSave.ts`** にはパネル保存データの型（`PanelSaveItem`・`PanelSaveDetail`）を定義します。
+
+**`types/yamlData.ts`** には localStorage の YAML 文字列をパースした際のデータ構造型を定義します。
+
 ### `ChipType`
 
 `"orders" | "select" | "switch"` の Union 型。アクションのルーティングキーとして使用。
@@ -248,6 +300,10 @@ type Action =
   | { type: "ADD_ITEM"; payload: { panelId: number } }
   | { type: "DELETE_ITEM"; payload: { panelId: number; itemId: number } };
 ```
+
+### ViewModel 型
+
+`useEditorViewModel.ts` 内で `EditorViewModel` 型を定義します。画面固有のインターフェースであるため `types/` には置かず、ViewModel フックファイルと同居させます。
 
 ---
 
@@ -316,12 +372,13 @@ blocs:
    - 汎用的な UI 要素 → `atoms/`
    - 複数 Atom の組み合わせ、特定ドメイン向け → `molecules/<domain>/`
    - reducer state やコールバックを props として受け取る複雑なコンポーネント → `organisms/<domain>/`
+   - 特定画面にのみ使われる大型コンポーネント → `organisms/<screen>/`（例: `organisms/editor/`）
 
 2. **Named export** を使用する（`export function MyComponent`）。
 
 3. **Props 型** をファイル内 interface として定義する。View 型をそのまま受け取る場合は `props: <ViewType>` の単一 prop にまとめる。
 
-4. ドメイン固有コンポーネントは適切な **ドメインサブディレクトリ**（`orders/`, `select/`, `switch/`, `panel/`, `bloc/`）に配置する。
+4. ドメイン固有コンポーネントは適切な **ドメインサブディレクトリ**（`orders/`, `select/`, `switch/`, `panel/`, `bloc/`）に配置する。画面固有の場合は画面名のサブディレクトリ（`editor/`, `viewer/`）に配置する。
 
 5. コンポーネントは **描画のみ** 行う。データ変換・状態管理は hooks 層に任せる。
 
@@ -332,5 +389,6 @@ blocs:
 1. ファイルを `hooks/` ディレクトリに配置し、`use` プレフィックスを付ける。
 2. **Named export** を使用する（`export function useFoo()`）。
 3. `useReducer` を使う場合、Action は discriminated union で定義する。
-4. アクション関数は `useMemo` でメモ化する。
+4. アクション関数は `useMemo` でメモ化する（React 19 Compiler との競合を避けるため、`useMemo` 内に副関数を同居させること）。
 5. ドメインリデューサーを新規追加する場合は `usePanelReducer.ts` でオーケストレーションに組み込む。
+6. 画面固有の ViewModel は `use<ScreenName>ViewModel.ts` として作成し、各 hooks を束ねて画面コンポーネントに渡す単一インターフェースを提供する（MVVM パターン）。

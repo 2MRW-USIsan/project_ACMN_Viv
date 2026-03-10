@@ -9,7 +9,7 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { useOrdersViewer } from "@/hooks/useOrdersViewer";
 
-export const OrdersViewerPanel = () => {
+export function OrdersViewerPanel() {
   const { leftText, rightText, errorMessage, refresh, applyRight } = useOrdersViewer();
 
   return (
@@ -66,4 +66,4 @@ export const OrdersViewerPanel = () => {
       </Grid>
     </Box>
   );
-};
+}

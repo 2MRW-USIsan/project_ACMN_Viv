@@ -47,7 +47,7 @@ const reducer = (state: State, action: Action): State => {
   return handlers[action.type]?.() ?? state;
 };
 
-export const useYamlEditor = () => {
+export function useYamlEditor() {
   const [state, dispatch] = useReducer(reducer, {
     content: INITIAL_YAML,
     savedMessage: "",
@@ -86,4 +86,4 @@ export const useYamlEditor = () => {
   }, [state.content]);
 
   return { content: state.content, savedMessage: state.savedMessage, setContent, save, createNew, download };
-};
+}
