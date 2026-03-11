@@ -38,6 +38,8 @@ const weightedRandom = (items: readonly OrderItem[]): OrderItem => {
   return items[items.length - 1];
 };
 
+const firstLabel = (order: Order): string => order.items[0]?.label ?? '';
+
 const generateFromOrders = (orders: readonly Order[]): string => {
   const result = orders.reduce(
     (acc, order) => {
@@ -51,9 +53,8 @@ const generateFromOrders = (orders: readonly Order[]): string => {
               ? `${first.label} ${weightedRandom(subitems).label}`
               : first.label;
           },
-          // Scripts and Color both use the first item's label as-is (no random selection)
-          Scripts: () => order.items[0]?.label ?? '',
-          Color: () => order.items[0]?.label ?? '',
+          Scripts: () => firstLabel(order),
+          Color: () => firstLabel(order),
         }[order.type]?.() ?? '');
       return { ...acc, [order.property]: value };
     },
