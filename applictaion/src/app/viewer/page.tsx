@@ -11,8 +11,8 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContentText from '@mui/material/DialogContentText';
 import ArrowForwardOutlined from '@mui/icons-material/ArrowForwardOutlined';
 import { useViewerViewModel } from '@/hooks/useViewerViewModel';
-import { RequestJsonPanel } from '@/components/organisms/RequestJsonPanel';
-import { OrderJsonPanel } from '@/components/organisms/OrderJsonPanel';
+import { RequestJsonPanel } from '@/components/organisms/viewer/RequestJsonPanel';
+import { OrderJsonPanel } from '@/components/organisms/viewer/OrderJsonPanel';
 
 export default function ViewerPage() {
   const vm = useViewerViewModel();

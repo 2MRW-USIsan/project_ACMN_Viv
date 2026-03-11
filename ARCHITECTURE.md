@@ -1,0 +1,394 @@
+# Architecture
+
+このドキュメントはプロジェクトのアーキテクチャと設計思想を記述します。新規開発のコンテキストとして利用してください。
+
+---
+
+## 1. プロジェクト概要
+
+**project_ACMN_Viv** は、AI プロンプト用の「Bloc」設定データを GUI で組み立て、YAML 形式でエクスポートするフロントエンドアプリケーションです。
+
+- フレームワーク: **Next.js 16 (App Router)**
+- 言語: **TypeScript 5**（`strict: true`）
+- UI ライブラリ: **MUI (Material UI) v7**
+- スタイリング: **Emotion（CSS-in-JS）**
+- 状態管理: **React 組み込みの `useReducer` + カスタムフック**
+- YAML 出力: **`yaml` パッケージ**
+- Lint: **ESLint 9（`eslint-config-next`）**
+- Compiler: **React 19 Compiler（`reactCompiler: true`）**
+
+> アプリのソースは `applictaion/` サブディレクトリに配置されています（ディレクトリ名のタイポあり）。
+
+---
+
+## 2. ディレクトリ構成
+
+```
+applictaion/src/
+├── app/                         # Next.js App Router エントリポイント
+│   ├── api/
+│   │   └── panelSaves/          # パネル保存 REST API
+│   │       ├── route.ts         # GET（一覧）/ POST（作成）
+│   │       └── [id]/route.ts    # GET（詳細）
+│   ├── editor/
+│   │   └── page.tsx             # /editor 画面（Bloc リストエディタ）
+│   ├── viewer/
+│   │   └── page.tsx             # /viewer 画面（オーダービュー）
+│   ├── layout.tsx               # ルートレイアウト（ThemeRegistry を適用）
+│   └── page.tsx                 # ルートページ（ホーム）
+│
+├── business/                    # ビジネスロジック（サーバーサイド）
+│   └── panelSave.ts             # パネル保存 CRUD（現在はインメモリモック）
+│
+├── components/                  # Atomic Design に基づく UI コンポーネント
+│   ├── atoms/                   # 最小単位の UI 要素
+│   ├── molecules/               # Atoms を組み合わせた中粒度コンポーネント
+│   │   ├── orders/
+│   │   ├── panel/
+│   │   ├── select/
+│   │   └── switch/
+│   ├── organisms/               # 複雑なビジネスロジックを持つコンポーネント
+│   │   ├── bloc/
+│   │   ├── editor/              # /editor 画面固有のオーガニズム
+│   │   │   └── YamlEditorPanel.tsx
+│   │   ├── orders/
+│   │   ├── select/
+│   │   ├── switch/
+│   │   ├── viewer/              # /viewer 画面固有のオーガニズム
+│   │   │   └── OrdersViewerPanel.tsx
+│   │   ├── SaveLoadToolbar.tsx
+│   │   └── YamlPreviewDialog.tsx
+│   └── providers/               # アプリ全体に横断するプロバイダー
+│       ├── EmotionRegistry.tsx
+│       └── ThemeRegistry.tsx
+│
+├── hooks/                       # 状態管理・データ変換カスタムフック
+│   ├── usePanelBaseReducer.ts   # パネルリスト基本状態（ドメインリデューサー）
+│   ├── useOrdersReducer.ts      # Orders ドメイン状態（ドメインリデューサー）
+│   ├── useSelectReducer.ts      # Select ドメイン状態（ドメインリデューサー）
+│   ├── useSwitchReducer.ts      # Switch ドメイン状態（ドメインリデューサー）
+│   ├── usePanelReducer.ts       # 4つのリデューサーを束ねるオーケストレーター
+│   ├── usePanelData.ts          # State → View へのデータ変換（Presenter）
+│   ├── useSavedPanels.ts        # パネル保存・ロード（インフラ層）
+│   ├── useEditorViewModel.ts    # /editor 画面の ViewModel（MVVM）
+│   ├── useYamlEditor.ts         # YAML テキストエディタ状態管理
+│   └── useOrdersViewer.ts       # オーダービュー状態管理
+│
+├── types/                       # TypeScript 型定義
+│   ├── panel.ts                 # 状態型（State types）
+│   ├── bloc.ts                  # ビュー型（View types）— Bloc
+│   ├── orders.ts                # ビュー型（View types）— Orders
+│   ├── select.ts                # ビュー型（View types）— Select
+│   ├── switch.ts                # ビュー型（View types）— Switch
+│   ├── panelSave.ts             # 保存データ型（PanelSaveItem, PanelSaveDetail）
+│   └── yamlData.ts              # YAML パース用データ型
+│
+├── utils/
+│   └── generateYaml.ts          # 状態 → YAML 文字列変換（純粋関数）
+│
+└── theme/
+    └── theme.ts                 # MUI テーマ設定
+```
+
+### パスエイリアス
+
+`tsconfig.json` で `@/*` → `src/*` が設定されています。すべての import で `@/` を使用してください。
+
+```ts
+import { PanelList } from "@/components/molecules/panel/PanelList";
+```
+
+---
+
+## 3. アーキテクチャの全体像
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│  app/editor/page.tsx  （"use client" — View エントリ）            │
+│                                                                 │
+│   useEditorViewModel()  ←─ EditorViewModel（MVVM ViewModel）    │
+│     ├── usePanelReducer()    ←─ State & Actions                 │
+│     ├── usePanelData(reducer)  ←─ BlocViewItem[]（Presenter）   │
+│     └── useSavedPanels(loadState)  ←─ 保存・ロード              │
+│                                                                 │
+│   └── <PanelList>                                               │
+│         └── <BlocPanelListItem> ×n                              │
+│               ├── <OrdersPanelList>                             │
+│               ├── <SelectPanelList>                             │
+│               └── <SwitchPanelList>                             │
+│                                                                 │
+│   <SaveLoadToolbar>  ←─ vm.saveList / vm.onLoadSave など        │
+│   <YamlPreviewDialog>  ←─ generateYaml(state)                  │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+データフローは一方向：
+
+```
+useReducer (状態管理)
+    ↓ state
+usePanelData (Presenter)
+    ↓ BlocViewItem[] （コールバック束ね済み）
+Components（描画のみ）
+    ↓ コールバック呼び出し
+dispatch → useReducer へ戻る
+```
+
+---
+
+## 4. 状態管理アーキテクチャ
+
+### 4-1. マルチドメイン リデューサー設計
+
+状態は **4 つの独立したリデューサー** に分割されています。
+
+| フック | 管理する状態 | 状態のキー |
+|---|---|---|
+| `usePanelBaseReducer` | パネルリスト（id, label, key, 開閉状態） | `{ panels: PanelBaseItem[] }` |
+| `useOrdersReducer` | Orders ドメインのデータ | `Record<panelId, OrdersPanelChip>` |
+| `useSelectReducer` | Select ドメインのデータ | `Record<panelId, SelectPanelChip>` |
+| `useSwitchReducer` | Switch ドメインのデータ | `Record<panelId, SwitchPanelChip>` |
+
+ドメインリデューサーはパネル ID をキーにした `Record` を持ちます。パネル基本情報とは独立しているため、ドメインごとのロジック変更が他に影響しません。
+
+### 4-2. オーケストレーター（`usePanelReducer`）
+
+`usePanelReducer` は 4 つのリデューサーを束ね、外部に単一のインターフェースを提供します（**Facade パターン**）。
+
+```ts
+export function usePanelReducer(): { state: PanelDataStateType; actions: PanelDataActionsType }
+```
+
+- **状態の統合**: `panelBaseState.panels` に各ドメインの状態をマージして `PanelDataStateType` を構築。
+- **ドメイン間の同期**: パネル削除時に `useEffect` を使って各ドメインリデューサーの孤立データをクリーンアップ。
+- **アクションのルーティング**: `ChipType` に応じたアクションのルーティングを `Record<ChipType, Action>` で実装（`if/else` 排除）。
+
+### 4-3. Presenter（`usePanelData`）
+
+`usePanelData(reducer)` は状態をコンポーネントが使いやすい形に変換します（**Presenter パターン**）。
+
+- reducer の `state` と `actions` を受け取り `BlocViewItem[]` を返す。
+- 各アイテムにコールバックを予めバインドして渡すため、コンポーネントは dispatch を意識しない。
+- `useMemo` でメモ化し不要な再計算を防ぐ。
+
+```
+state.panels ──→ usePanelData ──→ BlocViewItem[]
+                                   ├── orders.data: OrdersViewItem[]  （コールバック付き）
+                                   ├── select.data: SelectViewItem[]  （コールバック付き）
+                                   └── switch.data: SwitchViewItem[]  （コールバック付き）
+```
+
+### 4-4. インフラ層（`useSavedPanels`）
+
+`useSavedPanels(loadStateFn)` はパネル状態の永続化（API 経由の保存・ロード）を担当します。
+
+- `/api/panelSaves` エンドポイントを通じて保存一覧の取得・新規登録を行う。
+- ロード済みの状態を `loadedState` として保持し、差分検知（`hasDiff`）に利用。
+- API 通信のビジネスロジックは `business/panelSave.ts` に集約（現在はインメモリモック）。
+
+### 4-5. ViewModel（`useEditorViewModel`）
+
+`useEditorViewModel()` は `usePanelReducer`・`usePanelData`・`useSavedPanels` を束ね、`app/editor/page.tsx`（View）に渡すデータとコールバックを一元管理します（**MVVM パターン**）。
+
+```ts
+export function useEditorViewModel(): EditorViewModel
+```
+
+- View は `vm.panelData`・`vm.onAddPanel`・`vm.yaml` などのプロパティのみを参照する。
+- 状態管理・データ変換・API 通信の詳細はすべて ViewModel 内に隠蔽される。
+- 返却型 `EditorViewModel` は `types/` ではなく `useEditorViewModel.ts` 内で定義（画面固有の型のため）。
+
+### 4-6. ネストフィールドのラベルパース方式
+
+Orders / Select の子アイテム更新には、ネストパスをラベル文字列としてエンコードするパターンを採用しています。
+
+```
+// Orders の例
+`child:${childId}:item:${itemDataId}:complexItem:${complexItemId}:value`
+
+// Select の例
+`child:${childId}:listItem:${listItemId}:prompt`
+```
+
+`useOrdersReducer` の `CHANGE_ITEM_FORM` ハンドラーがこの文字列を正規表現でパースし、適切なネスト位置を更新します。これにより、汎用アクション 1 種類でネスト全深度の更新が可能になっています。
+
+---
+
+## 5. コンポーネント設計（Atomic Design）
+
+### Atoms — 最小単位の UI 要素
+
+ドメインに依存しない、再利用可能な基本 UI コンポーネントです。
+
+| ファイル | 役割 |
+|---|---|
+| `AddButtonPanel` | 「追加」ボタン（リストの末尾に配置） |
+| `CheckChip` | ON/OFF 切り替え可能なチップ（選択・非選択で見た目変化） |
+| `TextFieldPanel` | ラベル + TextField のペア（横並びレイアウト） |
+| `RadioGroupPanel` | 水平ラジオボタングループ |
+
+### Molecules — ドメイン複合コンポーネント
+
+Atoms を組み合わせた中粒度のコンポーネント。ドメイン（`orders/`, `select/`, `switch/`）ごとにサブディレクトリに整理。
+
+| ファイル | 役割 |
+|---|---|
+| `panel/PanelList` | ヘッダー + 子要素リスト + 追加ボタンのコンテナ |
+| `panel/PanelListItem` | 折りたたみ可能な key/label 入力 + 削除ボタン |
+| `orders/OrdersTextFieldPanel` | Orders の子フィールド（type 別コンテンツ切替） |
+| `orders/OrdersItemFieldPanel` | Orders のアイテムデータフィールド（複合データ対応） |
+| `select/SelectTextFieldPanel` | Select の子フィールド |
+| `select/ListItemTextFieldPanel` | Select のリストアイテムフィールド |
+| `switch/SwitchTextFieldPanel` | Switch の子フィールド（4フィールド横並び） |
+
+### Organisms — 複雑なドメインコンポーネント
+
+ドメインロジックを包含する複雑なコンポーネント。
+
+| ファイル | 役割 |
+|---|---|
+| `bloc/BlocPanelListItem` | Bloc パネル 1 件（Orders/Select/Switch の切替チップを持つ） |
+| `editor/YamlEditorPanel` | YAML テキストエディタパネル（`/editor` 画面固有） |
+| `orders/OrdersPanelList` | Orders パネルのリスト |
+| `orders/OrdersPanelListItem` | Orders パネル 1 件 |
+| `select/SelectPanelList` | Select パネルのリスト |
+| `select/SelectPanelListItem` | Select パネル 1 件（Shuffle チップ付き） |
+| `switch/SwitchPanelList` | Switch パネルのリスト |
+| `switch/SwitchPanelListItem` | Switch パネル 1 件（Randomize チップ付き） |
+| `viewer/OrdersViewerPanel` | オーダービューパネル（`/viewer` 画面固有） |
+| `SaveLoadToolbar` | 保存・ロード UI（保存選択ドロップダウン + ロードボタン） |
+| `YamlPreviewDialog` | YAML プレビューダイアログ（コピー・ダウンロード機能付き） |
+
+### Providers — アプリ全体横断プロバイダー
+
+MUI テーマや Emotion の SSR 対応など、UI には直接関係しないアプリ基盤コンポーネント。
+
+| ファイル | 役割 |
+|---|---|
+| `EmotionRegistry` | Emotion CSS-in-JS の SSR 対応キャッシュプロバイダー |
+| `ThemeRegistry` | `EmotionRegistry` + `ThemeProvider` + `CssBaseline` のラッパー |
+
+---
+
+## 6. 型設計
+
+### 状態型（State types） と ビュー型（View types）の分離
+
+**`types/panel.ts`** には useReducer が扱う状態型を定義します。内部 ID やフラグ（`state: boolean` など）を含みます。
+
+**`types/bloc.ts`, `types/orders.ts`, `types/select.ts`, `types/switch.ts`** にはコンポーネントが受け取るビュー型を定義します。コールバック関数が既にバインドされた形で含まれています。
+
+```
+panel.ts (State)       →   usePanelData (変換)   →   bloc.ts / orders.ts / select.ts / switch.ts (View)
+PanelDataStateType         BlocViewItem[]              コールバック付き View 型
+```
+
+**`types/panelSave.ts`** にはパネル保存データの型（`PanelSaveItem`・`PanelSaveDetail`）を定義します。
+
+**`types/yamlData.ts`** には localStorage の YAML 文字列をパースした際のデータ構造型を定義します。
+
+### `ChipType`
+
+`"orders" | "select" | "switch"` の Union 型。アクションのルーティングキーとして使用。
+
+### Action Union 型
+
+各リデューサーの Action は discriminated union として定義します。
+
+```ts
+type Action =
+  | { type: "ADD_ITEM"; payload: { panelId: number } }
+  | { type: "DELETE_ITEM"; payload: { panelId: number; itemId: number } };
+```
+
+### ViewModel 型
+
+`useEditorViewModel.ts` 内で `EditorViewModel` 型を定義します。画面固有のインターフェースであるため `types/` には置かず、ViewModel フックファイルと同居させます。
+
+---
+
+## 7. YAML 出力設計
+
+`utils/generateYaml.ts` は状態を YAML に変換する純粋関数です。
+
+- 内部状態（`id`, `state` フラグ, コールバック）は出力に含めない。
+- 選択済み（`selected === true`）かつデータが存在するドメインのみ出力。
+- 各ドメインはヘルパー関数群（`serialize*`）で直列化し、最後に `yaml.stringify()` で文字列化。
+
+**出力 YAML の構造**:
+
+```yaml
+blocs:
+  - key: panel-key
+    label: Panel Label
+    orders:
+      - key: item-key
+        label: Item Label
+        fields:
+          - key: field-key
+            label: Field Label
+            type: Random
+            options:
+              - value: "..."
+                prompt: "..."
+                weight: "1"
+    select:
+      - key: select-key
+        label: Select Label
+        shuffle: false
+        fields:
+          - key: field-key
+            label: Field Label
+            options:
+              - prompt: "..."
+                value: "..."
+    switch:
+      - key: switch-key
+        label: Switch Label
+        randomize: true
+        fields:
+          - key: field-key
+            label: Field Label
+            value: "on-value"
+            altValue: "off-value"
+```
+
+---
+
+## 8. テーマ設計
+
+`theme/theme.ts` で MUI テーマをカスタマイズしています。主な設定：
+
+- **カラーパレット**: Primary（ブルー系）、Secondary（ティール系）
+- **タイポグラフィ**: コンパクトな文字サイズ（0.72〜0.85rem）
+- **スペーシング**: 基本単位 6px
+- **コンポーネントデフォルト**: TextField は small / outlined、Chip は高さ 22px 固定
+
+---
+
+## 9. 新規コンポーネント追加時のガイド
+
+1. **Atom か Molecule か Organism かを判断** する。
+   - 汎用的な UI 要素 → `atoms/`
+   - 複数 Atom の組み合わせ、特定ドメイン向け → `molecules/<domain>/`
+   - reducer state やコールバックを props として受け取る複雑なコンポーネント → `organisms/<domain>/`
+   - 特定画面にのみ使われる大型コンポーネント → `organisms/<screen>/`（例: `organisms/editor/`）
+
+2. **Named export** を使用する（`export function MyComponent`）。
+
+3. **Props 型** をファイル内 interface として定義する。View 型をそのまま受け取る場合は `props: <ViewType>` の単一 prop にまとめる。
+
+4. ドメイン固有コンポーネントは適切な **ドメインサブディレクトリ**（`orders/`, `select/`, `switch/`, `panel/`, `bloc/`）に配置する。画面固有の場合は画面名のサブディレクトリ（`editor/`, `viewer/`）に配置する。
+
+5. コンポーネントは **描画のみ** 行う。データ変換・状態管理は hooks 層に任せる。
+
+---
+
+## 10. 新規 Hook 追加時のガイド
+
+1. ファイルを `hooks/` ディレクトリに配置し、`use` プレフィックスを付ける。
+2. **Named export** を使用する（`export function useFoo()`）。
+3. `useReducer` を使う場合、Action は discriminated union で定義する。
+4. アクション関数は `useMemo` でメモ化する（React 19 Compiler との競合を避けるため、`useMemo` 内に副関数を同居させること）。
+5. ドメインリデューサーを新規追加する場合は `usePanelReducer.ts` でオーケストレーションに組み込む。
+6. 画面固有の ViewModel は `use<ScreenName>ViewModel.ts` として作成し、各 hooks を束ねて画面コンポーネントに渡す単一インターフェースを提供する（MVVM パターン）。
