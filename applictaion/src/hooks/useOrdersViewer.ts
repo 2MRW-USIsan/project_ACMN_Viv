@@ -21,8 +21,8 @@ type Action =
 const parseOrdersJson = (yamlContent: string): { json: string; error: string } => {
   try {
     const parsed = loadYaml(yamlContent) as YamlData | null;
-    const orders = parsed?.orders ?? [];
-    return { json: JSON.stringify(orders, null, 2), error: "" };
+    const blocs = parsed?.blocs ?? [];
+    return { json: JSON.stringify(blocs, null, 2), error: "" };
   } catch (err) {
     const detail = err instanceof Error ? err.message : String(err);
     return { json: "", error: `YAMLの解析に失敗しました: ${detail}` };
