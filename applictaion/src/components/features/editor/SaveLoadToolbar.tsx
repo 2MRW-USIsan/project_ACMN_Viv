@@ -1,6 +1,6 @@
 "use client";
 
-import type { PanelSaveItem } from "@/types/panelSave";
+import type { PanelSaveItem } from "@/types/editor/panelSave";
 import { FormControl, InputLabel, MenuItem, Select, Stack } from "@mui/material";
 import { ButtonPanel } from "@/components/atoms/ButtonPanel";
 import { TypographyText } from "@/components/atoms/TypographyText";

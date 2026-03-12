@@ -4,7 +4,7 @@ import { BlocPanelListItem } from "@/components/features/editor/BlocPanelListIte
 import { YamlPreviewDialog } from "@/components/features/editor/YamlPreviewDialog";
 import { SaveLoadToolbar } from "@/components/features/editor/SaveLoadToolbar";
 import { PanelList } from "@/components/molecules/panel/PanelList";
-import { useEditorViewModel } from "@/hooks/useEditorViewModel";
+import { useEditorViewModel } from "@/hooks/editor/useEditorViewModel";
 import { Box } from "@mui/material";
 import { ButtonPanel } from "@/components/atoms/ButtonPanel";
 

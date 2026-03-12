@@ -3,7 +3,7 @@
 import { load as loadYaml } from "js-yaml";
 import { useMemo, useReducer } from "react";
 import { generateRequestJson, shuffleRequestJson } from "@/utils/generateRequestJson";
-import type { YamlData } from "@/types/yamlData";
+import type { YamlData } from "@/types/viewer/yamlData";
 
 type State = {
   text: string;

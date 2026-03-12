@@ -5,7 +5,7 @@ import { AlertPanel } from "@/components/atoms/AlertPanel";
 import { ButtonPanel } from "@/components/atoms/ButtonPanel";
 import { InputPanel } from "@/components/atoms/InputPanel";
 import { TypographyText } from "@/components/atoms/TypographyText";
-import { useYamlEditor } from "@/hooks/useYamlEditor";
+import { useYamlEditor } from "@/hooks/editor/useYamlEditor";
 
 export function YamlEditorPanel() {
   const { content, savedMessage, setContent, save, createNew, download } = useYamlEditor();

@@ -1,4 +1,4 @@
-import type { OrdersViewItem } from "@/types/orders";
+import type { OrdersViewItem } from "@/types/editor/orders";
 import { PanelList } from "@/components/molecules/panel/PanelList";
 import { OrdersPanelListItem } from "./OrdersPanelListItem";
 

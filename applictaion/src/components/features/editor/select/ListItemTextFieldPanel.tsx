@@ -1,6 +1,6 @@
 import { TextFieldPanel } from "@/components/atoms/TextFieldPanel";
 import { RemoveIconButton } from "@/components/atoms/RemoveIconButton";
-import { SelectListViewItem } from "@/types/select";
+import { SelectListViewItem } from "@/types/editor/select";
 import { Grid } from "@mui/material";
 
 interface ListItemTextFieldPanelProps {

@@ -1,4 +1,4 @@
-import type { OrdersPanelChip, OrdersPanelItem } from "@/types/panel";
+import type { OrdersPanelChip, OrdersPanelItem } from "@/types/editor/panel";
 import { useMemo, useReducer } from "react";
 
 type OrdersState = Record<number, OrdersPanelChip>;

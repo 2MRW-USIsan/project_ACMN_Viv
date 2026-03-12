@@ -1,10 +1,10 @@
 "use client";
 
-import type { BlocViewItem } from "@/types/bloc";
-import type { PanelSaveItem } from "@/types/panelSave";
-import { usePanelData } from "@/hooks/usePanelData";
-import { usePanelReducer } from "@/hooks/usePanelReducer";
-import { useSavedPanels } from "@/hooks/useSavedPanels";
+import type { BlocViewItem } from "@/types/editor/bloc";
+import type { PanelSaveItem } from "@/types/editor/panelSave";
+import { usePanelData } from "@/hooks/editor/usePanelData";
+import { usePanelReducer } from "@/hooks/editor/usePanelReducer";
+import { useSavedPanels } from "@/hooks/editor/useSavedPanels";
 import { generateYaml } from "@/utils/generateYaml";
 import { useMemo, useState } from "react";
 

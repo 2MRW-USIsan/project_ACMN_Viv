@@ -1,4 +1,4 @@
-import type { OrderJsonRecord } from "@/types/orderJson";
+import type { OrderJsonRecord } from "@/types/viewer/orderJson";
 
 // In-memory mock store. Replaced with Prisma/SQLite integration in the future.
 // TBD: Future support for multiple records (list selection)

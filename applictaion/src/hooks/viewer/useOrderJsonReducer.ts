@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useReducer } from "react";
-import type { OrderJsonRecord } from "@/types/orderJson";
+import type { OrderJsonRecord } from "@/types/viewer/orderJson";
 
 export type JsonValidationStatus = "empty" | "valid" | "invalid";
 

@@ -3,7 +3,7 @@ import type {
   YamlData,
   YamlOrdersComplexOption,
   YamlOrdersField,
-} from "@/types/yamlData";
+} from "@/types/viewer/yamlData";
 
 /**
  * Picks a random item from options weighted by the `weight` field.

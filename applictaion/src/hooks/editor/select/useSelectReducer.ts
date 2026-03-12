@@ -3,7 +3,7 @@ import type {
   SelectListDataItem,
   SelectPanelChip,
   SelectPanelItem,
-} from "@/types/panel";
+} from "@/types/editor/panel";
 import { useMemo, useReducer } from "react";
 
 type SelectState = Record<number, SelectPanelChip>;

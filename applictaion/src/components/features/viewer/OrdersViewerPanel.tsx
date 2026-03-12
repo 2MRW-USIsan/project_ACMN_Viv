@@ -15,7 +15,7 @@ import { AlertPanel } from "@/components/atoms/AlertPanel";
 import { ButtonPanel } from "@/components/atoms/ButtonPanel";
 import { InputPanel } from "@/components/atoms/InputPanel";
 import { TypographyText } from "@/components/atoms/TypographyText";
-import type { ViewerViewModel } from "@/hooks/useViewerViewModel";
+import type { ViewerViewModel } from "@/hooks/viewer/useViewerViewModel";
 
 interface OrdersViewerPanelProps {
   props: ViewerViewModel;

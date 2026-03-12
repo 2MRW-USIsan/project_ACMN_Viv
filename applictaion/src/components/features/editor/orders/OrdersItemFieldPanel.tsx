@@ -1,5 +1,5 @@
 import { RemoveIconButton } from "@/components/atoms/RemoveIconButton";
-import { OrdersItemViewItem } from "@/types/orders";
+import { OrdersItemViewItem } from "@/types/editor/orders";
 import { Grid, ListItem } from "@mui/material";
 import { InputPanel } from "@/components/atoms/InputPanel";
 import { PanelList } from "@/components/molecules/panel/PanelList";

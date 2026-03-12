@@ -63,25 +63,36 @@ applictaion/src/
 │       └── ThemeRegistry.tsx
 │
 ├── hooks/                       # 状態管理・データ変換カスタムフック
-│   ├── usePanelBaseReducer.ts   # パネルリスト基本状態（ドメインリデューサー）
-│   ├── useOrdersReducer.ts      # Orders ドメイン状態（ドメインリデューサー）
-│   ├── useSelectReducer.ts      # Select ドメイン状態（ドメインリデューサー）
-│   ├── useSwitchReducer.ts      # Switch ドメイン状態（ドメインリデューサー）
-│   ├── usePanelReducer.ts       # 4つのリデューサーを束ねるオーケストレーター
-│   ├── usePanelData.ts          # State → View へのデータ変換（Presenter）
-│   ├── useSavedPanels.ts        # パネル保存・ロード（インフラ層）
-│   ├── useEditorViewModel.ts    # /editor 画面の ViewModel（MVVM）
-│   ├── useYamlEditor.ts         # YAML テキストエディタ状態管理
-│   └── useOrdersViewer.ts       # オーダービュー状態管理
+│   ├── editor/                  # /editor 画面関連フック
+│   │   ├── useEditorViewModel.ts    # /editor 画面の ViewModel（MVVM）
+│   │   ├── usePanelReducer.ts       # 4つのリデューサーを束ねるオーケストレーター
+│   │   ├── usePanelBaseReducer.ts   # パネルリスト基本状態（ドメインリデューサー）
+│   │   ├── usePanelData.ts          # State → View へのデータ変換（Presenter）
+│   │   ├── useSavedPanels.ts        # パネル保存・ロード（インフラ層）
+│   │   ├── useYamlEditor.ts         # YAML テキストエディタ状態管理
+│   │   ├── orders/
+│   │   │   └── useOrdersReducer.ts  # Orders ドメイン状態（ドメインリデューサー）
+│   │   ├── select/
+│   │   │   └── useSelectReducer.ts  # Select ドメイン状態（ドメインリデューサー）
+│   │   └── switch/
+│   │       └── useSwitchReducer.ts  # Switch ドメイン状態（ドメインリデューサー）
+│   └── viewer/                  # /viewer 画面関連フック
+│       ├── useViewerViewModel.ts    # /viewer 画面の ViewModel（MVVM）
+│       ├── useOrderJsonReducer.ts   # オーダー用 JSON 状態管理
+│       ├── useRequestJsonReducer.ts # リクエスト用 JSON 状態管理
+│       └── useOrdersViewer.ts       # オーダービュー状態管理
 │
 ├── types/                       # TypeScript 型定義
-│   ├── panel.ts                 # 状態型（State types）
-│   ├── bloc.ts                  # ビュー型（View types）— Bloc
-│   ├── orders.ts                # ビュー型（View types）— Orders
-│   ├── select.ts                # ビュー型（View types）— Select
-│   ├── switch.ts                # ビュー型（View types）— Switch
-│   ├── panelSave.ts             # 保存データ型（PanelSaveItem, PanelSaveDetail）
-│   └── yamlData.ts              # YAML パース用データ型
+│   ├── editor/                  # /editor 画面関連の型
+│   │   ├── panel.ts             # 状態型（State types）— パネルリスト全体
+│   │   ├── bloc.ts              # ビュー型（View types）— Bloc
+│   │   ├── orders.ts            # ビュー型（View types）— Orders
+│   │   ├── select.ts            # ビュー型（View types）— Select
+│   │   ├── switch.ts            # ビュー型（View types）— Switch
+│   │   └── panelSave.ts         # 保存データ型（PanelSaveItem, PanelSaveDetail）
+│   └── viewer/                  # /viewer 画面関連の型
+│       ├── orderJson.ts         # オーダー用 JSON レコード型
+│       └── yamlData.ts          # YAML パース用データ型
 │
 ├── utils/
 │   └── generateYaml.ts          # 状態 → YAML 文字列変換（純粋関数）

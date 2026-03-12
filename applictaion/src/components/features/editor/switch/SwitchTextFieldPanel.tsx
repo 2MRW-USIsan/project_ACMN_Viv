@@ -1,4 +1,4 @@
-import { SwitchChildViewItem } from "@/types/switch";
+import { SwitchChildViewItem } from "@/types/editor/switch";
 import { RemoveIconButton } from "@/components/atoms/RemoveIconButton";
 import { Grid } from "@mui/material";
 import { TextFieldPanel } from "@/components/atoms/TextFieldPanel";

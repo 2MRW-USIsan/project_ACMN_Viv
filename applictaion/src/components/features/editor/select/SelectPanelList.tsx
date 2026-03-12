@@ -1,4 +1,4 @@
-import type { SelectViewItem } from "@/types/select";
+import type { SelectViewItem } from "@/types/editor/select";
 import { PanelList } from "@/components/molecules/panel/PanelList";
 import { SelectPanelListItem } from "./SelectPanelListItem";
 

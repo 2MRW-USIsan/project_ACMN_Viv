@@ -2,12 +2,12 @@ import type {
   ChipType,
   PanelDataActionsType,
   PanelDataStateType,
-} from "@/types/panel";
+} from "@/types/editor/panel";
 import { useEffect } from "react";
-import { useOrdersReducer } from "./useOrdersReducer";
+import { useOrdersReducer } from "./orders/useOrdersReducer";
 import { usePanelBaseReducer } from "./usePanelBaseReducer";
-import { useSelectReducer } from "./useSelectReducer";
-import { useSwitchReducer } from "./useSwitchReducer";
+import { useSelectReducer } from "./select/useSelectReducer";
+import { useSwitchReducer } from "./switch/useSwitchReducer";
 
 // Re-export for backward compatibility
 export type { PanelDataActionsType, PanelDataStateType };

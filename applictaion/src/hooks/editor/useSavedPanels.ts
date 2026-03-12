@@ -1,7 +1,7 @@
 "use client";
 
-import type { PanelDataStateType } from "@/types/panel";
-import type { PanelSaveDetail, PanelSaveItem } from "@/types/panelSave";
+import type { PanelDataStateType } from "@/types/editor/panel";
+import type { PanelSaveDetail, PanelSaveItem } from "@/types/editor/panelSave";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
 export type SavedPanelsActions = {

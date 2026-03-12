@@ -1,4 +1,4 @@
-import type { SelectChildViewItem, SelectListViewItem } from "@/types/select";
+import type { SelectChildViewItem, SelectListViewItem } from "@/types/editor/select";
 import { RemoveIconButton } from "@/components/atoms/RemoveIconButton";
 import { Grid } from "@mui/material";
 import { TextFieldPanel } from "@/components/atoms/TextFieldPanel";

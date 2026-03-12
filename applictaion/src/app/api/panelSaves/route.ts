@@ -2,7 +2,7 @@ import {
   createPanelSave,
   fetchPanelSaves,
 } from "@/business/panelSave";
-import type { PanelDataStateType } from "@/types/panel";
+import type { PanelDataStateType } from "@/types/editor/panel";
 import { NextResponse } from "next/server";
 
 export async function GET() {

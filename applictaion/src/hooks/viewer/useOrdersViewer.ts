@@ -2,7 +2,7 @@
 
 import { load as loadYaml } from "js-yaml";
 import { useCallback, useEffect, useReducer } from "react";
-import type { YamlData } from "@/types/yamlData";
+import type { YamlData } from "@/types/viewer/yamlData";
 
 const STORAGE_KEY = "acmn_yaml_content";
 

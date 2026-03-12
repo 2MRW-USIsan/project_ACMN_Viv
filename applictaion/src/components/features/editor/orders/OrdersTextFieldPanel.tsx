@@ -1,7 +1,7 @@
 import { RadioGroupPanel } from "@/components/atoms/RadioGroupPanel";
 import { RemoveIconButton } from "@/components/atoms/RemoveIconButton";
 import { TextFieldPanel } from "@/components/atoms/TextFieldPanel";
-import { OrdersChildViewItem } from "@/types/orders";
+import { OrdersChildViewItem } from "@/types/editor/orders";
 import { Grid } from "@mui/material";
 import { TypographyText } from "@/components/atoms/TypographyText";
 import { OrdersItemFieldPanel } from "./OrdersItemFieldPanel";

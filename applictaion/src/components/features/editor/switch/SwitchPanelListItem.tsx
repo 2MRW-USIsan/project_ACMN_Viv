@@ -2,7 +2,7 @@ import { CheckChip } from "@/components/atoms/CheckChip";
 import { PanelList } from "@/components/molecules/panel/PanelList";
 import { PanelListItem } from "@/components/molecules/panel/PanelListItem";
 import { SwitchTextFieldPanel } from "./SwitchTextFieldPanel";
-import { SwitchChildViewItem, SwitchViewItem } from "@/types/switch";
+import { SwitchChildViewItem, SwitchViewItem } from "@/types/editor/switch";
 import { ListItem } from "@mui/material";
 
 interface SwitchPanelListItemProps {

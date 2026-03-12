@@ -1,10 +1,10 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { useRequestJsonReducer } from "@/hooks/useRequestJsonReducer";
-import { useOrderJsonReducer } from "@/hooks/useOrderJsonReducer";
-import type { JsonValidationStatus } from "@/hooks/useOrderJsonReducer";
-import type { OrderJsonRecord } from "@/types/orderJson";
+import { useRequestJsonReducer } from "@/hooks/viewer/useRequestJsonReducer";
+import { useOrderJsonReducer } from "@/hooks/viewer/useOrderJsonReducer";
+import type { JsonValidationStatus } from "@/hooks/viewer/useOrderJsonReducer";
+import type { OrderJsonRecord } from "@/types/viewer/orderJson";
 
 const YAML_STORAGE_KEY = "acmn_yaml_content";
 

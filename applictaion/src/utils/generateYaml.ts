@@ -10,7 +10,7 @@ import type {
   SelectPanelItem,
   SwitchDataItem,
   SwitchPanelItem,
-} from "@/types/panel";
+} from "@/types/editor/panel";
 
 // Serializable YAML data types (no IDs, state flags, or callbacks)
 

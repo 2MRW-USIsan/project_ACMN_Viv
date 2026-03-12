@@ -1,4 +1,4 @@
-import type { SwitchViewItem } from "@/types/switch";
+import type { SwitchViewItem } from "@/types/editor/switch";
 import { PanelList } from "@/components/molecules/panel/PanelList";
 import { SwitchPanelListItem } from "./SwitchPanelListItem";
 

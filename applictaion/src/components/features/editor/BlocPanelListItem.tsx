@@ -4,7 +4,7 @@ import { OrdersPanelList } from "./orders/OrdersPanelList";
 import { PanelListItem } from "@/components/molecules/panel/PanelListItem";
 import { SelectPanelList } from "./select/SelectPanelList";
 import { SwitchPanelList } from "./switch/SwitchPanelList";
-import type { BlocViewItem } from "@/types/bloc";
+import type { BlocViewItem } from "@/types/editor/bloc";
 
 interface BlocPanelListItemProps {
   props: BlocViewItem;

@@ -2,7 +2,7 @@ import type {
   SwitchDataItem,
   SwitchPanelChip,
   SwitchPanelItem,
-} from "@/types/panel";
+} from "@/types/editor/panel";
 import { useMemo, useReducer } from "react";
 
 type SwitchState = Record<number, SwitchPanelChip>;

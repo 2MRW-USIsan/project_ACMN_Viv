@@ -1,8 +1,8 @@
-import type { BlocViewItem } from "@/types/bloc";
-import type { OrdersViewItem } from "@/types/orders";
-import type { PanelDataActionsType, PanelDataStateType } from "@/types/panel";
-import type { SelectViewItem } from "@/types/select";
-import type { SwitchViewItem } from "@/types/switch";
+import type { BlocViewItem } from "@/types/editor/bloc";
+import type { OrdersViewItem } from "@/types/editor/orders";
+import type { PanelDataActionsType, PanelDataStateType } from "@/types/editor/panel";
+import type { SelectViewItem } from "@/types/editor/select";
+import type { SwitchViewItem } from "@/types/editor/switch";
 import { useMemo } from "react";
 
 type PanelReducer = {
