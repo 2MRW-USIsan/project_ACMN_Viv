@@ -65,10 +65,15 @@ applictaion/src/
 ├── hooks/                       # 状態管理・データ変換カスタムフック
 │   ├── editor/                  # /editor 画面関連フック
 │   │   ├── useEditorViewModel.ts    # /editor 画面の ViewModel（MVVM）
+│   │   ├── useEditorService.ts      # API 呼び出し（パネル保存 CRUD）
+│   │   ├── useEditorReducer.ts      # 状態管理（パネル + 保存 + UI 状態）; EditorContexts 定義
+│   │   ├── useEditorController.ts   # 副作用管理（Initialize + Effects を呼ぶ）
+│   │   ├── useEditorInitialize.ts   # 初期化 useEffect ラッパー
+│   │   ├── useEditorEffects.ts      # state 副作用 useEffect ラッパー
+│   │   ├── useEditorComposer.ts     # ViewModel 生成; EditorViewModel 定義
 │   │   ├── usePanelReducer.ts       # 4つのリデューサーを束ねるオーケストレーター
 │   │   ├── usePanelBaseReducer.ts   # パネルリスト基本状態（ドメインリデューサー）
 │   │   ├── usePanelData.ts          # State → View へのデータ変換（Presenter）
-│   │   ├── useSavedPanels.ts        # パネル保存・ロード（インフラ層）
 │   │   ├── useYamlEditor.ts         # YAML テキストエディタ状態管理
 │   │   ├── orders/
 │   │   │   └── useOrdersReducer.ts  # Orders ドメイン状態（ドメインリデューサー）
@@ -78,6 +83,12 @@ applictaion/src/
 │   │       └── useSwitchReducer.ts  # Switch ドメイン状態（ドメインリデューサー）
 │   └── viewer/                  # /viewer 画面関連フック
 │       ├── useViewerViewModel.ts    # /viewer 画面の ViewModel（MVVM）
+│       ├── useViewerService.ts      # API 呼び出し（orderJson CRUD）
+│       ├── useViewerReducer.ts      # 状態管理（request + order + UI 状態）; ViewerContexts 定義
+│       ├── useViewerController.ts   # 副作用管理（Initialize + Effects を呼ぶ）
+│       ├── useViewerInitialize.ts   # 初期化 useEffect ラッパー
+│       ├── useViewerEffects.ts      # state 副作用 useEffect ラッパー
+│       ├── useViewerComposer.ts     # ViewModel 生成; ViewerViewModel 定義
 │       ├── useOrderJsonReducer.ts   # オーダー用 JSON 状態管理
 │       ├── useRequestJsonReducer.ts # リクエスト用 JSON 状態管理
 │       └── useOrdersViewer.ts       # オーダービュー状態管理
@@ -118,9 +129,14 @@ import { PanelList } from "@/components/molecules/panel/PanelList";
 │  app/editor/page.tsx  （"use client" — View エントリ）            │
 │                                                                 │
 │   useEditorViewModel()  ←─ EditorViewModel（MVVM ViewModel）    │
-│     ├── usePanelReducer()    ←─ State & Actions                 │
-│     ├── usePanelData(reducer)  ←─ BlocViewItem[]（Presenter）   │
-│     └── useSavedPanels(loadState)  ←─ 保存・ロード              │
+│     ├── useEditorService()       ←─ API 呼び出し                │
+│     ├── useEditorReducer()       ←─ State & Actions             │
+│     │     └── usePanelReducer()  ←─ パネル状態オーケストレーター │
+│     ├── useEditorController(contexts)  ←─ 副作用管理            │
+│     │     ├── useEditorInitialize()    ←─ 初期化 useEffect      │
+│     │     └── useEditorEffects()       ←─ 状態副作用 useEffect  │
+│     └── useEditorComposer(contexts)    ←─ ViewModel 生成        │
+│           └── usePanelData(reducer)    ←─ BlocViewItem[]        │
 │                                                                 │
 │   └── <PanelList>                                               │
 │         └── <BlocPanelListItem> ×n                              │
@@ -136,13 +152,16 @@ import { PanelList } from "@/components/molecules/panel/PanelList";
 データフローは一方向：
 
 ```
-useReducer (状態管理)
-    ↓ state
-usePanelData (Presenter)
-    ↓ BlocViewItem[] （コールバック束ね済み）
-Components（描画のみ）
-    ↓ コールバック呼び出し
-dispatch → useReducer へ戻る
+useEditorService (API 呼び出し)
+    ↓ fetchItem / request
+useEditorReducer (状態管理)
+    ↓ state / action
+useEditorController (副作用管理)     useEditorComposer (ViewModel 生成)
+    ↓ useEffect による初期化・連携          ↓ usePanelData (Presenter)
+                                           ↓ BlocViewItem[] （コールバック束ね済み）
+                                       Components（描画のみ）
+                                           ↓ コールバック呼び出し
+                                       action → useEditorReducer へ戻る
 ```
 
 ---
@@ -189,27 +208,27 @@ state.panels ──→ usePanelData ──→ BlocViewItem[]
                                    └── switch.data: SwitchViewItem[]  （コールバック付き）
 ```
 
-### 4-4. インフラ層（`useSavedPanels`）
+### 4-4. ViewModel フック構成（`useEditorViewModel` / `useViewerViewModel`）
 
-`useSavedPanels(loadStateFn)` はパネル状態の永続化（API 経由の保存・ロード）を担当します。
-
-- `/api/panelSaves` エンドポイントを通じて保存一覧の取得・新規登録を行う。
-- ロード済みの状態を `loadedState` として保持し、差分検知（`hasDiff`）に利用。
-- API 通信のビジネスロジックは `business/panelSave.ts` に集約（現在はインメモリモック）。
-
-### 4-5. ViewModel（`useEditorViewModel`）
-
-`useEditorViewModel()` は `usePanelReducer`・`usePanelData`・`useSavedPanels` を束ね、`app/editor/page.tsx`（View）に渡すデータとコールバックを一元管理します（**MVVM パターン**）。
+ViewModel フックは以下の 4 種のフックで構成されます（詳細は `GUIDELINES.md` の「ViewModel Logic Design」を参照）。
 
 ```ts
-export function useEditorViewModel(): EditorViewModel
+// use{Page}ViewModel の内部構成
+const { fetchItem, request } = use{Page}Service();       // API 呼び出し
+const { state, action } = use{Page}Reducer();            // 状態管理
+const contexts = { service: { fetchItem, request }, reducer: { state, action } };
+use{Page}Controller(contexts);                           // 副作用管理
+const { viewModels } = use{Page}Composer(contexts);      // ViewModel 生成
 ```
 
-- View は `vm.panelData`・`vm.onAddPanel`・`vm.yaml` などのプロパティのみを参照する。
-- 状態管理・データ変換・API 通信の詳細はすべて ViewModel 内に隠蔽される。
-- 返却型 `EditorViewModel` は `types/` ではなく `useEditorViewModel.ts` 内で定義（画面固有の型のため）。
+- **Service**: API・Repository・Usecase の呼び出しが責務。状態を持たない純粋な非同期関数群を `fetchItem`（読み取り系）と `request`（書き込み系）に分けて提供。
+- **Reducer**: `useReducer` / `useState` による状態管理。`state` と `action` を返す。処理量が増えた場合はドメイン単位のサブリデューサー（例: `usePanelReducer`）を内部で呼び出す。
+- **Controller**: `contexts` を受け取り `use{Page}Initialize`（初期化 `useEffect`）と `use{Page}Effects`（状態副作用 `useEffect`）を呼び出す。
+- **Composer**: `contexts` を受け取り最終的な ViewModel を生成して返す。`ViewModel` 型の定義もここに置く。
 
-### 4-6. ネストフィールドのラベルパース方式
+`use{Page}ViewModel` が返す型（例: `EditorViewModel`）は `use{Page}Composer.ts` 内で定義し、`use{Page}ViewModel.ts` から re-export します。
+
+### 4-5. ネストフィールドのラベルパース方式
 
 Orders / Select の子アイテム更新には、ネストパスをラベル文字列としてエンコードするパターンを採用しています。
 
@@ -317,7 +336,7 @@ type Action =
 
 ### ViewModel 型
 
-`useEditorViewModel.ts` 内で `EditorViewModel` 型を定義します。画面固有のインターフェースであるため `types/` には置かず、ViewModel フックファイルと同居させます。
+`EditorViewModel` 型は `useEditorComposer.ts` 内で定義し、`useEditorViewModel.ts` から re-export します。画面固有のインターフェースであるため `types/` には置きません。同様に `ViewerViewModel` は `useViewerComposer.ts` 内で定義します。
 
 ---
 
@@ -405,4 +424,9 @@ blocs:
 3. `useReducer` を使う場合、Action は discriminated union で定義する。
 4. アクション関数は `useMemo` でメモ化する（React 19 Compiler との競合を避けるため、`useMemo` 内に副関数を同居させること）。
 5. ドメインリデューサーを新規追加する場合は `usePanelReducer.ts` でオーケストレーションに組み込む。
-6. 画面固有の ViewModel は `use<ScreenName>ViewModel.ts` として作成し、各 hooks を束ねて画面コンポーネントに渡す単一インターフェースを提供する（MVVM パターン）。
+6. 画面固有の ViewModel は、以下の **5 種のフック** で構成する（詳細は `GUIDELINES.md` の「ViewModel Logic Design」を参照）。
+   - `use{Page}Service` — API 呼び出し（`fetchItem` / `request` を返す）
+   - `use{Page}Reducer` — 状態管理（`state` / `action` を返す）; `{Page}Contexts` 型もここで定義する
+   - `use{Page}Controller` — 副作用管理（`use{Page}Initialize` + `use{Page}Effects` を呼ぶ）
+   - `use{Page}Composer` — ViewModel 生成（`{ viewModels }` を返す）; ViewModel 型もここで定義する
+   - `use{Page}ViewModel` — 上記 4 フックを束ねるオーケストレーター
