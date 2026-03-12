@@ -1,14 +1,7 @@
-import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-import ExpandLess from "@mui/icons-material/ExpandLess";
-import ExpandMore from "@mui/icons-material/ExpandMore";
-import {
-  Collapse,
-  Grid,
-  IconButton,
-  List,
-  ListItem,
-  TextField,
-} from "@mui/material";
+import { DeleteIconButton } from "../../atoms/DeleteIconButton";
+import { ExpandIconButton } from "../../atoms/ExpandIconButton";
+import { InputPanel } from "../../atoms/InputPanel";
+import { Collapse, Grid, List, ListItem } from "@mui/material";
 
 interface PanelListItemProps {
   props: {
@@ -30,30 +23,28 @@ export function PanelListItem({
       <ListItem sx={{ pl: 2, pr: 1, gap: 1 }}>
         <Grid container spacing={1} sx={{ flex: 1 }} alignItems="center">
           <Grid size="grow">
-            <TextField
-              fullWidth
-              size="small"
-              label="Key"
-              value={values.key}
-              onChange={(e) => onChangeForm("key", e.target.value)}
+            <InputPanel
+              props={{
+                label: "Key",
+                value: values.key,
+                fullWidth: true,
+                onChange: (v) => onChangeForm("key", v),
+              }}
             />
           </Grid>
           <Grid size="grow">
-            <TextField
-              fullWidth
-              size="small"
-              label="Label"
-              value={values.label}
-              onChange={(e) => onChangeForm("label", e.target.value)}
+            <InputPanel
+              props={{
+                label: "Label",
+                value: values.label,
+                fullWidth: true,
+                onChange: (v) => onChangeForm("label", v),
+              }}
             />
           </Grid>
         </Grid>
-        <IconButton size="small" onClick={onDelete}>
-          <DeleteOutlineIcon fontSize="small" />
-        </IconButton>
-        <IconButton size="small" onClick={onClick}>
-          {state ? <ExpandLess /> : <ExpandMore />}
-        </IconButton>
+        <DeleteIconButton props={{ onClick: onDelete }} />
+        <ExpandIconButton props={{ expanded: state, onClick }} />
       </ListItem>
       <Collapse in={state} orientation="vertical" timeout="auto" unmountOnExit>
         {children}

@@ -1,5 +1,5 @@
 import { createOrderJson, fetchOrderJson, updateOrderJson } from "@/business/orderJson";
-import type { OrderJsonRecord } from "@/types/orderJson";
+import type { OrderJsonRecord } from "@/types/viewer/orderJson";
 import { NextResponse } from "next/server";
 
 export async function GET() {
