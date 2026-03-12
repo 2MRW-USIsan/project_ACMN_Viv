@@ -66,7 +66,7 @@ export function OrdersViewerPanel() {
             multiline
             rows={22}
             value={vm.requestJsonText}
-            inputProps={{ readOnly: true, style: { fontFamily: "monospace", fontSize: "0.8rem" } }}
+            slotProps={{ htmlInput: { readOnly: true, style: { fontFamily: "monospace", fontSize: "0.8rem" } } }}
             fullWidth
           />
         </Grid>
@@ -155,7 +155,7 @@ export function OrdersViewerPanel() {
             multiline
             rows={22}
             value={vm.orderJsonText}
-            inputProps={{ readOnly: true, style: { fontFamily: "monospace", fontSize: "0.8rem" } }}
+            slotProps={{ htmlInput: { readOnly: true, style: { fontFamily: "monospace", fontSize: "0.8rem" } } }}
             fullWidth
           />
 
