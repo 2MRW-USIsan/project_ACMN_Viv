@@ -1,6 +1,7 @@
 import { RemoveIconButton } from "@/components/atoms/RemoveIconButton";
 import { OrdersItemViewItem } from "@/types/orders";
-import { Grid, ListItem, TextField } from "@mui/material";
+import { Grid, ListItem } from "@mui/material";
+import { InputPanel } from "@/components/atoms/InputPanel";
 import { PanelList } from "../panel/PanelList";
 
 interface OrdersItemFieldPanelProps {
@@ -21,40 +22,44 @@ export function OrdersItemFieldPanel({ props }: OrdersItemFieldPanelProps) {
     <ListItem sx={{ width: "100%", pl: 4, display: "block" }}>
       <Grid container width="100%" spacing={1}>
         <Grid size="grow">
-          <TextField
-            fullWidth
-            size="small"
-            label="Value"
-            disabled={disabled}
-            value={values.value}
-            onChange={(e) => onChangeForm("value", e.target.value)}
+          <InputPanel
+            props={{
+              label: "Value",
+              value: values.value,
+              fullWidth: true,
+              disabled,
+              onChange: (v) => onChangeForm("value", v),
+            }}
           />
         </Grid>
         {!hidePrompt && (
           <Grid size="grow">
-            <TextField
-              fullWidth
-              size="small"
-              label="Prompt"
-              disabled={disabled}
-              value={values.prompt}
-              onChange={(e) => onChangeForm("prompt", e.target.value)}
+            <InputPanel
+              props={{
+                label: "Prompt",
+                value: values.prompt,
+                fullWidth: true,
+                disabled,
+                onChange: (v) => onChangeForm("prompt", v),
+              }}
             />
           </Grid>
         )}
         <Grid size={3}>
-          <TextField
-            fullWidth
-            size="small"
-            label="Weight"
-            type="number"
-            disabled={disabled}
-            value={disabled ? "0" : values.weight}
-            onChange={(e) => {
-              const v = Math.floor(Number(e.target.value));
-              onChangeForm("weight", String(v < 0 ? 0 : v));
+          <InputPanel
+            props={{
+              label: "Weight",
+              value: disabled ? "0" : values.weight,
+              fullWidth: true,
+              disabled,
+              type: "number",
+              step: 1,
+              min: 0,
+              onChange: (v) => {
+                const n = Math.floor(Number(v));
+                onChangeForm("weight", String(n < 0 ? 0 : n));
+              },
             }}
-            slotProps={{ htmlInput: { step: 1, min: 0 } }}
           />
         </Grid>
         <Grid size="auto" sx={{ display: "flex", alignItems: "center" }}>
@@ -69,39 +74,39 @@ export function OrdersItemFieldPanel({ props }: OrdersItemFieldPanelProps) {
             <ListItem key={complexItem.id} sx={{ width: "100%", pl: 4 }}>
               <Grid container width="100%" spacing={1}>
                 <Grid size="grow">
-                  <TextField
-                    fullWidth
-                    size="small"
-                    label="Value"
-                    value={complexItem.values.value}
-                    onChange={(e) =>
-                      complexItem.onChangeForm("value", e.target.value)
-                    }
+                  <InputPanel
+                    props={{
+                      label: "Value",
+                      value: complexItem.values.value,
+                      fullWidth: true,
+                      onChange: (v) => complexItem.onChangeForm("value", v),
+                    }}
                   />
                 </Grid>
                 <Grid size="grow">
-                  <TextField
-                    fullWidth
-                    size="small"
-                    label="Prompt"
-                    value={complexItem.values.prompt}
-                    onChange={(e) =>
-                      complexItem.onChangeForm("prompt", e.target.value)
-                    }
+                  <InputPanel
+                    props={{
+                      label: "Prompt",
+                      value: complexItem.values.prompt,
+                      fullWidth: true,
+                      onChange: (v) => complexItem.onChangeForm("prompt", v),
+                    }}
                   />
                 </Grid>
                 <Grid size={3}>
-                  <TextField
-                    fullWidth
-                    size="small"
-                    label="Weight"
-                    type="number"
-                    value={complexItem.values.weight}
-                    onChange={(e) => {
-                      const v = Math.floor(Number(e.target.value));
-                      complexItem.onChangeForm("weight", String(v < 0 ? 0 : v));
+                  <InputPanel
+                    props={{
+                      label: "Weight",
+                      value: complexItem.values.weight,
+                      fullWidth: true,
+                      type: "number",
+                      step: 1,
+                      min: 0,
+                      onChange: (v) => {
+                        const n = Math.floor(Number(v));
+                        complexItem.onChangeForm("weight", String(n < 0 ? 0 : n));
+                      },
                     }}
-                    slotProps={{ htmlInput: { step: 1, min: 0 } }}
                   />
                 </Grid>
                 <Grid

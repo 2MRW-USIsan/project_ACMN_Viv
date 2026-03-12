@@ -1,8 +1,6 @@
 "use client";
 
-import Alert from "@mui/material/Alert";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
@@ -10,11 +8,13 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
-import TextField from "@mui/material/TextField";
 import Tooltip from "@mui/material/Tooltip";
-import Typography from "@mui/material/Typography";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
+import { AlertPanel } from "@/components/atoms/AlertPanel";
+import { ButtonPanel } from "@/components/atoms/ButtonPanel";
+import { InputPanel } from "@/components/atoms/InputPanel";
+import { TypographyText } from "@/components/atoms/TypographyText";
 import type { ViewerViewModel } from "@/hooks/useViewerViewModel";
 
 interface OrdersViewerPanelProps {
@@ -25,14 +25,12 @@ export function OrdersViewerPanel({ props: vm }: OrdersViewerPanelProps) {
 
   return (
     <Box sx={{ p: 3, display: "flex", flexDirection: "column", gap: 2 }}>
-      <Typography variant="h5" component="h1">
-        オーダー
-      </Typography>
+      <TypographyText props={{ variant: "h5", component: "h1" }}>オーダー</TypographyText>
 
       {vm.yamlError && (
-        <Alert severity="error" sx={{ width: "fit-content" }}>
-          {vm.yamlError}
-        </Alert>
+        <Box sx={{ width: "fit-content" }}>
+          <AlertPanel props={{ severity: "error" }}>{vm.yamlError}</AlertPanel>
+        </Box>
       )}
 
       <Grid container spacing={3}>
@@ -41,36 +39,36 @@ export function OrdersViewerPanel({ props: vm }: OrdersViewerPanelProps) {
           <Stack direction="row" spacing={1} sx={{ mb: 1 }}>
             <Tooltip title="再抽選してJSON情報を更新します">
               <span>
-                <Button
-                  variant="contained"
-                  onClick={vm.onShuffle}
-                  disabled={!vm.hasYamlData}
+                <ButtonPanel
+                  props={{ variant: "contained", onClick: vm.onShuffle, disabled: !vm.hasYamlData }}
                 >
                   シャッフル
-                </Button>
+                </ButtonPanel>
               </span>
             </Tooltip>
             <Tooltip title="テキストエリアの内容をクリップボードにコピーします">
-              <Button
-                variant="outlined"
-                onClick={() => void vm.onCopyRequest()}
-                disabled={!vm.requestJsonText}
+              <ButtonPanel
+                props={{ variant: "outlined", onClick: () => void vm.onCopyRequest(), disabled: !vm.requestJsonText }}
               >
                 コピー
-              </Button>
+              </ButtonPanel>
             </Tooltip>
           </Stack>
 
-          <Typography variant="subtitle1" gutterBottom>
+          <TypographyText props={{ variant: "subtitle1", gutterBottom: true }}>
             リクエスト用JSON情報
-          </Typography>
-          <TextField
-            label="リクエスト用JSON"
-            multiline
-            rows={22}
-            value={vm.requestJsonText}
-            slotProps={{ htmlInput: { readOnly: true, style: { fontFamily: "monospace", fontSize: "0.8rem" } } }}
-            fullWidth
+          </TypographyText>
+          <InputPanel
+            props={{
+              label: "リクエスト用JSON",
+              value: vm.requestJsonText,
+              multiline: true,
+              rows: 22,
+              readOnly: true,
+              fontFamily: "monospace",
+              fontSize: "0.8rem",
+              fullWidth: true,
+            }}
           />
         </Grid>
 
@@ -78,22 +76,13 @@ export function OrdersViewerPanel({ props: vm }: OrdersViewerPanelProps) {
         <Grid size={6}>
           <Stack direction="row" spacing={1} sx={{ mb: 1 }}>
             <Tooltip title="クリップボードの文字列を貼り付けます">
-              <Button
-                variant="contained"
-                onClick={() => void vm.onPaste()}
-              >
-                ペースト
-              </Button>
+              <ButtonPanel props={{ variant: "contained", onClick: () => void vm.onPaste() }}>ペースト</ButtonPanel>
             </Tooltip>
             <Tooltip title="テキストエリアを空文字列にします">
-              <Button variant="outlined" onClick={vm.onClear}>
-                クリア
-              </Button>
+              <ButtonPanel props={{ variant: "outlined", onClick: vm.onClear }}>クリア</ButtonPanel>
             </Tooltip>
             <Tooltip title="DBから取得した情報にリセットします">
-              <Button variant="outlined" onClick={vm.onReset}>
-                リセット
-              </Button>
+              <ButtonPanel props={{ variant: "outlined", onClick: vm.onReset }}>リセット</ButtonPanel>
             </Tooltip>
             <Tooltip
               title={
@@ -103,33 +92,22 @@ export function OrdersViewerPanel({ props: vm }: OrdersViewerPanelProps) {
               }
             >
               <span>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={vm.onRegisterClick}
-                  disabled={!vm.isRegisterEnabled}
+                <ButtonPanel
+                  props={{ variant: "contained", color: "primary", onClick: vm.onRegisterClick, disabled: !vm.isRegisterEnabled }}
                 >
                   登録
-                </Button>
+                </ButtonPanel>
               </span>
             </Tooltip>
             {vm.isDeleteEnabled && (
               <Tooltip title="DBのレコードを削除します">
-                <Button
-                  variant="outlined"
-                  color="error"
-                  onClick={() => void vm.onDelete()}
-                >
-                  削除
-                </Button>
+                <ButtonPanel props={{ variant: "outlined", color: "error", onClick: () => void vm.onDelete() }}>削除</ButtonPanel>
               </Tooltip>
             )}
           </Stack>
 
           <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 0.5 }}>
-            <Typography variant="subtitle1">
-              オーダー用JSON情報
-            </Typography>
+            <TypographyText props={{ variant: "subtitle1" }}>オーダー用JSON情報</TypographyText>
             {/* TBD: 次へボタン — 遷移先画面未実装 */}
             <Box sx={{ ml: "auto" }}>
               <Tooltip
@@ -140,47 +118,48 @@ export function OrdersViewerPanel({ props: vm }: OrdersViewerPanelProps) {
                 }
               >
                 <span>
-                  <Button
-                    variant="contained"
-                    size="small"
-                    disabled={!vm.isNextEnabled}
-                    // TBD: onClick navigation to prompt editing screen
+                  <ButtonPanel
+                    props={{ variant: "contained", size: "small", disabled: !vm.isNextEnabled }}
                   >
                     次へ
-                  </Button>
+                  </ButtonPanel>
                 </span>
               </Tooltip>
             </Box>
           </Box>
 
-          <TextField
-            label="オーダー用JSON"
-            multiline
-            rows={22}
-            value={vm.orderJsonText}
-            slotProps={{ htmlInput: { readOnly: true, style: { fontFamily: "monospace", fontSize: "0.8rem" } } }}
-            fullWidth
+          <InputPanel
+            props={{
+              label: "オーダー用JSON",
+              value: vm.orderJsonText,
+              multiline: true,
+              rows: 22,
+              readOnly: true,
+              fontFamily: "monospace",
+              fontSize: "0.8rem",
+              fullWidth: true,
+            }}
           />
 
           {/* Diff & validation status */}
           <Box sx={{ mt: 1, display: "flex", flexDirection: "column", gap: 0.5 }}>
             {vm.hasDiff && (
-              <Alert severity="warning" sx={{ py: 0 }}>
+              <AlertPanel props={{ severity: "warning", compact: true }}>
                 DBの保存データと差分があります
-              </Alert>
+              </AlertPanel>
             )}
             {vm.validationStatus === "valid" && (
               <Box sx={{ display: "flex", alignItems: "center", gap: 0.5, color: "success.main" }}>
                 <CheckCircleOutlineIcon fontSize="small" />
-                <Typography variant="caption">JSON構造: OK</Typography>
+                <TypographyText props={{ variant: "caption" }}>JSON構造: OK</TypographyText>
               </Box>
             )}
             {vm.validationStatus === "invalid" && (
               <Box sx={{ display: "flex", alignItems: "center", gap: 0.5, color: "error.main" }}>
                 <ErrorOutlineIcon fontSize="small" />
-                <Typography variant="caption">
+                <TypographyText props={{ variant: "caption" }}>
                   JSON構造: NG — {vm.validationError}
-                </Typography>
+                </TypographyText>
               </Box>
             )}
           </Box>
@@ -201,14 +180,8 @@ export function OrdersViewerPanel({ props: vm }: OrdersViewerPanelProps) {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={vm.onCancelConfirm}>キャンセル</Button>
-          <Button
-            variant="contained"
-            onClick={() => void vm.onConfirmRegister()}
-            color="primary"
-          >
-            登録
-          </Button>
+          <ButtonPanel props={{ onClick: vm.onCancelConfirm }}>キャンセル</ButtonPanel>
+          <ButtonPanel props={{ variant: "contained", color: "primary", onClick: () => void vm.onConfirmRegister() }}>登録</ButtonPanel>
         </DialogActions>
       </Dialog>
     </Box>

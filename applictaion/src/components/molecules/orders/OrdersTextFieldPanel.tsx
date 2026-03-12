@@ -2,7 +2,8 @@ import { RadioGroupPanel } from "@/components/atoms/RadioGroupPanel";
 import { RemoveIconButton } from "@/components/atoms/RemoveIconButton";
 import { TextFieldPanel } from "@/components/atoms/TextFieldPanel";
 import { OrdersChildViewItem } from "@/types/orders";
-import { Grid, Typography } from "@mui/material";
+import { Grid } from "@mui/material";
+import { TypographyText } from "@/components/atoms/TypographyText";
 import { OrdersItemFieldPanel } from "./OrdersItemFieldPanel";
 import { PanelList } from "../panel/PanelList";
 
@@ -32,16 +33,16 @@ export function OrdersTextFieldPanel({ props }: OrdersTextFieldPanelProps) {
   const typeContentMap: Record<string, React.ReactNode> = {
     Scripts: (
       <Grid size={12} sx={{ pl: 1 }}>
-        <Typography variant="caption" color="text.secondary">
+        <TypographyText props={{ variant: "caption", color: "text.secondary" }}>
           Request: Intend to include an appropriate text.
-        </Typography>
+        </TypographyText>
       </Grid>
     ),
     Color: (
       <Grid size={12} sx={{ pl: 1 }}>
-        <Typography variant="caption" color="text.secondary">
+        <TypographyText props={{ variant: "caption", color: "text.secondary" }}>
           Request: Intend to include appropriate color information [#RRGGBB].
-        </Typography>
+        </TypographyText>
       </Grid>
     ),
   };

@@ -1,18 +1,18 @@
 "use client";
 
 import {
-  Alert,
-  Button,
+  Box,
   Dialog,
   DialogActions,
   DialogContent,
   DialogContentText,
   DialogTitle,
-  IconButton,
   Tooltip,
 } from "@mui/material";
-import ContentCopyIcon from "@mui/icons-material/ContentCopy";
-import DownloadIcon from "@mui/icons-material/Download";
+import { AlertPanel } from "@/components/atoms/AlertPanel";
+import { ButtonPanel } from "@/components/atoms/ButtonPanel";
+import { ContentCopyIconButton } from "@/components/atoms/ContentCopyIconButton";
+import { DownloadIconButton } from "@/components/atoms/DownloadIconButton";
 import { useState } from "react";
 
 interface YamlPreviewDialogProps {
@@ -75,21 +75,19 @@ export function YamlPreviewDialog({ props }: YamlPreviewDialogProps) {
               copied ? "Copied!" : copyError ? "Copy failed" : "Copy to clipboard"
             }
           >
-            <IconButton onClick={handleCopy} size="small">
-              <ContentCopyIcon fontSize="small" />
-            </IconButton>
+            <ContentCopyIconButton props={{ onClick: handleCopy }} />
           </Tooltip>
           <Tooltip title="Download blocs.yaml">
-            <IconButton onClick={handleDownload} size="small">
-              <DownloadIcon fontSize="small" />
-            </IconButton>
+            <DownloadIconButton props={{ onClick: handleDownload }} />
           </Tooltip>
         </DialogTitle>
         <DialogContent dividers>
           {hasDiff && (
-            <Alert severity="warning" sx={{ mb: 1 }}>
-              ロードしたデータと現在の入力内容に差分があります。
-            </Alert>
+            <Box sx={{ mb: 1 }}>
+              <AlertPanel props={{ severity: "warning" }}>
+                ロードしたデータと現在の入力内容に差分があります。
+              </AlertPanel>
+            </Box>
           )}
           <pre
             style={{
@@ -104,13 +102,8 @@ export function YamlPreviewDialog({ props }: YamlPreviewDialogProps) {
           </pre>
         </DialogContent>
         <DialogActions>
-          <Button
-            variant="contained"
-            onClick={() => setConfirmOpen(true)}
-          >
-            DBに登録
-          </Button>
-          <Button onClick={onClose}>Close</Button>
+          <ButtonPanel props={{ variant: "contained", onClick: () => setConfirmOpen(true) }}>DBに登録</ButtonPanel>
+          <ButtonPanel props={{ onClick: onClose }}>Close</ButtonPanel>
         </DialogActions>
       </Dialog>
 
@@ -127,16 +120,8 @@ export function YamlPreviewDialog({ props }: YamlPreviewDialogProps) {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setConfirmOpen(false)} disabled={registering}>
-            キャンセル
-          </Button>
-          <Button
-            variant="contained"
-            onClick={handleConfirmRegister}
-            disabled={registering}
-          >
-            登録
-          </Button>
+          <ButtonPanel props={{ onClick: () => setConfirmOpen(false), disabled: registering }}>キャンセル</ButtonPanel>
+          <ButtonPanel props={{ variant: "contained", onClick: handleConfirmRegister, disabled: registering }}>登録</ButtonPanel>
         </DialogActions>
       </Dialog>
     </>

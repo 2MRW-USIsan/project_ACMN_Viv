@@ -1,11 +1,10 @@
 "use client";
 
-import Alert from "@mui/material/Alert";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Stack from "@mui/material/Stack";
-import TextField from "@mui/material/TextField";
-import Typography from "@mui/material/Typography";
+import { Box, Stack } from "@mui/material";
+import { AlertPanel } from "@/components/atoms/AlertPanel";
+import { ButtonPanel } from "@/components/atoms/ButtonPanel";
+import { InputPanel } from "@/components/atoms/InputPanel";
+import { TypographyText } from "@/components/atoms/TypographyText";
 import { useYamlEditor } from "@/hooks/useYamlEditor";
 
 export function YamlEditorPanel() {
@@ -13,37 +12,31 @@ export function YamlEditorPanel() {
 
   return (
     <Box sx={{ p: 3, display: "flex", flexDirection: "column", gap: 2 }}>
-      <Typography variant="h5" component="h1">
-        YAMLエディタ
-      </Typography>
+      <TypographyText props={{ variant: "h5", component: "h1" }}>YAMLエディタ</TypographyText>
 
       <Stack direction="row" spacing={1}>
-        <Button variant="contained" onClick={save}>
-          保存
-        </Button>
-        <Button variant="outlined" onClick={createNew}>
-          新規
-        </Button>
-        <Button variant="outlined" onClick={download}>
-          ダウンロード
-        </Button>
+        <ButtonPanel props={{ variant: "contained", onClick: save }}>保存</ButtonPanel>
+        <ButtonPanel props={{ variant: "outlined", onClick: createNew }}>新規</ButtonPanel>
+        <ButtonPanel props={{ variant: "outlined", onClick: download }}>ダウンロード</ButtonPanel>
         {/* TODO: Add file load (upload) button when requirements are clarified */}
       </Stack>
 
       {savedMessage && (
-        <Alert severity="success" sx={{ width: "fit-content" }}>
-          {savedMessage}
-        </Alert>
+        <Box sx={{ width: "fit-content" }}>
+          <AlertPanel props={{ severity: "success" }}>{savedMessage}</AlertPanel>
+        </Box>
       )}
 
-      <TextField
-        label="YAMLコンテンツ"
-        multiline
-        rows={24}
-        value={content}
-        onChange={(e) => setContent(e.target.value)}
-        inputProps={{ style: { fontFamily: "monospace" } }}
-        fullWidth
+      <InputPanel
+        props={{
+          label: "YAMLコンテンツ",
+          value: content,
+          onChange: setContent,
+          multiline: true,
+          rows: 24,
+          fontFamily: "monospace",
+          fullWidth: true,
+        }}
       />
     </Box>
   );

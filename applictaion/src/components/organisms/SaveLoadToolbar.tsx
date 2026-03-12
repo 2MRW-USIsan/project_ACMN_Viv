@@ -1,14 +1,9 @@
 "use client";
 
 import type { PanelSaveItem } from "@/types/panelSave";
-import {
-  Button,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  Typography,
-} from "@mui/material";
+import { FormControl, InputLabel, MenuItem, Select, Stack } from "@mui/material";
+import { ButtonPanel } from "@/components/atoms/ButtonPanel";
+import { TypographyText } from "@/components/atoms/TypographyText";
 
 interface SaveLoadToolbarProps {
   props: {
@@ -35,14 +30,9 @@ export function SaveLoadToolbar({ props }: SaveLoadToolbarProps) {
     onReselect,
   } = props;
   return (
-    <>
+    <Stack direction="row" spacing={1} alignItems="center">
       {isLoaded ? (
-        <Typography
-          variant="body2"
-          sx={{ minWidth: 200, alignSelf: "center" }}
-        >
-          {loadedSaveName}
-        </Typography>
+        <TypographyText props={{ variant: "body2" }}>{loadedSaveName}</TypographyText>
       ) : (
         <FormControl size="small" sx={{ minWidth: 200 }}>
           <InputLabel>保存済みデータ</InputLabel>
@@ -60,19 +50,18 @@ export function SaveLoadToolbar({ props }: SaveLoadToolbarProps) {
         </FormControl>
       )}
       {isLoaded ? (
-        <Button variant="outlined" onClick={onReselect} sx={{ ml: 1 }}>
-          再選択
-        </Button>
+        <ButtonPanel props={{ variant: "outlined", onClick: onReselect }}>再選択</ButtonPanel>
       ) : (
-        <Button
-          variant="outlined"
-          onClick={onLoad}
-          disabled={!selectedSaveId || isLoading}
-          sx={{ ml: 1 }}
+        <ButtonPanel
+          props={{
+            variant: "outlined",
+            onClick: onLoad,
+            disabled: !selectedSaveId || isLoading,
+          }}
         >
           ロード
-        </Button>
+        </ButtonPanel>
       )}
-    </>
+    </Stack>
   );
 }

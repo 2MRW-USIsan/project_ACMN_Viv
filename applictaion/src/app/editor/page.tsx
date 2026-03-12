@@ -5,7 +5,8 @@ import { YamlPreviewDialog } from "@/components/organisms/YamlPreviewDialog";
 import { SaveLoadToolbar } from "@/components/organisms/SaveLoadToolbar";
 import { PanelList } from "@/components/molecules/panel/PanelList";
 import { useEditorViewModel } from "@/hooks/useEditorViewModel";
-import { Box, Button } from "@mui/material";
+import { Box } from "@mui/material";
+import { ButtonPanel } from "@/components/atoms/ButtonPanel";
 
 export default function EditorPage() {
   const vm = useEditorViewModel();
@@ -15,9 +16,11 @@ export default function EditorPage() {
       <Box
         sx={{ display: "flex", justifyContent: "flex-end", alignItems: "center" }}
       >
-        <Button variant="contained" onClick={vm.onOpenYaml} sx={{ m: 2 }}>
-          Generate YAML
-        </Button>
+        <Box sx={{ m: 2 }}>
+          <ButtonPanel props={{ variant: "contained", onClick: vm.onOpenYaml }}>
+            Generate YAML
+          </ButtonPanel>
+        </Box>
         <SaveLoadToolbar
           props={{
             saveList: vm.saveList,
