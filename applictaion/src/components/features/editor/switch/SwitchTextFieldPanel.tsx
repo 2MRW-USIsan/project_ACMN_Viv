@@ -1,7 +1,7 @@
 import { SwitchChildViewItem } from "@/types/switch";
 import { RemoveIconButton } from "@/components/atoms/RemoveIconButton";
 import { Grid } from "@mui/material";
-import { TextFieldPanel } from "../../atoms/TextFieldPanel";
+import { TextFieldPanel } from "@/components/atoms/TextFieldPanel";
 
 interface SwitchTextFieldPanelProps {
   props: SwitchChildViewItem;

@@ -1,7 +1,7 @@
 import { CheckChip } from "@/components/atoms/CheckChip";
 import { PanelList } from "@/components/molecules/panel/PanelList";
 import { PanelListItem } from "@/components/molecules/panel/PanelListItem";
-import { SelectTextFieldPanel } from "@/components/molecules/select/SelectTextFieldPanel";
+import { SelectTextFieldPanel } from "./SelectTextFieldPanel";
 import { SelectChildViewItem, SelectViewItem } from "@/types/select";
 import { ListItem } from "@mui/material";
 

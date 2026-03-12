@@ -5,7 +5,7 @@ import { OrdersChildViewItem } from "@/types/orders";
 import { Grid } from "@mui/material";
 import { TypographyText } from "@/components/atoms/TypographyText";
 import { OrdersItemFieldPanel } from "./OrdersItemFieldPanel";
-import { PanelList } from "../panel/PanelList";
+import { PanelList } from "@/components/molecules/panel/PanelList";
 
 interface OrdersTextFieldPanelProps {
   props: OrdersChildViewItem;

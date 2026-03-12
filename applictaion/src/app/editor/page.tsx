@@ -1,8 +1,8 @@
 "use client";
 
-import { BlocPanelListItem } from "@/components/organisms/bloc/BlocPanelListItem";
-import { YamlPreviewDialog } from "@/components/organisms/YamlPreviewDialog";
-import { SaveLoadToolbar } from "@/components/organisms/SaveLoadToolbar";
+import { BlocPanelListItem } from "@/components/features/editor/BlocPanelListItem";
+import { YamlPreviewDialog } from "@/components/features/editor/YamlPreviewDialog";
+import { SaveLoadToolbar } from "@/components/features/editor/SaveLoadToolbar";
 import { PanelList } from "@/components/molecules/panel/PanelList";
 import { useEditorViewModel } from "@/hooks/useEditorViewModel";
 import { Box } from "@mui/material";

@@ -1,8 +1,8 @@
 import type { SelectChildViewItem, SelectListViewItem } from "@/types/select";
 import { RemoveIconButton } from "@/components/atoms/RemoveIconButton";
 import { Grid } from "@mui/material";
-import { TextFieldPanel } from "../../atoms/TextFieldPanel";
-import { PanelList } from "../panel/PanelList";
+import { TextFieldPanel } from "@/components/atoms/TextFieldPanel";
+import { PanelList } from "@/components/molecules/panel/PanelList";
 import { ListItemTextFieldPanel } from "./ListItemTextFieldPanel";
 
 interface SelectTextFieldPanelProps {

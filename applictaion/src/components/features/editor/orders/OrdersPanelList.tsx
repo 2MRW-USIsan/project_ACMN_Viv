@@ -1,5 +1,5 @@
 import type { OrdersViewItem } from "@/types/orders";
-import { PanelList } from "../../molecules/panel/PanelList";
+import { PanelList } from "@/components/molecules/panel/PanelList";
 import { OrdersPanelListItem } from "./OrdersPanelListItem";
 
 interface OrdersPanelListProps {

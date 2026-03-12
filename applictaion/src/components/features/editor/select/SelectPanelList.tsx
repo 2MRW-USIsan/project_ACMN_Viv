@@ -1,5 +1,5 @@
 import type { SelectViewItem } from "@/types/select";
-import { PanelList } from "../../molecules/panel/PanelList";
+import { PanelList } from "@/components/molecules/panel/PanelList";
 import { SelectPanelListItem } from "./SelectPanelListItem";
 
 interface SelectPanelListProps {

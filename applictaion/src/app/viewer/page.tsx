@@ -1,6 +1,6 @@
 "use client";
 
-import { OrdersViewerPanel } from "@/components/organisms/viewer/OrdersViewerPanel";
+import { OrdersViewerPanel } from "@/components/features/viewer/OrdersViewerPanel";
 import { useViewerViewModel } from "@/hooks/useViewerViewModel";
 
 export default function ViewerPage() {

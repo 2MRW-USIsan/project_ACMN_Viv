@@ -2,7 +2,7 @@ import { RemoveIconButton } from "@/components/atoms/RemoveIconButton";
 import { OrdersItemViewItem } from "@/types/orders";
 import { Grid, ListItem } from "@mui/material";
 import { InputPanel } from "@/components/atoms/InputPanel";
-import { PanelList } from "../panel/PanelList";
+import { PanelList } from "@/components/molecules/panel/PanelList";
 
 interface OrdersItemFieldPanelProps {
   props: OrdersItemViewItem;
