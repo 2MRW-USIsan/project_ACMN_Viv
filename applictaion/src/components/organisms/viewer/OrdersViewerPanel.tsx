@@ -17,9 +17,11 @@ import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import type { ViewerViewModel } from "@/hooks/useViewerViewModel";
 
-type Props = { vm: ViewerViewModel };
+interface OrdersViewerPanelProps {
+  props: ViewerViewModel;
+}
 
-export function OrdersViewerPanel({ vm }: Props) {
+export function OrdersViewerPanel({ props: vm }: OrdersViewerPanelProps) {
 
   return (
     <Box sx={{ p: 3, display: "flex", flexDirection: "column", gap: 2 }}>

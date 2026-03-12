@@ -16,20 +16,17 @@ import DownloadIcon from "@mui/icons-material/Download";
 import { useState } from "react";
 
 interface YamlPreviewDialogProps {
-  open: boolean;
-  yaml: string;
-  hasDiff: boolean;
-  onClose: () => void;
-  onRegister: () => Promise<void>;
+  props: {
+    open: boolean;
+    yaml: string;
+    hasDiff: boolean;
+    onClose: () => void;
+    onRegister: () => Promise<void>;
+  };
 }
 
-export function YamlPreviewDialog({
-  open,
-  yaml,
-  hasDiff,
-  onClose,
-  onRegister,
-}: YamlPreviewDialogProps) {
+export function YamlPreviewDialog({ props }: YamlPreviewDialogProps) {
+  const { open, yaml, hasDiff, onClose, onRegister } = props;
   const [copied, setCopied] = useState(false);
   const [copyError, setCopyError] = useState(false);
   const [confirmOpen, setConfirmOpen] = useState(false);

@@ -1,6 +1,6 @@
 import { SwitchChildViewItem } from "@/types/switch";
-import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
-import { Grid, IconButton } from "@mui/material";
+import { RemoveIconButton } from "@/components/atoms/RemoveIconButton";
+import { Grid } from "@mui/material";
 import { TextFieldPanel } from "../../atoms/TextFieldPanel";
 
 interface SwitchTextFieldPanelProps {
@@ -36,24 +36,22 @@ export function SwitchTextFieldPanel({ props }: SwitchTextFieldPanelProps) {
       sx={{ flexWrap: { xs: "wrap", md: "nowrap" } }}
     >
       <Grid size={{ xs: 6, md: "grow" }}>
-        <TextFieldPanel prop={keyFormProps} />
+        <TextFieldPanel props={keyFormProps} />
       </Grid>
       <Grid size={{ xs: 6, md: "grow" }}>
-        <TextFieldPanel prop={labelFormProps} />
+        <TextFieldPanel props={labelFormProps} />
       </Grid>
       <Grid size={{ xs: 5, md: "grow" }}>
-        <TextFieldPanel prop={valueFormProps} />
+        <TextFieldPanel props={valueFormProps} />
       </Grid>
       <Grid size={{ xs: 5, md: "grow" }}>
-        <TextFieldPanel prop={altValueFormProps} />
+        <TextFieldPanel props={altValueFormProps} />
       </Grid>
       <Grid
         size={{ xs: 2, md: "auto" }}
         sx={{ display: "flex", alignItems: "center" }}
       >
-        <IconButton size="small" onClick={onDelete}>
-          <RemoveCircleOutlineIcon fontSize="small" />
-        </IconButton>
+        <RemoveIconButton props={{ onClick: onDelete }} />
       </Grid>
     </Grid>
   );

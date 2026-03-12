@@ -6,14 +6,14 @@ import {
 } from "@mui/material";
 
 interface RadioGroupPanelProps {
-  prop: {
+  props: {
     value: string | undefined;
     options: string[];
     onChange: (value: string) => void;
   };
 }
 export function RadioGroupPanel({
-  prop: { value, options, onChange },
+  props: { value, options, onChange },
 }: RadioGroupPanelProps) {
   return (
     <FormControl>

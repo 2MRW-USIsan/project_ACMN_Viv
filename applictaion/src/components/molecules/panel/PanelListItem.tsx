@@ -1,10 +1,8 @@
-import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-import ExpandLess from "@mui/icons-material/ExpandLess";
-import ExpandMore from "@mui/icons-material/ExpandMore";
+import { DeleteIconButton } from "../../atoms/DeleteIconButton";
+import { ExpandIconButton } from "../../atoms/ExpandIconButton";
 import {
   Collapse,
   Grid,
-  IconButton,
   List,
   ListItem,
   TextField,
@@ -48,12 +46,8 @@ export function PanelListItem({
             />
           </Grid>
         </Grid>
-        <IconButton size="small" onClick={onDelete}>
-          <DeleteOutlineIcon fontSize="small" />
-        </IconButton>
-        <IconButton size="small" onClick={onClick}>
-          {state ? <ExpandLess /> : <ExpandMore />}
-        </IconButton>
+        <DeleteIconButton props={{ onClick: onDelete }} />
+        <ExpandIconButton props={{ expanded: state, onClick }} />
       </ListItem>
       <Collapse in={state} orientation="vertical" timeout="auto" unmountOnExit>
         {children}

@@ -1,14 +1,14 @@
 import { ListItem, Grid, Typography, TextField } from "@mui/material";
 
-interface TextFieldPanel {
-  prop: {
+interface TextFieldPanelProps {
+  props: {
     label: string;
     value: string;
     onChange: (value: string) => void;
   };
 }
-export function TextFieldPanel({ prop }: TextFieldPanel) {
-  const { label, value, onChange } = prop;
+export function TextFieldPanel({ props }: TextFieldPanelProps) {
+  const { label, value, onChange } = props;
   const handleChange = (e: React.BaseSyntheticEvent) => {
     onChange(e.target.value);
   };

@@ -1,6 +1,6 @@
+import { RemoveIconButton } from "@/components/atoms/RemoveIconButton";
 import { OrdersItemViewItem } from "@/types/orders";
-import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
-import { Grid, IconButton, ListItem, TextField } from "@mui/material";
+import { Grid, ListItem, TextField } from "@mui/material";
 import { PanelList } from "../panel/PanelList";
 
 interface OrdersItemFieldPanelProps {
@@ -58,9 +58,7 @@ export function OrdersItemFieldPanel({ props }: OrdersItemFieldPanelProps) {
           />
         </Grid>
         <Grid size="auto" sx={{ display: "flex", alignItems: "center" }}>
-          <IconButton size="small" onClick={onDelete}>
-            <RemoveCircleOutlineIcon fontSize="small" />
-          </IconButton>
+          <RemoveIconButton props={{ onClick: onDelete }} />
         </Grid>
       </Grid>
       {hidePrompt && (
@@ -110,9 +108,7 @@ export function OrdersItemFieldPanel({ props }: OrdersItemFieldPanelProps) {
                   size="auto"
                   sx={{ display: "flex", alignItems: "center" }}
                 >
-                  <IconButton size="small" onClick={complexItem.onDelete}>
-                    <RemoveCircleOutlineIcon fontSize="small" />
-                  </IconButton>
+                  <RemoveIconButton props={{ onClick: complexItem.onDelete }} />
                 </Grid>
               </Grid>
             </ListItem>

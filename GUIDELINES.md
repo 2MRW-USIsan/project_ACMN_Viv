@@ -165,7 +165,39 @@ const actions = useMemo(
 
 ## Component Props Pattern（コンポーネント Props のパターン）
 
-- Atom・Molecule・Organism のコンポーネントは `props` という単一の prop オブジェクトを受け取ることが多い。View 型（`types/` 内の `*ViewItem` 型）をそのまま渡す場合に活用する。
+- **Props 型は必ず `interface` で定義**し、命名規則は **`<コンポーネント名>Props`** とする。
+
+```ts
+// ✅ Good
+interface OrdersPanelListItemProps { ... }
+
+// ❌ Bad — type を使っている、または ComponentName と一致しない名前
+type Props = { ... }
+interface OrdersPanelListItem { ... }
+```
+
+- `children` などを除くすべてのプロパティは `props` という単一オブジェクトにまとめて渡す。コンポーネント内部では destructure して使用する。
+
+```tsx
+// ✅ Good
+interface MyComponentProps {
+  props: { label: string; onClick: () => void };
+  children: React.ReactNode;
+}
+export function MyComponent({ props, children }: MyComponentProps) {
+  const { label, onClick } = props;
+  return <ChildComponent props={{ label, onClick }}>{children}</ChildComponent>;
+}
+
+// ❌ Bad — children 以外が props にまとまっていない
+interface MyComponentProps {
+  label: string;
+  onClick: () => void;
+  children: React.ReactNode;
+}
+```
+
+- View 型（`types/` 内の `*ViewItem` 型）をそのまま渡す場合も `props` フィールドに格納する。
 
 ```tsx
 // ✅ Good — View 型をそのまま渡す
@@ -178,12 +210,29 @@ interface OrdersPanelListItemProps {
 export function OrdersPanelListItem({ props }: OrdersPanelListItemProps) { ... }
 ```
 
-- 個別 props を展開して渡すパターンは Atom など props 数が少ない場合に使用する。
+---
+
+## MUI Import Convention（MUI インポート規約）
+
+- **MUI コンポーネントのインポートは可能な限り `atoms/` 階層で行う**。Atoms は「MUI のラッパー」として機能し、Molecules・Organisms は Atoms 経由で MUI コンポーネントを利用する。
 
 ```tsx
-// ✅ Good — props 数が少ない場合は展開も可
-<YamlPreviewDialog open={yamlOpen} yaml={yaml} onClose={handleClose} />
+// ✅ Good — Molecule は Atom 経由で MUI を利用
+import { RemoveIconButton } from "@/components/atoms/RemoveIconButton";
+// ...
+<RemoveIconButton props={{ onClick: onDelete }} />
+
+// ❌ Bad — Molecule が MUI を直接インポート
+import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
+import { IconButton } from "@mui/material";
+// ...
+<IconButton size="small" onClick={onDelete}>
+  <RemoveCircleOutlineIcon fontSize="small" />
+</IconButton>
 ```
+
+- `Grid`・`List`・`ListItem`・`Collapse` などの純粋なレイアウト用プリミティブは、Molecules・Organisms でも直接インポートして構わない。
+- Organism 固有の複合的な MUI コンポーネント（`Dialog`・`FormControl` など）はその Organism 内で直接インポートしてよい。
 
 ---
 

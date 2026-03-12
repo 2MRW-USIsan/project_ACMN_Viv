@@ -19,14 +19,16 @@ export default function EditorPage() {
           Generate YAML
         </Button>
         <SaveLoadToolbar
-          saveList={vm.saveList}
-          selectedSaveId={vm.selectedSaveId}
-          isLoading={vm.isSaveLoading}
-          isLoaded={vm.isLoaded}
-          loadedSaveName={vm.loadedSaveName}
-          onSelect={vm.onSelectSave}
-          onLoad={vm.onLoadSave}
-          onReselect={vm.onReselectSave}
+          props={{
+            saveList: vm.saveList,
+            selectedSaveId: vm.selectedSaveId,
+            isLoading: vm.isSaveLoading,
+            isLoaded: vm.isLoaded,
+            loadedSaveName: vm.loadedSaveName,
+            onSelect: vm.onSelectSave,
+            onLoad: vm.onLoadSave,
+            onReselect: vm.onReselectSave,
+          }}
         />
       </Box>
       <PanelList
@@ -40,11 +42,13 @@ export default function EditorPage() {
         ))}
       </PanelList>
       <YamlPreviewDialog
-        open={vm.yamlOpen}
-        yaml={vm.yaml}
-        hasDiff={vm.hasDiff}
-        onClose={vm.onCloseYaml}
-        onRegister={vm.onRegister}
+        props={{
+          open: vm.yamlOpen,
+          yaml: vm.yaml,
+          hasDiff: vm.hasDiff,
+          onClose: vm.onCloseYaml,
+          onRegister: vm.onRegister,
+        }}
       />
     </>
   );

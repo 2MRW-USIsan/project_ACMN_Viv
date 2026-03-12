@@ -11,26 +11,29 @@ import {
 } from "@mui/material";
 
 interface SaveLoadToolbarProps {
-  saveList: PanelSaveItem[];
-  selectedSaveId: string;
-  isLoading: boolean;
-  isLoaded: boolean;
-  loadedSaveName: string;
-  onSelect: (id: string) => void;
-  onLoad: () => void;
-  onReselect: () => void;
+  props: {
+    saveList: PanelSaveItem[];
+    selectedSaveId: string;
+    isLoading: boolean;
+    isLoaded: boolean;
+    loadedSaveName: string;
+    onSelect: (id: string) => void;
+    onLoad: () => void;
+    onReselect: () => void;
+  };
 }
 
-export function SaveLoadToolbar({
-  saveList,
-  selectedSaveId,
-  isLoading,
-  isLoaded,
-  loadedSaveName,
-  onSelect,
-  onLoad,
-  onReselect,
-}: SaveLoadToolbarProps) {
+export function SaveLoadToolbar({ props }: SaveLoadToolbarProps) {
+  const {
+    saveList,
+    selectedSaveId,
+    isLoading,
+    isLoaded,
+    loadedSaveName,
+    onSelect,
+    onLoad,
+    onReselect,
+  } = props;
   return (
     <>
       {isLoaded ? (
