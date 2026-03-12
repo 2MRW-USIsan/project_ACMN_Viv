@@ -15,10 +15,11 @@ import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
-import { useViewerViewModel } from "@/hooks/useViewerViewModel";
+import type { ViewerViewModel } from "@/hooks/useViewerViewModel";
 
-export function OrdersViewerPanel() {
-  const vm = useViewerViewModel();
+type Props = { vm: ViewerViewModel };
+
+export function OrdersViewerPanel({ vm }: Props) {
 
   return (
     <Box sx={{ p: 3, display: "flex", flexDirection: "column", gap: 2 }}>
