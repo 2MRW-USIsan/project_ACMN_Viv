@@ -60,6 +60,14 @@ export function useEditorViewModel(): EditorViewModel {
     await savedPanels.actions.registerSave(name, reducer.state);
   };
 
+  const onOpenYaml = () => {
+    // Save the generated YAML to localStorage so /viewer can load it
+    if (typeof window !== "undefined") {
+      window.localStorage.setItem("acmn_yaml_content", yaml);
+    }
+    setYamlOpen(true);
+  };
+
   return {
     panelData,
     onAddPanel: reducer.actions.addPanel,
@@ -74,7 +82,7 @@ export function useEditorViewModel(): EditorViewModel {
     yamlOpen,
     yaml,
     hasDiff,
-    onOpenYaml: () => setYamlOpen(true),
+    onOpenYaml,
     onCloseYaml: () => setYamlOpen(false),
     onRegister,
   };
