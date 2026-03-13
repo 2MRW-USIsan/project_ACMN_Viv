@@ -1,5 +1,19 @@
-import type { OrdersPanelChip, OrdersPanelItem } from "@/types/editor/panel";
-import { useEffect, useMemo, useReducer } from "react";
+import type { OrdersPanelChip } from "@/types/editor/panel";
+import {
+  addOrdersChildItem,
+  addOrdersComplexItemData,
+  addOrdersItem,
+  addOrdersItemData,
+  changeOrdersChip,
+  changeOrdersItem,
+  changeOrdersItemForm,
+  deleteOrdersChildItem,
+  deleteOrdersComplexItemData,
+  deleteOrdersItem,
+  deleteOrdersItemData,
+  removeOrdersPanel,
+} from "@/utils/reducers/editor/ordersReducerUtils";
+import { useEffect, useReducer } from "react";
 
 export type OrdersReducerState = Record<number, OrdersPanelChip>;
 
@@ -48,526 +62,286 @@ export type OrdersReducerAction = {
   deleteItem: (panelId: number, itemId: number) => void;
 };
 
-type Action =
-  | { type: "REMOVE_PANEL"; payload: { panelId: number } }
-  | { type: "CHANGE_CHIP"; payload: { panelId: number } }
-  | { type: "ADD_ITEM"; payload: { panelId: number } }
-  | {
-      type: "ADD_CHILD_ITEM";
-      payload: { panelId: number; parentItemId: number };
-    }
-  | {
-      type: "ADD_ITEM_DATA";
-      payload: { panelId: number; parentItemId: number; childItemId: number };
-    }
-  | {
-      type: "ADD_COMPLEX_ITEM_DATA";
-      payload: {
-        panelId: number;
-        parentItemId: number;
-        childItemId: number;
-        itemDataId: number;
-      };
-    }
-  | {
-      type: "DELETE_ITEM_DATA";
-      payload: {
-        panelId: number;
-        parentItemId: number;
-        childItemId: number;
-        itemDataId: number;
-      };
-    }
-  | {
-      type: "DELETE_COMPLEX_ITEM_DATA";
-      payload: {
-        panelId: number;
-        parentItemId: number;
-        childItemId: number;
-        itemDataId: number;
-        complexItemId: number;
-      };
-    }
-  | {
-      type: "DELETE_CHILD_ITEM";
-      payload: { panelId: number; parentItemId: number; childItemId: number };
-    }
-  | { type: "CHANGE_ITEM"; payload: { panelId: number; itemId: number } }
-  | {
-      type: "CHANGE_ITEM_FORM";
-      payload: {
-        panelId: number;
-        itemId: number;
-        label: string;
-        value: string;
-      };
-    }
-  | { type: "DELETE_ITEM"; payload: { panelId: number; itemId: number } }
-  | { type: "LOAD_STATE"; payload: OrdersReducerState }
-  | { type: "INITIALIZE" };
-
-const initItem: OrdersReducerState = {};
-
-const getChip = (state: OrdersReducerState, panelId: number): OrdersPanelChip =>
-  state[panelId] ?? { selected: false, data: [] };
-
-const createOrdersPanelItem = (): OrdersPanelItem => ({
-  id: Date.now(),
-  state: false,
-  values: { key: "", label: "--" },
-  data: [],
-});
-
-function reducer(
-  state: OrdersReducerState | undefined,
-  action: Action,
-): OrdersReducerState | undefined {
-  if (action.type === "INITIALIZE") return initItem;
-  if (!state) return state;
-  switch (action.type) {
-    case "REMOVE_PANEL":
-      return Object.fromEntries(
-        Object.entries(state).filter(
-          ([k]) => Number(k) !== action.payload.panelId,
-        ),
-      ) as OrdersReducerState;
-    case "CHANGE_CHIP": {
-      const chip = getChip(state, action.payload.panelId);
-      const selected = !chip.selected;
-      return {
-        ...state,
-        [action.payload.panelId]: {
-          ...chip,
-          selected,
-          data: selected ? chip.data : [],
-        },
-      };
-    }
-    case "ADD_ITEM": {
-      const chip = getChip(state, action.payload.panelId);
-      return {
-        ...state,
-        [action.payload.panelId]: {
-          ...chip,
-          data: [...chip.data, createOrdersPanelItem()],
-        },
-      };
-    }
-    case "ADD_CHILD_ITEM": {
-      const chip = getChip(state, action.payload.panelId);
-      return {
-        ...state,
-        [action.payload.panelId]: {
-          ...chip,
-          data: chip.data.map((item) =>
-            item.id === action.payload.parentItemId
-              ? {
-                  ...item,
-                  data: [
-                    ...item.data,
-                    {
-                      id: Date.now(),
-                      values: { key: "", label: "", type: "Random" },
-                      data: [],
-                    },
-                  ],
-                }
-              : item,
-          ),
-        },
-      };
-    }
-    case "ADD_ITEM_DATA": {
-      const chip = getChip(state, action.payload.panelId);
-      return {
-        ...state,
-        [action.payload.panelId]: {
-          ...chip,
-          data: chip.data.map((item) =>
-            item.id === action.payload.parentItemId
-              ? {
-                  ...item,
-                  data: item.data.map((child) =>
-                    child.id === action.payload.childItemId
-                      ? {
-                          ...child,
-                          data: [
-                            ...child.data,
-                            {
-                              id: Date.now(),
-                              values: { value: "", prompt: "", weight: "0" },
-                              complexData: [],
-                            },
-                          ],
-                        }
-                      : child,
-                  ),
-                }
-              : item,
-          ),
-        },
-      };
-    }
-    case "ADD_COMPLEX_ITEM_DATA": {
-      const chip = getChip(state, action.payload.panelId);
-      const { parentItemId, childItemId, itemDataId } = action.payload;
-      return {
-        ...state,
-        [action.payload.panelId]: {
-          ...chip,
-          data: chip.data.map((item) =>
-            item.id === parentItemId
-              ? {
-                  ...item,
-                  data: item.data.map((child) =>
-                    child.id === childItemId
-                      ? {
-                          ...child,
-                          data: child.data.map((itemData) =>
-                            itemData.id === itemDataId
-                              ? {
-                                  ...itemData,
-                                  complexData: [
-                                    ...(itemData.complexData ?? []),
-                                    {
-                                      id: Date.now(),
-                                      values: {
-                                        value: "",
-                                        prompt: "",
-                                        weight: "0",
-                                      },
-                                    },
-                                  ],
-                                }
-                              : itemData,
-                          ),
-                        }
-                      : child,
-                  ),
-                }
-              : item,
-          ),
-        },
-      };
-    }
-    case "DELETE_ITEM_DATA": {
-      const chip = getChip(state, action.payload.panelId);
-      const { parentItemId, childItemId, itemDataId } = action.payload;
-      return {
-        ...state,
-        [action.payload.panelId]: {
-          ...chip,
-          data: chip.data.map((item) =>
-            item.id === parentItemId
-              ? {
-                  ...item,
-                  data: item.data.map((child) =>
-                    child.id === childItemId
-                      ? {
-                          ...child,
-                          data: child.data.filter(
-                            (itemData) => itemData.id !== itemDataId,
-                          ),
-                        }
-                      : child,
-                  ),
-                }
-              : item,
-          ),
-        },
-      };
-    }
-    case "DELETE_COMPLEX_ITEM_DATA": {
-      const chip = getChip(state, action.payload.panelId);
-      const { parentItemId, childItemId, itemDataId, complexItemId } =
-        action.payload;
-      return {
-        ...state,
-        [action.payload.panelId]: {
-          ...chip,
-          data: chip.data.map((item) =>
-            item.id === parentItemId
-              ? {
-                  ...item,
-                  data: item.data.map((child) =>
-                    child.id === childItemId
-                      ? {
-                          ...child,
-                          data: child.data.map((itemData) =>
-                            itemData.id === itemDataId
-                              ? {
-                                  ...itemData,
-                                  complexData: (
-                                    itemData.complexData ?? []
-                                  ).filter(
-                                    (complexItem) =>
-                                      complexItem.id !== complexItemId,
-                                  ),
-                                }
-                              : itemData,
-                          ),
-                        }
-                      : child,
-                  ),
-                }
-              : item,
-          ),
-        },
-      };
-    }
-    case "DELETE_CHILD_ITEM": {
-      const chip = getChip(state, action.payload.panelId);
-      return {
-        ...state,
-        [action.payload.panelId]: {
-          ...chip,
-          data: chip.data.map((item) =>
-            item.id === action.payload.parentItemId
-              ? {
-                  ...item,
-                  data: item.data.filter(
-                    (child) => child.id !== action.payload.childItemId,
-                  ),
-                }
-              : item,
-          ),
-        },
-      };
-    }
-    case "CHANGE_ITEM": {
-      const chip = getChip(state, action.payload.panelId);
-      return {
-        ...state,
-        [action.payload.panelId]: {
-          ...chip,
-          data: chip.data.map((item) =>
-            item.id === action.payload.itemId
-              ? { ...item, state: !item.state }
-              : item,
-          ),
-        },
-      };
-    }
-    case "CHANGE_ITEM_FORM": {
-      const chip = getChip(state, action.payload.panelId);
-      const { itemId, label, value } = action.payload;
-      const childMatch = label.match(/^child:(\d+):(.+)$/);
-      if (childMatch) {
-        const childId = Number(childMatch[1]);
-        const childLabel = childMatch[2];
-        const itemMatch = childLabel.match(/^item:(\d+):(.+)$/);
-        if (itemMatch) {
-          const itemDataId = Number(itemMatch[1]);
-          const itemLabel = itemMatch[2];
-          const nestedComplexMatch = itemLabel.match(
-            /^complexItem:(\d+):(.+)$/,
-          );
-          if (nestedComplexMatch) {
-            const complexItemId = Number(nestedComplexMatch[1]);
-            const complexItemField = nestedComplexMatch[2];
-            return {
-              ...state,
-              [action.payload.panelId]: {
-                ...chip,
-                data: chip.data.map((item) =>
-                  item.id === itemId
-                    ? {
-                        ...item,
-                        data: item.data.map((child) =>
-                          child.id === childId
-                            ? {
-                                ...child,
-                                data: child.data.map((itemData) =>
-                                  itemData.id === itemDataId
-                                    ? {
-                                        ...itemData,
-                                        complexData: (
-                                          itemData.complexData ?? []
-                                        ).map((complexItem) =>
-                                          complexItem.id === complexItemId
-                                            ? {
-                                                ...complexItem,
-                                                values: {
-                                                  ...complexItem.values,
-                                                  [complexItemField]: value,
-                                                },
-                                              }
-                                            : complexItem,
-                                        ),
-                                      }
-                                    : itemData,
-                                ),
-                              }
-                            : child,
-                        ),
-                      }
-                    : item,
-                ),
-              },
-            };
-          }
-          return {
-            ...state,
-            [action.payload.panelId]: {
-              ...chip,
-              data: chip.data.map((item) =>
-                item.id === itemId
-                  ? {
-                      ...item,
-                      data: item.data.map((child) =>
-                        child.id === childId
-                          ? {
-                              ...child,
-                              data: child.data.map((itemData) =>
-                                itemData.id === itemDataId
-                                  ? {
-                                      ...itemData,
-                                      values: {
-                                        ...itemData.values,
-                                        [itemLabel]: value,
-                                      },
-                                    }
-                                  : itemData,
-                              ),
-                            }
-                          : child,
-                      ),
-                    }
-                  : item,
-              ),
-            },
-          };
-        }
-        return {
-          ...state,
-          [action.payload.panelId]: {
-            ...chip,
-            data: chip.data.map((item) =>
-              item.id === itemId
-                ? {
-                    ...item,
-                    data: item.data.map((child) =>
-                      child.id === childId
-                        ? {
-                            ...child,
-                            values: { ...child.values, [childLabel]: value },
-                            ...(childLabel === "type" && {
-                              data: [],
-                            }),
-                          }
-                        : child,
-                    ),
-                  }
-                : item,
-            ),
-          },
-        };
-      }
-      return {
-        ...state,
-        [action.payload.panelId]: {
-          ...chip,
-          data: chip.data.map((item) =>
-            item.id === itemId
-              ? { ...item, values: { ...item.values, [label]: value } }
-              : item,
-          ),
-        },
-      };
-    }
-    case "DELETE_ITEM": {
-      const chip = getChip(state, action.payload.panelId);
-      return {
-        ...state,
-        [action.payload.panelId]: {
-          ...chip,
-          data: chip.data.filter((item) => item.id !== action.payload.itemId),
-        },
-      };
-    }
-    case "LOAD_STATE":
-      return action.payload;
-    default:
-      return state;
-  }
-}
-
 export interface OrdersReducerReturn {
   state: OrdersReducerState;
   action: OrdersReducerAction;
 }
 
 export function useOrdersReducer(): OrdersReducerReturn {
+  type STATE = OrdersReducerState | undefined;
+
+  type REMOVE_PANEL = { panelId: number };
+  type CHANGE_CHIP = { panelId: number };
+  type ADD_ITEM = { panelId: number };
+  type ADD_CHILD_ITEM = { panelId: number; parentItemId: number };
+  type ADD_ITEM_DATA = {
+    panelId: number;
+    parentItemId: number;
+    childItemId: number;
+  };
+  type ADD_COMPLEX_ITEM_DATA = {
+    panelId: number;
+    parentItemId: number;
+    childItemId: number;
+    itemDataId: number;
+  };
+  type DELETE_ITEM_DATA = {
+    panelId: number;
+    parentItemId: number;
+    childItemId: number;
+    itemDataId: number;
+  };
+  type DELETE_COMPLEX_ITEM_DATA = {
+    panelId: number;
+    parentItemId: number;
+    childItemId: number;
+    itemDataId: number;
+    complexItemId: number;
+  };
+  type DELETE_CHILD_ITEM = {
+    panelId: number;
+    parentItemId: number;
+    childItemId: number;
+  };
+  type CHANGE_ITEM = { panelId: number; itemId: number };
+  type CHANGE_ITEM_FORM = {
+    panelId: number;
+    itemId: number;
+    label: string;
+    value: string;
+  };
+  type DELETE_ITEM = { panelId: number; itemId: number };
+  type LOAD_STATE = OrdersReducerState;
+
+  type ACTION =
+    | { type: "REMOVE_PANEL"; payload: REMOVE_PANEL }
+    | { type: "CHANGE_CHIP"; payload: CHANGE_CHIP }
+    | { type: "ADD_ITEM"; payload: ADD_ITEM }
+    | { type: "ADD_CHILD_ITEM"; payload: ADD_CHILD_ITEM }
+    | { type: "ADD_ITEM_DATA"; payload: ADD_ITEM_DATA }
+    | { type: "ADD_COMPLEX_ITEM_DATA"; payload: ADD_COMPLEX_ITEM_DATA }
+    | { type: "DELETE_ITEM_DATA"; payload: DELETE_ITEM_DATA }
+    | { type: "DELETE_COMPLEX_ITEM_DATA"; payload: DELETE_COMPLEX_ITEM_DATA }
+    | { type: "DELETE_CHILD_ITEM"; payload: DELETE_CHILD_ITEM }
+    | { type: "CHANGE_ITEM"; payload: CHANGE_ITEM }
+    | { type: "CHANGE_ITEM_FORM"; payload: CHANGE_ITEM_FORM }
+    | { type: "DELETE_ITEM"; payload: DELETE_ITEM }
+    | { type: "LOAD_STATE"; payload: LOAD_STATE }
+    | { type: "INITIALIZE" };
+
+  const initItem: OrdersReducerState = {};
+
+  const reducer = (state: STATE, action: ACTION): STATE => {
+    switch (action.type) {
+      case "REMOVE_PANEL":
+        return state && removeOrdersPanel(state, action.payload.panelId);
+      case "CHANGE_CHIP":
+        return state && changeOrdersChip(state, action.payload.panelId);
+      case "ADD_ITEM":
+        return state && addOrdersItem(state, action.payload.panelId);
+      case "ADD_CHILD_ITEM":
+        return (
+          state &&
+          addOrdersChildItem(
+            state,
+            action.payload.panelId,
+            action.payload.parentItemId,
+          )
+        );
+      case "ADD_ITEM_DATA":
+        return (
+          state &&
+          addOrdersItemData(
+            state,
+            action.payload.panelId,
+            action.payload.parentItemId,
+            action.payload.childItemId,
+          )
+        );
+      case "ADD_COMPLEX_ITEM_DATA":
+        return (
+          state &&
+          addOrdersComplexItemData(
+            state,
+            action.payload.panelId,
+            action.payload.parentItemId,
+            action.payload.childItemId,
+            action.payload.itemDataId,
+          )
+        );
+      case "DELETE_ITEM_DATA":
+        return (
+          state &&
+          deleteOrdersItemData(
+            state,
+            action.payload.panelId,
+            action.payload.parentItemId,
+            action.payload.childItemId,
+            action.payload.itemDataId,
+          )
+        );
+      case "DELETE_COMPLEX_ITEM_DATA":
+        return (
+          state &&
+          deleteOrdersComplexItemData(
+            state,
+            action.payload.panelId,
+            action.payload.parentItemId,
+            action.payload.childItemId,
+            action.payload.itemDataId,
+            action.payload.complexItemId,
+          )
+        );
+      case "DELETE_CHILD_ITEM":
+        return (
+          state &&
+          deleteOrdersChildItem(
+            state,
+            action.payload.panelId,
+            action.payload.parentItemId,
+            action.payload.childItemId,
+          )
+        );
+      case "CHANGE_ITEM":
+        return (
+          state &&
+          changeOrdersItem(
+            state,
+            action.payload.panelId,
+            action.payload.itemId,
+          )
+        );
+      case "CHANGE_ITEM_FORM":
+        return (
+          state &&
+          changeOrdersItemForm(
+            state,
+            action.payload.panelId,
+            action.payload.itemId,
+            action.payload.label,
+            action.payload.value,
+          )
+        );
+      case "DELETE_ITEM":
+        return (
+          state &&
+          deleteOrdersItem(
+            state,
+            action.payload.panelId,
+            action.payload.itemId,
+          )
+        );
+      case "LOAD_STATE":
+        return action.payload;
+      case "INITIALIZE":
+        return initItem;
+      default:
+        return state;
+    }
+  };
+
   const [state, dispatch] = useReducer(reducer, undefined);
 
   useEffect(() => {
     dispatch({ type: "INITIALIZE" });
   }, []);
 
-  const action = useMemo(
-    (): OrdersReducerAction => ({
-      loadState: (newState) =>
-        dispatch({ type: "LOAD_STATE", payload: newState }),
-      removePanel: (panelId) =>
-        dispatch({ type: "REMOVE_PANEL", payload: { panelId } }),
-      changeChip: (panelId) =>
-        dispatch({ type: "CHANGE_CHIP", payload: { panelId } }),
-      addItem: (panelId) =>
-        dispatch({ type: "ADD_ITEM", payload: { panelId } }),
-      addChildItem: (panelId, parentItemId) =>
-        dispatch({
-          type: "ADD_CHILD_ITEM",
-          payload: { panelId, parentItemId },
-        }),
-      addItemData: (panelId, parentItemId, childItemId) =>
-        dispatch({
-          type: "ADD_ITEM_DATA",
-          payload: { panelId, parentItemId, childItemId },
-        }),
-      addComplexItemData: (panelId, parentItemId, childItemId, itemDataId) =>
-        dispatch({
-          type: "ADD_COMPLEX_ITEM_DATA",
-          payload: { panelId, parentItemId, childItemId, itemDataId },
-        }),
-      deleteItemData: (panelId, parentItemId, childItemId, itemDataId) =>
-        dispatch({
-          type: "DELETE_ITEM_DATA",
-          payload: { panelId, parentItemId, childItemId, itemDataId },
-        }),
-      deleteComplexItemData: (
+  const handleLoadState = (newState: OrdersReducerState) =>
+    dispatch({ type: "LOAD_STATE", payload: newState });
+  const handleRemovePanel = (panelId: number) =>
+    dispatch({ type: "REMOVE_PANEL", payload: { panelId } });
+  const handleChangeChip = (panelId: number) =>
+    dispatch({ type: "CHANGE_CHIP", payload: { panelId } });
+  const handleAddItem = (panelId: number) =>
+    dispatch({ type: "ADD_ITEM", payload: { panelId } });
+  const handleAddChildItem = (panelId: number, parentItemId: number) =>
+    dispatch({ type: "ADD_CHILD_ITEM", payload: { panelId, parentItemId } });
+  const handleAddItemData = (
+    panelId: number,
+    parentItemId: number,
+    childItemId: number,
+  ) =>
+    dispatch({
+      type: "ADD_ITEM_DATA",
+      payload: { panelId, parentItemId, childItemId },
+    });
+  const handleAddComplexItemData = (
+    panelId: number,
+    parentItemId: number,
+    childItemId: number,
+    itemDataId: number,
+  ) =>
+    dispatch({
+      type: "ADD_COMPLEX_ITEM_DATA",
+      payload: { panelId, parentItemId, childItemId, itemDataId },
+    });
+  const handleDeleteItemData = (
+    panelId: number,
+    parentItemId: number,
+    childItemId: number,
+    itemDataId: number,
+  ) =>
+    dispatch({
+      type: "DELETE_ITEM_DATA",
+      payload: { panelId, parentItemId, childItemId, itemDataId },
+    });
+  const handleDeleteComplexItemData = (
+    panelId: number,
+    parentItemId: number,
+    childItemId: number,
+    itemDataId: number,
+    complexItemId: number,
+  ) =>
+    dispatch({
+      type: "DELETE_COMPLEX_ITEM_DATA",
+      payload: {
         panelId,
         parentItemId,
         childItemId,
         itemDataId,
         complexItemId,
-      ) =>
-        dispatch({
-          type: "DELETE_COMPLEX_ITEM_DATA",
-          payload: {
-            panelId,
-            parentItemId,
-            childItemId,
-            itemDataId,
-            complexItemId,
-          },
-        }),
-      deleteChildItem: (panelId, parentItemId, childItemId) =>
-        dispatch({
-          type: "DELETE_CHILD_ITEM",
-          payload: { panelId, parentItemId, childItemId },
-        }),
-      changeItem: (panelId, itemId) =>
-        dispatch({ type: "CHANGE_ITEM", payload: { panelId, itemId } }),
-      changeItemForm: (panelId, itemId, label, value) =>
-        dispatch({
-          type: "CHANGE_ITEM_FORM",
-          payload: { panelId, itemId, label, value },
-        }),
-      deleteItem: (panelId, itemId) =>
-        dispatch({ type: "DELETE_ITEM", payload: { panelId, itemId } }),
-    }),
-    [],
-  );
+      },
+    });
+  const handleDeleteChildItem = (
+    panelId: number,
+    parentItemId: number,
+    childItemId: number,
+  ) =>
+    dispatch({
+      type: "DELETE_CHILD_ITEM",
+      payload: { panelId, parentItemId, childItemId },
+    });
+  const handleChangeItem = (panelId: number, itemId: number) =>
+    dispatch({ type: "CHANGE_ITEM", payload: { panelId, itemId } });
+  const handleChangeItemForm = (
+    panelId: number,
+    itemId: number,
+    label: string,
+    value: string,
+  ) =>
+    dispatch({
+      type: "CHANGE_ITEM_FORM",
+      payload: { panelId, itemId, label, value },
+    });
+  const handleDeleteItem = (panelId: number, itemId: number) =>
+    dispatch({ type: "DELETE_ITEM", payload: { panelId, itemId } });
 
-  return { state: state ?? initItem, action };
+  return {
+    state: state ?? initItem,
+    action: {
+      loadState: handleLoadState,
+      removePanel: handleRemovePanel,
+      changeChip: handleChangeChip,
+      addItem: handleAddItem,
+      addChildItem: handleAddChildItem,
+      addItemData: handleAddItemData,
+      addComplexItemData: handleAddComplexItemData,
+      deleteItemData: handleDeleteItemData,
+      deleteComplexItemData: handleDeleteComplexItemData,
+      deleteChildItem: handleDeleteChildItem,
+      changeItem: handleChangeItem,
+      changeItemForm: handleChangeItemForm,
+      deleteItem: handleDeleteItem,
+    },
+  };
 }
