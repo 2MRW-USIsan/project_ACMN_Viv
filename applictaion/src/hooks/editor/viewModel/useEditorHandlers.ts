@@ -6,7 +6,7 @@ import { generateYaml } from "@/utils/generateYaml";
 export type EditorHandlers = {
   onAddPanel: () => void;
   onSelectSave: (id: string) => void;
-  onLoadSave: () => Promise<void>;
+  onLoadSave: () => void;
   onReselectSave: () => void;
   onOpenYaml: () => void;
   onCloseYaml: () => void;
@@ -15,13 +15,11 @@ export type EditorHandlers = {
 
 export function useEditorHandlers(contexts: EditorContexts): EditorHandlers {
   const { state, action } = contexts.reducer;
-  const { fetchItem, request } = contexts.service;
+  const { request } = contexts.service;
 
   const onRegister = async () => {
     const name = `保存 ${new Date().toLocaleString("ja-JP")}`;
     await request.registerSave(name, state.panel);
-    const list = await fetchItem.fetchSaveList();
-    action.setSaveList(list);
   };
 
   const onOpenYaml = () => {
@@ -32,16 +30,10 @@ export function useEditorHandlers(contexts: EditorContexts): EditorHandlers {
     action.setYamlOpen(true);
   };
 
-  const onLoadSave = async () => {
+  const onLoadSave = () => {
     if (!state.selectedSaveId) return;
     action.setIsSaveLoading(true);
-    try {
-      const detail = await fetchItem.fetchSaveDetail(state.selectedSaveId);
-      action.panel.loadState(detail.data);
-      action.setLoadedState(detail.data);
-    } finally {
-      action.setIsSaveLoading(false);
-    }
+    request.loadSaveDetail(state.selectedSaveId);
   };
 
   const onReselectSave = () => {

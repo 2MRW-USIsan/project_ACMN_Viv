@@ -1,10 +1,10 @@
 "use client";
 
 import type { OrderJsonRecord } from "@/types/viewer/orderJson";
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 export type ViewerFetchItem = {
-  fetchOrderJson: () => Promise<OrderJsonRecord | null>;
+  orderJson: OrderJsonRecord | null;
 };
 
 export type ViewerRequest = {
@@ -18,16 +18,15 @@ export type ViewerServiceReturn = {
 };
 
 export function useViewerService(): ViewerServiceReturn {
-  const fetchItem = useMemo(
-    (): ViewerFetchItem => ({
-      fetchOrderJson: async () => {
-        const res = await fetch("/api/orderJson");
-        if (!res.ok) return null;
-        return (await res.json()) as OrderJsonRecord | null;
-      },
-    }),
-    [],
-  );
+  const [orderJson, setOrderJson] = useState<OrderJsonRecord | null>(null);
+
+  useEffect(() => {
+    void (async () => {
+      const res = await fetch("/api/orderJson");
+      if (!res.ok) return;
+      setOrderJson((await res.json()) as OrderJsonRecord | null);
+    })();
+  }, []);
 
   const request = useMemo(
     (): ViewerRequest => ({
@@ -48,5 +47,6 @@ export function useViewerService(): ViewerServiceReturn {
     [],
   );
 
+  const fetchItem: ViewerFetchItem = { orderJson };
   return { fetchItem, request };
 }

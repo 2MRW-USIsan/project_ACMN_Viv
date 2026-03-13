@@ -20,12 +20,8 @@ export function useViewerInitialize(contexts: ViewerContexts): void {
     action.request.loadYaml(yaml);
   }, [action.request]);
 
-  // Load [オーダー用JSON情報] from DB on mount
+  // React to fetched [オーダー用JSON情報] state from service
   useEffect(() => {
-    const fetchFromDb = async () => {
-      const record = await fetchItem.fetchOrderJson();
-      action.order.loadFromDb(record);
-    };
-    void fetchFromDb();
-  }, [fetchItem, action.order]);
+    action.order.loadFromDb(fetchItem.orderJson);
+  }, [fetchItem.orderJson, action.order]);
 }
