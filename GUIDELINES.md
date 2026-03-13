@@ -150,6 +150,7 @@ export function MyComponent({ value, onChange }: MyComponentProps) { ... }
 - カスタムフックは `hooks/` ディレクトリに配置し、`use` プレフィックスを付ける。
 - `useMemo` を使ってアクション関数とデータ変換のコストを最小化する。React 19 Compiler と競合しないよう、`useMemo` 内で参照する補助関数はクロージャ内に同居させること。
 - 画面ごとに **ViewModel フック**（`use<Screen>ViewModel.ts`）を作成し、各 hooks を束ねて画面コンポーネントが参照する単一インターフェースとして提供する（MVVM パターン）。
+- **複数の state を扱う場合は `useReducer` を利用したカスタムフックを作成する。** 詳細な実装規約は [`IMPLEMENT_REDUCER_RULE.md`](./IMPLEMENT_REDUCER_RULE.md) を参照。
 
 ```ts
 // ✅ Good — アクションを useMemo でメモ化
