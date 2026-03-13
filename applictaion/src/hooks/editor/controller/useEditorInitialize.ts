@@ -8,8 +8,7 @@ export function useEditorInitialize(contexts: EditorContexts): void {
   const { action } = contexts.reducer;
 
   useEffect(() => {
-    void fetchItem.fetchSaveList().then((list) => {
-      action.setSaveList(list);
-    });
-  }, [fetchItem, action]);
+    if (fetchItem.saveList === null) return;
+    action.setSaveList(fetchItem.saveList);
+  }, [fetchItem.saveList, action]);
 }

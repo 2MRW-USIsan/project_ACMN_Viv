@@ -1,16 +1,18 @@
 "use client";
 
 import type { PanelDataStateType } from "@/types/editor/panel";
-import type { PanelSaveDetail, PanelSaveItem } from "@/types/editor/panelSave";
+import {
+  registerSave,
+} from "@/services/editorApiService";
+import type { EditorFetchItem } from "./useEditorFetchReducer";
+import { useEditorFetchReducer } from "./useEditorFetchReducer";
 import { useMemo } from "react";
 
-export type EditorFetchItem = {
-  fetchSaveList: () => Promise<PanelSaveItem[]>;
-  fetchSaveDetail: (id: string) => Promise<PanelSaveDetail>;
-};
+export type { EditorFetchItem };
 
 export type EditorRequest = {
   registerSave: (name: string, data: PanelDataStateType) => Promise<void>;
+  loadSaveDetail: (id: string) => void;
 };
 
 export type EditorServiceReturn = {
@@ -19,34 +21,20 @@ export type EditorServiceReturn = {
 };
 
 export function useEditorService(): EditorServiceReturn {
-  const fetchItem = useMemo(
-    (): EditorFetchItem => ({
-      fetchSaveList: async () => {
-        const res = await fetch("/api/panelSaves");
-        if (!res.ok) throw new Error(`Failed to fetch save list: ${res.status}`);
-        return (await res.json()) as PanelSaveItem[];
-      },
-      fetchSaveDetail: async (id) => {
-        const res = await fetch(`/api/panelSaves/${id}`);
-        if (!res.ok) throw new Error(`Failed to load save: ${res.status}`);
-        return (await res.json()) as PanelSaveDetail;
-      },
-    }),
-    [],
-  );
+  const { fetchItem, incrementSaveListVersion, requestSaveDetail } =
+    useEditorFetchReducer();
 
   const request = useMemo(
     (): EditorRequest => ({
       registerSave: async (name, data) => {
-        const res = await fetch("/api/panelSaves", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ name, data }),
-        });
-        if (!res.ok) throw new Error(`Failed to register save: ${res.status}`);
+        await registerSave(name, data);
+        incrementSaveListVersion();
+      },
+      loadSaveDetail: (id) => {
+        requestSaveDetail(id);
       },
     }),
-    [],
+    [incrementSaveListVersion, requestSaveDetail],
   );
 
   return { fetchItem, request };

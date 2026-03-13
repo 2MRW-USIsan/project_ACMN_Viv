@@ -188,10 +188,54 @@ const { viewModels } = use{Page}Composer(contexts);
 
 | フック | 責務 |
 |---|---|
-| `use{Page}Service` | API・Repository・Usecase の呼び出し。状態を持たず、純粋な非同期関数群を提供する。 |
+| `use{Page}Service` | API・Repository・Usecase の呼び出し。`fetchItem`（外部 I/O のレスポンスデータ状態）と `request`（ミューテーション・フェッチトリガー）を提供する。`useState` + `useEffect` で非同期取得結果を状態として管理し、`fetchItem` はハンドラ関数ではなく取得済みデータそのものとして返す。 |
 | `use{Page}Reducer` | `useReducer` / `useState` による状態管理。`state` と `action` を返す。 |
-| `use{Page}Controller` | `contexts` を受け取り、副作用（`useEffect`）の管理を行う。 |
+| `use{Page}Controller` | `contexts` を受け取り、副作用（`useEffect`）の管理を行う。`fetchItem` の状態変化に反応して Reducer の `action` を呼び出す。 |
 | `use{Page}Composer` | `contexts` を受け取り、ViewModel を生成して `{ viewModels }` として返す。 |
+
+### Service の設計方針
+
+`use{Page}Service` は `fetchItem`（レスポンスデータ状態）と `request`（ミューテーション操作）の 2 つを返す。
+
+- **`fetchItem`**: 外部 I/O（API・DB）から取得したレスポンスデータの **状態**（`useReducer` で管理）。ハンドラ関数ではなく、取得結果そのもの（例: `saveList: PanelSaveItem[] | null`）を保持する。内部の `useEffect` が fetch を実行し、結果を state に格納する。
+- **`request`**: ミューテーション（POST / DELETE など）や、パラメータ付きフェッチのトリガー（例: `loadSaveDetail(id)`）を提供する。`useMemo` でメモ化した関数群。
+
+`await fetch()` を含む実際の HTTP リクエスト処理は **`services/`** ディレクトリに純粋な非同期関数として外部化し、`use{Page}Service` フック内からインポートして使用する。
+
+```ts
+// ✅ Good — fetch 処理を services/ に外部化し、useReducer で状態管理
+// services/editorApiService.ts
+export async function fetchSaveList(): Promise<PanelSaveItem[]> {
+  const res = await fetch("/api/panelSaves");
+  if (!res.ok) throw new Error(`Failed to fetch save list: ${res.status}`);
+  return (await res.json()) as PanelSaveItem[];
+}
+
+// hooks/editor/service/useEditorService.ts
+export function use{Page}Service() {
+  const [state, dispatch] = useReducer(serviceReducer, initialState);
+
+  useEffect(() => {
+    void fetchSaveList().then((list) =>
+      dispatch({ type: "SET_SAVE_LIST", payload: list }),
+    );
+  }, [state.saveListVersion]);
+
+  const request = useMemo(() => ({
+    registerSave: async (name, data) => { /* POST して再フェッチをトリガー */ },
+    loadSaveDetail: (id) => { /* dispatch で useEffect をトリガー */ },
+  }), []);
+
+  return { fetchItem: { saveList: state.saveList }, request };
+}
+
+// ❌ Bad — fetch 処理をフック内に直接記述し、fetchItem にハンドラ関数を返す
+const fetchItem = useMemo(() => ({
+  fetchSaveList: async () => { const res = await fetch("/api/..."); ... },
+}), []);
+```
+
+`use{Page}Controller`（`use{Page}Initialize` / `use{Page}Effects`）では、`fetchItem` の状態変化を `useEffect` の依存配列で検知し、Reducer の `action` に反映する。
 
 ### Controller の分割
 
@@ -340,6 +384,7 @@ import { IconButton } from "@mui/material";
 | Handlers フック（ハンドラ情報） | `hooks/<screen>/use<Screen>Handlers.ts` |
 | 型定義 | `types/` |
 | ユーティリティ（純粋関数） | `utils/` |
+| API 呼び出し関数（クライアントサイド） | `services/` |
 | MUI テーマ | `theme/` |
 | ビジネスロジック（サーバーサイド） | `business/` |
 
