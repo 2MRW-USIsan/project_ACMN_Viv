@@ -163,6 +163,87 @@ const actions = useMemo(
 
 ---
 
+## ViewModel Logic Design（ViewModel ロジックの設計）
+
+ViewModel フック `use{Page}ViewModel` の内部は、以下の 4 種のカスタムフックで構成する。
+
+```ts
+// API・Repository・Usecase の呼び出しが責務
+const { fetchItem, request } = use{Page}Service();
+
+// 状態管理の状態およびアクションの取得が責務
+const { state, action } = use{Page}Reducer();
+
+// Context オブジェクト（Service と Reducer の情報をまとめて伝搬）
+const contexts = { service: { fetchItem, request }, reducer: { state, action } };
+
+// 状態管理および Service 処理との副作用管理が責務
+use{Page}Controller(contexts);
+
+// ViewModel の生成が責務
+const { viewModels } = use{Page}Composer(contexts);
+```
+
+### 各フックの責務
+
+| フック | 責務 |
+|---|---|
+| `use{Page}Service` | API・Repository・Usecase の呼び出し。状態を持たず、純粋な非同期関数群を提供する。 |
+| `use{Page}Reducer` | `useReducer` / `useState` による状態管理。`state` と `action` を返す。 |
+| `use{Page}Controller` | `contexts` を受け取り、副作用（`useEffect`）の管理を行う。 |
+| `use{Page}Composer` | `contexts` を受け取り、ViewModel を生成して `{ viewModels }` として返す。 |
+
+### Controller の分割
+
+`use{Page}Controller` の内部は、副作用の性質に応じて以下 2 つに分割する。
+
+```ts
+export function use{Page}Controller(contexts: {Page}Contexts): void {
+  use{Page}Initialize(contexts); // 初期化処理を構成する useEffect ラッパー
+  use{Page}Effects(contexts);    // 連携等、state 副作用処理を構成する useEffect ラッパー
+}
+```
+
+| フック | 責務 |
+|---|---|
+| `use{Page}Initialize` | マウント時の初期化（API 取得・localStorage 読込など）を担う `useEffect` ラッパー。 |
+| `use{Page}Effects` | state の変化に応じたクロスドメイン連携などを担う `useEffect` ラッパー。 |
+
+### Composer の構成
+
+`use{Page}Composer` の内部は、以下 2 つのサブフックに `contexts` を渡して ViewModel を組み立てる。
+
+```ts
+export function use{Page}Composer(contexts: {Page}Contexts): Returns {
+  const properties = use{Page}Properties(contexts); // プロパティ・ラベル情報を提供
+  const handlers = use{Page}Handlers(contexts);     // ハンドラ情報を提供
+
+  const viewModels: {Page}ViewModel = { ...properties, ...handlers };
+  return { viewModels };
+}
+```
+
+| フック | 責務 |
+|---|---|
+| `use{Page}Properties` | `contexts` を受け取り、プロパティやラベル情報（派生値・表示データ）を提供する。 |
+| `use{Page}Handlers` | `contexts` を受け取り、イベントハンドラ（コールバック関数群）を提供する。 |
+
+`{Page}ViewModel` 型は `use{Page}Properties` が返す `{Page}Properties` 型と `use{Page}Handlers` が返す `{Page}Handlers` 型の intersection 型として定義する。
+
+```ts
+export type {Page}ViewModel = {Page}Properties & {Page}Handlers;
+```
+
+### スケーリング規則
+
+処理量が肥大化した場合は、ドメイン単位でサブフックを用意する。
+
+- **Reducer**: `use{Page}Reducer` 内部で `use{Domain}Reducer` を呼び出す（例: `useEditorReducer` 内で `usePanelReducer` を呼ぶ）。
+- **Controller**: `use{Page}Initialize` / `use{Page}Effects` 内部でドメイン単位のサブフックを呼び出す。
+- **Composer**: `use{Page}Properties` / `use{Page}Handlers` 内部でドメイン単位のサブフックを呼び出す。
+
+---
+
 ## Component Props Pattern（コンポーネント Props のパターン）
 
 - **Props 型は必ず `interface` で定義**し、命名規則は **`<コンポーネント名>Props`** とする。
@@ -248,7 +329,15 @@ import { IconButton } from "@mui/material";
 | UI コンポーネント（複雑・画面固有） | `components/organisms/<screen>/` |
 | アプリ全体のプロバイダー | `components/providers/` |
 | カスタムフック | `hooks/` |
-| 画面 ViewModel フック | `hooks/use<Screen>ViewModel.ts` |
+| 画面 ViewModel フック | `hooks/<screen>/use<Screen>ViewModel.ts` |
+| Service フック（API 呼び出し） | `hooks/<screen>/use<Screen>Service.ts` |
+| Reducer フック（状態管理） | `hooks/<screen>/use<Screen>Reducer.ts` |
+| Controller フック（副作用管理） | `hooks/<screen>/use<Screen>Controller.ts` |
+| Initialize フック（初期化副作用） | `hooks/<screen>/use<Screen>Initialize.ts` |
+| Effects フック（状態副作用） | `hooks/<screen>/use<Screen>Effects.ts` |
+| Composer フック（ViewModel 生成） | `hooks/<screen>/use<Screen>Composer.ts` |
+| Properties フック（プロパティ・ラベル情報） | `hooks/<screen>/use<Screen>Properties.ts` |
+| Handlers フック（ハンドラ情報） | `hooks/<screen>/use<Screen>Handlers.ts` |
 | 型定義 | `types/` |
 | ユーティリティ（純粋関数） | `utils/` |
 | MUI テーマ | `theme/` |
