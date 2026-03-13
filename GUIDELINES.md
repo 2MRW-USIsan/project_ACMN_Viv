@@ -197,29 +197,41 @@ const { viewModels } = use{Page}Composer(contexts);
 
 `use{Page}Service` は `fetchItem`（レスポンスデータ状態）と `request`（ミューテーション操作）の 2 つを返す。
 
-- **`fetchItem`**: 外部 I/O（API・DB）から取得したレスポンスデータの **状態**（`useState` で管理）。ハンドラ関数ではなく、取得結果そのもの（例: `saveList: PanelSaveItem[] | null`）を保持する。内部の `useEffect` が fetch を実行し、結果を state に格納する。
+- **`fetchItem`**: 外部 I/O（API・DB）から取得したレスポンスデータの **状態**（`useReducer` で管理）。ハンドラ関数ではなく、取得結果そのもの（例: `saveList: PanelSaveItem[] | null`）を保持する。内部の `useEffect` が fetch を実行し、結果を state に格納する。
 - **`request`**: ミューテーション（POST / DELETE など）や、パラメータ付きフェッチのトリガー（例: `loadSaveDetail(id)`）を提供する。`useMemo` でメモ化した関数群。
 
+`await fetch()` を含む実際の HTTP リクエスト処理は **`services/`** ディレクトリに純粋な非同期関数として外部化し、`use{Page}Service` フック内からインポートして使用する。
+
 ```ts
-// ✅ Good — fetchItem はレスポンスデータの状態
+// ✅ Good — fetch 処理を services/ に外部化し、useReducer で状態管理
+// services/editorApiService.ts
+export async function fetchSaveList(): Promise<PanelSaveItem[]> {
+  const res = await fetch("/api/panelSaves");
+  if (!res.ok) throw new Error(`Failed to fetch save list: ${res.status}`);
+  return (await res.json()) as PanelSaveItem[];
+}
+
+// hooks/editor/service/useEditorService.ts
 export function use{Page}Service() {
-  const [saveList, setSaveList] = useState<PanelSaveItem[] | null>(null);
+  const [state, dispatch] = useReducer(serviceReducer, initialState);
 
   useEffect(() => {
-    void fetch("/api/...").then(res => res.json()).then(setSaveList);
-  }, []);
+    void fetchSaveList().then((list) =>
+      dispatch({ type: "SET_SAVE_LIST", payload: list }),
+    );
+  }, [state.saveListVersion]);
 
   const request = useMemo(() => ({
     registerSave: async (name, data) => { /* POST して再フェッチをトリガー */ },
-    loadSaveDetail: (id) => { /* state 更新で useEffect をトリガー */ },
+    loadSaveDetail: (id) => { /* dispatch で useEffect をトリガー */ },
   }), []);
 
-  return { fetchItem: { saveList }, request };
+  return { fetchItem: { saveList: state.saveList }, request };
 }
 
-// ❌ Bad — fetchItem にハンドラ関数を useMemo でメモ化して返す
+// ❌ Bad — fetch 処理をフック内に直接記述し、fetchItem にハンドラ関数を返す
 const fetchItem = useMemo(() => ({
-  fetchSaveList: async () => { ... },
+  fetchSaveList: async () => { const res = await fetch("/api/..."); ... },
 }), []);
 ```
 
@@ -372,6 +384,7 @@ import { IconButton } from "@mui/material";
 | Handlers フック（ハンドラ情報） | `hooks/<screen>/use<Screen>Handlers.ts` |
 | 型定義 | `types/` |
 | ユーティリティ（純粋関数） | `utils/` |
+| API 呼び出し関数（クライアントサイド） | `services/` |
 | MUI テーマ | `theme/` |
 | ビジネスロジック（サーバーサイド） | `business/` |
 

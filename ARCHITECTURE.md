@@ -118,7 +118,12 @@ applictaion/src/
 │       └── yamlData.ts          # YAML パース用データ型
 │
 ├── utils/
-│   └── generateYaml.ts          # 状態 → YAML 文字列変換（純粋関数）
+│   ├── generateYaml.ts          # 状態 → YAML 文字列変換（純粋関数）
+│   └── generateRequestJson.ts   # リクエスト JSON 生成（純粋関数）
+│
+├── services/                    # クライアントサイド API 呼び出し関数（純粋非同期関数）
+│   ├── editorApiService.ts      # /editor 向け API 呼び出し（panelSaves）
+│   └── viewerApiService.ts      # /viewer 向け API 呼び出し（orderJson）
 │
 └── theme/
     └── theme.ts                 # MUI テーマ設定
