@@ -4,6 +4,6 @@ import { OrdersViewerPanel } from "@/components/features/viewer/OrdersViewerPane
 import { useViewerViewModel } from "@/hooks/viewer/viewModel/useViewerViewModel";
 
 export default function ViewerPage() {
-  const vm = useViewerViewModel();
+  const { viewModels: vm } = useViewerViewModel();
   return <OrdersViewerPanel props={vm} />;
 }

@@ -9,7 +9,7 @@ import { Box } from "@mui/material";
 import { ButtonPanel } from "@/components/atoms/ButtonPanel";
 
 export default function EditorPage() {
-  const vm = useEditorViewModel();
+  const { viewModels: vm } = useEditorViewModel();
 
   return (
     <>
