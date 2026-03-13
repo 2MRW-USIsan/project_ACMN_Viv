@@ -1,10 +1,10 @@
 "use client";
 
-import type { EditorContexts } from "@/hooks/editor/useEditorReducer";
-import { useEditorProperties } from "@/hooks/editor/useEditorProperties";
-import type { EditorProperties } from "@/hooks/editor/useEditorProperties";
-import { useEditorHandlers } from "@/hooks/editor/useEditorHandlers";
-import type { EditorHandlers } from "@/hooks/editor/useEditorHandlers";
+import type { EditorContexts } from "@/hooks/editor/reducer/useEditorReducer";
+import { useEditorProperties } from "@/hooks/editor/viewModel/useEditorProperties";
+import type { EditorProperties } from "@/hooks/editor/viewModel/useEditorProperties";
+import { useEditorHandlers } from "@/hooks/editor/viewModel/useEditorHandlers";
+import type { EditorHandlers } from "@/hooks/editor/viewModel/useEditorHandlers";
 
 export type EditorViewModel = EditorProperties & EditorHandlers;
 

@@ -1,6 +1,6 @@
 "use client";
 
-import type { EditorContexts } from "@/hooks/editor/useEditorReducer";
+import type { EditorContexts } from "@/hooks/editor/reducer/useEditorReducer";
 import { generateYaml } from "@/utils/generateYaml";
 
 export type EditorHandlers = {

@@ -2,8 +2,8 @@
 
 import type { BlocViewItem } from "@/types/editor/bloc";
 import type { PanelSaveItem } from "@/types/editor/panelSave";
-import type { EditorContexts } from "@/hooks/editor/useEditorReducer";
-import { usePanelData } from "@/hooks/editor/usePanelData";
+import type { EditorContexts } from "@/hooks/editor/reducer/useEditorReducer";
+import { usePanelData } from "@/hooks/editor/reducer/usePanelData";
 import { generateYaml } from "@/utils/generateYaml";
 import { useMemo } from "react";
 

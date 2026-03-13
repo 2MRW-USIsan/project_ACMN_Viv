@@ -9,9 +9,6 @@ import { usePanelBaseReducer } from "./usePanelBaseReducer";
 import { useSelectReducer } from "./select/useSelectReducer";
 import { useSwitchReducer } from "./switch/useSwitchReducer";
 
-// Re-export for backward compatibility
-export type { PanelDataActionsType, PanelDataStateType };
-
 interface Returns {
   state: PanelDataStateType;
   actions: PanelDataActionsType;

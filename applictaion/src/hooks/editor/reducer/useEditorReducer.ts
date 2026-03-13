@@ -2,9 +2,9 @@
 
 import type { PanelDataActionsType, PanelDataStateType } from "@/types/editor/panel";
 import type { PanelSaveItem } from "@/types/editor/panelSave";
-import { usePanelReducer } from "@/hooks/editor/usePanelReducer";
+import { usePanelReducer } from "@/hooks/editor/reducer/usePanelReducer";
 import { useState } from "react";
-import type { EditorServiceReturn } from "@/hooks/editor/useEditorService";
+import type { EditorServiceReturn } from "@/hooks/editor/service/useEditorService";
 
 export type EditorReducerState = {
   panel: PanelDataStateType;

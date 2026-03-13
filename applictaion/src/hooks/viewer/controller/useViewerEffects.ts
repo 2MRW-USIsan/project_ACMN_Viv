@@ -1,6 +1,6 @@
 "use client";
 
-import type { ViewerContexts } from "@/hooks/viewer/useViewerReducer";
+import type { ViewerContexts } from "@/hooks/viewer/reducer/useViewerReducer";
 
 export function useViewerEffects(_contexts: ViewerContexts): void {
   // State-driven side effects for the viewer page.

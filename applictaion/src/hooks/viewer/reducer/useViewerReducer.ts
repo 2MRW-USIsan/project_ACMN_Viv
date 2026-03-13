@@ -1,12 +1,12 @@
 "use client";
 
-import type { JsonValidationStatus, OrderJsonActions } from "@/hooks/viewer/useOrderJsonReducer";
-import { useOrderJsonReducer } from "@/hooks/viewer/useOrderJsonReducer";
-import type { RequestJsonActions } from "@/hooks/viewer/useRequestJsonReducer";
-import { useRequestJsonReducer } from "@/hooks/viewer/useRequestJsonReducer";
-import type { OrderJsonRecord } from "@/types/viewer/orderJson";
+import type { OrderJsonActions } from "@/hooks/viewer/reducer/useOrderJsonReducer";
+import { useOrderJsonReducer } from "@/hooks/viewer/reducer/useOrderJsonReducer";
+import type { RequestJsonActions } from "@/hooks/viewer/reducer/useRequestJsonReducer";
+import { useRequestJsonReducer } from "@/hooks/viewer/reducer/useRequestJsonReducer";
+import type { JsonValidationStatus, OrderJsonRecord } from "@/types/viewer/orderJson";
 import { useState } from "react";
-import type { ViewerServiceReturn } from "@/hooks/viewer/useViewerService";
+import type { ViewerServiceReturn } from "@/hooks/viewer/service/useViewerService";
 
 export type ViewerReducerState = {
   request: {

@@ -1,7 +1,5 @@
-import type { PanelItemData } from "@/types/editor/panel";
+import type { PanelBaseItem, PanelItemData } from "@/types/editor/panel";
 import { useMemo, useReducer } from "react";
-
-export type PanelBaseItem = PanelItemData & { label: string };
 
 type PanelBaseState = {
   panels: PanelBaseItem[];

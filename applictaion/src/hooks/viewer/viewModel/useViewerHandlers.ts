@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback } from "react";
-import type { ViewerContexts } from "@/hooks/viewer/useViewerReducer";
+import type { ViewerContexts } from "@/hooks/viewer/reducer/useViewerReducer";
 
 export type ViewerHandlers = {
   onShuffle: () => void;

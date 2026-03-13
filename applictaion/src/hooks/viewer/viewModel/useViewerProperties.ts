@@ -1,8 +1,8 @@
 "use client";
 
 import { useMemo } from "react";
-import type { JsonValidationStatus } from "@/hooks/viewer/useOrderJsonReducer";
-import type { ViewerContexts } from "@/hooks/viewer/useViewerReducer";
+import type { JsonValidationStatus } from "@/types/viewer/orderJson";
+import type { ViewerContexts } from "@/hooks/viewer/reducer/useViewerReducer";
 import type { OrderJsonRecord } from "@/types/viewer/orderJson";
 
 export type ViewerProperties = {

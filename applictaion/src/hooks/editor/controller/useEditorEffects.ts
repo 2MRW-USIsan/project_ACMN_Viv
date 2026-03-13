@@ -1,6 +1,6 @@
 "use client";
 
-import type { EditorContexts } from "@/hooks/editor/useEditorReducer";
+import type { EditorContexts } from "@/hooks/editor/reducer/useEditorReducer";
 
 export function useEditorEffects(_contexts: EditorContexts): void {
   // State-driven side effects for the editor page.

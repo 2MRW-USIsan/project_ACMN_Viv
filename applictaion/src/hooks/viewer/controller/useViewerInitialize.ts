@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import type { ViewerContexts } from "@/hooks/viewer/useViewerReducer";
+import type { ViewerContexts } from "@/hooks/viewer/reducer/useViewerReducer";
 
 const YAML_STORAGE_KEY = "acmn_yaml_content";
 

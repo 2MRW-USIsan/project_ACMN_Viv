@@ -11,6 +11,9 @@ export type PanelItemData = {
   values: { key: string; label: string };
 };
 
+// Base panel item (id + label + key/label values) — without domain chips
+export type PanelBaseItem = PanelItemData & { label: string };
+
 export type PanelItem = PanelItemData & {
   label: string;
   orders: OrdersPanelChip;

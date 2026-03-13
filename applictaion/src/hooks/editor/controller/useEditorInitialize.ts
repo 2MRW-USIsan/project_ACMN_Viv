@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import type { EditorContexts } from "@/hooks/editor/useEditorReducer";
+import type { EditorContexts } from "@/hooks/editor/reducer/useEditorReducer";
 
 export function useEditorInitialize(contexts: EditorContexts): void {
   const { fetchItem } = contexts.service;
