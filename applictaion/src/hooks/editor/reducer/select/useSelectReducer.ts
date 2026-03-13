@@ -4,12 +4,12 @@ import type {
   SelectPanelChip,
   SelectPanelItem,
 } from "@/types/editor/panel";
-import { useMemo, useReducer } from "react";
+import { useEffect, useMemo, useReducer } from "react";
 
-type SelectState = Record<number, SelectPanelChip>;
+export type SelectReducerState = Record<number, SelectPanelChip>;
 
-export type SelectActions = {
-  loadState: (state: SelectState) => void;
+export type SelectReducerAction = {
+  loadState: (state: SelectReducerState) => void;
   removePanel: (panelId: number) => void;
   changeChip: (panelId: number) => void;
   addItem: (panelId: number) => void;
@@ -78,11 +78,12 @@ type Action =
     }
   | { type: "DELETE_ITEM"; payload: { panelId: number; itemId: number } }
   | { type: "TOGGLE_SHUFFLE"; payload: { panelId: number; itemId: number } }
-  | { type: "LOAD_STATE"; payload: SelectState };
+  | { type: "LOAD_STATE"; payload: SelectReducerState }
+  | { type: "INITIALIZE" };
 
-const initialState: SelectState = {};
+const initItem: SelectReducerState = {};
 
-const getChip = (state: SelectState, panelId: number): SelectPanelChip =>
+const getChip = (state: SelectReducerState, panelId: number): SelectPanelChip =>
   state[panelId] ?? { selected: false, data: [] };
 
 const createSelectPanelItem = (): SelectPanelItem => ({
@@ -104,14 +105,19 @@ const createSelectListDataItem = (): SelectListDataItem => ({
   values: { prompt: "", value: "" },
 });
 
-function reducer(state: SelectState, action: Action): SelectState {
+function reducer(
+  state: SelectReducerState | undefined,
+  action: Action,
+): SelectReducerState | undefined {
+  if (action.type === "INITIALIZE") return initItem;
+  if (!state) return state;
   switch (action.type) {
     case "REMOVE_PANEL":
       return Object.fromEntries(
         Object.entries(state).filter(
           ([k]) => Number(k) !== action.payload.panelId,
         ),
-      ) as SelectState;
+      ) as SelectReducerState;
     case "CHANGE_CHIP": {
       const chip = getChip(state, action.payload.panelId);
       const selected = !chip.selected;
@@ -320,16 +326,20 @@ function reducer(state: SelectState, action: Action): SelectState {
   }
 }
 
-type Returns = {
-  state: SelectState;
-  actions: SelectActions;
-};
+export interface SelectReducerReturn {
+  state: SelectReducerState;
+  action: SelectReducerAction;
+}
 
-export function useSelectReducer(): Returns {
-  const [state, dispatch] = useReducer(reducer, initialState);
+export function useSelectReducer(): SelectReducerReturn {
+  const [state, dispatch] = useReducer(reducer, undefined);
 
-  const actions = useMemo(
-    (): SelectActions => ({
+  useEffect(() => {
+    dispatch({ type: "INITIALIZE" });
+  }, []);
+
+  const action = useMemo(
+    (): SelectReducerAction => ({
       loadState: (newState) =>
         dispatch({ type: "LOAD_STATE", payload: newState }),
       removePanel: (panelId) =>
@@ -373,5 +383,5 @@ export function useSelectReducer(): Returns {
     [],
   );
 
-  return { state, actions };
+  return { state: state ?? initItem, action };
 }

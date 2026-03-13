@@ -1,7 +1,23 @@
 "use client";
 
-import { useMemo, useReducer } from "react";
+import { useMemo, useReducer, useEffect } from "react";
 import type { JsonValidationStatus, OrderJsonRecord } from "@/types/viewer/orderJson";
+
+export type OrderJsonReducerState = {
+  text: string;
+  dbRecord: OrderJsonRecord | null;
+  validationStatus: JsonValidationStatus;
+  validationError: string;
+  hasDiff: boolean;
+};
+
+export type OrderJsonReducerAction = {
+  setText: (text: string) => void;
+  loadFromDb: (record: OrderJsonRecord | null) => void;
+  paste: (text: string) => void;
+  clear: () => void;
+  reset: () => void;
+};
 
 type State = {
   text: string;
@@ -15,7 +31,8 @@ type Action =
   | { type: "LOAD_FROM_DB"; payload: OrderJsonRecord | null }
   | { type: "PASTE"; payload: string }
   | { type: "CLEAR" }
-  | { type: "RESET" };
+  | { type: "RESET" }
+  | { type: "INITIALIZE" };
 
 const validateJson = (text: string): { status: JsonValidationStatus; error: string } => {
   if (text.trim() === "") return { status: "empty", error: "" };
@@ -33,8 +50,17 @@ const applyText = (state: State, text: string): State => {
   return { ...state, text, validationStatus: status, validationError: error };
 };
 
-const reducer = (state: State, action: Action): State => {
-  const handlers: Record<Action["type"], () => State> = {
+const initItem: State = {
+  text: "",
+  dbRecord: null,
+  validationStatus: "empty",
+  validationError: "",
+};
+
+const reducer = (state: State | undefined, action: Action): State | undefined => {
+  if (action.type === "INITIALIZE") return initItem;
+  if (!state) return state;
+  const handlers: Record<Exclude<Action["type"], "INITIALIZE">, () => State> = {
     SET_TEXT: () =>
       applyText(state, (action as { type: "SET_TEXT"; payload: string }).payload),
     LOAD_FROM_DB: () => {
@@ -56,33 +82,20 @@ const reducer = (state: State, action: Action): State => {
   return handlers[action.type]?.() ?? state;
 };
 
-export type OrderJsonActions = {
-  setText: (text: string) => void;
-  loadFromDb: (record: OrderJsonRecord | null) => void;
-  paste: (text: string) => void;
-  clear: () => void;
-  reset: () => void;
-};
+export interface OrderJsonReducerReturn {
+  state: OrderJsonReducerState;
+  action: OrderJsonReducerAction;
+}
 
-type Returns = {
-  text: string;
-  dbRecord: OrderJsonRecord | null;
-  validationStatus: JsonValidationStatus;
-  validationError: string;
-  hasDiff: boolean;
-  actions: OrderJsonActions;
-};
+export function useOrderJsonReducer(): OrderJsonReducerReturn {
+  const [state, dispatch] = useReducer(reducer, undefined);
 
-export function useOrderJsonReducer(): Returns {
-  const [state, dispatch] = useReducer(reducer, {
-    text: "",
-    dbRecord: null,
-    validationStatus: "empty",
-    validationError: "",
-  });
+  useEffect(() => {
+    dispatch({ type: "INITIALIZE" });
+  }, []);
 
-  const actions = useMemo(
-    (): OrderJsonActions => ({
+  const action = useMemo(
+    (): OrderJsonReducerAction => ({
       setText: (text) => dispatch({ type: "SET_TEXT", payload: text }),
       loadFromDb: (record) => dispatch({ type: "LOAD_FROM_DB", payload: record }),
       paste: (text) => dispatch({ type: "PASTE", payload: text }),
@@ -92,14 +105,15 @@ export function useOrderJsonReducer(): Returns {
     [],
   );
 
-  const hasDiff = state.text !== (state.dbRecord?.jsonData ?? "");
-
+  const currentState = state ?? initItem;
   return {
-    text: state.text,
-    dbRecord: state.dbRecord,
-    validationStatus: state.validationStatus,
-    validationError: state.validationError,
-    hasDiff,
-    actions,
+    state: {
+      text: currentState.text,
+      dbRecord: currentState.dbRecord,
+      validationStatus: currentState.validationStatus,
+      validationError: currentState.validationError,
+      hasDiff: currentState.text !== (currentState.dbRecord?.jsonData ?? ""),
+    },
+    action,
   };
 }

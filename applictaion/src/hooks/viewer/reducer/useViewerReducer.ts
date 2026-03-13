@@ -1,32 +1,21 @@
 "use client";
 
-import type { OrderJsonActions } from "@/hooks/viewer/reducer/useOrderJsonReducer";
+import type { OrderJsonReducerAction, OrderJsonReducerState } from "@/hooks/viewer/reducer/useOrderJsonReducer";
 import { useOrderJsonReducer } from "@/hooks/viewer/reducer/useOrderJsonReducer";
-import type { RequestJsonActions } from "@/hooks/viewer/reducer/useRequestJsonReducer";
+import type { RequestJsonReducerAction, RequestJsonReducerState } from "@/hooks/viewer/reducer/useRequestJsonReducer";
 import { useRequestJsonReducer } from "@/hooks/viewer/reducer/useRequestJsonReducer";
-import type { JsonValidationStatus, OrderJsonRecord } from "@/types/viewer/orderJson";
 import { useState } from "react";
 import type { ViewerServiceReturn } from "@/hooks/viewer/service/useViewerService";
 
 export type ViewerReducerState = {
-  request: {
-    text: string;
-    yamlError: string;
-    hasYamlData: boolean;
-  };
-  order: {
-    text: string;
-    dbRecord: OrderJsonRecord | null;
-    validationStatus: JsonValidationStatus;
-    validationError: string;
-    hasDiff: boolean;
-  };
+  request: RequestJsonReducerState;
+  order: OrderJsonReducerState;
   isConfirmDialogOpen: boolean;
 };
 
 export type ViewerReducerAction = {
-  request: RequestJsonActions;
-  order: OrderJsonActions;
+  request: RequestJsonReducerAction;
+  order: OrderJsonReducerAction;
   setIsConfirmDialogOpen: (open: boolean) => void;
 };
 
@@ -46,24 +35,14 @@ export function useViewerReducer(): ViewerReducerReturn {
   const [isConfirmDialogOpen, setIsConfirmDialogOpen] = useState(false);
 
   const state: ViewerReducerState = {
-    request: {
-      text: requestJson.text,
-      yamlError: requestJson.yamlError,
-      hasYamlData: requestJson.hasYamlData,
-    },
-    order: {
-      text: orderJson.text,
-      dbRecord: orderJson.dbRecord,
-      validationStatus: orderJson.validationStatus,
-      validationError: orderJson.validationError,
-      hasDiff: orderJson.hasDiff,
-    },
+    request: requestJson.state,
+    order: orderJson.state,
     isConfirmDialogOpen,
   };
 
   const action: ViewerReducerAction = {
-    request: requestJson.actions,
-    order: orderJson.actions,
+    request: requestJson.action,
+    order: orderJson.action,
     setIsConfirmDialogOpen,
   };
 

@@ -9,17 +9,17 @@ import { usePanelBaseReducer } from "./usePanelBaseReducer";
 import { useSelectReducer } from "./select/useSelectReducer";
 import { useSwitchReducer } from "./switch/useSwitchReducer";
 
-interface Returns {
+export interface PanelReducerReturn {
   state: PanelDataStateType;
-  actions: PanelDataActionsType;
+  action: PanelDataActionsType;
 }
 
-export function usePanelReducer(): Returns {
-  const { state: panelBaseState, actions: panelBaseActions } =
+export function usePanelReducer(): PanelReducerReturn {
+  const { state: panelBaseState, action: panelBaseActions } =
     usePanelBaseReducer();
-  const { state: ordersState, actions: ordersActions } = useOrdersReducer();
-  const { state: selectState, actions: selectActions } = useSelectReducer();
-  const { state: switchState, actions: switchActions } = useSwitchReducer();
+  const { state: ordersState, action: ordersActions } = useOrdersReducer();
+  const { state: selectState, action: selectActions } = useSelectReducer();
+  const { state: switchState, action: switchActions } = useSwitchReducer();
 
   // Synchronize domain reducers when panels are deleted from the panel list.
   // Actions are memoized so they are stable across renders.
@@ -56,7 +56,7 @@ export function usePanelReducer(): Returns {
 
   return {
     state,
-    actions: {
+    action: {
       loadState: (newState) => {
         panelBaseActions.loadState(
           newState.panels.map((p) => ({

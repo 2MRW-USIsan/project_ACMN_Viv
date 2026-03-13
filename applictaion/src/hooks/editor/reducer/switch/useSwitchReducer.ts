@@ -3,12 +3,12 @@ import type {
   SwitchPanelChip,
   SwitchPanelItem,
 } from "@/types/editor/panel";
-import { useMemo, useReducer } from "react";
+import { useEffect, useMemo, useReducer } from "react";
 
-type SwitchState = Record<number, SwitchPanelChip>;
+export type SwitchReducerState = Record<number, SwitchPanelChip>;
 
-export type SwitchActions = {
-  loadState: (state: SwitchState) => void;
+export type SwitchReducerAction = {
+  loadState: (state: SwitchReducerState) => void;
   removePanel: (panelId: number) => void;
   changeChip: (panelId: number) => void;
   addItem: (panelId: number) => void;
@@ -53,11 +53,12 @@ type Action =
     }
   | { type: "DELETE_ITEM"; payload: { panelId: number; itemId: number } }
   | { type: "TOGGLE_RANDOMIZE"; payload: { panelId: number; itemId: number } }
-  | { type: "LOAD_STATE"; payload: SwitchState };
+  | { type: "LOAD_STATE"; payload: SwitchReducerState }
+  | { type: "INITIALIZE" };
 
-const initialState: SwitchState = {};
+const initItem: SwitchReducerState = {};
 
-const getChip = (state: SwitchState, panelId: number): SwitchPanelChip =>
+const getChip = (state: SwitchReducerState, panelId: number): SwitchPanelChip =>
   state[panelId] ?? { selected: false, data: [] };
 
 const createSwitchPanelItem = (): SwitchPanelItem => ({
@@ -75,14 +76,19 @@ const createSwitchDataItem = (): SwitchDataItem => ({
   altValue: "",
 });
 
-function reducer(state: SwitchState, action: Action): SwitchState {
+function reducer(
+  state: SwitchReducerState | undefined,
+  action: Action,
+): SwitchReducerState | undefined {
+  if (action.type === "INITIALIZE") return initItem;
+  if (!state) return state;
   switch (action.type) {
     case "REMOVE_PANEL":
       return Object.fromEntries(
         Object.entries(state).filter(
           ([k]) => Number(k) !== action.payload.panelId,
         ),
-      ) as SwitchState;
+      ) as SwitchReducerState;
     case "CHANGE_CHIP": {
       const chip = getChip(state, action.payload.panelId);
       const selected = !chip.selected;
@@ -212,16 +218,20 @@ function reducer(state: SwitchState, action: Action): SwitchState {
   }
 }
 
-type Returns = {
-  state: SwitchState;
-  actions: SwitchActions;
-};
+export interface SwitchReducerReturn {
+  state: SwitchReducerState;
+  action: SwitchReducerAction;
+}
 
-export function useSwitchReducer(): Returns {
-  const [state, dispatch] = useReducer(reducer, initialState);
+export function useSwitchReducer(): SwitchReducerReturn {
+  const [state, dispatch] = useReducer(reducer, undefined);
 
-  const actions = useMemo(
-    (): SwitchActions => ({
+  useEffect(() => {
+    dispatch({ type: "INITIALIZE" });
+  }, []);
+
+  const action = useMemo(
+    (): SwitchReducerAction => ({
       loadState: (newState) =>
         dispatch({ type: "LOAD_STATE", payload: newState }),
       removePanel: (panelId) =>
@@ -255,5 +265,5 @@ export function useSwitchReducer(): Returns {
     [],
   );
 
-  return { state, actions };
+  return { state: state ?? initItem, action };
 }

@@ -1,10 +1,10 @@
 import type { OrdersPanelChip, OrdersPanelItem } from "@/types/editor/panel";
-import { useMemo, useReducer } from "react";
+import { useEffect, useMemo, useReducer } from "react";
 
-type OrdersState = Record<number, OrdersPanelChip>;
+export type OrdersReducerState = Record<number, OrdersPanelChip>;
 
-export type OrdersActions = {
-  loadState: (state: OrdersState) => void;
+export type OrdersReducerAction = {
+  loadState: (state: OrdersReducerState) => void;
   removePanel: (panelId: number) => void;
   changeChip: (panelId: number) => void;
   addItem: (panelId: number) => void;
@@ -103,11 +103,12 @@ type Action =
       };
     }
   | { type: "DELETE_ITEM"; payload: { panelId: number; itemId: number } }
-  | { type: "LOAD_STATE"; payload: OrdersState };
+  | { type: "LOAD_STATE"; payload: OrdersReducerState }
+  | { type: "INITIALIZE" };
 
-const initialState: OrdersState = {};
+const initItem: OrdersReducerState = {};
 
-const getChip = (state: OrdersState, panelId: number): OrdersPanelChip =>
+const getChip = (state: OrdersReducerState, panelId: number): OrdersPanelChip =>
   state[panelId] ?? { selected: false, data: [] };
 
 const createOrdersPanelItem = (): OrdersPanelItem => ({
@@ -117,14 +118,19 @@ const createOrdersPanelItem = (): OrdersPanelItem => ({
   data: [],
 });
 
-function reducer(state: OrdersState, action: Action): OrdersState {
+function reducer(
+  state: OrdersReducerState | undefined,
+  action: Action,
+): OrdersReducerState | undefined {
+  if (action.type === "INITIALIZE") return initItem;
+  if (!state) return state;
   switch (action.type) {
     case "REMOVE_PANEL":
       return Object.fromEntries(
         Object.entries(state).filter(
           ([k]) => Number(k) !== action.payload.panelId,
         ),
-      ) as OrdersState;
+      ) as OrdersReducerState;
     case "CHANGE_CHIP": {
       const chip = getChip(state, action.payload.panelId);
       const selected = !chip.selected;
@@ -486,16 +492,20 @@ function reducer(state: OrdersState, action: Action): OrdersState {
   }
 }
 
-type Returns = {
-  state: OrdersState;
-  actions: OrdersActions;
-};
+export interface OrdersReducerReturn {
+  state: OrdersReducerState;
+  action: OrdersReducerAction;
+}
 
-export function useOrdersReducer(): Returns {
-  const [state, dispatch] = useReducer(reducer, initialState);
+export function useOrdersReducer(): OrdersReducerReturn {
+  const [state, dispatch] = useReducer(reducer, undefined);
 
-  const actions = useMemo(
-    (): OrdersActions => ({
+  useEffect(() => {
+    dispatch({ type: "INITIALIZE" });
+  }, []);
+
+  const action = useMemo(
+    (): OrdersReducerAction => ({
       loadState: (newState) =>
         dispatch({ type: "LOAD_STATE", payload: newState }),
       removePanel: (panelId) =>
@@ -559,5 +569,5 @@ export function useOrdersReducer(): Returns {
     [],
   );
 
-  return { state, actions };
+  return { state: state ?? initItem, action };
 }

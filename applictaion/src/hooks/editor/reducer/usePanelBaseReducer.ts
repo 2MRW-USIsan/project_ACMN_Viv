@@ -1,11 +1,11 @@
-import type { PanelBaseItem, PanelItemData } from "@/types/editor/panel";
-import { useMemo, useReducer } from "react";
+import type { PanelBaseItem } from "@/types/editor/panel";
+import { useEffect, useMemo, useReducer } from "react";
 
-type PanelBaseState = {
+export type PanelBaseReducerState = {
   panels: PanelBaseItem[];
 };
 
-export type PanelBaseActions = {
+export type PanelBaseReducerAction = {
   loadState: (panels: PanelBaseItem[]) => void;
   addPanel: () => void;
   changePanel: (id: number) => void;
@@ -21,11 +21,17 @@ type Action =
       type: "CHANGE_FORM";
       payload: { id: number; label: string; value: string };
     }
-  | { type: "LOAD_STATE"; payload: { panels: PanelBaseItem[] } };
+  | { type: "LOAD_STATE"; payload: { panels: PanelBaseItem[] } }
+  | { type: "INITIALIZE" };
 
-const initialState: PanelBaseState = { panels: [] };
+const initItem: PanelBaseReducerState = { panels: [] };
 
-function reducer(state: PanelBaseState, action: Action): PanelBaseState {
+function reducer(
+  state: PanelBaseReducerState | undefined,
+  action: Action,
+): PanelBaseReducerState | undefined {
+  if (action.type === "INITIALIZE") return initItem;
+  if (!state) return state;
   switch (action.type) {
     case "ADD_PANEL":
       return {
@@ -74,16 +80,20 @@ function reducer(state: PanelBaseState, action: Action): PanelBaseState {
   }
 }
 
-type Returns = {
-  state: PanelBaseState;
-  actions: PanelBaseActions;
-};
+export interface PanelBaseReducerReturn {
+  state: PanelBaseReducerState;
+  action: PanelBaseReducerAction;
+}
 
-export function usePanelBaseReducer(): Returns {
-  const [state, dispatch] = useReducer(reducer, initialState);
+export function usePanelBaseReducer(): PanelBaseReducerReturn {
+  const [state, dispatch] = useReducer(reducer, undefined);
 
-  const actions = useMemo(
-    (): PanelBaseActions => ({
+  useEffect(() => {
+    dispatch({ type: "INITIALIZE" });
+  }, []);
+
+  const action = useMemo(
+    (): PanelBaseReducerAction => ({
       loadState: (panels) =>
         dispatch({ type: "LOAD_STATE", payload: { panels } }),
       addPanel: () => dispatch({ type: "ADD_PANEL" }),
@@ -95,5 +105,5 @@ export function usePanelBaseReducer(): Returns {
     [],
   );
 
-  return { state, actions };
+  return { state: state ?? initItem, action };
 }
