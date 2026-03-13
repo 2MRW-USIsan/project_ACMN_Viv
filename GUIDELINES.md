@@ -209,13 +209,38 @@ export function use{Page}Controller(contexts: {Page}Contexts): void {
 | `use{Page}Initialize` | マウント時の初期化（API 取得・localStorage 読込など）を担う `useEffect` ラッパー。 |
 | `use{Page}Effects` | state の変化に応じたクロスドメイン連携などを担う `useEffect` ラッパー。 |
 
+### Composer の構成
+
+`use{Page}Composer` の内部は、以下 2 つのサブフックに `contexts` を渡して ViewModel を組み立てる。
+
+```ts
+export function use{Page}Composer(contexts: {Page}Contexts): Returns {
+  const properties = use{Page}Properties(contexts); // プロパティ・ラベル情報を提供
+  const handlers = use{Page}Handlers(contexts);     // ハンドラ情報を提供
+
+  const viewModels: {Page}ViewModel = { ...properties, ...handlers };
+  return { viewModels };
+}
+```
+
+| フック | 責務 |
+|---|---|
+| `use{Page}Properties` | `contexts` を受け取り、プロパティやラベル情報（派生値・表示データ）を提供する。 |
+| `use{Page}Handlers` | `contexts` を受け取り、イベントハンドラ（コールバック関数群）を提供する。 |
+
+`{Page}ViewModel` 型は `use{Page}Properties` が返す `{Page}Properties` 型と `use{Page}Handlers` が返す `{Page}Handlers` 型の intersection 型として定義する。
+
+```ts
+export type {Page}ViewModel = {Page}Properties & {Page}Handlers;
+```
+
 ### スケーリング規則
 
 処理量が肥大化した場合は、ドメイン単位でサブフックを用意する。
 
 - **Reducer**: `use{Page}Reducer` 内部で `use{Domain}Reducer` を呼び出す（例: `useEditorReducer` 内で `usePanelReducer` を呼ぶ）。
 - **Controller**: `use{Page}Initialize` / `use{Page}Effects` 内部でドメイン単位のサブフックを呼び出す。
-- **Composer**: `use{Page}Composer` 内部でドメイン単位のサブフックを呼び出す。
+- **Composer**: `use{Page}Properties` / `use{Page}Handlers` 内部でドメイン単位のサブフックを呼び出す。
 
 ---
 
@@ -311,6 +336,8 @@ import { IconButton } from "@mui/material";
 | Initialize フック（初期化副作用） | `hooks/<screen>/use<Screen>Initialize.ts` |
 | Effects フック（状態副作用） | `hooks/<screen>/use<Screen>Effects.ts` |
 | Composer フック（ViewModel 生成） | `hooks/<screen>/use<Screen>Composer.ts` |
+| Properties フック（プロパティ・ラベル情報） | `hooks/<screen>/use<Screen>Properties.ts` |
+| Handlers フック（ハンドラ情報） | `hooks/<screen>/use<Screen>Handlers.ts` |
 | 型定義 | `types/` |
 | ユーティリティ（純粋関数） | `utils/` |
 | MUI テーマ | `theme/` |

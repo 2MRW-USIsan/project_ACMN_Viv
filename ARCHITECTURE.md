@@ -71,6 +71,8 @@ applictaion/src/
 │   │   ├── useEditorInitialize.ts   # 初期化 useEffect ラッパー
 │   │   ├── useEditorEffects.ts      # state 副作用 useEffect ラッパー
 │   │   ├── useEditorComposer.ts     # ViewModel 生成; EditorViewModel 定義
+│   │   ├── useEditorProperties.ts   # プロパティ・ラベル情報提供; EditorProperties 定義
+│   │   ├── useEditorHandlers.ts     # ハンドラ情報提供; EditorHandlers 定義
 │   │   ├── usePanelReducer.ts       # 4つのリデューサーを束ねるオーケストレーター
 │   │   ├── usePanelBaseReducer.ts   # パネルリスト基本状態（ドメインリデューサー）
 │   │   ├── usePanelData.ts          # State → View へのデータ変換（Presenter）
@@ -89,6 +91,8 @@ applictaion/src/
 │       ├── useViewerInitialize.ts   # 初期化 useEffect ラッパー
 │       ├── useViewerEffects.ts      # state 副作用 useEffect ラッパー
 │       ├── useViewerComposer.ts     # ViewModel 生成; ViewerViewModel 定義
+│       ├── useViewerProperties.ts   # プロパティ・ラベル情報提供; ViewerProperties 定義
+│       ├── useViewerHandlers.ts     # ハンドラ情報提供; ViewerHandlers 定義
 │       ├── useOrderJsonReducer.ts   # オーダー用 JSON 状態管理
 │       ├── useRequestJsonReducer.ts # リクエスト用 JSON 状態管理
 │       └── useOrdersViewer.ts       # オーダービュー状態管理
@@ -136,7 +140,9 @@ import { PanelList } from "@/components/molecules/panel/PanelList";
 │     │     ├── useEditorInitialize()    ←─ 初期化 useEffect      │
 │     │     └── useEditorEffects()       ←─ 状態副作用 useEffect  │
 │     └── useEditorComposer(contexts)    ←─ ViewModel 生成        │
-│           └── usePanelData(reducer)    ←─ BlocViewItem[]        │
+│           ├── useEditorProperties(contexts) ←─ プロパティ・ラベル │
+│           │     └── usePanelData(reducer)  ←─ BlocViewItem[]   │
+│           └── useEditorHandlers(contexts)  ←─ ハンドラ          │
 │                                                                 │
 │   └── <PanelList>                                               │
 │         └── <BlocPanelListItem> ×n                              │
@@ -157,9 +163,11 @@ useEditorService (API 呼び出し)
 useEditorReducer (状態管理)
     ↓ state / action
 useEditorController (副作用管理)     useEditorComposer (ViewModel 生成)
-    ↓ useEffect による初期化・連携          ↓ usePanelData (Presenter)
-                                           ↓ BlocViewItem[] （コールバック束ね済み）
-                                       Components（描画のみ）
+    ↓ useEffect による初期化・連携          ├── useEditorProperties (プロパティ)
+                                           │     └── usePanelData (Presenter)
+                                           │           ↓ BlocViewItem[] （コールバック束ね済み）
+                                           └── useEditorHandlers (ハンドラ)
+                                        Components（描画のみ）
                                            ↓ コールバック呼び出し
                                        action → useEditorReducer へ戻る
 ```
@@ -224,9 +232,9 @@ const { viewModels } = use{Page}Composer(contexts);      // ViewModel 生成
 - **Service**: API・Repository・Usecase の呼び出しが責務。状態を持たない純粋な非同期関数群を `fetchItem`（読み取り系）と `request`（書き込み系）に分けて提供。
 - **Reducer**: `useReducer` / `useState` による状態管理。`state` と `action` を返す。処理量が増えた場合はドメイン単位のサブリデューサー（例: `usePanelReducer`）を内部で呼び出す。
 - **Controller**: `contexts` を受け取り `use{Page}Initialize`（初期化 `useEffect`）と `use{Page}Effects`（状態副作用 `useEffect`）を呼び出す。
-- **Composer**: `contexts` を受け取り最終的な ViewModel を生成して返す。`ViewModel` 型の定義もここに置く。
+- **Composer**: `contexts` を受け取り `use{Page}Properties`（プロパティ・ラベル情報）と `use{Page}Handlers`（ハンドラ情報）を呼び出し、最終的な ViewModel を生成して返す。`ViewModel` 型の定義もここに置く。
 
-`use{Page}ViewModel` が返す型（例: `EditorViewModel`）は `use{Page}Composer.ts` 内で定義し、`use{Page}ViewModel.ts` から re-export します。
+`use{Page}ViewModel` が返す型（例: `EditorViewModel`）は `use{Page}Composer.ts` 内で `{Page}Properties & {Page}Handlers` の intersection 型として定義し、`use{Page}ViewModel.ts` から re-export します。`{Page}Properties` 型は `use{Page}Properties.ts`、`{Page}Handlers` 型は `use{Page}Handlers.ts` でそれぞれ定義します。
 
 ### 4-5. ネストフィールドのラベルパース方式
 
@@ -336,7 +344,7 @@ type Action =
 
 ### ViewModel 型
 
-`EditorViewModel` 型は `useEditorComposer.ts` 内で定義し、`useEditorViewModel.ts` から re-export します。画面固有のインターフェースであるため `types/` には置きません。同様に `ViewerViewModel` は `useViewerComposer.ts` 内で定義します。
+`EditorViewModel` 型は `useEditorComposer.ts` 内で `EditorProperties & EditorHandlers` の intersection 型として定義し、`useEditorViewModel.ts` から re-export します。`EditorProperties` は `useEditorProperties.ts`、`EditorHandlers` は `useEditorHandlers.ts` でそれぞれ定義します。画面固有のインターフェースであるため `types/` には置きません。同様に `ViewerViewModel` は `useViewerComposer.ts` 内で `ViewerProperties & ViewerHandlers` として定義します。
 
 ---
 
@@ -429,4 +437,6 @@ blocs:
    - `use{Page}Reducer` — 状態管理（`state` / `action` を返す）; `{Page}Contexts` 型もここで定義する
    - `use{Page}Controller` — 副作用管理（`use{Page}Initialize` + `use{Page}Effects` を呼ぶ）
    - `use{Page}Composer` — ViewModel 生成（`{ viewModels }` を返す）; ViewModel 型もここで定義する
+     - `use{Page}Properties` — プロパティ・ラベル情報提供（`{Page}Properties` 型もここで定義する）
+     - `use{Page}Handlers` — ハンドラ情報提供（`{Page}Handlers` 型もここで定義する）
    - `use{Page}ViewModel` — 上記 4 フックを束ねるオーケストレーター
