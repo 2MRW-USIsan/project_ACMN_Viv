@@ -1,11 +1,17 @@
-import type { PanelBaseItem, PanelItemData } from "@/types/editor/panel";
-import { useMemo, useReducer } from "react";
+import type { PanelBaseItem } from "@/types/editor/panel";
+import {
+  addPanelItem,
+  changeFormItem,
+  changePanelItem,
+  deletePanelItem,
+} from "@/utils/reducers/editor/panelBaseReducerUtils";
+import { useEffect, useReducer } from "react";
 
-type PanelBaseState = {
+export type PanelBaseReducerState = {
   panels: PanelBaseItem[];
 };
 
-export type PanelBaseActions = {
+export type PanelBaseReducerAction = {
   loadState: (panels: PanelBaseItem[]) => void;
   addPanel: () => void;
   changePanel: (id: number) => void;
@@ -13,87 +19,72 @@ export type PanelBaseActions = {
   changeForm: (id: number, label: string, value: string) => void;
 };
 
-type Action =
-  | { type: "ADD_PANEL" }
-  | { type: "CHANGE_PANEL"; payload: { id: number } }
-  | { type: "DELETE_PANEL"; payload: { id: number } }
-  | {
-      type: "CHANGE_FORM";
-      payload: { id: number; label: string; value: string };
-    }
-  | { type: "LOAD_STATE"; payload: { panels: PanelBaseItem[] } };
-
-const initialState: PanelBaseState = { panels: [] };
-
-function reducer(state: PanelBaseState, action: Action): PanelBaseState {
-  switch (action.type) {
-    case "ADD_PANEL":
-      return {
-        ...state,
-        panels: [
-          ...state.panels,
-          {
-            id: Date.now(),
-            label: `Panel ${state.panels.length + 1}`,
-            values: { key: `key-${Date.now()}`, label: `label-${Date.now()}` },
-            state: false,
-          },
-        ],
-      };
-    case "CHANGE_PANEL":
-      return {
-        ...state,
-        panels: state.panels.map((p) =>
-          p.id === action.payload.id ? { ...p, state: !p.state } : p,
-        ),
-      };
-    case "DELETE_PANEL":
-      return {
-        ...state,
-        panels: state.panels.filter((p) => p.id !== action.payload.id),
-      };
-    case "CHANGE_FORM":
-      return {
-        ...state,
-        panels: state.panels.map((p) =>
-          p.id === action.payload.id
-            ? {
-                ...p,
-                values: {
-                  ...p.values,
-                  [action.payload.label]: action.payload.value,
-                },
-              }
-            : p,
-        ),
-      };
-    case "LOAD_STATE":
-      return { panels: action.payload.panels };
-    default:
-      return state;
-  }
+export interface PanelBaseReducerReturn {
+  state: PanelBaseReducerState;
+  action: PanelBaseReducerAction;
 }
 
-type Returns = {
-  state: PanelBaseState;
-  actions: PanelBaseActions;
-};
+export function usePanelBaseReducer(): PanelBaseReducerReturn {
+  type STATE = PanelBaseReducerState | undefined;
 
-export function usePanelBaseReducer(): Returns {
-  const [state, dispatch] = useReducer(reducer, initialState);
+  type CHANGE_PANEL = { id: number };
+  type DELETE_PANEL = { id: number };
+  type CHANGE_FORM = { id: number; label: string; value: string };
+  type LOAD_STATE = { panels: PanelBaseItem[] };
 
-  const actions = useMemo(
-    (): PanelBaseActions => ({
-      loadState: (panels) =>
-        dispatch({ type: "LOAD_STATE", payload: { panels } }),
-      addPanel: () => dispatch({ type: "ADD_PANEL" }),
-      changePanel: (id) => dispatch({ type: "CHANGE_PANEL", payload: { id } }),
-      deletePanel: (id) => dispatch({ type: "DELETE_PANEL", payload: { id } }),
-      changeForm: (id, label, value) =>
-        dispatch({ type: "CHANGE_FORM", payload: { id, label, value } }),
-    }),
-    [],
-  );
+  type ACTION =
+    | { type: "ADD_PANEL" }
+    | { type: "CHANGE_PANEL"; payload: CHANGE_PANEL }
+    | { type: "DELETE_PANEL"; payload: DELETE_PANEL }
+    | { type: "CHANGE_FORM"; payload: CHANGE_FORM }
+    | { type: "LOAD_STATE"; payload: LOAD_STATE }
+    | { type: "INITIALIZE" };
 
-  return { state, actions };
+  const initItem: PanelBaseReducerState = { panels: [] };
+
+  const reducer = (state: STATE, action: ACTION): STATE => {
+    switch (action.type) {
+      case "ADD_PANEL":
+        return state && addPanelItem(state);
+      case "CHANGE_PANEL":
+        return state && changePanelItem(state, action.payload);
+      case "DELETE_PANEL":
+        return state && deletePanelItem(state, action.payload);
+      case "CHANGE_FORM":
+        return state && changeFormItem(state, action.payload);
+      case "LOAD_STATE":
+        return { panels: action.payload.panels };
+      case "INITIALIZE":
+        return initItem;
+      default:
+        return state;
+    }
+  };
+
+  const [state, dispatch] = useReducer(reducer, undefined);
+
+  useEffect(() => {
+    dispatch({ type: "INITIALIZE" });
+  }, []);
+
+  const handleLoadState = (panels: PanelBaseItem[]) =>
+    dispatch({ type: "LOAD_STATE", payload: { panels } });
+  const handleAddPanel = () => dispatch({ type: "ADD_PANEL" });
+  const handleChangePanel = (id: number) =>
+    dispatch({ type: "CHANGE_PANEL", payload: { id } });
+  const handleDeletePanel = (id: number) =>
+    dispatch({ type: "DELETE_PANEL", payload: { id } });
+  const handleChangeForm = (id: number, label: string, value: string) =>
+    dispatch({ type: "CHANGE_FORM", payload: { id, label, value } });
+
+  return {
+    state: state ?? initItem,
+    action: {
+      loadState: handleLoadState,
+      addPanel: handleAddPanel,
+      changePanel: handleChangePanel,
+      deletePanel: handleDeletePanel,
+      changeForm: handleChangeForm,
+    },
+  };
 }

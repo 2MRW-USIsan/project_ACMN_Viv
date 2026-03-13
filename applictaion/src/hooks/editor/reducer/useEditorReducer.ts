@@ -52,7 +52,7 @@ export function useEditorReducer(): EditorReducerReturn {
   };
 
   const action: EditorReducerAction = {
-    panel: panelReducer.actions,
+    panel: panelReducer.action,
     setSaveList,
     setSelectedSaveId,
     setLoadedState,

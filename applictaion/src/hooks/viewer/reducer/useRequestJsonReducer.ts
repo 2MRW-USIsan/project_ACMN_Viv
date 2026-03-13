@@ -1,81 +1,78 @@
 "use client";
 
-import { load as loadYaml } from "js-yaml";
-import { useMemo, useReducer } from "react";
-import { generateRequestJson, shuffleRequestJson } from "@/utils/generateRequestJson";
+import {
+  loadYamlContent,
+  shuffleRequestState,
+} from "@/utils/reducers/viewer/requestJsonReducerUtils";
 import type { YamlData } from "@/types/viewer/yamlData";
+import { useEffect, useReducer } from "react";
 
-type State = {
+export type RequestJsonReducerState = {
   text: string;
   yamlError: string;
-  yamlData: YamlData | null;
+  hasYamlData: boolean;
 };
 
-type Action =
-  | { type: "LOAD_YAML"; payload: string }
-  | { type: "SHUFFLE" };
-
-const parseYaml = (yamlContent: string): { data: YamlData | null; error: string } => {
-  if (!yamlContent.trim()) return { data: null, error: "" };
-  try {
-    const parsed = loadYaml(yamlContent) as YamlData | null;
-    if (!parsed?.blocs) {
-      return { data: null, error: "YAMLにblocsフィールドがありません" };
-    }
-    return { data: parsed, error: "" };
-  } catch (err) {
-    const detail = err instanceof Error ? err.message : String(err);
-    return { data: null, error: `YAMLの解析に失敗しました: ${detail}` };
-  }
-};
-
-const reducer = (state: State, action: Action): State => {
-  const handlers: Record<Action["type"], () => State> = {
-    LOAD_YAML: () => {
-      const yamlContent = (action as { type: "LOAD_YAML"; payload: string }).payload;
-      const { data, error } = parseYaml(yamlContent);
-      const text = data ? generateRequestJson(data) : "";
-      return { text, yamlError: error, yamlData: data };
-    },
-    SHUFFLE: () => {
-      if (!state.yamlData) return state;
-      return { ...state, text: shuffleRequestJson(state.yamlData) };
-    },
-  };
-  return handlers[action.type]?.() ?? state;
-};
-
-export type RequestJsonActions = {
+export type RequestJsonReducerAction = {
   loadYaml: (yamlContent: string) => void;
   shuffle: () => void;
 };
 
-type Returns = {
-  text: string;
-  yamlError: string;
-  hasYamlData: boolean;
-  actions: RequestJsonActions;
-};
+export interface RequestJsonReducerReturn {
+  state: RequestJsonReducerState;
+  action: RequestJsonReducerAction;
+}
 
-export function useRequestJsonReducer(): Returns {
-  const [state, dispatch] = useReducer(reducer, {
-    text: "",
-    yamlError: "",
-    yamlData: null,
-  });
+export function useRequestJsonReducer(): RequestJsonReducerReturn {
+  type InternalState = {
+    text: string;
+    yamlError: string;
+    yamlData: YamlData | null;
+  };
+  type STATE = InternalState | undefined;
 
-  const actions = useMemo(
-    (): RequestJsonActions => ({
-      loadYaml: (yamlContent) => dispatch({ type: "LOAD_YAML", payload: yamlContent }),
-      shuffle: () => dispatch({ type: "SHUFFLE" }),
-    }),
-    [],
-  );
+  type LOAD_YAML = string;
 
+  type ACTION =
+    | { type: "LOAD_YAML"; payload: LOAD_YAML }
+    | { type: "SHUFFLE" }
+    | { type: "INITIALIZE" };
+
+  const initItem: InternalState = { text: "", yamlError: "", yamlData: null };
+
+  const reducer = (state: STATE, action: ACTION): STATE => {
+    switch (action.type) {
+      case "LOAD_YAML":
+        return loadYamlContent(action.payload);
+      case "SHUFFLE":
+        return state && shuffleRequestState(state);
+      case "INITIALIZE":
+        return initItem;
+      default:
+        return state;
+    }
+  };
+
+  const [state, dispatch] = useReducer(reducer, undefined);
+
+  useEffect(() => {
+    dispatch({ type: "INITIALIZE" });
+  }, []);
+
+  const handleLoadYaml = (yamlContent: string) =>
+    dispatch({ type: "LOAD_YAML", payload: yamlContent });
+  const handleShuffle = () => dispatch({ type: "SHUFFLE" });
+
+  const currentState = state ?? initItem;
   return {
-    text: state.text,
-    yamlError: state.yamlError,
-    hasYamlData: state.yamlData !== null,
-    actions,
+    state: {
+      text: currentState.text,
+      yamlError: currentState.yamlError,
+      hasYamlData: currentState.yamlData !== null,
+    },
+    action: {
+      loadYaml: handleLoadYaml,
+      shuffle: handleShuffle,
+    },
   };
 }
