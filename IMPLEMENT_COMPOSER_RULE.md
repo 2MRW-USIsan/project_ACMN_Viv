@@ -24,7 +24,12 @@ export function use{Page}Composer(contexts: {Page}Contexts) {
 
   return {
     viewModel: {
-      ... // properties とhandlers を基にUIコンポーネントに渡すprops情報を生成する
+      // properties と handlers を基に、UIコンポーネントが受け取る props の構造を明示的に組み立てる
+      sample: {
+        label: properties.sample.label,
+        onClick: handlers.sample.onClick,
+      },
+      // ...
     }
   }
 }
@@ -41,7 +46,27 @@ export function use{Page}Composer(contexts: {Page}Contexts) {
 - 戻り値は `{ viewModel: {Page}ViewModel }` とする。
 
 ```ts
-// ✅ Good — Properties と Handlers を呼び出し viewModel を合成する
+// ✅ Good — Properties と Handlers を受け取り、UIコンポーネントの props 構造を明示的に組み立てる
+export function useEditorComposer(contexts: EditorContexts) {
+  const { properties } = useEditorProperties(contexts);
+  const { handlers } = useEditorHandlers(contexts);
+
+  return {
+    viewModel: {
+      panelHeader: {
+        name: properties.panelName,
+        onNameChange: handlers.onPanelNameChange,
+      },
+      savePanel: {
+        saveList: properties.saveList,
+        isSaveLoading: properties.isSaveLoading,
+        onSaveRegister: handlers.onSaveRegister,
+      },
+    },
+  };
+}
+
+// ❌ Bad — properties と handlers をそのままスプレッドする（UIコンポーネント側で正しく Props として受け取れない）
 export function useEditorComposer(contexts: EditorContexts) {
   const { properties } = useEditorProperties(contexts);
   const { handlers } = useEditorHandlers(contexts);
@@ -118,7 +143,8 @@ export function useEditorHandlers(contexts: EditorContexts) {
 
 ### 4. ViewModel の型定義
 
-- `{Page}ViewModel` 型は `use{Page}Composer.ts` 内で `{Page}Properties & {Page}Handlers` の intersection 型として定義・export する。
+- `{Page}ViewModel` 型は `use{Page}Composer.ts` 内で定義・export する。
+- `{Page}ViewModel` はUIコンポーネントに渡す props の構造を表す型とする。各プロパティにはUIコンポーネント単位のオブジェクトを対応させ、`{Page}Properties` と `{Page}Handlers` から必要な値を明示的にマッピングして組み立てる。
 - `{Page}Properties` 型は `use{Page}Properties.ts`、`{Page}Handlers` 型は `use{Page}Handlers.ts` でそれぞれ定義・export する。
 - `use{Page}ViewModel.ts` では `{Page}ViewModel` を `use{Page}Composer.ts` から re-export する。
 
@@ -127,6 +153,7 @@ export function useEditorHandlers(contexts: EditorContexts) {
 export interface {Page}Properties {
   panelName: string;
   saveList: PanelSaveItem[];
+  isSaveLoading: boolean;
   // ...
 }
 
@@ -138,10 +165,18 @@ export interface {Page}Handlers {
 }
 
 // use{Page}Composer.ts
-import type { {Page}Properties } from "./use{Page}Properties";
-import type { {Page}Handlers } from "./use{Page}Handlers";
-
-export type {Page}ViewModel = {Page}Properties & {Page}Handlers;
+export interface {Page}ViewModel {
+  panelHeader: {
+    name: string;
+    onNameChange: (name: string) => void;
+  };
+  savePanel: {
+    saveList: PanelSaveItem[];
+    isSaveLoading: boolean;
+    onSaveRegister: () => void;
+  };
+  // ...
+}
 
 export function use{Page}Composer(contexts: {Page}Contexts) {
   const { properties } = use{Page}Properties(contexts);
@@ -149,9 +184,16 @@ export function use{Page}Composer(contexts: {Page}Contexts) {
 
   return {
     viewModel: {
-      ...properties,
-      ...handlers,
-    } as {Page}ViewModel,
+      panelHeader: {
+        name: properties.panelName,
+        onNameChange: handlers.onPanelNameChange,
+      },
+      savePanel: {
+        saveList: properties.saveList,
+        isSaveLoading: properties.isSaveLoading,
+        onSaveRegister: handlers.onSaveRegister,
+      },
+    } satisfies {Page}ViewModel,
   };
 }
 ```
