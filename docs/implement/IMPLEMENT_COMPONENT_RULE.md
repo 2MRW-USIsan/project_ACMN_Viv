@@ -229,5 +229,5 @@ export { CanvasAtom };
 | molecules | 部品単位（複数atoms） | 持たない | `/components/molecules/` |
 | atoms | 最小単位（MUIラッパー） | 例外①UI内部状態、例外②パフォーマンス目的のDOM操作（useRef/useEffect必須） | `/components/atoms/` |
 
-関連ドキュメント: [`IMPLEMENT_BASIC_RULE.md`](./IMPLEMENT_BASIC_RULE.md)・[`IMPLEMENT_VIEWMODEL.md`](./IMPLEMENT_VIEWMODEL.md)・[`GUIDELINES.md`](./GUIDELINES.md)・[`ARCHITECTURE.md`](./ARCHITECTURE.md)  
-→ [README.md](./README.md) に戻る
+関連ドキュメント: [`IMPLEMENT_BASIC_RULE.md`](./IMPLEMENT_BASIC_RULE.md)・[`IMPLEMENT_VIEWMODEL.md`](./IMPLEMENT_VIEWMODEL.md)・[`GUIDELINES.md`](../architecture/GUIDELINES.md)・[`ARCHITECTURE.md`](../architecture/ARCHITECTURE.md)  
+→ [README.md](../../README.md) に戻る

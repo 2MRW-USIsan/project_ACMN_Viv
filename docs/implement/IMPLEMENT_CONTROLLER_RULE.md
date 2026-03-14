@@ -129,12 +129,12 @@ src/hooks/{page}/controller/
 
 このルールに基づく実装例は以下のファイルを参照してください。
 
-- [`applictaion/src/hooks/editor/controller/useEditorController.ts`](applictaion/src/hooks/editor/controller/useEditorController.ts)
-- [`applictaion/src/hooks/editor/controller/useEditorInitialize.ts`](applictaion/src/hooks/editor/controller/useEditorInitialize.ts)
-- [`applictaion/src/hooks/editor/controller/useEditorEffects.ts`](applictaion/src/hooks/editor/controller/useEditorEffects.ts)
-- [`applictaion/src/hooks/viewer/controller/useViewerController.ts`](applictaion/src/hooks/viewer/controller/useViewerController.ts)
-- [`applictaion/src/hooks/viewer/controller/useViewerInitialize.ts`](applictaion/src/hooks/viewer/controller/useViewerInitialize.ts)
-- [`applictaion/src/hooks/viewer/controller/useViewerEffects.ts`](applictaion/src/hooks/viewer/controller/useViewerEffects.ts)
+- [`application/src/hooks/editor/controller/useEditorController.ts`](../../application/src/hooks/editor/controller/useEditorController.ts)
+- [`application/src/hooks/editor/controller/useEditorInitialize.ts`](../../application/src/hooks/editor/controller/useEditorInitialize.ts)
+- [`application/src/hooks/editor/controller/useEditorEffects.ts`](../../application/src/hooks/editor/controller/useEditorEffects.ts)
+- [`application/src/hooks/viewer/controller/useViewerController.ts`](../../application/src/hooks/viewer/controller/useViewerController.ts)
+- [`application/src/hooks/viewer/controller/useViewerInitialize.ts`](../../application/src/hooks/viewer/controller/useViewerInitialize.ts)
+- [`application/src/hooks/viewer/controller/useViewerEffects.ts`](../../application/src/hooks/viewer/controller/useViewerEffects.ts)
 
-ViewModel 全体の設計については [`GUIDELINES.md`](./GUIDELINES.md) の「ViewModel Logic Design」セクションおよび [`IMPLEMENT_VIEWMODEL.md`](./IMPLEMENT_VIEWMODEL.md) を参照してください。  
-→ [README.md](./README.md) に戻る
+ViewModel 全体の設計については [`GUIDELINES.md`](../architecture/GUIDELINES.md) の「ViewModel Logic Design」セクションおよび [`IMPLEMENT_VIEWMODEL.md`](./IMPLEMENT_VIEWMODEL.md) を参照してください。  
+→ [README.md](../../README.md) に戻る

@@ -112,7 +112,7 @@ export function SampleComponent({ props }: { props: { label: string } }) { ... }
 type Returns = { state: SampleState; action: SampleAction };
 ```
 
-> **備考:** コンポーネントの Props 型の詳細なパターンは [`GUIDELINES.md`](./GUIDELINES.md)「Component Props Pattern」を参照してください。
+> **備考:** コンポーネントの Props 型の詳細なパターンは [`GUIDELINES.md`](../architecture/GUIDELINES.md)「Component Props Pattern」を参照してください。
 
 ---
 
@@ -152,7 +152,7 @@ for (let i = 0; i < items.length; i++) {
 }
 ```
 
-> **備考:** 関数型プログラミングの詳細な方針は [`GUIDELINES.md`](./GUIDELINES.md)「Functional Programming Principles」を参照してください。
+> **備考:** 関数型プログラミングの詳細な方針は [`GUIDELINES.md`](../architecture/GUIDELINES.md)「Functional Programming Principles」を参照してください。
 
 ---
 
@@ -167,4 +167,4 @@ for (let i = 0; i < items.length; i++) {
 | エクスポート | Named export のみ（`export default` 禁止） |
 | ループ回避 | `for`/`while` を避け `map`/`filter`/`reduce` を使用 |
 
-→ [GUIDELINES.md](./GUIDELINES.md) に戻る
+→ [GUIDELINES.md](../architecture/GUIDELINES.md) に戻る
