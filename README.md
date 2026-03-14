@@ -13,6 +13,8 @@
 |---|---|
 | [ARCHITECTURE.md](./ARCHITECTURE.md) | アーキテクチャ・ディレクトリ構成・状態管理・コンポーネント設計・型設計 |
 | [GUIDELINES.md](./GUIDELINES.md) | コーディング規約・設計ガイドライン全般 |
+| [IMPLEMENT_BASIC_RULE.md](./IMPLEMENT_BASIC_RULE.md) | 基本実装ルール（命名規則・宣言・エクスポート・ループ回避） |
+| [IMPLEMENT_COMPONENT_RULE.md](./IMPLEMENT_COMPONENT_RULE.md) | Component 実装ルール（Atomic Design 階層・MVVM 方針） |
 | [IMPLEMENT_VIEWMODEL.md](./IMPLEMENT_VIEWMODEL.md) | ViewModel フック（`use{Page}ViewModel`）実装ルール |
 | [IMPLEMENT_SERVICE.md](./IMPLEMENT_SERVICE.md) | Service フック（`use{Page}Service`）実装ルール |
 | [IMPLEMENT_CONTROLLER_RULE.md](./IMPLEMENT_CONTROLLER_RULE.md) | Controller フック（`use{Page}Controller`）実装ルール |
