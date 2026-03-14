@@ -1,7 +1,10 @@
 "use client";
 
 import type { PanelSaveDetail, PanelSaveItem } from "@/types/editor/panelSave";
-import { fetchSaveDetail, fetchSaveList } from "@/services/editorApiService";
+import {
+  incrementSaveListVersion,
+  requestSaveDetail,
+} from "@/utils/reducers/editor/editorFetchReducerUtils";
 import { useEffect, useReducer } from "react";
 
 export type EditorFetchItem = {
@@ -9,85 +12,85 @@ export type EditorFetchItem = {
   saveDetail: PanelSaveDetail | null;
 };
 
-type EditorFetchState = {
+export type EditorFetchReducerState = {
   saveList: PanelSaveItem[] | null;
   saveDetail: PanelSaveDetail | null;
   saveListVersion: number;
   saveDetailRequest: { id: string; ver: number } | null;
 };
 
-type EditorFetchAction =
-  | { type: "SET_SAVE_LIST"; payload: PanelSaveItem[] }
-  | { type: "SET_SAVE_DETAIL"; payload: PanelSaveDetail | null }
-  | { type: "INCREMENT_SAVE_LIST_VERSION" }
-  | { type: "REQUEST_SAVE_DETAIL"; payload: string };
-
-const initialState: EditorFetchState = {
-  saveList: null,
-  saveDetail: null,
-  saveListVersion: 0,
-  saveDetailRequest: null,
-};
-
-const editorFetchReducer = (
-  state: EditorFetchState,
-  action: EditorFetchAction,
-): EditorFetchState => {
-  const handlers: Record<EditorFetchAction["type"], () => EditorFetchState> = {
-    SET_SAVE_LIST: () => ({
-      ...state,
-      saveList: (action as { type: "SET_SAVE_LIST"; payload: PanelSaveItem[] })
-        .payload,
-    }),
-    SET_SAVE_DETAIL: () => ({
-      ...state,
-      saveDetail: (
-        action as { type: "SET_SAVE_DETAIL"; payload: PanelSaveDetail | null }
-      ).payload,
-    }),
-    INCREMENT_SAVE_LIST_VERSION: () => ({
-      ...state,
-      saveListVersion: state.saveListVersion + 1,
-    }),
-    REQUEST_SAVE_DETAIL: () => ({
-      ...state,
-      saveDetail: null,
-      saveDetailRequest: {
-        id: (action as { type: "REQUEST_SAVE_DETAIL"; payload: string }).payload,
-        ver: (state.saveDetailRequest?.ver ?? 0) + 1,
-      },
-    }),
-  };
-  return handlers[action.type]?.() ?? state;
-};
-
-export type EditorFetchReducerReturn = {
-  fetchItem: EditorFetchItem;
+export type EditorFetchReducerAction = {
+  setSaveList: (list: PanelSaveItem[]) => void;
+  setSaveDetail: (detail: PanelSaveDetail | null) => void;
   incrementSaveListVersion: () => void;
   requestSaveDetail: (id: string) => void;
 };
 
+export interface EditorFetchReducerReturn {
+  state: EditorFetchReducerState;
+  action: EditorFetchReducerAction;
+}
+
 export function useEditorFetchReducer(): EditorFetchReducerReturn {
-  const [state, dispatch] = useReducer(editorFetchReducer, initialState);
+  type STATE = EditorFetchReducerState | undefined;
+
+  type SET_SAVE_LIST = PanelSaveItem[];
+  type SET_SAVE_DETAIL = PanelSaveDetail | null;
+  type REQUEST_SAVE_DETAIL = { id: string };
+
+  type ACTION =
+    | { type: "SET_SAVE_LIST"; payload: SET_SAVE_LIST }
+    | { type: "SET_SAVE_DETAIL"; payload: SET_SAVE_DETAIL }
+    | { type: "INCREMENT_SAVE_LIST_VERSION" }
+    | { type: "REQUEST_SAVE_DETAIL"; payload: REQUEST_SAVE_DETAIL }
+    | { type: "INITIALIZE" };
+
+  const initItem: EditorFetchReducerState = {
+    saveList: null,
+    saveDetail: null,
+    saveListVersion: 0,
+    saveDetailRequest: null,
+  };
+
+  const reducer = (state: STATE, action: ACTION): STATE => {
+    switch (action.type) {
+      case "SET_SAVE_LIST":
+        return state && { ...state, saveList: action.payload };
+      case "SET_SAVE_DETAIL":
+        return state && { ...state, saveDetail: action.payload };
+      case "INCREMENT_SAVE_LIST_VERSION":
+        return state && incrementSaveListVersion(state);
+      case "REQUEST_SAVE_DETAIL":
+        return state && requestSaveDetail(state, action.payload);
+      case "INITIALIZE":
+        return initItem;
+      default:
+        return state;
+    }
+  };
+
+  const [state, dispatch] = useReducer(reducer, undefined);
 
   useEffect(() => {
-    void fetchSaveList().then((list) =>
-      dispatch({ type: "SET_SAVE_LIST", payload: list }),
-    );
-  }, [state.saveListVersion]);
+    dispatch({ type: "INITIALIZE" });
+  }, []);
 
-  useEffect(() => {
-    if (!state.saveDetailRequest) return;
-    void fetchSaveDetail(state.saveDetailRequest.id).then((detail) =>
-      dispatch({ type: "SET_SAVE_DETAIL", payload: detail }),
-    );
-  }, [state.saveDetailRequest]);
+  const handleSetSaveList = (list: PanelSaveItem[]) =>
+    dispatch({ type: "SET_SAVE_LIST", payload: list });
+  const handleSetSaveDetail = (detail: PanelSaveDetail | null) =>
+    dispatch({ type: "SET_SAVE_DETAIL", payload: detail });
+  const handleIncrementSaveListVersion = () =>
+    dispatch({ type: "INCREMENT_SAVE_LIST_VERSION" });
+  const handleRequestSaveDetail = (id: string) =>
+    dispatch({ type: "REQUEST_SAVE_DETAIL", payload: { id } });
 
   return {
-    fetchItem: { saveList: state.saveList, saveDetail: state.saveDetail },
-    incrementSaveListVersion: () =>
-      dispatch({ type: "INCREMENT_SAVE_LIST_VERSION" }),
-    requestSaveDetail: (id) =>
-      dispatch({ type: "REQUEST_SAVE_DETAIL", payload: id }),
+    state: state ?? initItem,
+    action: {
+      setSaveList: handleSetSaveList,
+      setSaveDetail: handleSetSaveDetail,
+      incrementSaveListVersion: handleIncrementSaveListVersion,
+      requestSaveDetail: handleRequestSaveDetail,
+    },
   };
 }
