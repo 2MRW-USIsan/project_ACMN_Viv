@@ -137,8 +137,8 @@ export { LabeledInputMolecule };
 ### atoms
 
 - コンポーネントの**最小単位**。原則として MUI コンポーネントのラッパーとして実装する。
-- 例外として、MUI コンポーネント単体で完結する**UI内部状態**（例：開閉状態、ホバー状態など）を持ってもよい。
-- パフォーマンス上の理由から DOM を直接操作してもよいが、その際は `useRef` や `useEffect` で管理し、外部に隠蔽すること。
+- 例外①：MUI コンポーネント単体で完結する**UI内部状態**（例：開閉状態、ホバー状態など）を持ってもよい。
+- 例外②：テキストフィールドなど、ViewModel のハンドラをそのまま利用するとパフォーマンスに影響が出る場合は、**DOM操作による制御**を許可する。ただし、`useRef` や `useEffect` を適切に用いて疎結合を保ち、外部インターフェースには影響を与えないこと。
 
 ```tsx
 // 例: /components/atoms/TextFieldAtom.tsx（MUIラッパー）
@@ -152,6 +152,29 @@ interface TextFieldAtomProps {
 const TextFieldAtom = ({ props }: TextFieldAtomProps) => (
   <TextField value={props.value} onChange={props.onChange} />
 );
+
+export { TextFieldAtom };
+
+// 例: /components/atoms/TextFieldAtom.tsx（例外②：パフォーマンス最適化のため非制御 + DOM操作）
+// ViewModel の onChange を毎キー入力で呼ぶとパフォーマンスに影響が出る場合に適用する。
+// useRef で DOM を直接操作し、外部インターフェース（props）は変えない。
+interface TextFieldAtomProps {
+  props: {
+    defaultValue: string;
+    onBlur: (value: string) => void;
+  };
+}
+
+const TextFieldAtom = ({ props }: TextFieldAtomProps) => {
+  const inputRef = useRef<HTMLInputElement>(null);
+  useEffect(() => {
+    if (inputRef.current) inputRef.current.value = props.defaultValue;
+  }, [props.defaultValue]);
+  const handleBlur = () => {
+    if (inputRef.current) props.onBlur(inputRef.current.value);
+  };
+  return <TextField inputRef={inputRef} defaultValue={props.defaultValue} onBlur={handleBlur} />;
+};
 
 export { TextFieldAtom };
 
@@ -204,4 +227,4 @@ export { CanvasAtom };
 | template | ページレイアウト単位 | 持たない | `/components/templates/` |
 | organisms | 機能単位 | 持たない | `/components/organisms/` |
 | molecules | 部品単位（複数atoms） | 持たない | `/components/molecules/` |
-| atoms | 最小単位（MUIラッパー） | 例外的にUI内部状態のみ可 | `/components/atoms/` |
+| atoms | 最小単位（MUIラッパー） | 例外①UI内部状態、例外②パフォーマンス目的のDOM操作（useRef/useEffect必須） | `/components/atoms/` |
