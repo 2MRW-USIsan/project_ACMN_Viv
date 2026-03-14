@@ -16,6 +16,7 @@
 | [IMPLEMENT_VIEWMODEL.md](./IMPLEMENT_VIEWMODEL.md) | ViewModel フック（`use{Page}ViewModel`）実装ルール |
 | [IMPLEMENT_SERVICE.md](./IMPLEMENT_SERVICE.md) | Service フック（`use{Page}Service`）実装ルール |
 | [IMPLEMENT_CONTROLLER_RULE.md](./IMPLEMENT_CONTROLLER_RULE.md) | Controller フック（`use{Page}Controller`）実装ルール |
+| [IMPLEMENT_COMPOSER_RULE.md](./IMPLEMENT_COMPOSER_RULE.md) | Composer フック（`use{Page}Composer`）実装ルール |
 | [IMPLEMENT_REDUCER_RULE.md](./IMPLEMENT_REDUCER_RULE.md) | `useReducer` カスタムフック実装ルール |
 | [SCREEN_REQUEST_TEMPLATE.md](./SCREEN_REQUEST_TEMPLATE.md) | 画面実装依頼書テンプレート（依頼側が記述） |
 | [SCREEN_REPORT_TEMPLATE.md](./SCREEN_REPORT_TEMPLATE.md) | 画面成果物仕様書テンプレート（AI が出力する報告書） |
