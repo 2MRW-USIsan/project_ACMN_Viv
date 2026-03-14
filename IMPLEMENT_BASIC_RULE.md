@@ -32,6 +32,8 @@ export function Sample({ ... }: SampleProps): SampleReturns {
 | コンポーネント定義 | UpperCamelCase | `PanelList`, `OrdersChip` |
 | カスタムフック定義 | useUpperCamelCase | `useEditorViewModel`, `usePanelReducer` |
 | 変数・内部関数 | camelCase | `const handleClick`, `const itemList` |
+| 型定義（モジュールスコープ） | UpperCamelCaseType | `SampleStateType`, `SampleActionType` |
+| 型定義（関数内部スコープ） | 任意（TYPE 大文字も可） | `STATE`, `ACTION`, `PAYLOAD` |
 
 ```ts
 // ✅ Good
@@ -39,10 +41,31 @@ export function PanelList(...) { ... }          // コンポーネントは Uppe
 export function useEditorViewModel() { ... }    // カスタムフックは useUpperCamelCase
 export function formatDate(...) { ... }         // ユーティリティは camelCase
 
+// モジュールスコープの型定義は UpperCamelCaseType
+type SampleStateType = { label: string; active: boolean };
+type SampleActionType =
+  | { type: "TOGGLE"; payload: { id: number } }
+  | { type: "INITIALIZE" };
+
 // ❌ Bad
 export function panelList(...) { ... }          // コンポーネントが camelCase
 export function EditorViewModel() { ... }       // フックが use プレフィックスなし
 export function FormatDate(...) { ... }         // ユーティリティが UpperCamelCase
+type sampleState = { ... };                     // 型定義が camelCase
+```
+
+関数の**内部スコープ**で用いるローカル型定義は、`Type` サフィックスを省略できる。
+
+```ts
+export function useSampleReducer() {
+  // 内部スコープの型定義は TYPE (大文字) や略称も可
+  type STATE = SampleStateType | undefined;
+  type ACTION =
+    | { type: "TOGGLE"; payload: { id: number } }
+    | { type: "INITIALIZE" };
+
+  const reducer = (state: STATE, action: ACTION): STATE => { ... };
+}
 ```
 
 ---
@@ -137,7 +160,8 @@ for (let i = 0; i < items.length; i++) {
 
 | ルール | 要点 |
 |---|---|
-| 命名規則 | コンポーネントは UpperCamelCase、フックは useUpperCamelCase、それ以外は camelCase |
+| 命名規則（関数） | コンポーネントは UpperCamelCase、フックは useUpperCamelCase、それ以外は camelCase |
+| 命名規則（型定義） | モジュールスコープは UpperCamelCaseType、関数内部スコープは TYPE 大文字も任意 |
 | 変数・関数宣言 | 原則 `const`、処理内の関数はアロー関数 |
 | interface 定義 | 必要に応じて `<Name>Props` / `<Name>Returns` で定義 |
 | エクスポート | Named export のみ（`export default` 禁止） |
