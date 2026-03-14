@@ -273,7 +273,7 @@ const { fetchItem, request } = use{Page}Service();       // API 呼び出し
 const { state, action } = use{Page}Reducer();            // 状態管理
 const contexts = { service: { fetchItem, request }, reducer: { state, action } };
 use{Page}Controller(contexts);                           // 副作用管理
-const { viewModels } = use{Page}Composer(contexts);      // ViewModel 生成
+const { viewModel } = use{Page}Composer(contexts);      // ViewModel 生成
 ```
 
 - **Service**: API・Repository・Usecase の呼び出しが責務。状態を持たない純粋な非同期関数群を `fetchItem`（読み取り系）と `request`（書き込み系）に分けて提供。
@@ -281,7 +281,7 @@ const { viewModels } = use{Page}Composer(contexts);      // ViewModel 生成
 - **Controller**: `contexts` を受け取り `use{Page}Initialize`（初期化 `useEffect`）と `use{Page}Effects`（状態副作用 `useEffect`）を呼び出す。
 - **Composer**: `contexts` を受け取り `use{Page}Properties`（プロパティ・ラベル情報）と `use{Page}Handlers`（ハンドラ情報）を呼び出し、最終的な ViewModel を生成して返す。`ViewModel` 型の定義もここに置く。
 
-`use{Page}ViewModel` が返す型（例: `EditorViewModel`）は `use{Page}Composer.ts` 内で `{Page}Properties & {Page}Handlers` の intersection 型として定義し、`use{Page}ViewModel.ts` から re-export します。`{Page}Properties` 型は `use{Page}Properties.ts`、`{Page}Handlers` 型は `use{Page}Handlers.ts` でそれぞれ定義します。
+`use{Page}ViewModel` が返す型（例: `EditorViewModel`）は `use{Page}Composer.ts` 内で定義し、`use{Page}ViewModel.ts` から re-export します。`{Page}ViewModel` は UI コンポーネント単位のオブジェクトを各プロパティに対応させた構造体として定義し、`{Page}Properties` と `{Page}Handlers` から必要な値を明示的にマッピングして組み立てます（spread による合成は行いません）。`{Page}Properties` 型は `use{Page}Properties.ts`、`{Page}Handlers` 型は `use{Page}Handlers.ts` でそれぞれ定義します。
 
 ### 4-5. ネストフィールドのラベルパース方式
 
@@ -403,7 +403,7 @@ type Action =
 
 ### ViewModel 型
 
-`EditorViewModel` 型は `useEditorComposer.ts` 内で `EditorProperties & EditorHandlers` の intersection 型として定義し、`useEditorViewModel.ts` から re-export します。`EditorProperties` は `useEditorProperties.ts`、`EditorHandlers` は `useEditorHandlers.ts` でそれぞれ定義します。画面固有のインターフェースであるため `types/` には置きません。同様に `ViewerViewModel` は `useViewerComposer.ts` 内で `ViewerProperties & ViewerHandlers` として定義します。
+`EditorViewModel` 型は `useEditorComposer.ts` 内で定義し、`useEditorViewModel.ts` から re-export します。`EditorViewModel` は UI コンポーネント単位のオブジェクトを各プロパティに対応させた構造体として定義し、`EditorProperties`（`useEditorProperties.ts` で定義）と `EditorHandlers`（`useEditorHandlers.ts` で定義）から必要な値を明示的にマッピングして組み立てます（spread による合成は行いません）。画面固有のインターフェースであるため `types/` には置きません。同様に `ViewerViewModel` は `useViewerComposer.ts` 内で `ViewerProperties` と `ViewerHandlers` から明示的にマッピングして定義します。
 
 ### Contexts 型（フック間依存注入）
 
@@ -499,7 +499,7 @@ blocs:
    - `use{Page}Service` — API 呼び出し（`fetchItem` / `request` を返す）
    - `use{Page}Reducer` — 状態管理（`state` / `action` を返す）; `{Page}Contexts` 型もここで定義する
    - `use{Page}Controller` — 副作用管理（`use{Page}Initialize` + `use{Page}Effects` を呼ぶ）
-   - `use{Page}Composer` — ViewModel 生成（`{ viewModels }` を返す）; ViewModel 型もここで定義する
+   - `use{Page}Composer` — ViewModel 生成（`{ viewModel }` を返す）; ViewModel 型もここで定義する
      - `use{Page}Properties` — プロパティ・ラベル情報提供（`{Page}Properties` 型もここで定義する）
      - `use{Page}Handlers` — ハンドラ情報提供（`{Page}Handlers` 型もここで定義する）
    - `use{Page}ViewModel` — 上記 4 フックを束ねるオーケストレーター
@@ -507,5 +507,5 @@ blocs:
 ---
 
 コーディング規約の詳細は [`GUIDELINES.md`](./GUIDELINES.md) を参照してください。  
-実装ルールの詳細は [`IMPLEMENT_VIEWMODEL.md`](./IMPLEMENT_VIEWMODEL.md)・[`IMPLEMENT_SERVICE.md`](./IMPLEMENT_SERVICE.md)・[`IMPLEMENT_CONTROLLER_RULE.md`](./IMPLEMENT_CONTROLLER_RULE.md)・[`IMPLEMENT_REDUCER_RULE.md`](./IMPLEMENT_REDUCER_RULE.md) を参照してください。  
+実装ルールの詳細は [`IMPLEMENT_BASIC_RULE.md`](./IMPLEMENT_BASIC_RULE.md)・[`IMPLEMENT_COMPONENT_RULE.md`](./IMPLEMENT_COMPONENT_RULE.md)・[`IMPLEMENT_VIEWMODEL.md`](./IMPLEMENT_VIEWMODEL.md)・[`IMPLEMENT_SERVICE.md`](./IMPLEMENT_SERVICE.md)・[`IMPLEMENT_CONTROLLER_RULE.md`](./IMPLEMENT_CONTROLLER_RULE.md)・[`IMPLEMENT_COMPOSER_RULE.md`](./IMPLEMENT_COMPOSER_RULE.md)・[`IMPLEMENT_REDUCER_RULE.md`](./IMPLEMENT_REDUCER_RULE.md) を参照してください。  
 → [README.md](./README.md) に戻る

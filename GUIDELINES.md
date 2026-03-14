@@ -182,7 +182,7 @@ const contexts = { service: { fetchItem, request }, reducer: { state, action } }
 use{Page}Controller(contexts);
 
 // ViewModel の生成が責務
-const { viewModels } = use{Page}Composer(contexts);
+const { viewModel } = use{Page}Composer(contexts);
 ```
 
 ### 各フックの責務
@@ -192,7 +192,7 @@ const { viewModels } = use{Page}Composer(contexts);
 | `use{Page}Service` | API・Repository・Usecase の呼び出し。`fetchItem`（外部 I/O のレスポンスデータ状態）と `request`（ミューテーション・フェッチトリガー）を提供する。`useState` + `useEffect` で非同期取得結果を状態として管理し、`fetchItem` はハンドラ関数ではなく取得済みデータそのものとして返す。 |
 | `use{Page}Reducer` | `useReducer` / `useState` による状態管理。`state` と `action` を返す。 |
 | `use{Page}Controller` | `contexts` を受け取り、副作用（`useEffect`）の管理を行う。`fetchItem` の状態変化に反応して Reducer の `action` を呼び出す。 |
-| `use{Page}Composer` | `contexts` を受け取り、ViewModel を生成して `{ viewModels }` として返す。 |
+| `use{Page}Composer` | `contexts` を受け取り、ViewModel を生成して `{ viewModel }` として返す。 |
 
 ### Service の設計方針
 
@@ -263,8 +263,15 @@ export function use{Page}Composer(contexts: {Page}Contexts): Returns {
   const properties = use{Page}Properties(contexts); // プロパティ・ラベル情報を提供
   const handlers = use{Page}Handlers(contexts);     // ハンドラ情報を提供
 
-  const viewModels: {Page}ViewModel = { ...properties, ...handlers };
-  return { viewModels };
+  return {
+    viewModel: {
+      // properties と handlers を基に、UI コンポーネントが受け取る props の構造を明示的に組み立てる
+      sample: {
+        label: properties.sample.label,
+        onClick: handlers.sample.onClick,
+      },
+    },
+  };
 }
 ```
 
@@ -273,10 +280,16 @@ export function use{Page}Composer(contexts: {Page}Contexts): Returns {
 | `use{Page}Properties` | `contexts` を受け取り、プロパティやラベル情報（派生値・表示データ）を提供する。 |
 | `use{Page}Handlers` | `contexts` を受け取り、イベントハンドラ（コールバック関数群）を提供する。 |
 
-`{Page}ViewModel` 型は `use{Page}Properties` が返す `{Page}Properties` 型と `use{Page}Handlers` が返す `{Page}Handlers` 型の intersection 型として定義する。
+`{Page}ViewModel` 型は `use{Page}Composer.ts` 内で定義・export する。UI コンポーネント単位のオブジェクトを各プロパティに対応させた構造体として定義し、`{Page}Properties` と `{Page}Handlers` から必要な値を明示的にマッピングして組み立てる。
 
 ```ts
-export type {Page}ViewModel = {Page}Properties & {Page}Handlers;
+export interface {Page}ViewModel {
+  // UI コンポーネント単位のプロパティを対応させる
+  sample: {
+    label: string;
+    onClick: () => void;
+  };
+}
 ```
 
 ### スケーリング規則
@@ -404,5 +417,5 @@ import { IconButton } from "@mui/material";
 
 これらのガイドラインに従うことで、コードの保守性・可読性が高まりバグが減ります。新しいコードを書く際はこのドキュメントをコンテキストとして参照してください。アーキテクチャの詳細は [`ARCHITECTURE.md`](./ARCHITECTURE.md) を参照してください。
 
-実装ルールの詳細は [`IMPLEMENT_BASIC_RULE.md`](./IMPLEMENT_BASIC_RULE.md)・[`IMPLEMENT_VIEWMODEL.md`](./IMPLEMENT_VIEWMODEL.md)・[`IMPLEMENT_SERVICE.md`](./IMPLEMENT_SERVICE.md)・[`IMPLEMENT_CONTROLLER_RULE.md`](./IMPLEMENT_CONTROLLER_RULE.md)・[`IMPLEMENT_REDUCER_RULE.md`](./IMPLEMENT_REDUCER_RULE.md) を参照してください。  
+実装ルールの詳細は [`IMPLEMENT_BASIC_RULE.md`](./IMPLEMENT_BASIC_RULE.md)・[`IMPLEMENT_COMPONENT_RULE.md`](./IMPLEMENT_COMPONENT_RULE.md)・[`IMPLEMENT_VIEWMODEL.md`](./IMPLEMENT_VIEWMODEL.md)・[`IMPLEMENT_SERVICE.md`](./IMPLEMENT_SERVICE.md)・[`IMPLEMENT_CONTROLLER_RULE.md`](./IMPLEMENT_CONTROLLER_RULE.md)・[`IMPLEMENT_COMPOSER_RULE.md`](./IMPLEMENT_COMPOSER_RULE.md)・[`IMPLEMENT_REDUCER_RULE.md`](./IMPLEMENT_REDUCER_RULE.md) を参照してください。  
 → [README.md](./README.md) に戻る
