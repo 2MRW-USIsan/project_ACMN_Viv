@@ -364,6 +364,12 @@ import { IconButton } from "@mui/material";
 
 ## Directory Conventions（ディレクトリ規約）
 
+ディレクトリ構成は `ARCHITECTURE.md`「設計ルール」で定義された 3 つのルールに基づいています。
+
+- **ルール 1**: 最上位層は Next.js App 標準（`app/`・`components/`・`hooks/`・`types/`・`business/`・`services/` など）。
+- **ルール 2**: ルール 1 の各ディレクトリ内は設計思想に沿って命名（`components/` → Atomic Design、`hooks/` → Clean Architecture）。
+- **ルール 3**: 適した設計がない場合はドメイン粒度で分類（画面単位の Page ドメイン → 画面内機能単位の Page サブドメイン）。
+
 詳細は `ARCHITECTURE.md` を参照。以下に主要な配置ルールのみ記す。
 
 | 種別 | 配置先 |

@@ -23,6 +23,40 @@
 
 ## 2. ディレクトリ構成
 
+### 設計ルール
+
+ディレクトリ構成は以下の 3 つのルールに従って設計されています。
+
+**ルール 1 — 最上位層は Next.js App 標準のディレクトリ構成**
+
+最上位層は Next.js App Router の標準的なディレクトリ構成に準拠します。
+
+| ディレクトリ | 用途 |
+|---|---|
+| `app/` | App Router のエントリポイント（ルーティング） |
+| `app/api/` | Next.js API Routes（バックエンド API 定義） |
+| `components/` | 表示用 React コンポーネント |
+| `hooks/` | 制御用カスタムフック |
+| `types/` | TypeScript 型定義 |
+| `business/` | サーバーサイドビジネスロジック |
+| `services/` | クライアントサイド API 呼び出し関数 |
+
+**ルール 2 — サブディレクトリは設計思想に沿った命名**
+
+ルール 1 で分割したディレクトリをさらに細分化する場合、以下の設計思想に基づいた命名を行います。
+
+- **Atomic Design**（主に `components/`）: `atoms/` → `molecules/` → `organisms/` の 3 階層で構成。
+- **Clean Architecture**（主に `hooks/`）: `viewModel/`・`controller/`・`service/`・`reducer/` の各レイヤーに分割。
+
+**ルール 3 — 適した設計がない場合はドメイン粒度で分類**
+
+特に適した設計パターンがない場合、またはさらなる分割が必要な場合は **ドメイン粒度** で分類します。
+
+- **Page ドメイン**: 画面ごとにサブディレクトリを用意（例: `hooks/editor/`・`hooks/viewer/`）。
+- **Page サブドメイン**: 画面内のデータ構成や機能構成でさらに分割（例: `hooks/editor/reducer/orders/`）。
+
+### 構成ツリー
+
 ```
 applictaion/src/
 ├── app/                         # Next.js App Router エントリポイント
