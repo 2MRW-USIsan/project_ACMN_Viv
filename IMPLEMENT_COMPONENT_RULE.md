@@ -12,7 +12,39 @@
 
 ---
 
-## Atomic Design 設計方針
+## コンポーネント実装の基本ルール
+
+`IMPLEMENT_BASIC_RULE.md` の汎用ルールに加え、コンポーネント固有の追加ルールを以下に定義する。
+
+- コンポーネントは `const` で宣言し、`export { Name }` で名前付きエクスポートする（`export const` は使用しない）。ただし `/app` 以下の pages は Next.js の要求に従い `export default function` とする。
+- Props は `interface {ComponentName}Props` で定義する。
+- コンポーネントへ渡す情報は原則すべて `props` プロパティにまとめて渡す（`children` などの `ReactNode` はその限りではない）。
+
+```tsx
+// OK
+interface ExampleProps {
+  props: {
+    label: string;
+    onClick: () => void;
+  };
+}
+const Example = ({ props }: ExampleProps) => <button onClick={props.onClick}>{props.label}</button>;
+export { Example };
+
+// NG: export const の使用
+export const Example = ({ props }: ExampleProps) => <button onClick={props.onClick}>{props.label}</button>;
+
+// NG: Props をそれぞれ個別に受け取る（props プロパティにまとめていない）
+interface ExampleProps {
+  label: string;
+  onClick: () => void;
+}
+const Example = ({ label, onClick }: ExampleProps) => <button onClick={onClick}>{label}</button>;
+```
+
+---
+
+
 
 Atomic Design の階層に従い、以下の粒度でコンポーネントを分類する。
 
@@ -26,7 +58,7 @@ Atomic Design の階層に従い、以下の粒度でコンポーネントを分
 // 例: /app/editor/page.tsx
 export default function EditorPage() {
   const viewModel = useEditorViewModel();
-  return <EditorTemplate {...viewModel} />;
+  return <EditorTemplate props={viewModel} />;
 }
 ```
 
@@ -38,9 +70,15 @@ export default function EditorPage() {
 
 ```tsx
 // 例: /components/templates/EditorTemplate.tsx
-export const EditorTemplate = ({ isLoading, panels, ...handlers }: EditorViewModel) => (
-  isLoading ? <LoadingOrganism /> : <EditorOrganism panels={panels} {...handlers} />
+interface EditorTemplateProps {
+  props: EditorViewModel;
+}
+
+const EditorTemplate = ({ props }: EditorTemplateProps) => (
+  props.isLoading ? <LoadingOrganism /> : <EditorOrganism props={props} />
 );
+
+export { EditorTemplate };
 ```
 
 ### organisms
@@ -52,13 +90,22 @@ export const EditorTemplate = ({ isLoading, panels, ...handlers }: EditorViewMod
 
 ```tsx
 // 例: /components/organisms/PanelListOrganism.tsx
-export const PanelListOrganism = ({ panels, onSelect }: PanelListProps) => (
+interface PanelListOrganismProps {
+  props: {
+    panels: Panel[];
+    onSelect: (id: string) => void;
+  };
+}
+
+const PanelListOrganism = ({ props }: PanelListOrganismProps) => (
   <Stack>
-    {panels.map((panel) => (
-      <PanelCardMolecule key={panel.id} panel={panel} onSelect={onSelect} />
+    {props.panels.map((panel) => (
+      <PanelCardMolecule key={panel.id} props={{ panel, onSelect: props.onSelect }} />
     ))}
   </Stack>
 );
+
+export { PanelListOrganism };
 ```
 
 ### molecules
@@ -69,12 +116,22 @@ export const PanelListOrganism = ({ panels, onSelect }: PanelListProps) => (
 
 ```tsx
 // 例: /components/molecules/LabeledInputMolecule.tsx
-export const LabeledInputMolecule = ({ label, value, onChange }: LabeledInputProps) => (
+interface LabeledInputMoleculeProps {
+  props: {
+    label: string;
+    value: string;
+    onChange: (value: string) => void;
+  };
+}
+
+const LabeledInputMolecule = ({ props }: LabeledInputMoleculeProps) => (
   <Stack direction="row" alignItems="center">
-    <LabelAtom text={label} />
-    <TextFieldAtom value={value} onChange={onChange} />
+    <LabelAtom props={{ text: props.label }} />
+    <TextFieldAtom props={{ value: props.value, onChange: props.onChange }} />
   </Stack>
 );
+
+export { LabeledInputMolecule };
 ```
 
 ### atoms
@@ -85,30 +142,56 @@ export const LabeledInputMolecule = ({ label, value, onChange }: LabeledInputPro
 
 ```tsx
 // 例: /components/atoms/TextFieldAtom.tsx（MUIラッパー）
-export const TextFieldAtom = ({ value, onChange }: TextFieldAtomProps) => (
-  <TextField value={value} onChange={onChange} />
+interface TextFieldAtomProps {
+  props: {
+    value: string;
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  };
+}
+
+const TextFieldAtom = ({ props }: TextFieldAtomProps) => (
+  <TextField value={props.value} onChange={props.onChange} />
 );
 
+export { TextFieldAtom };
+
 // 例: /components/atoms/CollapseButtonAtom.tsx（例外：開閉状態を内部に持つ）
-export const CollapseButtonAtom = ({ label }: CollapseButtonAtomProps) => {
+interface CollapseButtonAtomProps {
+  props: {
+    label: string;
+  };
+}
+
+const CollapseButtonAtom = ({ props }: CollapseButtonAtomProps) => {
   const [open, setOpen] = useState(false);
+  const handleToggle = () => setOpen((prev) => !prev);
   return (
     <>
-      <Button onClick={() => setOpen((prev) => !prev)}>{label}</Button>
+      <Button onClick={handleToggle}>{props.label}</Button>
       <Collapse in={open}>...</Collapse>
     </>
   );
 };
 
+export { CollapseButtonAtom };
+
 // 例: /components/atoms/CanvasAtom.tsx（例外：DOM操作をuseRef/useEffectで隠蔽）
-export const CanvasAtom = ({ data }: CanvasAtomProps) => {
+interface CanvasAtomProps {
+  props: {
+    data: unknown;
+  };
+}
+
+const CanvasAtom = ({ props }: CanvasAtomProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   useEffect(() => {
     const ctx = canvasRef.current?.getContext("2d");
     // DOM操作はここで完結させ、外部に露出しない
-  }, [data]);
+  }, [props.data]);
   return <canvas ref={canvasRef} />;
 };
+
+export { CanvasAtom };
 ```
 
 ---
