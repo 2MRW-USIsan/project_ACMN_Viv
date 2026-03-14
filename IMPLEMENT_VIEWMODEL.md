@@ -21,3 +21,8 @@ export function use{Page}ViewModel():{Page}ViewModelReturns {
   return { viewModels };
 }
 ```
+
+---
+
+関連ドキュメント: [`IMPLEMENT_SERVICE.md`](./IMPLEMENT_SERVICE.md)・[`IMPLEMENT_CONTROLLER_RULE.md`](./IMPLEMENT_CONTROLLER_RULE.md)・[`IMPLEMENT_REDUCER_RULE.md`](./IMPLEMENT_REDUCER_RULE.md)・[`GUIDELINES.md`](./GUIDELINES.md)・[`ARCHITECTURE.md`](./ARCHITECTURE.md)  
+→ [README.md](./README.md) に戻る

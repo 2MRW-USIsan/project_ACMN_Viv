@@ -363,3 +363,7 @@ export type EditorViewModel = {
 - **差分検知**: ロードした状態と現在の状態を `JSON.stringify` で比較し、差分がある場合は YAML プレビューダイアログに警告を表示する。
 - **React 19 Compiler**: React 19 Compiler が有効なため、手動の `useMemo` 記述では補助関数をクロージャ内に同居させること（Compiler の依存解析と競合しないようにするため）。
 - **保存データの永続化**: 現在は API 経由のインメモリモック。本番化の際は `business/panelSave.ts` を DB 実装に差し替える。
+
+---
+
+→ [README.md](./README.md) に戻る
