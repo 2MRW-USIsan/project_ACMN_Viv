@@ -403,3 +403,6 @@ import { IconButton } from "@mui/material";
 ## Conclusion
 
 これらのガイドラインに従うことで、コードの保守性・可読性が高まりバグが減ります。新しいコードを書く際はこのドキュメントをコンテキストとして参照してください。アーキテクチャの詳細は [`ARCHITECTURE.md`](./ARCHITECTURE.md) を参照してください。
+
+実装ルールの詳細は [`IMPLEMENT_VIEWMODEL.md`](./IMPLEMENT_VIEWMODEL.md)・[`IMPLEMENT_SERVICE.md`](./IMPLEMENT_SERVICE.md)・[`IMPLEMENT_CONTROLLER_RULE.md`](./IMPLEMENT_CONTROLLER_RULE.md)・[`IMPLEMENT_REDUCER_RULE.md`](./IMPLEMENT_REDUCER_RULE.md) を参照してください。  
+→ [README.md](./README.md) に戻る

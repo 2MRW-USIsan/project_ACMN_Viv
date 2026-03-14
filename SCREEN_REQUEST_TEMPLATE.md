@@ -178,3 +178,7 @@
 - Orders の子フィールドには複数の type（Random・Scripts・Color・Complex 等）があり、type ごとに入力 UI が異なる。詳細は実装時に都度確認するか、適切な設計でAIに判断してほしい
 - Select の選択肢にはシャッフル機能、Switch にはランダマイズ機能が必要
 - 保存名は自動生成（例：「保存 2026/01/01 12:00:00」）で可
+
+---
+
+→ [README.md](./README.md) に戻る

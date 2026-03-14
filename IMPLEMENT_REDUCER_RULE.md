@@ -197,4 +197,5 @@ return {
 - [`applictaion/src/hooks/viewer/reducer/useRequestJsonReducer.ts`](applictaion/src/hooks/viewer/reducer/useRequestJsonReducer.ts)
 - [`applictaion/src/hooks/viewer/reducer/useOrderJsonReducer.ts`](applictaion/src/hooks/viewer/reducer/useOrderJsonReducer.ts)
 
-画面レベルの Reducer（複数のドメイン Reducer を束ねる場合）については [`GUIDELINES.md`](GUIDELINES.md) の「ViewModel Logic Design」セクションおよび [`ARCHITECTURE.md`](ARCHITECTURE.md) を参照してください。
+画面レベルの Reducer（複数のドメイン Reducer を束ねる場合）については [`GUIDELINES.md`](./GUIDELINES.md) の「ViewModel Logic Design」セクションおよび [`ARCHITECTURE.md`](./ARCHITECTURE.md) を参照してください。  
+→ [README.md](./README.md) に戻る

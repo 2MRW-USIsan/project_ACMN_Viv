@@ -136,4 +136,5 @@ src/hooks/{page}/controller/
 - [`applictaion/src/hooks/viewer/controller/useViewerInitialize.ts`](applictaion/src/hooks/viewer/controller/useViewerInitialize.ts)
 - [`applictaion/src/hooks/viewer/controller/useViewerEffects.ts`](applictaion/src/hooks/viewer/controller/useViewerEffects.ts)
 
-ViewModel 全体の設計については [`GUIDELINES.md`](GUIDELINES.md) の「ViewModel Logic Design」セクションおよび [`IMPLEMENT_VIEWMODEL.md`](IMPLEMENT_VIEWMODEL.md) を参照してください。
+ViewModel 全体の設計については [`GUIDELINES.md`](./GUIDELINES.md) の「ViewModel Logic Design」セクションおよび [`IMPLEMENT_VIEWMODEL.md`](./IMPLEMENT_VIEWMODEL.md) を参照してください。  
+→ [README.md](./README.md) に戻る
