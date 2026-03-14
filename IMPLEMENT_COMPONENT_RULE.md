@@ -16,7 +16,7 @@
 
 `IMPLEMENT_BASIC_RULE.md` の汎用ルールに加え、コンポーネント固有の追加ルールを以下に定義する。
 
-- コンポーネントは `const` で宣言し、`export { Name }` で名前付きエクスポートする（`export const` は使用しない）。ただし `/app` 以下の pages は Next.js の要求に従い `export default function` とする。
+- コンポーネントは `export function Name()` で宣言する（`export const` や `const` + `export { Name }` は使用しない）。ただし `/app` 以下の pages は Next.js の要求に従い `export default function` とする。
 - Props は `interface {ComponentName}Props` で定義する。
 - コンポーネントへ渡す情報は原則すべて `props` プロパティにまとめて渡す（`children` などの `ReactNode` はその限りではない）。
 
@@ -28,18 +28,25 @@ interface ExampleProps {
     onClick: () => void;
   };
 }
-const Example = ({ props }: ExampleProps) => <button onClick={props.onClick}>{props.label}</button>;
-export { Example };
+export function Example({ props }: ExampleProps) {
+  return <button onClick={props.onClick}>{props.label}</button>;
+}
 
 // NG: export const の使用
 export const Example = ({ props }: ExampleProps) => <button onClick={props.onClick}>{props.label}</button>;
+
+// NG: const + export { Name } の使用
+const Example = ({ props }: ExampleProps) => <button onClick={props.onClick}>{props.label}</button>;
+export { Example };
 
 // NG: Props をそれぞれ個別に受け取る（props プロパティにまとめていない）
 interface ExampleProps {
   label: string;
   onClick: () => void;
 }
-const Example = ({ label, onClick }: ExampleProps) => <button onClick={onClick}>{label}</button>;
+export function Example({ label, onClick }: ExampleProps) {
+  return <button onClick={onClick}>{label}</button>;
+}
 ```
 
 ---
@@ -74,11 +81,9 @@ interface EditorTemplateProps {
   props: EditorViewModel;
 }
 
-const EditorTemplate = ({ props }: EditorTemplateProps) => (
-  props.isLoading ? <LoadingOrganism /> : <EditorOrganism props={props} />
-);
-
-export { EditorTemplate };
+export function EditorTemplate({ props }: EditorTemplateProps) {
+  return props.isLoading ? <LoadingOrganism /> : <EditorOrganism props={props} />;
+}
 ```
 
 ### organisms
@@ -97,15 +102,15 @@ interface PanelListOrganismProps {
   };
 }
 
-const PanelListOrganism = ({ props }: PanelListOrganismProps) => (
-  <Stack>
-    {props.panels.map((panel) => (
-      <PanelCardMolecule key={panel.id} props={{ panel, onSelect: props.onSelect }} />
-    ))}
-  </Stack>
-);
-
-export { PanelListOrganism };
+export function PanelListOrganism({ props }: PanelListOrganismProps) {
+  return (
+    <Stack>
+      {props.panels.map((panel) => (
+        <PanelCardMolecule key={panel.id} props={{ panel, onSelect: props.onSelect }} />
+      ))}
+    </Stack>
+  );
+}
 ```
 
 ### molecules
@@ -124,14 +129,14 @@ interface LabeledInputMoleculeProps {
   };
 }
 
-const LabeledInputMolecule = ({ props }: LabeledInputMoleculeProps) => (
-  <Stack direction="row" alignItems="center">
-    <LabelAtom props={{ text: props.label }} />
-    <TextFieldAtom props={{ value: props.value, onChange: props.onChange }} />
-  </Stack>
-);
-
-export { LabeledInputMolecule };
+export function LabeledInputMolecule({ props }: LabeledInputMoleculeProps) {
+  return (
+    <Stack direction="row" alignItems="center">
+      <LabelAtom props={{ text: props.label }} />
+      <TextFieldAtom props={{ value: props.value, onChange: props.onChange }} />
+    </Stack>
+  );
+}
 ```
 
 ### atoms
@@ -149,11 +154,9 @@ interface TextFieldAtomProps {
   };
 }
 
-const TextFieldAtom = ({ props }: TextFieldAtomProps) => (
-  <TextField value={props.value} onChange={props.onChange} />
-);
-
-export { TextFieldAtom };
+export function TextFieldAtom({ props }: TextFieldAtomProps) {
+  return <TextField value={props.value} onChange={props.onChange} />;
+}
 
 // 例: /components/atoms/TextFieldAtom.tsx（例外②：パフォーマンス最適化のため非制御 + DOM操作）
 // ViewModel の onChange を毎キー入力で呼ぶとパフォーマンスに影響が出る場合に適用する。
@@ -165,7 +168,7 @@ interface TextFieldAtomProps {
   };
 }
 
-const TextFieldAtom = ({ props }: TextFieldAtomProps) => {
+export function TextFieldAtom({ props }: TextFieldAtomProps) {
   const inputRef = useRef<HTMLInputElement>(null);
   useEffect(() => {
     if (inputRef.current) inputRef.current.value = props.defaultValue;
@@ -174,9 +177,7 @@ const TextFieldAtom = ({ props }: TextFieldAtomProps) => {
     if (inputRef.current) props.onBlur(inputRef.current.value);
   };
   return <TextField inputRef={inputRef} defaultValue={props.defaultValue} onBlur={handleBlur} />;
-};
-
-export { TextFieldAtom };
+}
 
 // 例: /components/atoms/CollapseButtonAtom.tsx（例外：開閉状態を内部に持つ）
 interface CollapseButtonAtomProps {
@@ -185,7 +186,7 @@ interface CollapseButtonAtomProps {
   };
 }
 
-const CollapseButtonAtom = ({ props }: CollapseButtonAtomProps) => {
+export function CollapseButtonAtom({ props }: CollapseButtonAtomProps) {
   const [open, setOpen] = useState(false);
   const handleToggle = () => setOpen((prev) => !prev);
   return (
@@ -194,9 +195,7 @@ const CollapseButtonAtom = ({ props }: CollapseButtonAtomProps) => {
       <Collapse in={open}>...</Collapse>
     </>
   );
-};
-
-export { CollapseButtonAtom };
+}
 
 // 例: /components/atoms/CanvasAtom.tsx（例外：DOM操作をuseRef/useEffectで隠蔽）
 interface CanvasAtomProps {
@@ -205,16 +204,14 @@ interface CanvasAtomProps {
   };
 }
 
-const CanvasAtom = ({ props }: CanvasAtomProps) => {
+export function CanvasAtom({ props }: CanvasAtomProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   useEffect(() => {
     const ctx = canvasRef.current?.getContext("2d");
     // DOM操作はここで完結させ、外部に露出しない
   }, [props.data]);
   return <canvas ref={canvasRef} />;
-};
-
-export { CanvasAtom };
+}
 ```
 
 ---
