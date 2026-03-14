@@ -33,7 +33,7 @@ export function Sample({ ... }: SampleProps): SampleReturns {
 | カスタムフック定義 | useUpperCamelCase | `useEditorViewModel`, `usePanelReducer` |
 | 変数・内部関数 | camelCase | `const handleClick`, `const itemList` |
 | 型定義（モジュールスコープ） | UpperCamelCaseType | `SampleStateType`, `SampleActionType` |
-| 型定義（関数内部スコープ） | 任意（TYPE 大文字も可） | `STATE`, `ACTION`, `PAYLOAD` |
+| 型定義（関数内部スコープ） | UPPER_SNAKE_CASE（TYPEは任意） | `STATE`, `ACTION`, `PAYLOAD` |
 
 ```ts
 // ✅ Good
