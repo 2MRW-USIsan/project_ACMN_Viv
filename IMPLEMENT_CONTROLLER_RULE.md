@@ -62,6 +62,7 @@ export function useEditorInitialize(contexts: EditorContexts): void {
   const { fetchItem } = contexts.service;
   const { action } = contexts.reducer;
 
+  // [初期化] saveListの取得完了時にReducerのsaveList状態へ反映する
   useEffect(() => {
     if (fetchItem.saveList === null) return;
     action.setSaveList(fetchItem.saveList);
@@ -82,6 +83,7 @@ export function useEditorEffects(contexts: EditorContexts): void {
   const { fetchItem } = contexts.service;
   const { action } = contexts.reducer;
 
+  // [副作用] saveDetailの取得完了時にパネル状態を復元し、ローディング状態を終了する
   useEffect(() => {
     if (fetchItem.saveDetail === null) return;
     action.panel.loadState(fetchItem.saveDetail.data);
