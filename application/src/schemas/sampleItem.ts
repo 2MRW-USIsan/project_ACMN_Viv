@@ -9,3 +9,8 @@ export const sampleItemSchema = z.object({
 });
 
 export const sampleItemArraySchema = z.array(sampleItemSchema);
+
+export const sampleItemInputSchema = z.object({
+  title: z.string().min(1, "title is required"),
+  description: z.string().min(1, "description is required"),
+});

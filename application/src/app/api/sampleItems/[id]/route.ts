@@ -4,6 +4,8 @@ import {
   updateSampleItem,
   deleteSampleItem,
 } from "@/business/sampleItem";
+import { sampleItemInputSchema } from "@/schemas/sampleItem";
+import { ZodError } from "zod";
 
 interface RouteParams {
   params: Promise<{ id: string }>;
@@ -14,7 +16,7 @@ export async function GET(
   { params }: RouteParams,
 ): Promise<NextResponse> {
   const { id } = await params;
-  const item = getSampleItemById(id);
+  const item = await getSampleItemById(id);
   if (!item) {
     return NextResponse.json({ error: "Not Found" }, { status: 404 });
   }
@@ -25,20 +27,21 @@ export async function PUT(
   request: Request,
   { params }: RouteParams,
 ): Promise<NextResponse> {
-  const { id } = await params;
-  const body = await request.json();
-  const { title, description } = body as { title: string; description: string };
-  if (!title.trim() || !description.trim()) {
-    return NextResponse.json(
-      { error: "title and description are required" },
-      { status: 400 },
-    );
+  try {
+    const { id } = await params;
+    const body: unknown = await request.json();
+    const input = sampleItemInputSchema.parse(body);
+    const updated = await updateSampleItem(id, input);
+    if (!updated) {
+      return NextResponse.json({ error: "Not Found" }, { status: 404 });
+    }
+    return NextResponse.json(updated);
+  } catch (err) {
+    if (err instanceof ZodError) {
+      return NextResponse.json({ error: err.errors }, { status: 400 });
+    }
+    throw err;
   }
-  const updated = updateSampleItem(id, { title, description });
-  if (!updated) {
-    return NextResponse.json({ error: "Not Found" }, { status: 404 });
-  }
-  return NextResponse.json(updated);
 }
 
 export async function DELETE(
@@ -46,7 +49,7 @@ export async function DELETE(
   { params }: RouteParams,
 ): Promise<NextResponse> {
   const { id } = await params;
-  const deleted = deleteSampleItem(id);
+  const deleted = await deleteSampleItem(id);
   if (!deleted) {
     return NextResponse.json({ error: "Not Found" }, { status: 404 });
   }
