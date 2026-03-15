@@ -14,7 +14,7 @@ interface TextFieldAtomProps {
   };
 }
 
-const TextFieldAtom = ({ props }: TextFieldAtomProps) => {
+export function TextFieldAtom({ props }: TextFieldAtomProps) {
   const inputRef = useRef<HTMLInputElement | HTMLTextAreaElement>(null);
 
   useEffect(() => {
@@ -36,6 +36,4 @@ const TextFieldAtom = ({ props }: TextFieldAtomProps) => {
       fullWidth={props.fullWidth}
     />
   );
-};
-
-export { TextFieldAtom };
+}

@@ -15,18 +15,18 @@ interface ButtonAtomProps {
   };
 }
 
-const ButtonAtom = ({ props }: ButtonAtomProps) => (
-  <Button
-    variant={props.variant ?? "contained"}
-    color={props.color ?? "primary"}
-    onClick={props.onClick}
-    disabled={props.disabled || props.isLoading}
-    size={props.size ?? "small"}
-    fullWidth={props.fullWidth}
-    startIcon={props.isLoading ? <CircularProgress size={14} /> : undefined}
-  >
-    {props.label}
-  </Button>
-);
-
-export { ButtonAtom };
+export function ButtonAtom({ props }: ButtonAtomProps) {
+  return (
+    <Button
+      variant={props.variant ?? "contained"}
+      color={props.color ?? "primary"}
+      onClick={props.onClick}
+      disabled={props.disabled || props.isLoading}
+      size={props.size ?? "small"}
+      fullWidth={props.fullWidth}
+      startIcon={props.isLoading ? <CircularProgress size={14} /> : undefined}
+    >
+      {props.label}
+    </Button>
+  );
+}

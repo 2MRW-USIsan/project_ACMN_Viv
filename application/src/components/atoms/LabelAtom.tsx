@@ -19,14 +19,14 @@ interface LabelAtomProps {
   };
 }
 
-const LabelAtom = ({ props }: LabelAtomProps) => (
-  <Typography
-    variant={props.variant ?? "body1"}
-    color={props.color}
-    fontWeight={props.fontWeight}
-  >
-    {props.text}
-  </Typography>
-);
-
-export { LabelAtom };
+export function LabelAtom({ props }: LabelAtomProps) {
+  return (
+    <Typography
+      variant={props.variant ?? "body1"}
+      color={props.color}
+      fontWeight={props.fontWeight}
+    >
+      {props.text}
+    </Typography>
+  );
+}

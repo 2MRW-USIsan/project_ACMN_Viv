@@ -9,16 +9,16 @@ interface SampleTemplateProps {
   props: SampleViewModel;
 }
 
-const SampleTemplate = ({ props }: SampleTemplateProps) => (
-  <Stack spacing={3} p={3} maxWidth={900} mx="auto">
-    <Paper elevation={2} sx={{ p: 3 }}>
-      <SampleEditorOrganism props={props.editor} />
-    </Paper>
-    <Divider />
-    <Paper elevation={2} sx={{ p: 3 }}>
-      <SampleListOrganism props={props.itemList} />
-    </Paper>
-  </Stack>
-);
-
-export { SampleTemplate };
+export function SampleTemplate({ props }: SampleTemplateProps) {
+  return (
+    <Stack spacing={3} p={3} maxWidth={900} mx="auto">
+      <Paper elevation={2} sx={{ p: 3 }}>
+        <SampleEditorOrganism props={props.editor} />
+      </Paper>
+      <Divider />
+      <Paper elevation={2} sx={{ p: 3 }}>
+        <SampleListOrganism props={props.itemList} />
+      </Paper>
+    </Stack>
+  );
+}
