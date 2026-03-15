@@ -1,4 +1,4 @@
-"use client"
+import { ThemeProvider } from "@/components/providers/ThemeProvider";
 
 export default function RootLayout({
   children,
@@ -7,8 +7,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`acmn-application`}>
-        {children}
+      <body className="acmn-application">
+        <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>
   );
