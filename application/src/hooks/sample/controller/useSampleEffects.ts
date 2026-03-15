@@ -1,6 +1,6 @@
 "use client";
 
-import { SampleContexts } from "@/hooks/sample/state/useSampleReducer";
+import { SampleContexts } from "@/hooks/sample/state/useSampleStateReducer";
 
 export function useSampleEffects(_contexts: SampleContexts): void {
   // State-driven side effects for the sample page.

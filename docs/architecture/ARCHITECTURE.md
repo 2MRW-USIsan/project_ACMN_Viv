@@ -46,8 +46,7 @@
 ルール 1 で分割したディレクトリをさらに細分化する場合、以下の設計思想に基づいた命名を行います。
 
 - **Atomic Design**（主に `components/`）: `atoms/` → `molecules/` → `organisms/` の 3 階層で構成。
-- **Clean Architecture**（主に `hooks/`）: `viewModel/`・`controller/`・`state/` の各レイヤーに分割。  
-  ※ `state/` は `service/`（API 呼び出し）と `reducer/`（状態管理）を統合した層。ファイル数が多い場合は `service/` と `reducer/` に個別分割しても可。
+- **Clean Architecture**（主に `hooks/`）: `viewModel/`・`controller/`・`state/` の各レイヤーに分割。
 
 **ルール 3 — 適した設計がない場合はドメイン粒度で分類**
 
@@ -139,9 +138,7 @@ application/src/
 │           ├── useRequestJsonReducer.ts # リクエスト用 JSON 状態管理
 │           └── useOrdersViewer.ts       # オーダービュー状態管理
 │
-│   NOTE: service/ と reducer/ のファイルがそれぞれ 1 つの場合は state/ に統合する（例: sample/）
-│
-│   └── sample/                  # /sample 画面関連フック（state/ 統合パターンの例）
+│   └── sample/                  # /sample 画面関連フック
 │       ├── viewModel/           # ViewModel 層（MVVM）
 │       │   ├── useSampleViewModel.ts    # /sample 画面の ViewModel エントリポイント
 │       │   ├── useSampleComposer.ts     # ViewModel 生成; SampleViewModel 定義
@@ -153,7 +150,8 @@ application/src/
 │       │   └── useSampleEffects.ts      # state 副作用 useEffect ラッパー
 │       └── state/               # State 層（Service + Reducer を統合）
 │           ├── useSampleService.ts      # API 呼び出し（sampleItems CRUD）
-│           └── useSampleReducer.ts      # 状態管理; SampleContexts 定義
+│           ├── useSampleFetchReducer.ts # フェッチ状態管理（useSampleService から利用）
+│           └── useSampleStateReducer.ts # UI 状態管理; SampleContexts 定義
 │
 ├── types/                       # TypeScript 型定義
 │   ├── editor/                  # /editor 画面関連の型
@@ -514,8 +512,8 @@ blocs:
 4. アクション関数は `useMemo` でメモ化する（React 19 Compiler との競合を避けるため、`useMemo` 内に副関数を同居させること）。
 5. ドメインリデューサーを新規追加する場合は `usePanelReducer.ts` でオーケストレーションに組み込む。
 6. 画面固有の ViewModel は、以下の **5 種のフック** で構成する（詳細は [`GUIDELINES.md`](./GUIDELINES.md) の「ViewModel Logic Design」を参照）。
-   - `use{Page}Service` — API 呼び出し（`fetchItem` / `request` を返す）; `state/` 配置時は `use{Page}Reducer` と同ディレクトリに置く
-   - `use{Page}Reducer` — 状態管理（`state` / `action` を返す）; `{Page}Contexts` 型もここで定義する; `state/` 配置時は `use{Page}Service` と同ディレクトリに置く
+   - `use{Page}Service` — API 呼び出し（`fetchItem` / `request` を返す）
+   - `use{Page}Reducer` — 状態管理（`state` / `action` を返す）; `{Page}Contexts` 型もここで定義する
    - `use{Page}Controller` — 副作用管理（`use{Page}Initialize` + `use{Page}Effects` を呼ぶ）
    - `use{Page}Composer` — ViewModel 生成（`{ viewModel }` を返す）; ViewModel 型もここで定義する
      - `use{Page}Properties` — プロパティ・ラベル情報提供（`{Page}Properties` 型もここで定義する）

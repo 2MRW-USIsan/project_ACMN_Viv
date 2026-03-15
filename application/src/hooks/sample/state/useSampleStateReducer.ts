@@ -49,7 +49,7 @@ export interface SampleContexts {
   };
 }
 
-export function useSampleReducer(): SampleReducerReturn {
+export function useSampleStateReducer(): SampleReducerReturn {
   type STATE = SampleReducerState | undefined;
 
   type SET_ITEM_LIST = { items: SampleItem[] };

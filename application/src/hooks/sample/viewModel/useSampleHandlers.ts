@@ -1,7 +1,7 @@
 "use client";
 
 import { SampleItem } from "@/types/sampleItem";
-import { SampleContexts } from "@/hooks/sample/state/useSampleReducer";
+import { SampleContexts } from "@/hooks/sample/state/useSampleStateReducer";
 
 export interface SampleHandlers {
   onSelectItem: (item: SampleItem) => void;

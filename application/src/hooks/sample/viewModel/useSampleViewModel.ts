@@ -1,7 +1,7 @@
 "use client";
 
 import { useSampleService } from "@/hooks/sample/state/useSampleService";
-import { useSampleReducer } from "@/hooks/sample/state/useSampleReducer";
+import { useSampleStateReducer } from "@/hooks/sample/state/useSampleStateReducer";
 import { useSampleController } from "@/hooks/sample/controller/useSampleController";
 import { useSampleComposer, SampleViewModel } from "@/hooks/sample/viewModel/useSampleComposer";
 
@@ -13,7 +13,7 @@ interface SampleViewModelReturns {
 
 export function useSampleViewModel(): SampleViewModelReturns {
   const { fetchItem, request } = useSampleService();
-  const { state, action } = useSampleReducer();
+  const { state, action } = useSampleStateReducer();
 
   const contexts = { service: { fetchItem, request }, reducer: { state, action } };
 
