@@ -166,17 +166,11 @@ const actions = useMemo(
 
 ## ViewModel Logic Design（ViewModel ロジックの設計）
 
-ViewModel フック `use{Page}ViewModel` の内部は、以下の 4 種のカスタムフックで構成する。
+ViewModel フック `use{Page}ViewModel` の内部は、以下の 3 種のカスタムフックで構成する。
 
 ```ts
-// API・Repository・Usecase の呼び出しが責務
-const { fetchItem, request } = use{Page}Service();
-
-// 状態管理の状態およびアクションの取得が責務
-const { state, action } = use{Page}Reducer();
-
-// Context オブジェクト（Service と Reducer の情報をまとめて伝搬）
-const contexts = { service: { fetchItem, request }, reducer: { state, action } };
+// Context（Service + Reducer を統合した DI コンテナ）の呼び出しが責務
+const { contexts } = use{Page}Context();
 
 // 状態管理および Service 処理との副作用管理が責務
 use{Page}Controller(contexts);
@@ -185,12 +179,30 @@ use{Page}Controller(contexts);
 const { viewModel } = use{Page}Composer(contexts);
 ```
 
+`use{Page}Context` は `state/` レイヤーに配置し、`use{Page}Service` と `use{Page}StateReducer` を統合して `{ contexts }` を返す。
+
+```ts
+// state/use{Page}Context.ts
+export function use{Page}Context(): {Page}ContextReturns {
+  const { fetchItem, request } = use{Page}Service();
+  const { state, action } = use{Page}StateReducer();
+
+  const contexts: {Page}Contexts = {
+    service: { fetchItem, request },
+    reducer: { state, action },
+  };
+
+  return { contexts };
+}
+```
+
 ### 各フックの責務
 
 | フック | 責務 |
 |---|---|
+| `use{Page}Context` | `state/` レイヤーに配置。`use{Page}Service` と `use{Page}StateReducer` を統合し、`{ contexts }` として返す DI コンテナ。 |
 | `use{Page}Service` | API・Repository・Usecase の呼び出し。`fetchItem`（外部 I/O のレスポンスデータ状態）と `request`（ミューテーション・フェッチトリガー）を提供する。`useState` + `useEffect` で非同期取得結果を状態として管理し、`fetchItem` はハンドラ関数ではなく取得済みデータそのものとして返す。 |
-| `use{Page}Reducer` | `useReducer` / `useState` による状態管理。`state` と `action` を返す。 |
+| `use{Page}StateReducer` | `useReducer` / `useState` による状態管理。`state` と `action` を返す。 |
 | `use{Page}Controller` | `contexts` を受け取り、副作用（`useEffect`）の管理を行う。`fetchItem` の状態変化に反応して Reducer の `action` を呼び出す。 |
 | `use{Page}Composer` | `contexts` を受け取り、ViewModel を生成して `{ viewModel }` として返す。 |
 
@@ -394,6 +406,7 @@ import { IconButton } from "@mui/material";
 | アプリ全体のプロバイダー | `components/providers/` |
 | カスタムフック | `hooks/` |
 | 画面 ViewModel フック | `hooks/<screen>/use<Screen>ViewModel.ts` |
+| Context フック（Service + Reducer 統合） | `hooks/<screen>/state/use<Screen>Context.ts` |
 | Service フック（API 呼び出し） | `hooks/<screen>/use<Screen>Service.ts` |
 | Reducer フック（状態管理） | `hooks/<screen>/use<Screen>Reducer.ts` |
 | Controller フック（副作用管理） | `hooks/<screen>/use<Screen>Controller.ts` |
