@@ -1,7 +1,7 @@
 "use client";
 
 import { SampleItem } from "@/types/sampleItem";
-import { SampleContexts } from "@/hooks/sample/state/useSampleStateReducer";
+import { SampleContexts } from "@/hooks/sample/state/useSampleContext";
 import { useSampleProperties } from "@/hooks/sample/viewModel/useSampleProperties";
 import { useSampleHandlers } from "@/hooks/sample/viewModel/useSampleHandlers";
 
@@ -45,9 +45,7 @@ export function useSampleComposer(contexts: SampleContexts) {
         isLoading: properties.isLoading,
         onTitleChange: handlers.onEditorTitleChange,
         onDescriptionChange: handlers.onEditorDescriptionChange,
-        onSave: properties.isEditing
-          ? handlers.onUpdateItem
-          : handlers.onCreateItem,
+        onSave: handlers.onSave,
         onCancel: handlers.onClearSelection,
       },
     } satisfies SampleViewModel,

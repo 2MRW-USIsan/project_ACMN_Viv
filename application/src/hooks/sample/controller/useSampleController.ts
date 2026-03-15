@@ -1,6 +1,6 @@
 "use client";
 
-import { SampleContexts } from "@/hooks/sample/state/useSampleStateReducer";
+import { SampleContexts } from "@/hooks/sample/state/useSampleContext";
 import { useSampleInitialize } from "@/hooks/sample/controller/useSampleInitialize";
 import { useSampleEffects } from "@/hooks/sample/controller/useSampleEffects";
 

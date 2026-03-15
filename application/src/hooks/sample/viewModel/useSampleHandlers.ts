@@ -1,22 +1,20 @@
 "use client";
 
 import { SampleItem } from "@/types/sampleItem";
-import { SampleContexts } from "@/hooks/sample/state/useSampleStateReducer";
+import { SampleContexts } from "@/hooks/sample/state/useSampleContext";
 
 export interface SampleHandlers {
   onSelectItem: (item: SampleItem) => void;
   onClearSelection: () => void;
   onEditorTitleChange: (title: string) => void;
   onEditorDescriptionChange: (description: string) => void;
-  onCreateItem: () => Promise<void>;
-  onUpdateItem: () => Promise<void>;
+  onSave: () => Promise<void>;
   onDeleteItem: (id: string) => Promise<void>;
 }
 
 export function useSampleHandlers(contexts: SampleContexts) {
-  const { action } = contexts.reducer;
+  const { action, state } = contexts.reducer;
   const { request } = contexts.service;
-  const { state } = contexts.reducer;
 
   const handleOnCreateItem = async (): Promise<void> => {
     if (!state.editorTitle.trim()) return;
@@ -35,12 +33,24 @@ export function useSampleHandlers(contexts: SampleContexts) {
       state.editorTitle,
       state.editorDescription,
     );
+    action.selectItem(null);
     action.setIsLoading(false);
+  };
+
+  const handleOnSave = async (): Promise<void> => {
+    if (state.selectedItem !== null) {
+      await handleOnUpdateItem();
+    } else {
+      await handleOnCreateItem();
+    }
   };
 
   const handleOnDeleteItem = async (id: string): Promise<void> => {
     action.setIsLoading(true);
     await request.deleteItem(id);
+    if (state.selectedItem?.id === id) {
+      action.selectItem(null);
+    }
     action.setIsLoading(false);
   };
 
@@ -49,8 +59,7 @@ export function useSampleHandlers(contexts: SampleContexts) {
     onClearSelection: () => action.selectItem(null),
     onEditorTitleChange: action.setEditorTitle,
     onEditorDescriptionChange: action.setEditorDescription,
-    onCreateItem: handleOnCreateItem,
-    onUpdateItem: handleOnUpdateItem,
+    onSave: handleOnSave,
     onDeleteItem: handleOnDeleteItem,
   };
 

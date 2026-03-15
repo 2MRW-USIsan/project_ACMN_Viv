@@ -1,7 +1,7 @@
 "use client";
 
 import { SampleItem } from "@/types/sampleItem";
-import { SampleContexts } from "@/hooks/sample/state/useSampleStateReducer";
+import { SampleContexts } from "@/hooks/sample/state/useSampleContext";
 
 export interface SampleProperties {
   itemList: SampleItem[];
@@ -14,9 +14,10 @@ export interface SampleProperties {
 
 export function useSampleProperties(contexts: SampleContexts) {
   const { state } = contexts.reducer;
+  const { fetchItem } = contexts.service;
 
   const properties: SampleProperties = {
-    itemList: state.itemList,
+    itemList: fetchItem.itemList ?? [],
     selectedItem: state.selectedItem,
     editorTitle: state.editorTitle,
     editorDescription: state.editorDescription,
