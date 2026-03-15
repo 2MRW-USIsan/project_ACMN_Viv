@@ -461,12 +461,14 @@ blocs:
 
 ## 8. テーマ設計
 
-`theme/theme.ts` で MUI テーマをカスタマイズしています。主な設定：
+アプリ全体のデザインは **`MUI の createTheme`** で一元管理します。`theme/theme.ts` にテーマオブジェクト（`acmnTheme`）を定義し、`components/providers/ThemeRegistry.tsx` 経由でアプリ全体に適用します。主な設定：
 
 - **カラーパレット**: Primary（ブルー系）、Secondary（ティール系）
 - **タイポグラフィ**: コンパクトな文字サイズ（0.72〜0.85rem）
 - **スペーシング**: 基本単位 6px
 - **コンポーネントデフォルト**: TextField は small / outlined、Chip は高さ 22px 固定
+
+テーマ実装の詳細は [`IMPLEMENT_THEME_RULE.md`](../implement/IMPLEMENT_THEME_RULE.md) を参照してください。
 
 ---
 
@@ -507,5 +509,5 @@ blocs:
 ---
 
 コーディング規約の詳細は [`GUIDELINES.md`](./GUIDELINES.md) を参照してください。  
-実装ルールの詳細は [`IMPLEMENT_BASIC_RULE.md`](../implement/IMPLEMENT_BASIC_RULE.md)・[`IMPLEMENT_COMPONENT_RULE.md`](../implement/IMPLEMENT_COMPONENT_RULE.md)・[`IMPLEMENT_VIEWMODEL.md`](../implement/IMPLEMENT_VIEWMODEL.md)・[`IMPLEMENT_SERVICE.md`](../implement/IMPLEMENT_SERVICE.md)・[`IMPLEMENT_CONTROLLER_RULE.md`](../implement/IMPLEMENT_CONTROLLER_RULE.md)・[`IMPLEMENT_COMPOSER_RULE.md`](../implement/IMPLEMENT_COMPOSER_RULE.md)・[`IMPLEMENT_REDUCER_RULE.md`](../implement/IMPLEMENT_REDUCER_RULE.md) を参照してください。  
+実装ルールの詳細は [`IMPLEMENT_BASIC_RULE.md`](../implement/IMPLEMENT_BASIC_RULE.md)・[`IMPLEMENT_COMPONENT_RULE.md`](../implement/IMPLEMENT_COMPONENT_RULE.md)・[`IMPLEMENT_VIEWMODEL.md`](../implement/IMPLEMENT_VIEWMODEL.md)・[`IMPLEMENT_SERVICE.md`](../implement/IMPLEMENT_SERVICE.md)・[`IMPLEMENT_CONTROLLER_RULE.md`](../implement/IMPLEMENT_CONTROLLER_RULE.md)・[`IMPLEMENT_COMPOSER_RULE.md`](../implement/IMPLEMENT_COMPOSER_RULE.md)・[`IMPLEMENT_REDUCER_RULE.md`](../implement/IMPLEMENT_REDUCER_RULE.md)・[`IMPLEMENT_THEME_RULE.md`](../implement/IMPLEMENT_THEME_RULE.md) を参照してください。  
 → [README.md](../../README.md) に戻る
