@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { SampleContexts } from "@/hooks/sample/reducer/useSampleReducer";
+import { SampleContexts } from "@/hooks/sample/state/useSampleReducer";
 
 export function useSampleInitialize(contexts: SampleContexts): void {
   const { fetchItem } = contexts.service;

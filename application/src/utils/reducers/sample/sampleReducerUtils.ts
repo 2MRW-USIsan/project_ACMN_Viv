@@ -1,5 +1,5 @@
 import { SampleItem } from "@/types/sampleItem";
-import { SampleReducerState } from "@/hooks/sample/reducer/useSampleReducer";
+import { SampleReducerState } from "@/hooks/sample/state/useSampleReducer";
 
 export const setItemList = (
   state: SampleReducerState,

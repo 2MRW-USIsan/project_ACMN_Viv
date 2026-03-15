@@ -1,7 +1,7 @@
 "use client";
 
 import { SampleItem } from "@/types/sampleItem";
-import { SampleContexts } from "@/hooks/sample/reducer/useSampleReducer";
+import { SampleContexts } from "@/hooks/sample/state/useSampleReducer";
 import { useSampleProperties } from "@/hooks/sample/viewModel/useSampleProperties";
 import { useSampleHandlers } from "@/hooks/sample/viewModel/useSampleHandlers";
 

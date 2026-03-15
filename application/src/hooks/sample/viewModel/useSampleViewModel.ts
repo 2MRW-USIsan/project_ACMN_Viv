@@ -1,7 +1,7 @@
 "use client";
 
-import { useSampleService } from "@/hooks/sample/service/useSampleService";
-import { useSampleReducer } from "@/hooks/sample/reducer/useSampleReducer";
+import { useSampleService } from "@/hooks/sample/state/useSampleService";
+import { useSampleReducer } from "@/hooks/sample/state/useSampleReducer";
 import { useSampleController } from "@/hooks/sample/controller/useSampleController";
 import { useSampleComposer, SampleViewModel } from "@/hooks/sample/viewModel/useSampleComposer";
 

@@ -2,7 +2,7 @@
 
 import { useReducer, useEffect } from "react";
 import { SampleItem } from "@/types/sampleItem";
-import { SampleFetchItem, SampleRequest } from "@/hooks/sample/service/useSampleService";
+import { SampleFetchItem, SampleRequest } from "@/hooks/sample/state/useSampleService";
 import {
   setItemList,
   selectItem,
