@@ -14,10 +14,9 @@ export interface SampleProperties {
 
 export function useSampleProperties(contexts: SampleContexts) {
   const { state } = contexts.reducer;
-  const { fetchItem } = contexts.service;
 
   const properties: SampleProperties = {
-    itemList: fetchItem.itemList ?? [],
+    itemList: state.itemList,
     selectedItem: state.selectedItem,
     editorTitle: state.editorTitle,
     editorDescription: state.editorDescription,
