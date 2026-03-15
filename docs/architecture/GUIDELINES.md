@@ -150,7 +150,7 @@ export function MyComponent({ value, onChange }: MyComponentProps) { ... }
 - カスタムフックは `hooks/` ディレクトリに配置し、`use` プレフィックスを付ける。
 - `useMemo` を使ってアクション関数とデータ変換のコストを最小化する。React 19 Compiler と競合しないよう、`useMemo` 内で参照する補助関数はクロージャ内に同居させること。
 - 画面ごとに **ViewModel フック**（`use<Screen>ViewModel.ts`）を作成し、各 hooks を束ねて画面コンポーネントが参照する単一インターフェースとして提供する（MVVM パターン）。
-- **複数の state を扱う場合は `useReducer` を利用したカスタムフックを作成する。** 詳細な実装規約は [`IMPLEMENT_REDUCER_RULE.md`](./IMPLEMENT_REDUCER_RULE.md) を参照。
+- **複数の state を扱う場合は `useReducer` を利用したカスタムフックを作成する。** 詳細な実装規約は [`IMPLEMENT_REDUCER_RULE.md`](../implement/IMPLEMENT_REDUCER_RULE.md) を参照。
 
 ```ts
 // ✅ Good — アクションを useMemo でメモ化
@@ -417,5 +417,5 @@ import { IconButton } from "@mui/material";
 
 これらのガイドラインに従うことで、コードの保守性・可読性が高まりバグが減ります。新しいコードを書く際はこのドキュメントをコンテキストとして参照してください。アーキテクチャの詳細は [`ARCHITECTURE.md`](./ARCHITECTURE.md) を参照してください。
 
-実装ルールの詳細は [`IMPLEMENT_BASIC_RULE.md`](./IMPLEMENT_BASIC_RULE.md)・[`IMPLEMENT_COMPONENT_RULE.md`](./IMPLEMENT_COMPONENT_RULE.md)・[`IMPLEMENT_VIEWMODEL.md`](./IMPLEMENT_VIEWMODEL.md)・[`IMPLEMENT_SERVICE.md`](./IMPLEMENT_SERVICE.md)・[`IMPLEMENT_CONTROLLER_RULE.md`](./IMPLEMENT_CONTROLLER_RULE.md)・[`IMPLEMENT_COMPOSER_RULE.md`](./IMPLEMENT_COMPOSER_RULE.md)・[`IMPLEMENT_REDUCER_RULE.md`](./IMPLEMENT_REDUCER_RULE.md) を参照してください。  
-→ [README.md](./README.md) に戻る
+実装ルールの詳細は [`IMPLEMENT_BASIC_RULE.md`](../implement/IMPLEMENT_BASIC_RULE.md)・[`IMPLEMENT_COMPONENT_RULE.md`](../implement/IMPLEMENT_COMPONENT_RULE.md)・[`IMPLEMENT_VIEWMODEL.md`](../implement/IMPLEMENT_VIEWMODEL.md)・[`IMPLEMENT_SERVICE.md`](../implement/IMPLEMENT_SERVICE.md)・[`IMPLEMENT_CONTROLLER_RULE.md`](../implement/IMPLEMENT_CONTROLLER_RULE.md)・[`IMPLEMENT_COMPOSER_RULE.md`](../implement/IMPLEMENT_COMPOSER_RULE.md)・[`IMPLEMENT_REDUCER_RULE.md`](../implement/IMPLEMENT_REDUCER_RULE.md) を参照してください。  
+→ [README.md](../../README.md) に戻る

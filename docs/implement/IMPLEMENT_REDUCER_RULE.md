@@ -193,9 +193,9 @@ return {
 
 このルールに基づく実装例は以下のファイルを参照してください。
 
-- [`applictaion/src/hooks/editor/reducer/usePanelBaseReducer.ts`](applictaion/src/hooks/editor/reducer/usePanelBaseReducer.ts)
-- [`applictaion/src/hooks/viewer/reducer/useRequestJsonReducer.ts`](applictaion/src/hooks/viewer/reducer/useRequestJsonReducer.ts)
-- [`applictaion/src/hooks/viewer/reducer/useOrderJsonReducer.ts`](applictaion/src/hooks/viewer/reducer/useOrderJsonReducer.ts)
+- [`application/src/hooks/editor/reducer/usePanelBaseReducer.ts`](../../application/src/hooks/editor/reducer/usePanelBaseReducer.ts)
+- [`application/src/hooks/viewer/reducer/useRequestJsonReducer.ts`](../../application/src/hooks/viewer/reducer/useRequestJsonReducer.ts)
+- [`application/src/hooks/viewer/reducer/useOrderJsonReducer.ts`](../../application/src/hooks/viewer/reducer/useOrderJsonReducer.ts)
 
-画面レベルの Reducer（複数のドメイン Reducer を束ねる場合）については [`GUIDELINES.md`](./GUIDELINES.md) の「ViewModel Logic Design」セクションおよび [`ARCHITECTURE.md`](./ARCHITECTURE.md) を参照してください。  
-→ [README.md](./README.md) に戻る
+画面レベルの Reducer（複数のドメイン Reducer を束ねる場合）については [`GUIDELINES.md`](../architecture/GUIDELINES.md) の「ViewModel Logic Design」セクションおよび [`ARCHITECTURE.md`](../architecture/ARCHITECTURE.md) を参照してください。  
+→ [README.md](../../README.md) に戻る

@@ -17,7 +17,7 @@
 - Lint: **ESLint 9（`eslint-config-next`）**
 - Compiler: **React 19 Compiler（`reactCompiler: true`）**
 
-> アプリのソースは `applictaion/` サブディレクトリに配置されています（ディレクトリ名のタイポあり）。
+> アプリのソースは `application/` サブディレクトリに配置されています。
 
 ---
 
@@ -58,7 +58,7 @@
 ### 構成ツリー
 
 ```
-applictaion/src/
+application/src/
 ├── app/                         # Next.js App Router エントリポイント
 │   ├── api/
 │   │   └── panelSaves/          # パネル保存 REST API
@@ -507,5 +507,5 @@ blocs:
 ---
 
 コーディング規約の詳細は [`GUIDELINES.md`](./GUIDELINES.md) を参照してください。  
-実装ルールの詳細は [`IMPLEMENT_BASIC_RULE.md`](./IMPLEMENT_BASIC_RULE.md)・[`IMPLEMENT_COMPONENT_RULE.md`](./IMPLEMENT_COMPONENT_RULE.md)・[`IMPLEMENT_VIEWMODEL.md`](./IMPLEMENT_VIEWMODEL.md)・[`IMPLEMENT_SERVICE.md`](./IMPLEMENT_SERVICE.md)・[`IMPLEMENT_CONTROLLER_RULE.md`](./IMPLEMENT_CONTROLLER_RULE.md)・[`IMPLEMENT_COMPOSER_RULE.md`](./IMPLEMENT_COMPOSER_RULE.md)・[`IMPLEMENT_REDUCER_RULE.md`](./IMPLEMENT_REDUCER_RULE.md) を参照してください。  
-→ [README.md](./README.md) に戻る
+実装ルールの詳細は [`IMPLEMENT_BASIC_RULE.md`](../implement/IMPLEMENT_BASIC_RULE.md)・[`IMPLEMENT_COMPONENT_RULE.md`](../implement/IMPLEMENT_COMPONENT_RULE.md)・[`IMPLEMENT_VIEWMODEL.md`](../implement/IMPLEMENT_VIEWMODEL.md)・[`IMPLEMENT_SERVICE.md`](../implement/IMPLEMENT_SERVICE.md)・[`IMPLEMENT_CONTROLLER_RULE.md`](../implement/IMPLEMENT_CONTROLLER_RULE.md)・[`IMPLEMENT_COMPOSER_RULE.md`](../implement/IMPLEMENT_COMPOSER_RULE.md)・[`IMPLEMENT_REDUCER_RULE.md`](../implement/IMPLEMENT_REDUCER_RULE.md) を参照してください。  
+→ [README.md](../../README.md) に戻る
