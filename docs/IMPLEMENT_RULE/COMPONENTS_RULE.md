@@ -14,7 +14,7 @@
 
 ## コンポーネント実装の基本ルール
 
-`IMPLEMENT_BASIC_RULE.md` の汎用ルールに加え、コンポーネント固有の追加ルールを以下に定義する。
+`BASIC_RULE.md` の汎用ルールに加え、コンポーネント固有の追加ルールを以下に定義する。
 
 - コンポーネントは `export function Name(...)` で宣言する（`export default` は使用しない）。ただし `/app` 以下の pages は Next.js の要求に従い `export default function` とする。
 - Props は `interface {ComponentName}Props` で定義する。
@@ -224,5 +224,5 @@ export function CanvasAtom({ props }: CanvasAtomProps) {
 | molecules | 部品単位（複数atoms） | 持たない | `/components/molecules/` |
 | atoms | 最小単位（MUIラッパー） | 例外①UI内部状態、例外②パフォーマンス目的のDOM操作（useRef/useEffect必須） | `/components/atoms/` |
 
-関連ドキュメント: [`IMPLEMENT_BASIC_RULE.md`](./IMPLEMENT_BASIC_RULE.md)・[`IMPLEMENT_VIEWMODEL.md`](./IMPLEMENT_VIEWMODEL.md)・[`GUIDELINES.md`](../architecture/GUIDELINES.md)・[`ARCHITECTURE.md`](../architecture/ARCHITECTURE.md)  
+関連ドキュメント: [`BASIC_RULE.md`](./BASIC_RULE.md)・[`VIEWMODEL_RULE.md`](./HOOKS_RULE/VIEWMODEL_RULE.md)・[`GUIDELINES.md`](../architecture/GUIDELINES.md)・[`ARCHITECTURE.md`](../architecture/ARCHITECTURE.md)  
 → [README.md](../../README.md) に戻る

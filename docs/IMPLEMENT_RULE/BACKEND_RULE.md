@@ -146,5 +146,5 @@ export const sampleItemInputSchema = z.object({
 
 ---
 
-関連ドキュメント: [`IMPLEMENT_BASIC_RULE.md`](./IMPLEMENT_BASIC_RULE.md)・[`IMPLEMENT_API_SERVICE_RULE.md`](./IMPLEMENT_API_SERVICE_RULE.md)・[`GUIDELINES.md`](../architecture/GUIDELINES.md)  
+関連ドキュメント: [`BASIC_RULE.md`](./BASIC_RULE.md)・[`SERVICE_RULE.md`](./HOOKS_RULE/STATE/SERVICE_RULE.md)・[`GUIDELINES.md`](../architecture/GUIDELINES.md)  
 → [README.md](../../README.md) に戻る

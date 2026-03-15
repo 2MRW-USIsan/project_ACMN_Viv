@@ -483,7 +483,7 @@ blocs:
 - **スペーシング**: 基本単位 6px
 - **コンポーネントデフォルト**: TextField は small / outlined、Chip は高さ 22px 固定
 
-テーマ実装の詳細は [`IMPLEMENT_THEME_RULE.md`](../implement/IMPLEMENT_THEME_RULE.md) を参照してください。
+テーマ実装の詳細は [`THEME_RULE.md`](../IMPLEMENT_RULE/THEME_RULE.md) を参照してください。
 
 ---
 
@@ -512,17 +512,22 @@ blocs:
 3. `useReducer` を使う場合、Action は discriminated union で定義する。
 4. アクション関数は `useMemo` でメモ化する（React 19 Compiler との競合を避けるため、`useMemo` 内に副関数を同居させること）。
 5. ドメインリデューサーを新規追加する場合は `usePanelReducer.ts` でオーケストレーションに組み込む。
-6. 画面固有の ViewModel は、以下の **5 種のフック** で構成する（詳細は [`GUIDELINES.md`](./GUIDELINES.md) の「ViewModel Logic Design」を参照）。
-   - `use{Page}Service` — API 呼び出し（`fetchItem` / `request` を返す）
-   - `use{Page}Reducer` — 状態管理（`state` / `action` を返す）; `{Page}Contexts` 型もここで定義する
-   - `use{Page}Controller` — 副作用管理（`use{Page}Initialize` + `use{Page}Effects` を呼ぶ）
-   - `use{Page}Composer` — ViewModel 生成（`{ viewModel }` を返す）; ViewModel 型もここで定義する
-     - `use{Page}Properties` — プロパティ・ラベル情報提供（`{Page}Properties` 型もここで定義する）
-     - `use{Page}Handlers` — ハンドラ情報提供（`{Page}Handlers` 型もここで定義する）
-   - `use{Page}ViewModel` — 上記 4 フックを束ねるオーケストレーター
+6. 画面固有の ViewModel は、以下のフック構成で実装する（詳細は [`GUIDELINES.md`](./GUIDELINES.md) の「ViewModel Logic Design」を参照）。
+   - `state/` 層:
+     - `use{Page}FetchReducer` — フェッチ状態管理（Service から利用）
+     - `use{Page}Service` — API 呼び出し（`fetchItem` / `request` を返す）
+     - `use{Page}StateReducer` — UI 状態管理（`state` / `action` を返す）; `{Page}Contexts` 型もここで定義する
+     - `use{Page}Context` — Service + StateReducer を統合して `{ contexts }` を返す
+   - `controller/` 層:
+     - `use{Page}Controller` — 副作用管理（`use{Page}Initialize` + `use{Page}Effects` を呼ぶ）
+   - `viewModel/` 層:
+     - `use{Page}Composer` — ViewModel 生成（`{ viewModel }` を返す）; ViewModel 型もここで定義する
+       - `use{Page}Properties` — プロパティ・ラベル情報提供（`{Page}Properties` 型もここで定義する）
+       - `use{Page}Handlers` — ハンドラ情報提供（`{Page}Handlers` 型もここで定義する）
+     - `use{Page}ViewModel` — 上記フックを束ねるエントリーポイント（Context→Controller→Composer）
 
 ---
 
 コーディング規約の詳細は [`GUIDELINES.md`](./GUIDELINES.md) を参照してください。  
-実装ルールの詳細は [`IMPLEMENT_BASIC_RULE.md`](../implement/IMPLEMENT_BASIC_RULE.md)・[`IMPLEMENT_COMPONENT_RULE.md`](../implement/IMPLEMENT_COMPONENT_RULE.md)・[`IMPLEMENT_VIEWMODEL.md`](../implement/IMPLEMENT_VIEWMODEL.md)・[`IMPLEMENT_SERVICE.md`](../implement/IMPLEMENT_SERVICE.md)・[`IMPLEMENT_CONTROLLER_RULE.md`](../implement/IMPLEMENT_CONTROLLER_RULE.md)・[`IMPLEMENT_COMPOSER_RULE.md`](../implement/IMPLEMENT_COMPOSER_RULE.md)・[`IMPLEMENT_REDUCER_RULE.md`](../implement/IMPLEMENT_REDUCER_RULE.md)・[`IMPLEMENT_THEME_RULE.md`](../implement/IMPLEMENT_THEME_RULE.md) を参照してください。  
+実装ルールの詳細は [`BASIC_RULE.md`](../IMPLEMENT_RULE/BASIC_RULE.md)・[`COMPONENTS_RULE.md`](../IMPLEMENT_RULE/COMPONENTS_RULE.md)・[`VIEWMODEL_RULE.md`](../IMPLEMENT_RULE/HOOKS_RULE/VIEWMODEL_RULE.md)・[`SERVICE_RULE.md`](../IMPLEMENT_RULE/HOOKS_RULE/STATE/SERVICE_RULE.md)・[`CONTROLLER_RULE.md`](../IMPLEMENT_RULE/HOOKS_RULE/CONTROLLER_RULE.md)・[`CONTEXT_RULE.md`](../IMPLEMENT_RULE/HOOKS_RULE/STATE/CONTEXT_RULE.md)・[`FETCH_REDUCER_RULE.md`](../IMPLEMENT_RULE/HOOKS_RULE/STATE/FETCH_REDUCER_RULE.md)・[`STATE_REDUCER_RULE.md`](../IMPLEMENT_RULE/HOOKS_RULE/STATE/STATE_REDUCER_RULE.md)・[`THEME_RULE.md`](../IMPLEMENT_RULE/THEME_RULE.md) を参照してください。  
 → [README.md](../../README.md) に戻る
