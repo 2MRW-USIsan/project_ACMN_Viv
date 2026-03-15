@@ -149,6 +149,7 @@ application/src/
 │       │   ├── useSampleInitialize.ts   # 初期化 useEffect ラッパー
 │       │   └── useSampleEffects.ts      # state 副作用 useEffect ラッパー
 │       └── state/               # State 層（Service + Reducer を統合）
+│           ├── useSampleContext.ts      # Service + Reducer を統合; SampleContexts を返す
 │           ├── useSampleService.ts      # API 呼び出し（sampleItems CRUD）
 │           ├── useSampleFetchReducer.ts # フェッチ状態管理（useSampleService から利用）
 │           └── useSampleStateReducer.ts # UI 状態管理; SampleContexts 定義
