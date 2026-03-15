@@ -7,7 +7,7 @@
 ## 基本方針
 
 アプリ全体のデザインは **`MUI の createTheme`** で一元管理します。  
-テーマ設定は `theme/theme.ts` に集約し、`ThemeRegistry` プロバイダー経由でアプリ全体に適用します。
+テーマ設定は `theme/theme.ts` に集約し、`ThemeProvider` プロバイダー経由でアプリ全体に適用します。
 
 ---
 
@@ -19,8 +19,7 @@ src/
 │   └── theme.ts                      # createTheme によるテーマ定義
 └── components/
     └── providers/
-        ├── EmotionRegistry.tsx        # Emotion キャッシュの SSR 対応ラッパー
-        └── ThemeRegistry.tsx          # ThemeProvider ラッパー（EmotionRegistry を内包）
+        └── ThemeProvider.tsx          # Emotion SSR + MUI ThemeProvider を一体化したプロバイダー
 ```
 
 ---
@@ -60,37 +59,24 @@ export const acmnTheme = createTheme({
 
 ## プロバイダー構成
 
-### EmotionRegistry
+### ThemeProvider
 
-Next.js App Router の RSC（React Server Components）環境で Emotion スタイルを SSR 時に `<head>` へ注入するためのラッパーです。  
-`useServerInsertedHTML` を使用して Emotion キャッシュを制御します。
-
-```tsx
-"use client";
-
-export function EmotionRegistry({ children }: EmotionRegistryProps) {
-  // Emotion キャッシュの生成と useServerInsertedHTML による注入
-  ...
-  return <CacheProvider value={cache}>{children}</CacheProvider>;
-}
-```
-
-### ThemeRegistry
-
-`EmotionRegistry` と `ThemeProvider`・`CssBaseline` を組み合わせたプロバイダーです。  
+Emotion キャッシュの SSR 対応（`useServerInsertedHTML`）と MUI の `ThemeProvider`・`CssBaseline` を一つのファイルにまとめたプロバイダーです。  
 `app/layout.tsx` からのみ呼び出します。
 
 ```tsx
 "use client";
 
-export function ThemeRegistry({ children }: ThemeRegistryProps) {
+export function ThemeProvider({ children }: ThemeProviderProps) {
+  // Emotion キャッシュの生成と useServerInsertedHTML による注入
+  ...
   return (
-    <EmotionRegistry>
-      <ThemeProvider theme={acmnTheme}>
+    <CacheProvider value={cache}>
+      <MuiThemeProvider theme={acmnTheme}>
         <CssBaseline />
         {children}
-      </ThemeProvider>
-    </EmotionRegistry>
+      </MuiThemeProvider>
+    </CacheProvider>
   );
 }
 ```
@@ -99,17 +85,17 @@ export function ThemeRegistry({ children }: ThemeRegistryProps) {
 
 ## layout.tsx での適用
 
-`app/layout.tsx` は Server Component として実装し、`<body>` 直下で `ThemeRegistry` を適用します。
+`app/layout.tsx` は Server Component として実装し、`<body>` 直下で `ThemeProvider` を適用します。
 
 ```tsx
 // app/layout.tsx  ← "use client" は付けない（Server Component）
-import { ThemeRegistry } from "@/components/providers/ThemeRegistry";
+import { ThemeProvider } from "@/components/providers/ThemeProvider";
 
 export default function RootLayout({ children }: ...) {
   return (
     <html lang="en">
       <body className="acmn-application">
-        <ThemeRegistry>{children}</ThemeRegistry>
+        <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>
   );

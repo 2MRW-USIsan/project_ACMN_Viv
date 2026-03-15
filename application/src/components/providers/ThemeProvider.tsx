@@ -4,12 +4,14 @@ import { useState } from "react";
 import { useServerInsertedHTML } from "next/navigation";
 import createCache from "@emotion/cache";
 import { CacheProvider } from "@emotion/react";
+import { ThemeProvider as MuiThemeProvider, CssBaseline } from "@mui/material";
+import { acmnTheme } from "@/theme/theme";
 
-interface EmotionRegistryProps {
+interface ThemeProviderProps {
   children: React.ReactNode;
 }
 
-export function EmotionRegistry({ children }: EmotionRegistryProps) {
+export function ThemeProvider({ children }: ThemeProviderProps) {
   const [{ cache, flush }] = useState(() => {
     const emotionCache = createCache({ key: "mui" });
     emotionCache.compat = true;
@@ -48,5 +50,12 @@ export function EmotionRegistry({ children }: EmotionRegistryProps) {
     );
   });
 
-  return <CacheProvider value={cache}>{children}</CacheProvider>;
+  return (
+    <CacheProvider value={cache}>
+      <MuiThemeProvider theme={acmnTheme}>
+        <CssBaseline />
+        {children}
+      </MuiThemeProvider>
+    </CacheProvider>
+  );
 }

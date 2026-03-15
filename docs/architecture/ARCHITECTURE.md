@@ -93,8 +93,7 @@ application/src/
 │   │   ├── SaveLoadToolbar.tsx
 │   │   └── YamlPreviewDialog.tsx
 │   └── providers/               # アプリ全体に横断するプロバイダー
-│       ├── EmotionRegistry.tsx
-│       └── ThemeRegistry.tsx
+│       └── ThemeProvider.tsx
 │
 ├── hooks/                       # 状態管理・データ変換カスタムフック
 │   ├── editor/                  # /editor 画面関連フック

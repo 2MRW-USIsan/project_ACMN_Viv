@@ -1,4 +1,4 @@
-import { ThemeRegistry } from "@/components/providers/ThemeRegistry";
+import { ThemeProvider } from "@/components/providers/ThemeProvider";
 
 export default function RootLayout({
   children,
@@ -8,7 +8,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="acmn-application">
-        <ThemeRegistry>{children}</ThemeRegistry>
+        <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>
   );
