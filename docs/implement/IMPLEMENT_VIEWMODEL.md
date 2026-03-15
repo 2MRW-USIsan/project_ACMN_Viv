@@ -7,18 +7,30 @@ interface {Page}ViewModelReturns {
   viewModel: {Page}ViewModel;
 }
 export function use{Page}ViewModel():{Page}ViewModelReturns {
-  // Serviceの呼び出し（API, repository, I/O 管理）
-  const { fetchItem, request } = use{Page}Service();
-  // StateReducerの呼び出し（状態管理定義、状態情報、制御ハンドラ）
-  const { state, action } = use{Page}Reducer();
-  // context(DI Container)定義
-  const contexts = { service: { fetchItem, request }, reducer: { state, action } };
-  // Controllerの呼び出し（初期化制御、副作用管理）  
+  // Context(DI Container)の呼び出し（Service + StateReducer を統合）
+  const { contexts } = use{Page}Context();
+  // Controllerの呼び出し（初期化制御、副作用管理）
   use{Page}Controller(contexts);
-  // Composerの呼び出し（ViewModel(Props+UIハンドラ)の生成）  
+  // Composerの呼び出し（ViewModel(Props+UIハンドラ)の生成）
   const { viewModel } = use{Page}Composer(contexts);
 
   return { viewModel };
+}
+```
+
+`use{Page}Context` は `state/` レイヤーに配置し、`use{Page}Service` と `use{Page}StateReducer` を統合して `{ contexts }` を返す:
+
+```ts
+export function use{Page}Context(): {Page}ContextReturns {
+  const { fetchItem, request } = use{Page}Service();
+  const { state, action } = use{Page}StateReducer();
+
+  const contexts: {Page}Contexts = {
+    service: { fetchItem, request },
+    reducer: { state, action },
+  };
+
+  return { contexts };
 }
 ```
 
