@@ -17,6 +17,8 @@
 | [IMPLEMENT_COMPONENT_RULE.md](./IMPLEMENT_COMPONENT_RULE.md) | Component 実装ルール（Atomic Design 階層・MVVM 方針） |
 | [IMPLEMENT_VIEWMODEL.md](./IMPLEMENT_VIEWMODEL.md) | ViewModel フック（`use{Page}ViewModel`）実装ルール |
 | [IMPLEMENT_SERVICE.md](./IMPLEMENT_SERVICE.md) | Service フック（`use{Page}Service`）実装ルール |
+| [IMPLEMENT_API_SERVICE_RULE.md](./IMPLEMENT_API_SERVICE_RULE.md) | API Service 関数（`services/`）実装ルール・Zod バリデーション |
+| [IMPLEMENT_BACKEND_RULE.md](./IMPLEMENT_BACKEND_RULE.md) | バックエンド実装ルール（`business/`・`app/api/`・Prisma 移行方針） |
 | [IMPLEMENT_CONTROLLER_RULE.md](./IMPLEMENT_CONTROLLER_RULE.md) | Controller フック（`use{Page}Controller`）実装ルール |
 | [IMPLEMENT_COMPOSER_RULE.md](./IMPLEMENT_COMPOSER_RULE.md) | Composer フック（`use{Page}Composer`）実装ルール |
 | [IMPLEMENT_REDUCER_RULE.md](./IMPLEMENT_REDUCER_RULE.md) | `useReducer` カスタムフック実装ルール |

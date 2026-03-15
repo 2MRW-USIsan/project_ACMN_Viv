@@ -46,7 +46,7 @@
 ルール 1 で分割したディレクトリをさらに細分化する場合、以下の設計思想に基づいた命名を行います。
 
 - **Atomic Design**（主に `components/`）: `atoms/` → `molecules/` → `organisms/` の 3 階層で構成。
-- **Clean Architecture**（主に `hooks/`）: `viewModel/`・`controller/`・`service/`・`reducer/` の各レイヤーに分割。
+- **Clean Architecture**（主に `hooks/`）: `viewModel/`・`controller/`・`state/` の各レイヤーに分割。
 
 **ルール 3 — 適した設計がない場合はドメイン粒度で分類**
 
@@ -137,6 +137,21 @@ application/src/
 │           ├── useOrderJsonReducer.ts   # オーダー用 JSON 状態管理
 │           ├── useRequestJsonReducer.ts # リクエスト用 JSON 状態管理
 │           └── useOrdersViewer.ts       # オーダービュー状態管理
+│
+│   └── sample/                  # /sample 画面関連フック
+│       ├── viewModel/           # ViewModel 層（MVVM）
+│       │   ├── useSampleViewModel.ts    # /sample 画面の ViewModel エントリポイント
+│       │   ├── useSampleComposer.ts     # ViewModel 生成; SampleViewModel 定義
+│       │   ├── useSampleProperties.ts   # プロパティ・ラベル情報提供; SampleProperties 定義
+│       │   └── useSampleHandlers.ts     # ハンドラ情報提供; SampleHandlers 定義
+│       ├── controller/          # Controller 層（副作用管理）
+│       │   ├── useSampleController.ts   # 副作用管理（Initialize + Effects を呼ぶ）
+│       │   ├── useSampleInitialize.ts   # 初期化 useEffect ラッパー
+│       │   └── useSampleEffects.ts      # state 副作用 useEffect ラッパー
+│       └── state/               # State 層（Service + Reducer を統合）
+│           ├── useSampleService.ts      # API 呼び出し（sampleItems CRUD）
+│           ├── useSampleFetchReducer.ts # フェッチ状態管理（useSampleService から利用）
+│           └── useSampleStateReducer.ts # UI 状態管理; SampleContexts 定義
 │
 ├── types/                       # TypeScript 型定義
 │   ├── editor/                  # /editor 画面関連の型
