@@ -36,12 +36,17 @@
 | [FETCH_REDUCER_RULE.md](./docs/IMPLEMENT_RULE/HOOKS_RULE/STATE/FETCH_REDUCER_RULE.md) | FetchReducer フック実装ルール（`use{Page}FetchReducer`） |
 | [STATE_REDUCER_RULE.md](./docs/IMPLEMENT_RULE/HOOKS_RULE/STATE/STATE_REDUCER_RULE.md) | StateReducer フック実装ルール（`use{Page}StateReducer`・`{Page}Contexts` 型定義） |
 
-### テンプレート
+### テンプレート（工程別）
 
-| ドキュメント | 概要 |
-|---|---|
-| [SCREEN_REQUEST_TEMPLATE.md](./docs/templates/SCREEN_REQUEST_TEMPLATE.md) | 画面実装依頼書テンプレート（依頼側が記述） |
-| [SCREEN_REPORT_TEMPLATE.md](./docs/templates/SCREEN_REPORT_TEMPLATE.md) | 画面成果物仕様書テンプレート（AI が出力する報告書） |
+実装は以下の5工程に分けて進める。各工程に依頼書（REQUEST）と成果物報告書（REPORT）のテンプレートを用意している。
+
+| 工程 | 依頼書 | 成果物報告書 | スコープ |
+|---|---|---|---|
+| 1. 画面追加 | [REQUEST](./docs/templates/01_SCREEN_ADD/REQUEST_TEMPLATE.md) | [REPORT](./docs/templates/01_SCREEN_ADD/REPORT_TEMPLATE.md) | AppRouter パス追加・全フック空実装 |
+| 2. コンポーネント追加 | [REQUEST](./docs/templates/02_COMPONENT_ADD/REQUEST_TEMPLATE.md) | [REPORT](./docs/templates/02_COMPONENT_ADD/REPORT_TEMPLATE.md) | コンポーネント追加・StateReducer 状態追加 |
+| 3. CRUD処理の追加 | [REQUEST](./docs/templates/03_CRUD_ADD/REQUEST_TEMPLATE.md) | [REPORT](./docs/templates/03_CRUD_ADD/REPORT_TEMPLATE.md) | StateReducer・FetchReducer 状態・ハンドラ追加 |
+| 4. 副作用影響の変更 | [REQUEST](./docs/templates/04_SIDE_EFFECT/REQUEST_TEMPLATE.md) | [REPORT](./docs/templates/04_SIDE_EFFECT/REPORT_TEMPLATE.md) | ハンドラ調整・Controller 実装 |
+| 5. リファクタリング | [REQUEST](./docs/templates/05_REFACTOR/REQUEST_TEMPLATE.md) | [REPORT](./docs/templates/05_REFACTOR/REPORT_TEMPLATE.md) | 型定義・ユーティリティ統合・外部化 |
 
 ---
 
