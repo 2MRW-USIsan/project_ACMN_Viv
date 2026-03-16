@@ -24,18 +24,32 @@
 
 ---
 
-### 2. 追加する CRUD 操作
+### 2. StateReducer の構造定義と UI コンポーネントへの結びつけ
 
-| 操作 | 対象データ | 説明 |
+工程2で暫定プロパティ（`todo` プレフィックス）で実装したコンポーネントの  
+プロパティを正式な名前・構造に置き換え、StateReducer の state / action と結びつける。
+
+**StateReducer に追加する state フィールド：**
+
+| フィールド名 | 型 | 対応するコンポーネント / プロパティ |
 |---|---|---|
-| 一覧取得（Read） | （例）〇〇リスト | （説明） |
-| 新規作成（Create） | （例）〇〇アイテム | （説明） |
-| 更新（Update） | （例）〇〇アイテム | （説明） |
-| 削除（Delete） | （例）〇〇アイテム | （説明） |
+| （例）`selectedItem` | `{Domain}Item \| null` | （例）`{Name}EditorOrganism` の `entryValue` へマッピング |
+| （例）`isEditorOpen` | `boolean` | （例）`{Name}EditorOrganism` の `isOpen` へマッピング |
+
+**StateReducer に追加する action（ハンドラ）：**
+
+| アクション名 | 引数 | 対応するコンポーネント / ハンドラ |
+|---|---|---|
+| （例）`selectItem` | `item: {Domain}Item \| null` | （例）`{Name}ListOrganism` の `onSelect` へマッピング |
+| （例）`setIsEditorOpen` | `open: boolean` | （例）`{Name}EditorOrganism` の `onOpen` へマッピング |
 
 ---
 
-### 3. 扱うデータ型
+### 3. FetchReducer の構造定義と CRUD 定義
+
+API から取得するデータの構造と、必要な CRUD 操作を定義する。
+
+**扱うデータ型：**
 
 ```ts
 // 概念レベルの型定義（詳細は AI が判断する）
@@ -45,40 +59,28 @@ type {Domain}Item = {
 };
 ```
 
----
+**FetchReducer に追加する state フィールド：**
 
-### 4. 必要な API 操作
-
-| メソッド | エンドポイント | 説明 |
+| フィールド名 | 型 | 説明 |
 |---|---|---|
-| GET | `/api/xxx` | 一覧取得 |
-| POST | `/api/xxx` | 新規作成 |
-| PUT | `/api/xxx/[id]` | 更新 |
-| DELETE | `/api/xxx/[id]` | 削除 |
+| （例）`itemList` | `{Domain}Item[] \| null` | API から取得したアイテム一覧（`null` = 未取得） |
+
+**Service に追加する CRUD 操作（request 関数）：**
+
+| 操作 | 関数名 | エンドポイント | 説明 |
+|---|---|---|---|
+| 一覧取得（Read） | `fetchItems` | GET `/api/xxx` | アイテム一覧を取得する |
+| 新規作成（Create） | `createItem` | POST `/api/xxx` | アイテムを作成する |
+| 更新（Update） | `updateItem` | PUT `/api/xxx/[id]` | アイテムを更新する |
+| 削除（Delete） | `deleteItem` | DELETE `/api/xxx/[id]` | アイテムを削除する |
 
 ---
 
-### 5. StateReducer / FetchReducer への追加仕様
-
-本工程でどちらの Reducer に何を追加するかを指定する。  
-StateReducer / FetchReducer の使い分けは `STATE_REDUCER_RULE.md` を参照すること。
-
-**StateReducer への追加：**
-
-- （例）`itemList` — UI が直接操作・参照する作業コピー（追加・更新・削除が必要）
-- （例）`isLoading` — API 通信中フラグ
-
-**FetchReducer への追加：**
-
-- （例）`itemList` — API から取得した生データキャッシュ（`null` = 未取得）
-
----
-
-### 6. 技術的制約・参照すべき規約
+### 4. 技術的制約・参照すべき規約
 
 - FetchReducer と StateReducer の使い分けは `STATE_REDUCER_RULE.md` §2「UI 状態と Service 状態の分離」に従うこと
 - API ルートと business 層の分離は `BACKEND_RULE.md` に従うこと
-- 本工程では副作用（`useEffect` による状態同期）は実装しない。工程4で追加する
+- 副作用（`useEffect` による状態同期）は実装しない。工程4で追加する
 
 ---
 
@@ -97,18 +99,38 @@ StateReducer / FetchReducer の使い分けは `STATE_REDUCER_RULE.md` を参照
 
 ---
 
-### 2. 追加する CRUD 操作
+### 2. StateReducer の構造定義と UI コンポーネントへの結びつけ
 
-| 操作 | 対象データ | 説明 |
+**StateReducer に追加する state フィールド：**
+
+| フィールド名 | 型 | 対応するコンポーネント / プロパティ |
 |---|---|---|
-| 一覧取得（Read） | サンプルアイテムリスト | 全アイテムを取得して一覧に表示する |
-| 新規作成（Create） | サンプルアイテム | タイトル・詳細を入力して新規アイテムを作成する |
-| 更新（Update） | サンプルアイテム | 選択中アイテムのタイトル・詳細を更新する |
-| 削除（Delete） | サンプルアイテム | 選択中アイテムを削除する |
+| `selectedItem` | `SampleItem \| null` | `SampleEditorOrganism` の `entryValue` 等へマッピング |
+| `editorTitle` | `string` | `SampleEditorOrganism` のタイトル入力フィールドへマッピング |
+| `editorDetail` | `string` | `SampleEditorOrganism` の詳細テキストエリアへマッピング |
+| `isEditorOpen` | `boolean` | `SampleEditorOrganism` の `isOpen` へマッピング |
+| `itemList` | `SampleItem[]` | `SampleListOrganism` のアイテム一覧へマッピング |
+| `isLoading` | `boolean` | ローディング表示用フラグ |
+
+**StateReducer に追加する action（ハンドラ）：**
+
+| アクション名 | 引数 | 対応するコンポーネント / ハンドラ |
+|---|---|---|
+| `selectItem` | `item: SampleItem \| null` | `SampleListOrganism` の `onSelect` へマッピング |
+| `setEditorTitle` | `title: string` | `SampleEditorOrganism` のタイトル onChange へマッピング |
+| `setEditorDetail` | `detail: string` | `SampleEditorOrganism` の詳細 onChange へマッピング |
+| `setIsEditorOpen` | `open: boolean` | エディタパネルの開閉ハンドラへマッピング |
+| `setItemList` | `items: SampleItem[]` | 一覧初期化・再取得時に使用 |
+| `addItem` | `item: SampleItem` | 一覧にアイテムを追加 |
+| `updateItem` | `item: SampleItem` | 一覧のアイテムを更新 |
+| `removeItem` | `id: string` | 一覧からアイテムを削除 |
+| `setIsLoading` | `loading: boolean` | ローディング状態の更新 |
 
 ---
 
-### 3. 扱うデータ型
+### 3. FetchReducer の構造定義と CRUD 定義
+
+**扱うデータ型：**
 
 ```ts
 type SampleItem = {
@@ -119,33 +141,24 @@ type SampleItem = {
 };
 ```
 
----
+**FetchReducer に追加する state フィールド：**
 
-### 4. 必要な API 操作
-
-| メソッド | エンドポイント | 説明 |
+| フィールド名 | 型 | 説明 |
 |---|---|---|
-| GET | `/api/sampleItems` | 全アイテムの一覧取得 |
-| POST | `/api/sampleItems` | 新規アイテムの作成 |
-| PUT | `/api/sampleItems/[id]` | アイテムの更新 |
-| DELETE | `/api/sampleItems/[id]` | アイテムの削除 |
+| `itemList` | `SampleItem[] \| null` | API から取得したアイテム一覧（`null` = 未取得） |
+
+**Service に追加する CRUD 操作（request 関数）：**
+
+| 操作 | 関数名 | エンドポイント | 説明 |
+|---|---|---|---|
+| 一覧取得（Read） | `fetchItems` | GET `/api/sampleItems` | 全アイテムを取得する |
+| 新規作成（Create） | `createItem` | POST `/api/sampleItems` | アイテムを新規作成する |
+| 更新（Update） | `updateItem` | PUT `/api/sampleItems/[id]` | アイテムを更新する |
+| 削除（Delete） | `deleteItem` | DELETE `/api/sampleItems/[id]` | アイテムを削除する |
 
 ---
 
-### 5. StateReducer / FetchReducer への追加仕様
-
-**StateReducer への追加：**
-
-- `itemList` — UI が操作する作業コピー（追加・更新・削除を StateReducer に直接反映）
-- `isLoading` — API 通信中フラグ（通信開始時に `true`、完了時に `false`）
-
-**FetchReducer への追加：**
-
-- `itemList` — API から取得した生データキャッシュ（初期値 `null`）
-
----
-
-### 6. 技術的制約・参照すべき規約
+### 4. 技術的制約・参照すべき規約
 
 - FetchReducer と StateReducer の使い分けは `STATE_REDUCER_RULE.md` §2 に従うこと
 - API ルートは `app/api/sampleItems/route.ts`・`app/api/sampleItems/[id]/route.ts` に作成すること
