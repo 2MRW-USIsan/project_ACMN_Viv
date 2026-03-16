@@ -1,7 +1,7 @@
 "use client";
 
 import { SampleItem } from "@/types/sampleItem";
-import { SampleContexts } from "@/hooks/sample/state/useSampleStateReducer";
+import { SampleContexts } from "@/hooks/sample/state/useSampleContext";
 
 export interface SampleProperties {
   itemList: SampleItem[];
