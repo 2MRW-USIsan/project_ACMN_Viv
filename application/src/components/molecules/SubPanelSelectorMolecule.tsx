@@ -44,6 +44,41 @@ interface SubPanelSelectorMoleculeProps {
       subPanelId: string,
     ) => void;
     onAdd: (panelId: string, subType: SubPanelType) => void;
+    onSelectItemToggleExpanded: (
+      panelId: string,
+      subPanelId: string,
+      itemId: string,
+    ) => void;
+    onSelectItemKeyChange: (
+      panelId: string,
+      subPanelId: string,
+      itemId: string,
+      value: string,
+    ) => void;
+    onSelectItemLabelChange: (
+      panelId: string,
+      subPanelId: string,
+      itemId: string,
+      value: string,
+    ) => void;
+    onSelectItemLabelTextChange: (
+      panelId: string,
+      subPanelId: string,
+      itemId: string,
+      value: string,
+    ) => void;
+    onSelectItemPromptChange: (
+      panelId: string,
+      subPanelId: string,
+      itemId: string,
+      value: string,
+    ) => void;
+    onSelectItemDelete: (
+      panelId: string,
+      subPanelId: string,
+      itemId: string,
+    ) => void;
+    onSelectItemAdd: (panelId: string, subPanelId: string) => void;
   };
 }
 
@@ -65,33 +100,98 @@ export function SubPanelSelectorMolecule({
       {SUB_PANEL_TYPES.map((subType) => {
         const subPanelList = props.subPanels[subType];
         if (!subPanelList || subPanelList.length === 0) return null;
-        const subPanelListProps = {
-          panelId: props.panelId,
-          subPanelList,
-          onToggleExpanded: (panelId: string, subPanelId: string) =>
-            props.onToggleExpanded(panelId, subType, subPanelId),
-          onKeyChange: (panelId: string, subPanelId: string, value: string) =>
-            props.onKeyChange(panelId, subType, subPanelId, value),
-          onLabelChange: (panelId: string, subPanelId: string, value: string) =>
-            props.onLabelChange(panelId, subType, subPanelId, value),
-          onContentChange: (panelId: string, subPanelId: string, value: string) =>
-            props.onContentChange(panelId, subType, subPanelId, value),
-          onDelete: (panelId: string, subPanelId: string) =>
-            props.onDelete(panelId, subType, subPanelId),
-          onAdd: (panelId: string) => props.onAdd(panelId, subType),
-        };
 
         const renderComponent = () => {
           switch (subType) {
-            case "orders":
+            case "orders": {
+              const subPanelListProps = {
+                panelId: props.panelId,
+                subPanelList,
+                onToggleExpanded: (panelId: string, subPanelId: string) =>
+                  props.onToggleExpanded(panelId, subType, subPanelId),
+                onKeyChange: (
+                  panelId: string,
+                  subPanelId: string,
+                  value: string,
+                ) => props.onKeyChange(panelId, subType, subPanelId, value),
+                onLabelChange: (
+                  panelId: string,
+                  subPanelId: string,
+                  value: string,
+                ) => props.onLabelChange(panelId, subType, subPanelId, value),
+                onContentChange: (
+                  panelId: string,
+                  subPanelId: string,
+                  value: string,
+                ) =>
+                  props.onContentChange(panelId, subType, subPanelId, value),
+                onDelete: (panelId: string, subPanelId: string) =>
+                  props.onDelete(panelId, subType, subPanelId),
+                onAdd: (panelId: string) => props.onAdd(panelId, subType),
+              };
               return <OrdersPanelListOrganism props={subPanelListProps} />;
-            case "switch":
+            }
+            case "switch": {
+              const subPanelListProps = {
+                panelId: props.panelId,
+                subPanelList,
+                onToggleExpanded: (panelId: string, subPanelId: string) =>
+                  props.onToggleExpanded(panelId, subType, subPanelId),
+                onKeyChange: (
+                  panelId: string,
+                  subPanelId: string,
+                  value: string,
+                ) => props.onKeyChange(panelId, subType, subPanelId, value),
+                onLabelChange: (
+                  panelId: string,
+                  subPanelId: string,
+                  value: string,
+                ) => props.onLabelChange(panelId, subType, subPanelId, value),
+                onContentChange: (
+                  panelId: string,
+                  subPanelId: string,
+                  value: string,
+                ) =>
+                  props.onContentChange(panelId, subType, subPanelId, value),
+                onDelete: (panelId: string, subPanelId: string) =>
+                  props.onDelete(panelId, subType, subPanelId),
+                onAdd: (panelId: string) => props.onAdd(panelId, subType),
+              };
               return <SwitchPanelListOrganism props={subPanelListProps} />;
-            case "select":
+            }
+            case "select": {
+              const subPanelListProps = {
+                panelId: props.panelId,
+                subPanelList,
+                onToggleExpanded: (panelId: string, subPanelId: string) =>
+                  props.onToggleExpanded(panelId, subType, subPanelId),
+                onKeyChange: (
+                  panelId: string,
+                  subPanelId: string,
+                  value: string,
+                ) => props.onKeyChange(panelId, subType, subPanelId, value),
+                onLabelChange: (
+                  panelId: string,
+                  subPanelId: string,
+                  value: string,
+                ) => props.onLabelChange(panelId, subType, subPanelId, value),
+                onDelete: (panelId: string, subPanelId: string) =>
+                  props.onDelete(panelId, subType, subPanelId),
+                onAdd: (panelId: string) => props.onAdd(panelId, subType),
+                onSelectItemToggleExpanded: props.onSelectItemToggleExpanded,
+                onSelectItemKeyChange: props.onSelectItemKeyChange,
+                onSelectItemLabelChange: props.onSelectItemLabelChange,
+                onSelectItemLabelTextChange: props.onSelectItemLabelTextChange,
+                onSelectItemPromptChange: props.onSelectItemPromptChange,
+                onSelectItemDelete: props.onSelectItemDelete,
+                onSelectItemAdd: props.onSelectItemAdd,
+              };
               return <SelectPanelListOrganism props={subPanelListProps} />;
-            default:
+            }
+            default: {
               const _exhaustive: never = subType;
               return _exhaustive;
+            }
           }
         };
 

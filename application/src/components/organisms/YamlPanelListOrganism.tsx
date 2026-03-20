@@ -58,6 +58,41 @@ interface YamlPanelListOrganismProps {
       subPanelId: string,
     ) => void;
     todoOnSubPanelAdd: (panelId: string, subType: SubPanelType) => void;
+    todoOnSelectItemToggleExpanded: (
+      panelId: string,
+      subPanelId: string,
+      itemId: string,
+    ) => void;
+    todoOnSelectItemKeyChange: (
+      panelId: string,
+      subPanelId: string,
+      itemId: string,
+      value: string,
+    ) => void;
+    todoOnSelectItemLabelChange: (
+      panelId: string,
+      subPanelId: string,
+      itemId: string,
+      value: string,
+    ) => void;
+    todoOnSelectItemLabelTextChange: (
+      panelId: string,
+      subPanelId: string,
+      itemId: string,
+      value: string,
+    ) => void;
+    todoOnSelectItemPromptChange: (
+      panelId: string,
+      subPanelId: string,
+      itemId: string,
+      value: string,
+    ) => void;
+    todoOnSelectItemDelete: (
+      panelId: string,
+      subPanelId: string,
+      itemId: string,
+    ) => void;
+    todoOnSelectItemAdd: (panelId: string, subPanelId: string) => void;
   };
 }
 
@@ -93,6 +128,13 @@ export function YamlPanelListOrganism({ props }: YamlPanelListOrganismProps) {
           onContentChange: props.todoOnSubPanelContentChange,
           onDelete: props.todoOnSubPanelDelete,
           onAdd: props.todoOnSubPanelAdd,
+          onSelectItemToggleExpanded: props.todoOnSelectItemToggleExpanded,
+          onSelectItemKeyChange: props.todoOnSelectItemKeyChange,
+          onSelectItemLabelChange: props.todoOnSelectItemLabelChange,
+          onSelectItemLabelTextChange: props.todoOnSelectItemLabelTextChange,
+          onSelectItemPromptChange: props.todoOnSelectItemPromptChange,
+          onSelectItemDelete: props.todoOnSelectItemDelete,
+          onSelectItemAdd: props.todoOnSelectItemAdd,
         };
         return (
           <PanelItemMolecule key={panel.id} props={panelItemProps}>

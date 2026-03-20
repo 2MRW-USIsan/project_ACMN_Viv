@@ -1,11 +1,10 @@
 "use client";
 
 import { TextFieldAtom } from "@/components/atoms/TextFieldAtom";
-import { SubPanelType } from "@/types/subPanel";
 
 interface SubPanelContentMoleculeProps {
   props: {
-    subType: SubPanelType;
+    subType: "orders" | "switch";
     value: string;
     onValueChange: (value: string) => void;
   };
@@ -40,22 +39,12 @@ function SwitchSubPanelContentMolecule({
   return <TextFieldAtom props={textFieldProps} />;
 }
 
-function SelectSubPanelContentMolecule({
-  value,
-  onValueChange,
-}: SubTypeTextFieldProps) {
-  const textFieldProps = {
-    label: "Select Text",
-    defaultValue: value,
-    onBlur: onValueChange,
-  };
-  return <TextFieldAtom props={textFieldProps} />;
-}
-
-const SUB_PANEL_COMPONENTS: Record<SubPanelType, React.ComponentType<SubTypeTextFieldProps>> = {
+const SUB_PANEL_COMPONENTS: Record<
+  "orders" | "switch",
+  React.ComponentType<SubTypeTextFieldProps>
+> = {
   orders: OrdersSubPanelContentMolecule,
   switch: SwitchSubPanelContentMolecule,
-  select: SelectSubPanelContentMolecule,
 };
 
 export function SubPanelContentMolecule({ props }: SubPanelContentMoleculeProps) {
