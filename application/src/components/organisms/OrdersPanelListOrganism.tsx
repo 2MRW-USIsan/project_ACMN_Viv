@@ -18,13 +18,19 @@ interface OrdersPanelListOrganismProps {
     onToggleExpanded: (panelId: string, subPanelId: string) => void;
     onKeyChange: (panelId: string, subPanelId: string, value: string) => void;
     onLabelChange: (panelId: string, subPanelId: string, value: string) => void;
-    onContentChange: (panelId: string, subPanelId: string, value: string) => void;
+    onContentChange: (
+      panelId: string,
+      subPanelId: string,
+      value: string,
+    ) => void;
     onDelete: (panelId: string, subPanelId: string) => void;
     onAdd: (panelId: string) => void;
   };
 }
 
-export function OrdersPanelListOrganism({ props }: OrdersPanelListOrganismProps) {
+export function OrdersPanelListOrganism({
+  props,
+}: OrdersPanelListOrganismProps) {
   const contentFieldKey = SUB_PANEL_CONTENT_FIELD_KEYS[SUB_TYPE];
   const headingLabelProps = { text: LABEL };
   const addButtonProps = {
@@ -39,6 +45,7 @@ export function OrdersPanelListOrganism({ props }: OrdersPanelListOrganismProps)
       {props.subPanelList.map((subPanel) => {
         const panelItemProps = {
           id: subPanel.id,
+          itemLabel: "Group:",
           panelKey: subPanel.panelKey,
           panelLabel: subPanel.panelLabel,
           expanded: subPanel.expanded,

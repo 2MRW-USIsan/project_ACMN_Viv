@@ -11,6 +11,7 @@ import { CollapseAtom } from "@/components/atoms/CollapseAtom";
 interface PanelItemMoleculeProps {
   props: {
     id: string;
+    itemLabel: string;
     panelKey: string;
     panelLabel: string;
     expanded: boolean;
@@ -29,7 +30,7 @@ export function PanelItemMolecule({ props, children }: PanelItemMoleculeProps) {
     props.onLabelChange(props.id, value);
   const handleDelete = () => props.onDelete(props.id);
 
-  const labelProps = { text: "Blocs:" };
+  const labelProps = { text: props.itemLabel };
   const keyFieldProps = {
     label: "Key",
     defaultValue: props.panelKey,

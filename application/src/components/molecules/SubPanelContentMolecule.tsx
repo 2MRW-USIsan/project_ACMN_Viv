@@ -52,14 +52,24 @@ function SelectSubPanelContentMolecule({
   return <TextFieldAtom props={textFieldProps} />;
 }
 
-const SUB_PANEL_COMPONENTS: Record<SubPanelType, React.ComponentType<SubTypeTextFieldProps>> = {
+const SUB_PANEL_COMPONENTS: Record<
+  SubPanelType,
+  React.ComponentType<SubTypeTextFieldProps>
+> = {
   orders: OrdersSubPanelContentMolecule,
   switch: SwitchSubPanelContentMolecule,
   select: SelectSubPanelContentMolecule,
 };
 
-export function SubPanelContentMolecule({ props }: SubPanelContentMoleculeProps) {
+export function SubPanelContentMolecule({
+  props,
+}: SubPanelContentMoleculeProps) {
   const SubPanelComponent = SUB_PANEL_COMPONENTS[props.subType];
 
-  return <SubPanelComponent value={props.value} onValueChange={props.onValueChange} />;
+  return (
+    <SubPanelComponent
+      value={props.value}
+      onValueChange={props.onValueChange}
+    />
+  );
 }

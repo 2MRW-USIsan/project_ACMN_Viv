@@ -6,7 +6,7 @@ import {
   SubPanelType,
   SubPanelItem,
 } from "@/components/molecules/SubPanelSelectorMolecule";
-import { SUB_PANEL_CONTENT_FIELD_KEYS } from "@/types/subPanel";
+import { SelectItem, SUB_PANEL_CONTENT_FIELD_KEYS } from "@/types/subPanel";
 
 const ROUTE_LIST = [
   { label: "Configurations", href: "/configurations" },
@@ -85,7 +85,7 @@ export function useConfigurationsMock() {
               expanded: false,
               ordersText: "",
               switchText: "",
-              selectText: "",
+              selectItems: [],
             },
           ];
         }
@@ -177,7 +177,9 @@ export function useConfigurationsMock() {
     subPanelId: string,
     value: string,
   ) => {
-    const contentFieldKey = SUB_PANEL_CONTENT_FIELD_KEYS[subType];
+    const contentFieldKey =
+      subType === "select" ? undefined : SUB_PANEL_CONTENT_FIELD_KEYS[subType];
+    if (!contentFieldKey) return;
 
     setPanelList((prev) =>
       prev.map((panel) => {
@@ -243,7 +245,7 @@ export function useConfigurationsMock() {
           expanded: false,
           ordersText: "",
           switchText: "",
-          selectText: "",
+          selectItems: [],
         };
 
         return {
@@ -251,6 +253,147 @@ export function useConfigurationsMock() {
           subPanels: {
             ...panel.subPanels,
             [subType]: [...(panel.subPanels[subType] ?? []), nextSubPanel],
+          },
+        };
+      }),
+    );
+  };
+
+  const handleSelectItemAdd = (
+    panelId: string,
+    subType: SubPanelType,
+    subPanelId: string,
+  ) => {
+    if (subType !== "select") return;
+
+    const nextSelectItem: SelectItem = {
+      id: crypto.randomUUID(),
+      label: "",
+      prompt: "",
+    };
+
+    setPanelList((prev) =>
+      prev.map((panel) => {
+        if (panel.id !== panelId) return panel;
+        const subPanelList = panel.subPanels[subType];
+        if (!subPanelList) return panel;
+
+        return {
+          ...panel,
+          subPanels: {
+            ...panel.subPanels,
+            [subType]: subPanelList.map((subPanel) =>
+              subPanel.id === subPanelId
+                ? {
+                    ...subPanel,
+                    selectItems: [...(subPanel.selectItems ?? []), nextSelectItem],
+                  }
+                : subPanel,
+            ),
+          },
+        };
+      }),
+    );
+  };
+
+  const handleSelectItemDelete = (
+    panelId: string,
+    subType: SubPanelType,
+    subPanelId: string,
+    itemId: string,
+  ) => {
+    if (subType !== "select") return;
+
+    setPanelList((prev) =>
+      prev.map((panel) => {
+        if (panel.id !== panelId) return panel;
+        const subPanelList = panel.subPanels[subType];
+        if (!subPanelList) return panel;
+
+        return {
+          ...panel,
+          subPanels: {
+            ...panel.subPanels,
+            [subType]: subPanelList.map((subPanel) =>
+              subPanel.id === subPanelId
+                ? {
+                    ...subPanel,
+                    selectItems: (subPanel.selectItems ?? []).filter(
+                      (item) => item.id !== itemId,
+                    ),
+                  }
+                : subPanel,
+            ),
+          },
+        };
+      }),
+    );
+  };
+
+  const handleSelectItemLabelChange = (
+    panelId: string,
+    subType: SubPanelType,
+    subPanelId: string,
+    itemId: string,
+    value: string,
+  ) => {
+    if (subType !== "select") return;
+
+    setPanelList((prev) =>
+      prev.map((panel) => {
+        if (panel.id !== panelId) return panel;
+        const subPanelList = panel.subPanels[subType];
+        if (!subPanelList) return panel;
+
+        return {
+          ...panel,
+          subPanels: {
+            ...panel.subPanels,
+            [subType]: subPanelList.map((subPanel) =>
+              subPanel.id === subPanelId
+                ? {
+                    ...subPanel,
+                    selectItems: (subPanel.selectItems ?? []).map((item) =>
+                      item.id === itemId ? { ...item, label: value } : item,
+                    ),
+                  }
+                : subPanel,
+            ),
+          },
+        };
+      }),
+    );
+  };
+
+  const handleSelectItemPromptChange = (
+    panelId: string,
+    subType: SubPanelType,
+    subPanelId: string,
+    itemId: string,
+    value: string,
+  ) => {
+    if (subType !== "select") return;
+
+    setPanelList((prev) =>
+      prev.map((panel) => {
+        if (panel.id !== panelId) return panel;
+        const subPanelList = panel.subPanels[subType];
+        if (!subPanelList) return panel;
+
+        return {
+          ...panel,
+          subPanels: {
+            ...panel.subPanels,
+            [subType]: subPanelList.map((subPanel) =>
+              subPanel.id === subPanelId
+                ? {
+                    ...subPanel,
+                    selectItems: (subPanel.selectItems ?? []).map((item) =>
+                      item.id === itemId ? { ...item, prompt: value } : item,
+                    ),
+                  }
+                : subPanel,
+            ),
           },
         };
       }),
@@ -278,6 +421,10 @@ export function useConfigurationsMock() {
       todoOnSubPanelContentChange: handleSubPanelContentChange,
       todoOnSubPanelDelete: handleSubPanelDelete,
       todoOnSubPanelAdd: handleSubPanelAdd,
+      todoOnSelectItemAdd: handleSelectItemAdd,
+      todoOnSelectItemDelete: handleSelectItemDelete,
+      todoOnSelectItemLabelChange: handleSelectItemLabelChange,
+      todoOnSelectItemPromptChange: handleSelectItemPromptChange,
     },
   };
 

@@ -1,5 +1,6 @@
 "use client";
 
+import type { ReactElement } from "react";
 import { FlexLayoutAtom } from "@/components/atoms/FlexLayoutAtom";
 import { IndentedBoxAtom } from "@/components/atoms/IndentedBoxAtom";
 import { SelectableChipAtom } from "@/components/atoms/SelectableChipAtom";
@@ -7,7 +8,6 @@ import { OrdersPanelListOrganism } from "@/components/organisms/OrdersPanelListO
 import { SwitchPanelListOrganism } from "@/components/organisms/SwitchPanelListOrganism";
 import { SelectPanelListOrganism } from "@/components/organisms/SelectPanelListOrganism";
 import { SUB_PANEL_TYPES, SubPanelItem, SubPanelType } from "@/types/subPanel";
-
 export type { SubPanelItem, SubPanelType };
 
 interface SubPanelSelectorMoleculeProps {
@@ -44,6 +44,31 @@ interface SubPanelSelectorMoleculeProps {
       subPanelId: string,
     ) => void;
     onAdd: (panelId: string, subType: SubPanelType) => void;
+    onSelectItemAdd: (
+      panelId: string,
+      subType: SubPanelType,
+      subPanelId: string,
+    ) => void;
+    onSelectItemDelete: (
+      panelId: string,
+      subType: SubPanelType,
+      subPanelId: string,
+      itemId: string,
+    ) => void;
+    onSelectItemLabelChange: (
+      panelId: string,
+      subType: SubPanelType,
+      subPanelId: string,
+      itemId: string,
+      value: string,
+    ) => void;
+    onSelectItemPromptChange: (
+      panelId: string,
+      subType: SubPanelType,
+      subPanelId: string,
+      itemId: string,
+      value: string,
+    ) => void;
   };
 }
 
@@ -65,7 +90,8 @@ export function SubPanelSelectorMolecule({
       {SUB_PANEL_TYPES.map((subType) => {
         const subPanelList = props.subPanels[subType];
         if (!subPanelList || subPanelList.length === 0) return null;
-        const subPanelListProps = {
+
+        const commonProps = {
           panelId: props.panelId,
           subPanelList,
           onToggleExpanded: (panelId: string, subPanelId: string) =>
@@ -74,31 +100,91 @@ export function SubPanelSelectorMolecule({
             props.onKeyChange(panelId, subType, subPanelId, value),
           onLabelChange: (panelId: string, subPanelId: string, value: string) =>
             props.onLabelChange(panelId, subType, subPanelId, value),
-          onContentChange: (panelId: string, subPanelId: string, value: string) =>
-            props.onContentChange(panelId, subType, subPanelId, value),
           onDelete: (panelId: string, subPanelId: string) =>
             props.onDelete(panelId, subType, subPanelId),
           onAdd: (panelId: string) => props.onAdd(panelId, subType),
         };
 
-        const renderComponent = () => {
-          switch (subType) {
-            case "orders":
-              return <OrdersPanelListOrganism props={subPanelListProps} />;
-            case "switch":
-              return <SwitchPanelListOrganism props={subPanelListProps} />;
-            case "select":
-              return <SelectPanelListOrganism props={subPanelListProps} />;
-            default:
-              const _exhaustive: never = subType;
-              return _exhaustive;
-          }
-        };
+        const componentMap = {
+          orders: (
+            <OrdersPanelListOrganism
+              props={{
+                ...commonProps,
+                onContentChange: (
+                  panelId: string,
+                  subPanelId: string,
+                  value: string,
+                ) => props.onContentChange(panelId, subType, subPanelId, value),
+              }}
+            />
+          ),
+          switch: (
+            <SwitchPanelListOrganism
+              props={{
+                ...commonProps,
+                onContentChange: (
+                  panelId: string,
+                  subPanelId: string,
+                  value: string,
+                ) => props.onContentChange(panelId, subType, subPanelId, value),
+              }}
+            />
+          ),
+          select: (
+            <SelectPanelListOrganism
+              props={{
+                ...commonProps,
+                onSelectItemAdd: (panelId: string, subPanelId: string) =>
+                  props.onSelectItemAdd(panelId, subType, subPanelId),
+                onSelectItemDelete: (
+                  panelId: string,
+                  subPanelId: string,
+                  itemId: string,
+                ) =>
+                  props.onSelectItemDelete(
+                    panelId,
+                    subType,
+                    subPanelId,
+                    itemId,
+                  ),
+                onSelectItemLabelChange: (
+                  panelId: string,
+                  subPanelId: string,
+                  itemId: string,
+                  value: string,
+                ) =>
+                  props.onSelectItemLabelChange(
+                    panelId,
+                    subType,
+                    subPanelId,
+                    itemId,
+                    value,
+                  ),
+                onSelectItemPromptChange: (
+                  panelId: string,
+                  subPanelId: string,
+                  itemId: string,
+                  value: string,
+                ) =>
+                  props.onSelectItemPromptChange(
+                    panelId,
+                    subType,
+                    subPanelId,
+                    itemId,
+                    value,
+                  ),
+              }}
+            />
+          ),
+        } satisfies Record<SubPanelType, ReactElement>;
 
         return (
-          <IndentedBoxAtom key={subType}>{renderComponent()}</IndentedBoxAtom>
+          <IndentedBoxAtom key={subType}>
+            {componentMap[subType]}
+          </IndentedBoxAtom>
         );
       })}
     </>
   );
 }
+

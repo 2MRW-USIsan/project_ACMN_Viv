@@ -16,7 +16,10 @@ interface SampleListItemMoleculeProps {
 }
 
 export function SampleListItemMolecule({ props }: SampleListItemMoleculeProps) {
-  const titleLabelProps = { text: props.item.title, fontWeight: "bold" as const };
+  const titleLabelProps = {
+    text: props.item.title,
+    fontWeight: "bold" as const,
+  };
   const descriptionLabelProps = {
     text: props.item.description,
     variant: "body2" as const,

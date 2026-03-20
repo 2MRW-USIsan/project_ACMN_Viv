@@ -58,6 +58,31 @@ interface YamlPanelListOrganismProps {
       subPanelId: string,
     ) => void;
     todoOnSubPanelAdd: (panelId: string, subType: SubPanelType) => void;
+    todoOnSelectItemAdd: (
+      panelId: string,
+      subType: SubPanelType,
+      subPanelId: string,
+    ) => void;
+    todoOnSelectItemDelete: (
+      panelId: string,
+      subType: SubPanelType,
+      subPanelId: string,
+      itemId: string,
+    ) => void;
+    todoOnSelectItemLabelChange: (
+      panelId: string,
+      subType: SubPanelType,
+      subPanelId: string,
+      itemId: string,
+      value: string,
+    ) => void;
+    todoOnSelectItemPromptChange: (
+      panelId: string,
+      subType: SubPanelType,
+      subPanelId: string,
+      itemId: string,
+      value: string,
+    ) => void;
   };
 }
 
@@ -75,6 +100,7 @@ export function YamlPanelListOrganism({ props }: YamlPanelListOrganismProps) {
       {props.todoPanelList.map((panel) => {
         const panelItemProps = {
           id: panel.id,
+          itemLabel: "Blocs:",
           panelKey: panel.panelKey,
           panelLabel: panel.panelLabel,
           expanded: panel.expanded,
@@ -93,6 +119,10 @@ export function YamlPanelListOrganism({ props }: YamlPanelListOrganismProps) {
           onContentChange: props.todoOnSubPanelContentChange,
           onDelete: props.todoOnSubPanelDelete,
           onAdd: props.todoOnSubPanelAdd,
+          onSelectItemAdd: props.todoOnSelectItemAdd,
+          onSelectItemDelete: props.todoOnSelectItemDelete,
+          onSelectItemLabelChange: props.todoOnSelectItemLabelChange,
+          onSelectItemPromptChange: props.todoOnSelectItemPromptChange,
         };
         return (
           <PanelItemMolecule key={panel.id} props={panelItemProps}>

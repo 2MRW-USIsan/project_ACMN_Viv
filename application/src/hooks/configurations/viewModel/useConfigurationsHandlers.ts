@@ -40,6 +40,31 @@ export interface ConfigurationsHandlers {
     subPanelId: string,
   ) => void;
   todoOnSubPanelAdd: (panelId: string, subType: SubPanelType) => void;
+  todoOnSelectItemAdd: (
+    panelId: string,
+    subType: SubPanelType,
+    subPanelId: string,
+  ) => void;
+  todoOnSelectItemDelete: (
+    panelId: string,
+    subType: SubPanelType,
+    subPanelId: string,
+    itemId: string,
+  ) => void;
+  todoOnSelectItemLabelChange: (
+    panelId: string,
+    subType: SubPanelType,
+    subPanelId: string,
+    itemId: string,
+    value: string,
+  ) => void;
+  todoOnSelectItemPromptChange: (
+    panelId: string,
+    subType: SubPanelType,
+    subPanelId: string,
+    itemId: string,
+    value: string,
+  ) => void;
 }
 
 export function useConfigurationsHandlers(_contexts: ConfigurationsContexts) {
@@ -82,6 +107,31 @@ export function useConfigurationsHandlers(_contexts: ConfigurationsContexts) {
     _subPanelId: string,
   ) => {};
   const todoOnSubPanelAdd = (_panelId: string, _subType: SubPanelType) => {};
+  const todoOnSelectItemAdd = (
+    _panelId: string,
+    _subType: SubPanelType,
+    _subPanelId: string,
+  ) => {};
+  const todoOnSelectItemDelete = (
+    _panelId: string,
+    _subType: SubPanelType,
+    _subPanelId: string,
+    _itemId: string,
+  ) => {};
+  const todoOnSelectItemLabelChange = (
+    _panelId: string,
+    _subType: SubPanelType,
+    _subPanelId: string,
+    _itemId: string,
+    _value: string,
+  ) => {};
+  const todoOnSelectItemPromptChange = (
+    _panelId: string,
+    _subType: SubPanelType,
+    _subPanelId: string,
+    _itemId: string,
+    _value: string,
+  ) => {};
 
   const handlers: ConfigurationsHandlers = {
     todoDrawerOnToggle,
@@ -97,6 +147,10 @@ export function useConfigurationsHandlers(_contexts: ConfigurationsContexts) {
     todoOnSubPanelContentChange,
     todoOnSubPanelDelete,
     todoOnSubPanelAdd,
+    todoOnSelectItemAdd,
+    todoOnSelectItemDelete,
+    todoOnSelectItemLabelChange,
+    todoOnSelectItemPromptChange,
   };
 
   return { handlers };

@@ -5,10 +5,9 @@ import { DividerAtom } from "@/components/atoms/DividerAtom";
 import { LabelAtom } from "@/components/atoms/LabelAtom";
 import { ListAtom } from "@/components/atoms/ListAtom";
 import { PanelItemMolecule } from "@/components/molecules/PanelItemMolecule";
-import { SubPanelContentMolecule } from "@/components/molecules/SubPanelContentMolecule";
-import { SUB_PANEL_CONTENT_FIELD_KEYS, SubPanelItem } from "@/types/subPanel";
+import { SelectSubPanelContentMolecule } from "@/components/molecules/SelectSubPanelContentMolecule";
+import { SubPanelItem } from "@/types/subPanel";
 
-const SUB_TYPE = "select" as const;
 const LABEL = "Select Groups:";
 
 interface SelectPanelListOrganismProps {
@@ -18,14 +17,32 @@ interface SelectPanelListOrganismProps {
     onToggleExpanded: (panelId: string, subPanelId: string) => void;
     onKeyChange: (panelId: string, subPanelId: string, value: string) => void;
     onLabelChange: (panelId: string, subPanelId: string, value: string) => void;
-    onContentChange: (panelId: string, subPanelId: string, value: string) => void;
     onDelete: (panelId: string, subPanelId: string) => void;
     onAdd: (panelId: string) => void;
+    onSelectItemAdd: (panelId: string, subPanelId: string) => void;
+    onSelectItemDelete: (
+      panelId: string,
+      subPanelId: string,
+      itemId: string,
+    ) => void;
+    onSelectItemLabelChange: (
+      panelId: string,
+      subPanelId: string,
+      itemId: string,
+      value: string,
+    ) => void;
+    onSelectItemPromptChange: (
+      panelId: string,
+      subPanelId: string,
+      itemId: string,
+      value: string,
+    ) => void;
   };
 }
 
-export function SelectPanelListOrganism({ props }: SelectPanelListOrganismProps) {
-  const contentFieldKey = SUB_PANEL_CONTENT_FIELD_KEYS[SUB_TYPE];
+export function SelectPanelListOrganism({
+  props,
+}: SelectPanelListOrganismProps) {
   const headingLabelProps = { text: LABEL };
   const addButtonProps = {
     onAdd: () => props.onAdd(props.panelId),
@@ -39,6 +56,7 @@ export function SelectPanelListOrganism({ props }: SelectPanelListOrganismProps)
       {props.subPanelList.map((subPanel) => {
         const panelItemProps = {
           id: subPanel.id,
+          itemLabel: "Group:",
           panelKey: subPanel.panelKey,
           panelLabel: subPanel.panelLabel,
           expanded: subPanel.expanded,
@@ -50,14 +68,28 @@ export function SelectPanelListOrganism({ props }: SelectPanelListOrganismProps)
           onDelete: () => props.onDelete(props.panelId, subPanel.id),
         };
         const subPanelContentProps = {
-          subType: SUB_TYPE,
-          value: subPanel[contentFieldKey],
-          onValueChange: (value: string) =>
-            props.onContentChange(props.panelId, subPanel.id, value),
+          selectItems: subPanel.selectItems ?? [],
+          onAddItem: () => props.onSelectItemAdd(props.panelId, subPanel.id),
+          onDeleteItem: (itemId: string) =>
+            props.onSelectItemDelete(props.panelId, subPanel.id, itemId),
+          onLabelChange: (itemId: string, value: string) =>
+            props.onSelectItemLabelChange(
+              props.panelId,
+              subPanel.id,
+              itemId,
+              value,
+            ),
+          onPromptChange: (itemId: string, value: string) =>
+            props.onSelectItemPromptChange(
+              props.panelId,
+              subPanel.id,
+              itemId,
+              value,
+            ),
         };
         return (
           <PanelItemMolecule key={subPanel.id} props={panelItemProps}>
-            <SubPanelContentMolecule props={subPanelContentProps} />
+            <SelectSubPanelContentMolecule props={subPanelContentProps} />
           </PanelItemMolecule>
         );
       })}

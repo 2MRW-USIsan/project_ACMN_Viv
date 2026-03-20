@@ -1,7 +1,10 @@
 "use client";
 
 import { ConfigurationsContexts } from "@/hooks/configurations/state/useConfigurationsContext";
-import { SubPanelType, SubPanelItem } from "@/components/molecules/SubPanelSelectorMolecule";
+import {
+  SubPanelType,
+  SubPanelItem,
+} from "@/components/molecules/SubPanelSelectorMolecule";
 
 export interface ConfigurationsProperties {
   todoTitle: string;
