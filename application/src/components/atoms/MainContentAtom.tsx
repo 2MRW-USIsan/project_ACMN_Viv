@@ -1,6 +1,6 @@
 "use client";
 
-import { Box } from "@mui/material";
+import { Box, Toolbar } from "@mui/material";
 
 interface MainContentAtomProps {
   children?: React.ReactNode;
@@ -9,6 +9,7 @@ interface MainContentAtomProps {
 export function MainContentAtom({ children }: MainContentAtomProps) {
   return (
     <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+      <Toolbar />
       {children}
     </Box>
   );
