@@ -3,6 +3,7 @@
 import { ConfigurationsContexts } from "@/hooks/configurations/state/useConfigurationsContext";
 
 export interface ConfigurationsProperties {
+  todoTitle: string;
   todoDrawerOpen: boolean;
   todoRouteList: { label: string; href: string }[];
   todoPanelList: { id: string; expanded: boolean }[];
@@ -10,6 +11,7 @@ export interface ConfigurationsProperties {
 
 export function useConfigurationsProperties(_contexts: ConfigurationsContexts) {
   const properties: ConfigurationsProperties = {
+    todoTitle: "Configurations",
     todoDrawerOpen: false,
     todoRouteList: [
       { label: "Configurations", href: "/configurations" },

@@ -6,6 +6,7 @@ import { useConfigurationsHandlers } from "@/hooks/configurations/viewModel/useC
 
 export interface ConfigurationsViewModel {
   appPage: {
+    todoTitle: string;
     todoDrawerOpen: boolean;
     todoDrawerOnToggle: () => void;
     todoRouteList: { label: string; href: string }[];
@@ -23,6 +24,7 @@ export function useConfigurationsComposer(contexts: ConfigurationsContexts) {
 
   const viewModel: ConfigurationsViewModel = {
     appPage: {
+      todoTitle: properties.todoTitle,
       todoDrawerOpen: properties.todoDrawerOpen,
       todoDrawerOnToggle: handlers.todoDrawerOnToggle,
       todoRouteList: properties.todoRouteList,

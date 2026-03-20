@@ -1,16 +1,16 @@
 "use client";
 
-import { AppBarAtom } from "@/components/atoms/AppBarAtom";
 import { DrawerAtom } from "@/components/atoms/DrawerAtom";
-import { MenuIconButtonAtom } from "@/components/atoms/MenuIconButtonAtom";
 import { FlexLayoutAtom } from "@/components/atoms/FlexLayoutAtom";
 import { ToolbarSpacerAtom } from "@/components/atoms/ToolbarSpacerAtom";
 import { MainContentAtom } from "@/components/atoms/MainContentAtom";
 import { ListAtom } from "@/components/atoms/ListAtom";
+import { AppBarMolecule } from "@/components/molecules/AppBarMolecule";
 import { NavItemMolecule } from "@/components/molecules/NavItemMolecule";
 
 interface AppPageOrganismProps {
   props: {
+    todoTitle: string;
     todoDrawerOpen: boolean;
     todoDrawerOnToggle: () => void;
     todoRouteList: { label: string; href: string }[];
@@ -21,11 +21,7 @@ interface AppPageOrganismProps {
 export function AppPageOrganism({ props, children }: AppPageOrganismProps) {
   return (
     <FlexLayoutAtom>
-      <AppBarAtom>
-        <MenuIconButtonAtom
-          props={{ onClick: props.todoDrawerOnToggle, ariaLabel: "Toggle navigation menu" }}
-        />
-      </AppBarAtom>
+      <AppBarMolecule props={{ title: props.todoTitle, onMenuToggle: props.todoDrawerOnToggle }} />
       <DrawerAtom props={{ open: props.todoDrawerOpen }}>
         <ToolbarSpacerAtom />
         <ListAtom>
