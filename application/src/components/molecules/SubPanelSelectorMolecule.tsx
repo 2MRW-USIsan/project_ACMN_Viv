@@ -51,35 +51,32 @@ export function SubPanelSelectorMolecule({
   return (
     <>
       <FlexLayoutAtom>
-        {SUB_PANEL_TYPES.map((subType) => (
-          <SelectableChipAtom
-            key={subType}
-            props={{
-              label: subType,
-              selected: !!props.subPanels[subType],
-              onClick: () => props.onToggleEnabled(props.panelId, subType),
-            }}
-          />
-        ))}
+        {SUB_PANEL_TYPES.map((subType) => {
+          const chipProps = {
+            label: subType,
+            selected: !!props.subPanels[subType],
+            onClick: () => props.onToggleEnabled(props.panelId, subType),
+          };
+          return <SelectableChipAtom key={subType} props={chipProps} />;
+        })}
       </FlexLayoutAtom>
       {SUB_PANEL_TYPES.map((subType) => {
         const subPanelList = props.subPanels[subType];
         if (!subPanelList || subPanelList.length === 0) return null;
+        const subPanelListProps = {
+          subType,
+          panelId: props.panelId,
+          subPanelList,
+          onToggleExpanded: props.onToggleExpanded,
+          onKeyChange: props.onKeyChange,
+          onLabelChange: props.onLabelChange,
+          onContentChange: props.onContentChange,
+          onDelete: props.onDelete,
+          onAdd: props.onAdd,
+        };
         return (
           <IndentedBoxAtom key={subType}>
-            <SubPanelListOrganism
-              props={{
-                subType,
-                panelId: props.panelId,
-                subPanelList,
-                onToggleExpanded: props.onToggleExpanded,
-                onKeyChange: props.onKeyChange,
-                onLabelChange: props.onLabelChange,
-                onContentChange: props.onContentChange,
-                onDelete: props.onDelete,
-                onAdd: props.onAdd,
-              }}
-            />
+            <SubPanelListOrganism props={subPanelListProps} />
           </IndentedBoxAtom>
         );
       })}

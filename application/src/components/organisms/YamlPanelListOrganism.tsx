@@ -62,45 +62,45 @@ interface YamlPanelListOrganismProps {
 }
 
 export function YamlPanelListOrganism({ props }: YamlPanelListOrganismProps) {
+  const headingLabelProps = { text: "Blocs Items:" };
+  const addButtonProps = {
+    onAdd: props.todoOnPanelAdd,
+    hasItems: props.todoPanelList.length > 0,
+  };
+
   return (
     <ListAtom>
-      <LabelAtom props={{ text: "Blocs Items:" }} />
+      <LabelAtom props={headingLabelProps} />
       <DividerAtom />
-      {props.todoPanelList.map((panel) => (
-        <PanelItemMolecule
-          key={panel.id}
-          props={{
-            id: panel.id,
-            panelKey: panel.panelKey,
-            panelLabel: panel.panelLabel,
-            expanded: panel.expanded,
-            onToggle: props.todoOnPanelToggle,
-            onKeyChange: props.todoOnPanelKeyChange,
-            onLabelChange: props.todoOnPanelLabelChange,
-            onDelete: props.todoOnPanelDelete,
-          }}
-        >
-          <SubPanelSelectorMolecule
-            props={{
-              panelId: panel.id,
-              subPanels: panel.subPanels,
-              onToggleEnabled: props.todoOnSubPanelToggleEnabled,
-              onToggleExpanded: props.todoOnSubPanelToggleExpanded,
-              onKeyChange: props.todoOnSubPanelKeyChange,
-              onLabelChange: props.todoOnSubPanelLabelChange,
-              onContentChange: props.todoOnSubPanelContentChange,
-              onDelete: props.todoOnSubPanelDelete,
-              onAdd: props.todoOnSubPanelAdd,
-            }}
-          />
-        </PanelItemMolecule>
-      ))}
-      <AddPanelButtonAtom
-        props={{
-          onAdd: props.todoOnPanelAdd,
-          hasItems: props.todoPanelList.length > 0,
-        }}
-      />
+      {props.todoPanelList.map((panel) => {
+        const panelItemProps = {
+          id: panel.id,
+          panelKey: panel.panelKey,
+          panelLabel: panel.panelLabel,
+          expanded: panel.expanded,
+          onToggle: props.todoOnPanelToggle,
+          onKeyChange: props.todoOnPanelKeyChange,
+          onLabelChange: props.todoOnPanelLabelChange,
+          onDelete: props.todoOnPanelDelete,
+        };
+        const subPanelSelectorProps = {
+          panelId: panel.id,
+          subPanels: panel.subPanels,
+          onToggleEnabled: props.todoOnSubPanelToggleEnabled,
+          onToggleExpanded: props.todoOnSubPanelToggleExpanded,
+          onKeyChange: props.todoOnSubPanelKeyChange,
+          onLabelChange: props.todoOnSubPanelLabelChange,
+          onContentChange: props.todoOnSubPanelContentChange,
+          onDelete: props.todoOnSubPanelDelete,
+          onAdd: props.todoOnSubPanelAdd,
+        };
+        return (
+          <PanelItemMolecule key={panel.id} props={panelItemProps}>
+            <SubPanelSelectorMolecule props={subPanelSelectorProps} />
+          </PanelItemMolecule>
+        );
+      })}
+      <AddPanelButtonAtom props={addButtonProps} />
     </ListAtom>
   );
 }

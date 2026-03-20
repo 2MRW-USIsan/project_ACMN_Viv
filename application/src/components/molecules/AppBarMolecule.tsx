@@ -12,22 +12,21 @@ interface AppBarMoleculeProps {
 }
 
 export function AppBarMolecule({ props }: AppBarMoleculeProps) {
+  const menuIconButtonProps = {
+    onClick: props.onMenuToggle,
+    ariaLabel: "Toggle navigation menu",
+  };
+  const labelProps = {
+    text: props.title,
+    variant: "h6" as const,
+    color: "inherit",
+    fontWeight: "bold" as const,
+  };
+
   return (
     <AppBarAtom>
-      <MenuIconButtonAtom
-        props={{
-          onClick: props.onMenuToggle,
-          ariaLabel: "Toggle navigation menu",
-        }}
-      />
-      <LabelAtom
-        props={{
-          text: props.title,
-          variant: "h6",
-          color: "inherit",
-          fontWeight: "bold",
-        }}
-      />
+      <MenuIconButtonAtom props={menuIconButtonProps} />
+      <LabelAtom props={labelProps} />
     </AppBarAtom>
   );
 }

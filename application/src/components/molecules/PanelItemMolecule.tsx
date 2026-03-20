@@ -29,32 +29,33 @@ export function PanelItemMolecule({ props, children }: PanelItemMoleculeProps) {
     props.onLabelChange(props.id, value);
   const handleDelete = () => props.onDelete(props.id);
 
+  const labelProps = { text: "Blocs:" };
+  const keyFieldProps = {
+    label: "Key",
+    defaultValue: props.panelKey,
+    onBlur: handleKeyChange,
+  };
+  const labelFieldProps = {
+    label: "Label",
+    defaultValue: props.panelLabel,
+    onBlur: handleLabelChange,
+  };
+  const deleteButtonProps = { onClick: handleDelete };
+  const expandButtonProps = { expanded: props.expanded, onClick: handleToggle };
+  const collapseProps = { in: props.expanded };
+
   return (
     <>
       <ListItemAtom>
         <PanelHeaderLayoutAtom>
-          <LabelAtom props={{ text: "Blocs:" }} />
-          <TextFieldAtom
-            props={{
-              label: "Key",
-              defaultValue: props.panelKey,
-              onBlur: handleKeyChange,
-            }}
-          />
-          <TextFieldAtom
-            props={{
-              label: "Label",
-              defaultValue: props.panelLabel,
-              onBlur: handleLabelChange,
-            }}
-          />
-          <DeleteIconButtonAtom props={{ onClick: handleDelete }} />
-          <ExpandIconButtonAtom
-            props={{ expanded: props.expanded, onClick: handleToggle }}
-          />
+          <LabelAtom props={labelProps} />
+          <TextFieldAtom props={keyFieldProps} />
+          <TextFieldAtom props={labelFieldProps} />
+          <DeleteIconButtonAtom props={deleteButtonProps} />
+          <ExpandIconButtonAtom props={expandButtonProps} />
         </PanelHeaderLayoutAtom>
       </ListItemAtom>
-      <CollapseAtom props={{ in: props.expanded }}>{children}</CollapseAtom>
+      <CollapseAtom props={collapseProps}>{children}</CollapseAtom>
     </>
   );
 }

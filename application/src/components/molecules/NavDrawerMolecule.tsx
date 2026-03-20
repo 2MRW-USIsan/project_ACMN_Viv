@@ -14,8 +14,10 @@ interface NavDrawerMoleculeProps {
 }
 
 export function NavDrawerMolecule({ props }: NavDrawerMoleculeProps) {
+  const drawerProps = { open: props.open, onClose: props.onClose };
+
   return (
-    <DrawerAtom props={{ open: props.open, onClose: props.onClose }}>
+    <DrawerAtom props={drawerProps}>
       <ToolbarSpacerAtom />
       <ListAtom>
         {props.routeList.map((route) => (

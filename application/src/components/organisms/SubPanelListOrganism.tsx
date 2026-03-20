@@ -57,50 +57,49 @@ interface SubPanelListOrganismProps {
 
 export function SubPanelListOrganism({ props }: SubPanelListOrganismProps) {
   const contentFieldKey = SUB_PANEL_CONTENT_FIELD_KEYS[props.subType];
+  const headingLabelProps = { text: SUB_PANEL_LABELS[props.subType] };
+  const addButtonProps = {
+    onAdd: () => props.onAdd(props.panelId, props.subType),
+    hasItems: props.subPanelList.length > 0,
+  };
 
   return (
     <ListAtom>
-      <LabelAtom props={{ text: SUB_PANEL_LABELS[props.subType] }} />
+      <LabelAtom props={headingLabelProps} />
       <DividerAtom />
-      {props.subPanelList.map((subPanel) => (
-        <PanelItemMolecule
-          key={subPanel.id}
-          props={{
-            id: subPanel.id,
-            panelKey: subPanel.panelKey,
-            panelLabel: subPanel.panelLabel,
-            expanded: subPanel.expanded,
-            onToggle: () =>
-              props.onToggleExpanded(props.panelId, props.subType, subPanel.id),
-            onKeyChange: (_id, value) =>
-              props.onKeyChange(props.panelId, props.subType, subPanel.id, value),
-            onLabelChange: (_id, value) =>
-              props.onLabelChange(props.panelId, props.subType, subPanel.id, value),
-            onDelete: () =>
-              props.onDelete(props.panelId, props.subType, subPanel.id),
-          }}
-        >
-          <SubPanelContentMolecule
-            props={{
-              subType: props.subType,
-              value: subPanel[contentFieldKey],
-              onValueChange: (value) =>
-                props.onContentChange(
-                  props.panelId,
-                  props.subType,
-                  subPanel.id,
-                  value,
-                ),
-            }}
-          />
-        </PanelItemMolecule>
-      ))}
-      <AddPanelButtonAtom
-        props={{
-          onAdd: () => props.onAdd(props.panelId, props.subType),
-          hasItems: props.subPanelList.length > 0,
-        }}
-      />
+      {props.subPanelList.map((subPanel) => {
+        const panelItemProps = {
+          id: subPanel.id,
+          panelKey: subPanel.panelKey,
+          panelLabel: subPanel.panelLabel,
+          expanded: subPanel.expanded,
+          onToggle: () =>
+            props.onToggleExpanded(props.panelId, props.subType, subPanel.id),
+          onKeyChange: (_id: string, value: string) =>
+            props.onKeyChange(props.panelId, props.subType, subPanel.id, value),
+          onLabelChange: (_id: string, value: string) =>
+            props.onLabelChange(props.panelId, props.subType, subPanel.id, value),
+          onDelete: () =>
+            props.onDelete(props.panelId, props.subType, subPanel.id),
+        };
+        const subPanelContentProps = {
+          subType: props.subType,
+          value: subPanel[contentFieldKey],
+          onValueChange: (value: string) =>
+            props.onContentChange(
+              props.panelId,
+              props.subType,
+              subPanel.id,
+              value,
+            ),
+        };
+        return (
+          <PanelItemMolecule key={subPanel.id} props={panelItemProps}>
+            <SubPanelContentMolecule props={subPanelContentProps} />
+          </PanelItemMolecule>
+        );
+      })}
+      <AddPanelButtonAtom props={addButtonProps} />
     </ListAtom>
   );
 }

@@ -16,6 +16,20 @@ interface SampleListItemMoleculeProps {
 }
 
 export function SampleListItemMolecule({ props }: SampleListItemMoleculeProps) {
+  const titleLabelProps = { text: props.item.title, fontWeight: "bold" as const };
+  const descriptionLabelProps = {
+    text: props.item.description,
+    variant: "body2" as const,
+    color: "text.secondary",
+  };
+  const deleteButtonProps = {
+    label: "削除",
+    variant: "outlined" as const,
+    color: "error" as const,
+    isLoading: props.isLoading,
+    onClick: () => props.onDelete(props.item.id),
+  };
+
   return (
     <Stack
       direction="row"
@@ -32,25 +46,11 @@ export function SampleListItemMolecule({ props }: SampleListItemMoleculeProps) {
       onClick={() => props.onSelect(props.item)}
     >
       <Stack spacing={0.5} flex={1} mr={1}>
-        <LabelAtom props={{ text: props.item.title, fontWeight: "bold" }} />
-        <LabelAtom
-          props={{
-            text: props.item.description,
-            variant: "body2",
-            color: "text.secondary",
-          }}
-        />
+        <LabelAtom props={titleLabelProps} />
+        <LabelAtom props={descriptionLabelProps} />
       </Stack>
       <span onClick={(e) => e.stopPropagation()}>
-        <ButtonAtom
-          props={{
-            label: "削除",
-            variant: "outlined",
-            color: "error",
-            isLoading: props.isLoading,
-            onClick: () => props.onDelete(props.item.id),
-          }}
-        />
+        <ButtonAtom props={deleteButtonProps} />
       </span>
     </Stack>
   );

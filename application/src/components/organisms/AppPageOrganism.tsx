@@ -16,21 +16,20 @@ interface AppPageOrganismProps {
 }
 
 export function AppPageOrganism({ props, children }: AppPageOrganismProps) {
+  const appBarProps = {
+    title: props.todoTitle,
+    onMenuToggle: props.todoDrawerOnToggle,
+  };
+  const navDrawerProps = {
+    open: props.todoDrawerOpen,
+    onClose: props.todoDrawerOnToggle,
+    routeList: props.todoRouteList,
+  };
+
   return (
     <FlexLayoutAtom>
-      <AppBarMolecule
-        props={{
-          title: props.todoTitle,
-          onMenuToggle: props.todoDrawerOnToggle,
-        }}
-      />
-      <NavDrawerMolecule
-        props={{
-          open: props.todoDrawerOpen,
-          onClose: props.todoDrawerOnToggle,
-          routeList: props.todoRouteList,
-        }}
-      />
+      <AppBarMolecule props={appBarProps} />
+      <NavDrawerMolecule props={navDrawerProps} />
       <MainContentAtom>{children}</MainContentAtom>
     </FlexLayoutAtom>
   );
