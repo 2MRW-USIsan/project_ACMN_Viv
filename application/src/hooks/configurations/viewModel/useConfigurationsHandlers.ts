@@ -51,6 +51,26 @@ export interface ConfigurationsHandlers {
     subPanelId: string,
     itemId: string,
   ) => void;
+  todoOnSelectItemToggle: (
+    panelId: string,
+    subType: SubPanelType,
+    subPanelId: string,
+    itemId: string,
+  ) => void;
+  todoOnSelectItemKeyChange: (
+    panelId: string,
+    subType: SubPanelType,
+    subPanelId: string,
+    itemId: string,
+    value: string,
+  ) => void;
+  todoOnSelectItemPanelLabelChange: (
+    panelId: string,
+    subType: SubPanelType,
+    subPanelId: string,
+    itemId: string,
+    value: string,
+  ) => void;
   todoOnSelectItemLabelChange: (
     panelId: string,
     subType: SubPanelType,
@@ -118,6 +138,26 @@ export function useConfigurationsHandlers(_contexts: ConfigurationsContexts) {
     _subPanelId: string,
     _itemId: string,
   ) => {};
+  const todoOnSelectItemToggle = (
+    _panelId: string,
+    _subType: SubPanelType,
+    _subPanelId: string,
+    _itemId: string,
+  ) => {};
+  const todoOnSelectItemKeyChange = (
+    _panelId: string,
+    _subType: SubPanelType,
+    _subPanelId: string,
+    _itemId: string,
+    _value: string,
+  ) => {};
+  const todoOnSelectItemPanelLabelChange = (
+    _panelId: string,
+    _subType: SubPanelType,
+    _subPanelId: string,
+    _itemId: string,
+    _value: string,
+  ) => {};
   const todoOnSelectItemLabelChange = (
     _panelId: string,
     _subType: SubPanelType,
@@ -149,6 +189,9 @@ export function useConfigurationsHandlers(_contexts: ConfigurationsContexts) {
     todoOnSubPanelAdd,
     todoOnSelectItemAdd,
     todoOnSelectItemDelete,
+    todoOnSelectItemToggle,
+    todoOnSelectItemKeyChange,
+    todoOnSelectItemPanelLabelChange,
     todoOnSelectItemLabelChange,
     todoOnSelectItemPromptChange,
   };

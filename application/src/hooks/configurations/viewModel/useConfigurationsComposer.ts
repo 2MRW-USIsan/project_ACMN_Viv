@@ -74,6 +74,26 @@ export interface ConfigurationsViewModel {
       subPanelId: string,
       itemId: string,
     ) => void;
+    todoOnSelectItemToggle: (
+      panelId: string,
+      subType: SubPanelType,
+      subPanelId: string,
+      itemId: string,
+    ) => void;
+    todoOnSelectItemKeyChange: (
+      panelId: string,
+      subType: SubPanelType,
+      subPanelId: string,
+      itemId: string,
+      value: string,
+    ) => void;
+    todoOnSelectItemPanelLabelChange: (
+      panelId: string,
+      subType: SubPanelType,
+      subPanelId: string,
+      itemId: string,
+      value: string,
+    ) => void;
     todoOnSelectItemLabelChange: (
       panelId: string,
       subType: SubPanelType,
@@ -118,6 +138,9 @@ export function useConfigurationsComposer(contexts: ConfigurationsContexts) {
       todoOnSubPanelAdd: handlers.todoOnSubPanelAdd,
       todoOnSelectItemAdd: handlers.todoOnSelectItemAdd,
       todoOnSelectItemDelete: handlers.todoOnSelectItemDelete,
+      todoOnSelectItemToggle: handlers.todoOnSelectItemToggle,
+      todoOnSelectItemKeyChange: handlers.todoOnSelectItemKeyChange,
+      todoOnSelectItemPanelLabelChange: handlers.todoOnSelectItemPanelLabelChange,
       todoOnSelectItemLabelChange: handlers.todoOnSelectItemLabelChange,
       todoOnSelectItemPromptChange: handlers.todoOnSelectItemPromptChange,
     },

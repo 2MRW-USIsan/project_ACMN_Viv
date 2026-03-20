@@ -25,6 +25,23 @@ interface SelectPanelListOrganismProps {
       subPanelId: string,
       itemId: string,
     ) => void;
+    onSelectItemToggle: (
+      panelId: string,
+      subPanelId: string,
+      itemId: string,
+    ) => void;
+    onSelectItemKeyChange: (
+      panelId: string,
+      subPanelId: string,
+      itemId: string,
+      value: string,
+    ) => void;
+    onSelectItemPanelLabelChange: (
+      panelId: string,
+      subPanelId: string,
+      itemId: string,
+      value: string,
+    ) => void;
     onSelectItemLabelChange: (
       panelId: string,
       subPanelId: string,
@@ -72,6 +89,22 @@ export function SelectPanelListOrganism({
           onAddItem: () => props.onSelectItemAdd(props.panelId, subPanel.id),
           onDeleteItem: (itemId: string) =>
             props.onSelectItemDelete(props.panelId, subPanel.id, itemId),
+          onToggle: (itemId: string) =>
+            props.onSelectItemToggle(props.panelId, subPanel.id, itemId),
+          onKeyChange: (itemId: string, value: string) =>
+            props.onSelectItemKeyChange(
+              props.panelId,
+              subPanel.id,
+              itemId,
+              value,
+            ),
+          onItemLabelChange: (itemId: string, value: string) =>
+            props.onSelectItemPanelLabelChange(
+              props.panelId,
+              subPanel.id,
+              itemId,
+              value,
+            ),
           onLabelChange: (itemId: string, value: string) =>
             props.onSelectItemLabelChange(
               props.panelId,

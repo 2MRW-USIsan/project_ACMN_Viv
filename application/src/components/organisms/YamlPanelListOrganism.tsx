@@ -69,6 +69,26 @@ interface YamlPanelListOrganismProps {
       subPanelId: string,
       itemId: string,
     ) => void;
+    todoOnSelectItemToggle: (
+      panelId: string,
+      subType: SubPanelType,
+      subPanelId: string,
+      itemId: string,
+    ) => void;
+    todoOnSelectItemKeyChange: (
+      panelId: string,
+      subType: SubPanelType,
+      subPanelId: string,
+      itemId: string,
+      value: string,
+    ) => void;
+    todoOnSelectItemPanelLabelChange: (
+      panelId: string,
+      subType: SubPanelType,
+      subPanelId: string,
+      itemId: string,
+      value: string,
+    ) => void;
     todoOnSelectItemLabelChange: (
       panelId: string,
       subType: SubPanelType,
@@ -121,6 +141,9 @@ export function YamlPanelListOrganism({ props }: YamlPanelListOrganismProps) {
           onAdd: props.todoOnSubPanelAdd,
           onSelectItemAdd: props.todoOnSelectItemAdd,
           onSelectItemDelete: props.todoOnSelectItemDelete,
+          onSelectItemToggle: props.todoOnSelectItemToggle,
+          onSelectItemKeyChange: props.todoOnSelectItemKeyChange,
+          onSelectItemPanelLabelChange: props.todoOnSelectItemPanelLabelChange,
           onSelectItemLabelChange: props.todoOnSelectItemLabelChange,
           onSelectItemPromptChange: props.todoOnSelectItemPromptChange,
         };

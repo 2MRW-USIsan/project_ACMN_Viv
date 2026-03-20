@@ -55,6 +55,26 @@ interface SubPanelSelectorMoleculeProps {
       subPanelId: string,
       itemId: string,
     ) => void;
+    onSelectItemToggle: (
+      panelId: string,
+      subType: SubPanelType,
+      subPanelId: string,
+      itemId: string,
+    ) => void;
+    onSelectItemKeyChange: (
+      panelId: string,
+      subType: SubPanelType,
+      subPanelId: string,
+      itemId: string,
+      value: string,
+    ) => void;
+    onSelectItemPanelLabelChange: (
+      panelId: string,
+      subType: SubPanelType,
+      subPanelId: string,
+      itemId: string,
+      value: string,
+    ) => void;
     onSelectItemLabelChange: (
       panelId: string,
       subType: SubPanelType,
@@ -146,6 +166,43 @@ export function SubPanelSelectorMolecule({
                     subType,
                     subPanelId,
                     itemId,
+                  ),
+                onSelectItemToggle: (
+                  panelId: string,
+                  subPanelId: string,
+                  itemId: string,
+                ) =>
+                  props.onSelectItemToggle(
+                    panelId,
+                    subType,
+                    subPanelId,
+                    itemId,
+                  ),
+                onSelectItemKeyChange: (
+                  panelId: string,
+                  subPanelId: string,
+                  itemId: string,
+                  value: string,
+                ) =>
+                  props.onSelectItemKeyChange(
+                    panelId,
+                    subType,
+                    subPanelId,
+                    itemId,
+                    value,
+                  ),
+                onSelectItemPanelLabelChange: (
+                  panelId: string,
+                  subPanelId: string,
+                  itemId: string,
+                  value: string,
+                ) =>
+                  props.onSelectItemPanelLabelChange(
+                    panelId,
+                    subType,
+                    subPanelId,
+                    itemId,
+                    value,
                   ),
                 onSelectItemLabelChange: (
                   panelId: string,

@@ -11,6 +11,9 @@ export type SubPanelContentFieldKey =
 
 export interface SelectItem {
   id: string;
+  panelKey: string;
+  panelLabel: string;
+  expanded: boolean;
   label: string;
   prompt: string;
 }

@@ -268,6 +268,9 @@ export function useConfigurationsMock() {
 
     const nextSelectItem: SelectItem = {
       id: crypto.randomUUID(),
+      panelKey: "",
+      panelLabel: "",
+      expanded: false,
       label: "",
       prompt: "",
     };
@@ -400,6 +403,114 @@ export function useConfigurationsMock() {
     );
   };
 
+  const handleSelectItemToggle = (
+    panelId: string,
+    subType: SubPanelType,
+    subPanelId: string,
+    itemId: string,
+  ) => {
+    if (subType !== "select") return;
+
+    setPanelList((prev) =>
+      prev.map((panel) => {
+        if (panel.id !== panelId) return panel;
+        const subPanelList = panel.subPanels[subType];
+        if (!subPanelList) return panel;
+
+        return {
+          ...panel,
+          subPanels: {
+            ...panel.subPanels,
+            [subType]: subPanelList.map((subPanel) =>
+              subPanel.id === subPanelId
+                ? {
+                    ...subPanel,
+                    selectItems: (subPanel.selectItems ?? []).map((item) =>
+                      item.id === itemId
+                        ? { ...item, expanded: !item.expanded }
+                        : item,
+                    ),
+                  }
+                : subPanel,
+            ),
+          },
+        };
+      }),
+    );
+  };
+
+  const handleSelectItemKeyChange = (
+    panelId: string,
+    subType: SubPanelType,
+    subPanelId: string,
+    itemId: string,
+    value: string,
+  ) => {
+    if (subType !== "select") return;
+
+    setPanelList((prev) =>
+      prev.map((panel) => {
+        if (panel.id !== panelId) return panel;
+        const subPanelList = panel.subPanels[subType];
+        if (!subPanelList) return panel;
+
+        return {
+          ...panel,
+          subPanels: {
+            ...panel.subPanels,
+            [subType]: subPanelList.map((subPanel) =>
+              subPanel.id === subPanelId
+                ? {
+                    ...subPanel,
+                    selectItems: (subPanel.selectItems ?? []).map((item) =>
+                      item.id === itemId ? { ...item, panelKey: value } : item,
+                    ),
+                  }
+                : subPanel,
+            ),
+          },
+        };
+      }),
+    );
+  };
+
+  const handleSelectItemPanelLabelChange = (
+    panelId: string,
+    subType: SubPanelType,
+    subPanelId: string,
+    itemId: string,
+    value: string,
+  ) => {
+    if (subType !== "select") return;
+
+    setPanelList((prev) =>
+      prev.map((panel) => {
+        if (panel.id !== panelId) return panel;
+        const subPanelList = panel.subPanels[subType];
+        if (!subPanelList) return panel;
+
+        return {
+          ...panel,
+          subPanels: {
+            ...panel.subPanels,
+            [subType]: subPanelList.map((subPanel) =>
+              subPanel.id === subPanelId
+                ? {
+                    ...subPanel,
+                    selectItems: (subPanel.selectItems ?? []).map((item) =>
+                      item.id === itemId
+                        ? { ...item, panelLabel: value }
+                        : item,
+                    ),
+                  }
+                : subPanel,
+            ),
+          },
+        };
+      }),
+    );
+  };
+
   const viewModel: ConfigurationsViewModel = {
     appPage: {
       todoTitle: "Configurations",
@@ -423,6 +534,9 @@ export function useConfigurationsMock() {
       todoOnSubPanelAdd: handleSubPanelAdd,
       todoOnSelectItemAdd: handleSelectItemAdd,
       todoOnSelectItemDelete: handleSelectItemDelete,
+      todoOnSelectItemToggle: handleSelectItemToggle,
+      todoOnSelectItemKeyChange: handleSelectItemKeyChange,
+      todoOnSelectItemPanelLabelChange: handleSelectItemPanelLabelChange,
       todoOnSelectItemLabelChange: handleSelectItemLabelChange,
       todoOnSelectItemPromptChange: handleSelectItemPromptChange,
     },
