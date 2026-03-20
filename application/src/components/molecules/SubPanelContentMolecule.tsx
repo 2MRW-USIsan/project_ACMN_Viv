@@ -20,45 +20,36 @@ function OrdersSubPanelContentMolecule({
   value,
   onValueChange,
 }: SubTypeTextFieldProps) {
-  return (
-    <TextFieldAtom
-      props={{
-        label: "Orders Text",
-        defaultValue: value,
-        onBlur: onValueChange,
-      }}
-    />
-  );
+  const textFieldProps = {
+    label: "Orders Text",
+    defaultValue: value,
+    onBlur: onValueChange,
+  };
+  return <TextFieldAtom props={textFieldProps} />;
 }
 
 function SwitchSubPanelContentMolecule({
   value,
   onValueChange,
 }: SubTypeTextFieldProps) {
-  return (
-    <TextFieldAtom
-      props={{
-        label: "Switch Text",
-        defaultValue: value,
-        onBlur: onValueChange,
-      }}
-    />
-  );
+  const textFieldProps = {
+    label: "Switch Text",
+    defaultValue: value,
+    onBlur: onValueChange,
+  };
+  return <TextFieldAtom props={textFieldProps} />;
 }
 
 function SelectSubPanelContentMolecule({
   value,
   onValueChange,
 }: SubTypeTextFieldProps) {
-  return (
-    <TextFieldAtom
-      props={{
-        label: "Select Text",
-        defaultValue: value,
-        onBlur: onValueChange,
-      }}
-    />
-  );
+  const textFieldProps = {
+    label: "Select Text",
+    defaultValue: value,
+    onBlur: onValueChange,
+  };
+  return <TextFieldAtom props={textFieldProps} />;
 }
 
 const SUB_PANEL_COMPONENTS: Record<SubPanelType, React.ComponentType<SubTypeTextFieldProps>> = {

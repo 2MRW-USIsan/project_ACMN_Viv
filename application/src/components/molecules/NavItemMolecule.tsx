@@ -12,10 +12,13 @@ interface NavItemMoleculeProps {
 }
 
 export function NavItemMolecule({ props }: NavItemMoleculeProps) {
+  const navLinkButtonProps = { href: props.href };
+  const listItemTextProps = { primary: props.label };
+
   return (
     <ListItemAtom>
-      <NavLinkButtonAtom props={{ href: props.href }}>
-        <ListItemTextAtom props={{ primary: props.label }} />
+      <NavLinkButtonAtom props={navLinkButtonProps}>
+        <ListItemTextAtom props={listItemTextProps} />
       </NavLinkButtonAtom>
     </ListItemAtom>
   );

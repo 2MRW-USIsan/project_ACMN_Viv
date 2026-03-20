@@ -16,36 +16,37 @@ interface SampleListOrganismProps {
 }
 
 export function SampleListOrganism({ props }: SampleListOrganismProps) {
+  const headingLabelProps = {
+    text: "データリスト",
+    variant: "h6" as const,
+    fontWeight: "bold" as const,
+  };
+  const emptyLabelProps = {
+    text: "データがありません。",
+    variant: "body2" as const,
+    color: "text.secondary",
+  };
+
   return (
     <Stack spacing={1}>
-      <LabelAtom
-        props={{ text: "データリスト", variant: "h6", fontWeight: "bold" }}
-      />
+      <LabelAtom props={headingLabelProps} />
       {props.isLoading && props.items.length === 0 ? (
         <Stack alignItems="center" p={2}>
           <CircularProgress size={24} />
         </Stack>
       ) : props.items.length === 0 ? (
-        <LabelAtom
-          props={{
-            text: "データがありません。",
-            variant: "body2",
-            color: "text.secondary",
-          }}
-        />
+        <LabelAtom props={emptyLabelProps} />
       ) : (
-        props.items.map((item) => (
-          <SampleListItemMolecule
-            key={item.id}
-            props={{
-              item,
-              isSelected: props.selectedItem?.id === item.id,
-              isLoading: props.isLoading,
-              onSelect: props.onSelectItem,
-              onDelete: props.onDeleteItem,
-            }}
-          />
-        ))
+        props.items.map((item) => {
+          const itemProps = {
+            item,
+            isSelected: props.selectedItem?.id === item.id,
+            isLoading: props.isLoading,
+            onSelect: props.onSelectItem,
+            onDelete: props.onDeleteItem,
+          };
+          return <SampleListItemMolecule key={item.id} props={itemProps} />;
+        })
       )}
     </Stack>
   );
