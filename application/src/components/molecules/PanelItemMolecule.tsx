@@ -2,6 +2,7 @@
 
 import { ListItemAtom } from "@/components/atoms/ListItemAtom";
 import { PanelHeaderLayoutAtom } from "@/components/atoms/PanelHeaderLayoutAtom";
+import { LabelAtom } from "@/components/atoms/LabelAtom";
 import { TextFieldAtom } from "@/components/atoms/TextFieldAtom";
 import { DeleteIconButtonAtom } from "@/components/atoms/DeleteIconButtonAtom";
 import { ExpandIconButtonAtom } from "@/components/atoms/ExpandIconButtonAtom";
@@ -32,7 +33,7 @@ export function PanelItemMolecule({ props, children }: PanelItemMoleculeProps) {
     <>
       <ListItemAtom>
         <PanelHeaderLayoutAtom>
-          {/* TODO：ここにラベルテキストを追加してほしい。ラベル情報："Blocs:" */}
+          <LabelAtom props={{ text: "Blocs:" }} />
           <TextFieldAtom
             props={{
               label: "Key",
