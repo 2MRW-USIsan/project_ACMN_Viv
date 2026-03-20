@@ -1,9 +1,9 @@
 "use client";
 
-import { useConfigurationsViewModel } from "@/hooks/configurations/viewModel/useConfigurationsViewModel";
+import { useConfigurationsMock } from "@/hooks/configurations/mock/useConfigurationsMock";
 import { ConfigurationsTemplate } from "@/components/templates/ConfigurationsTemplate";
 
 export default function ConfigurationsPage() {
-  const { viewModel } = useConfigurationsViewModel();
+  const { viewModel } = useConfigurationsMock();
   return <ConfigurationsTemplate props={viewModel} />;
 }
