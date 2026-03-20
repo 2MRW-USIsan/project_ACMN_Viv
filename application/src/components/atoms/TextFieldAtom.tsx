@@ -1,6 +1,6 @@
 "use client";
 
-import { TextField } from "@mui/material";
+import { Box, TextField } from "@mui/material";
 import { useRef, useEffect } from "react";
 
 interface TextFieldAtomProps {
@@ -10,7 +10,6 @@ interface TextFieldAtomProps {
     onBlur: (value: string) => void;
     multiline?: boolean;
     rows?: number;
-    fullWidth?: boolean;
   };
 }
 
@@ -26,14 +25,16 @@ export function TextFieldAtom({ props }: TextFieldAtomProps) {
   };
 
   return (
-    <TextField
-      inputRef={inputRef}
-      label={props.label}
-      defaultValue={props.defaultValue}
-      onBlur={handleBlur}
-      multiline={props.multiline}
-      rows={props.rows}
-      fullWidth={props.fullWidth}
-    />
+    <Box sx={{ flex: 1, minWidth: 0, width: "100%" }}>
+      <TextField
+        inputRef={inputRef}
+        label={props.label}
+        defaultValue={props.defaultValue}
+        onBlur={handleBlur}
+        multiline={props.multiline}
+        rows={props.rows}
+        fullWidth
+      />
+    </Box>
   );
 }

@@ -6,7 +6,9 @@ interface PanelHeaderLayoutAtomProps {
   children?: React.ReactNode;
 }
 
-export function PanelHeaderLayoutAtom({ children }: PanelHeaderLayoutAtomProps) {
+export function PanelHeaderLayoutAtom({
+  children,
+}: PanelHeaderLayoutAtomProps) {
   return (
     <Box
       sx={{

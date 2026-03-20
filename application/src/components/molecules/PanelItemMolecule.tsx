@@ -32,6 +32,7 @@ export function PanelItemMolecule({ props, children }: PanelItemMoleculeProps) {
     <>
       <ListItemAtom>
         <PanelHeaderLayoutAtom>
+          {/* TODO：ここにラベルテキストを追加してほしい。ラベル情報："Blocs:" */}
           <TextFieldAtom
             props={{
               label: "Key",

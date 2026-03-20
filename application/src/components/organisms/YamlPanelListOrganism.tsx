@@ -36,7 +36,9 @@ export function YamlPanelListOrganism({ props }: YamlPanelListOrganismProps) {
             onLabelChange: props.todoOnPanelLabelChange,
             onDelete: props.todoOnPanelDelete,
           }}
-        />
+        >
+          {/* TODO: コンポーネント追加 */}
+        </PanelItemMolecule>
       ))}
       <AddPanelButtonAtom
         props={{

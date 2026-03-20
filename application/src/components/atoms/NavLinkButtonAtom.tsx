@@ -20,7 +20,11 @@ export function NavLinkButtonAtom({ props, children }: NavLinkButtonAtomProps) {
       component={Link}
       href={props.href}
       selected={isActive}
-      sx={isActive ? { "& .MuiListItemText-primary": { fontWeight: "bold" } } : undefined}
+      sx={
+        isActive
+          ? { "& .MuiListItemText-primary": { fontWeight: "bold" } }
+          : undefined
+      }
     >
       {children}
     </ListItemButton>
