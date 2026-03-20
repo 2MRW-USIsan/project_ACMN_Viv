@@ -3,7 +3,9 @@
 import { FlexLayoutAtom } from "@/components/atoms/FlexLayoutAtom";
 import { IndentedBoxAtom } from "@/components/atoms/IndentedBoxAtom";
 import { SelectableChipAtom } from "@/components/atoms/SelectableChipAtom";
-import { SubPanelListOrganism } from "@/components/organisms/SubPanelListOrganism";
+import { OrdersPanelListOrganism } from "@/components/organisms/OrdersPanelListOrganism";
+import { SwitchPanelListOrganism } from "@/components/organisms/SwitchPanelListOrganism";
+import { SelectPanelListOrganism } from "@/components/organisms/SelectPanelListOrganism";
 import { SUB_PANEL_TYPES, SubPanelItem, SubPanelType } from "@/types/subPanel";
 
 export type { SubPanelItem, SubPanelType };
@@ -64,20 +66,37 @@ export function SubPanelSelectorMolecule({
         const subPanelList = props.subPanels[subType];
         if (!subPanelList || subPanelList.length === 0) return null;
         const subPanelListProps = {
-          subType,
           panelId: props.panelId,
           subPanelList,
-          onToggleExpanded: props.onToggleExpanded,
-          onKeyChange: props.onKeyChange,
-          onLabelChange: props.onLabelChange,
-          onContentChange: props.onContentChange,
-          onDelete: props.onDelete,
-          onAdd: props.onAdd,
+          onToggleExpanded: (panelId: string, subPanelId: string) =>
+            props.onToggleExpanded(panelId, subType, subPanelId),
+          onKeyChange: (panelId: string, subPanelId: string, value: string) =>
+            props.onKeyChange(panelId, subType, subPanelId, value),
+          onLabelChange: (panelId: string, subPanelId: string, value: string) =>
+            props.onLabelChange(panelId, subType, subPanelId, value),
+          onContentChange: (panelId: string, subPanelId: string, value: string) =>
+            props.onContentChange(panelId, subType, subPanelId, value),
+          onDelete: (panelId: string, subPanelId: string) =>
+            props.onDelete(panelId, subType, subPanelId),
+          onAdd: (panelId: string) => props.onAdd(panelId, subType),
         };
+
+        const renderComponent = () => {
+          switch (subType) {
+            case "orders":
+              return <OrdersPanelListOrganism props={subPanelListProps} />;
+            case "switch":
+              return <SwitchPanelListOrganism props={subPanelListProps} />;
+            case "select":
+              return <SelectPanelListOrganism props={subPanelListProps} />;
+            default:
+              const _exhaustive: never = subType;
+              return _exhaustive;
+          }
+        };
+
         return (
-          <IndentedBoxAtom key={subType}>
-            <SubPanelListOrganism props={subPanelListProps} />
-          </IndentedBoxAtom>
+          <IndentedBoxAtom key={subType}>{renderComponent()}</IndentedBoxAtom>
         );
       })}
     </>
