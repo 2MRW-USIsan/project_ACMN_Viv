@@ -140,6 +140,7 @@ export function LabeledInputMolecule({ props }: LabeledInputMoleculeProps) {
 ### atoms
 
 - コンポーネントの**最小単位**。原則として MUI コンポーネントのラッパーとして実装する。
+- **MUI コンポーネントは必ず Atoms 層にカプセル化する。** template・organisms・molecules 層から MUI を直接 import してはならない。スタイリングや子要素配置など複雑な指定が必要な MUI コンポーネントは、ラッパー Atom として `/components/atoms/` に配置する。
 - 例外①：MUI コンポーネント単体で完結する**UI内部状態**（例：開閉状態、ホバー状態など）を持ってもよい。
 - 例外②：テキストフィールドなど、ViewModel のハンドラをそのまま利用するとパフォーマンスに影響が出る場合は、**DOM操作による制御**を許可する。ただし、`useRef` や `useEffect` を適切に用いて疎結合を保ち、外部インターフェースには影響を与えないこと。
 
@@ -216,13 +217,13 @@ export function CanvasAtom({ props }: CanvasAtomProps) {
 
 ## 階層サマリー
 
-| 階層 | 粒度 | 状態管理 | 配置 |
-|------|------|----------|------|
-| pages | ページ単位 | ViewModelフックを呼び出す | `/app/**/page.tsx` |
-| template | ページレイアウト単位 | 持たない | `/components/templates/` |
-| organisms | 機能単位 | 持たない | `/components/organisms/` |
-| molecules | 部品単位（複数atoms） | 持たない | `/components/molecules/` |
-| atoms | 最小単位（MUIラッパー） | 例外①UI内部状態、例外②パフォーマンス目的のDOM操作（useRef/useEffect必須） | `/components/atoms/` |
+| 階層 | 粒度 | 状態管理 | MUI import | 配置 |
+|------|------|----------|------------|------|
+| pages | ページ単位 | ViewModelフックを呼び出す | 禁止 | `/app/**/page.tsx` |
+| template | ページレイアウト単位 | 持たない | 禁止 | `/components/templates/` |
+| organisms | 機能単位 | 持たない | 禁止 | `/components/organisms/` |
+| molecules | 部品単位（複数atoms） | 持たない | 禁止 | `/components/molecules/` |
+| atoms | 最小単位（MUIラッパー） | 例外①UI内部状態、例外②パフォーマンス目的のDOM操作（useRef/useEffect必須） | 許可（ここでカプセル化） | `/components/atoms/` |
 
 関連ドキュメント: [`BASIC_RULE.md`](./BASIC_RULE.md)・[`VIEWMODEL_RULE.md`](./HOOKS_RULE/VIEWMODEL_RULE.md)・[`GUIDELINES.md`](../architecture/GUIDELINES.md)・[`ARCHITECTURE.md`](../architecture/ARCHITECTURE.md)  
 → [README.md](../../README.md) に戻る
