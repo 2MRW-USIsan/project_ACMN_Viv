@@ -8,13 +8,14 @@ import { NavItemMolecule } from "@/components/molecules/NavItemMolecule";
 interface NavDrawerMoleculeProps {
   props: {
     open: boolean;
+    onClose: () => void;
     routeList: { label: string; href: string }[];
   };
 }
 
 export function NavDrawerMolecule({ props }: NavDrawerMoleculeProps) {
   return (
-    <DrawerAtom props={{ open: props.open }}>
+    <DrawerAtom props={{ open: props.open, onClose: props.onClose }}>
       <ToolbarSpacerAtom />
       <ListAtom>
         {props.routeList.map((route) => (

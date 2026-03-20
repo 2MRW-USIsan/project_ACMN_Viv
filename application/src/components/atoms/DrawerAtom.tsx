@@ -7,6 +7,7 @@ const DRAWER_WIDTH = 240;
 interface DrawerAtomProps {
   props: {
     open: boolean;
+    onClose: () => void;
   };
   children?: React.ReactNode;
 }
@@ -14,11 +15,10 @@ interface DrawerAtomProps {
 export function DrawerAtom({ props, children }: DrawerAtomProps) {
   return (
     <Drawer
-      variant="persistent"
+      variant="temporary"
       open={props.open}
+      onClose={props.onClose}
       sx={{
-        width: DRAWER_WIDTH,
-        flexShrink: 0,
         "& .MuiDrawer-paper": { width: DRAWER_WIDTH, boxSizing: "border-box" },
       }}
     >

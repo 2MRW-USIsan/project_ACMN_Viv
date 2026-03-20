@@ -19,7 +19,7 @@ export function AppPageOrganism({ props, children }: AppPageOrganismProps) {
   return (
     <FlexLayoutAtom>
       <AppBarMolecule props={{ title: props.todoTitle, onMenuToggle: props.todoDrawerOnToggle }} />
-      <NavDrawerMolecule props={{ open: props.todoDrawerOpen, routeList: props.todoRouteList }} />
+      <NavDrawerMolecule props={{ open: props.todoDrawerOpen, onClose: props.todoDrawerOnToggle, routeList: props.todoRouteList }} />
       <MainContentAtom>{children}</MainContentAtom>
     </FlexLayoutAtom>
   );
