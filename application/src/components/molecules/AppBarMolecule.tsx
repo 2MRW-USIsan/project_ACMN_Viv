@@ -15,9 +15,19 @@ export function AppBarMolecule({ props }: AppBarMoleculeProps) {
   return (
     <AppBarAtom>
       <MenuIconButtonAtom
-        props={{ onClick: props.onMenuToggle, ariaLabel: "Toggle navigation menu" }}
+        props={{
+          onClick: props.onMenuToggle,
+          ariaLabel: "Toggle navigation menu",
+        }}
       />
-      <LabelAtom props={{ text: props.title, variant: "h6", color: "inherit", fontWeight: "bold" }} />
+      <LabelAtom
+        props={{
+          text: props.title,
+          variant: "h6",
+          color: "inherit",
+          fontWeight: "bold",
+        }}
+      />
     </AppBarAtom>
   );
 }

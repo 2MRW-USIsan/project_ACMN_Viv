@@ -6,6 +6,8 @@ interface PostingClerkTemplateProps {
   props: PostingClerkViewModel;
 }
 
-export function PostingClerkTemplate({ props: _props }: PostingClerkTemplateProps) {
+export function PostingClerkTemplate({
+  props: _props,
+}: PostingClerkTemplateProps) {
   return <></>;
 }

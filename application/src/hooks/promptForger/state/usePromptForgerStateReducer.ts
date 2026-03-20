@@ -1,7 +1,10 @@
 "use client";
 
 import { useReducer, useEffect } from "react";
-import { PromptForgerFetchItem, PromptForgerRequest } from "@/hooks/promptForger/state/usePromptForgerService";
+import {
+  PromptForgerFetchItem,
+  PromptForgerRequest,
+} from "@/hooks/promptForger/state/usePromptForgerService";
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface PromptForgerReducerState {

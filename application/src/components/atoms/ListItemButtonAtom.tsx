@@ -9,6 +9,9 @@ interface ListItemButtonAtomProps {
   children?: React.ReactNode;
 }
 
-export function ListItemButtonAtom({ props, children }: ListItemButtonAtomProps) {
+export function ListItemButtonAtom({
+  props,
+  children,
+}: ListItemButtonAtomProps) {
   return <ListItemButton onClick={props.onClick}>{children}</ListItemButton>;
 }

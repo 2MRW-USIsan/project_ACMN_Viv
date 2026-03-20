@@ -1,7 +1,10 @@
 "use client";
 
 import { useSampleService } from "@/hooks/sample/state/useSampleService";
-import { useSampleStateReducer, SampleContexts } from "@/hooks/sample/state/useSampleStateReducer";
+import {
+  useSampleStateReducer,
+  SampleContexts,
+} from "@/hooks/sample/state/useSampleStateReducer";
 
 export type { SampleContexts };
 

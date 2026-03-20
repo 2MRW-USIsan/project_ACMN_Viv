@@ -18,11 +18,18 @@ export function YamlPanelListOrganism({ props }: YamlPanelListOrganismProps) {
       {props.todoPanelList.map((panel) => (
         <PanelItemMolecule
           key={panel.id}
-          props={{ id: panel.id, expanded: panel.expanded, onToggle: props.todoOnPanelToggle }}
+          props={{
+            id: panel.id,
+            expanded: panel.expanded,
+            onToggle: props.todoOnPanelToggle,
+          }}
         />
       ))}
       <AddPanelButtonAtom
-        props={{ onAdd: props.todoOnPanelAdd, hasItems: props.todoPanelList.length > 0 }}
+        props={{
+          onAdd: props.todoOnPanelAdd,
+          hasItems: props.todoPanelList.length > 0,
+        }}
       />
     </ListAtom>
   );

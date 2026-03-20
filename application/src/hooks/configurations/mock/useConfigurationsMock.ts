@@ -13,15 +13,17 @@ const ROUTE_LIST = [
 
 export function useConfigurationsMock() {
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const [panelList, setPanelList] = useState<{ id: string; expanded: boolean }[]>([]);
+  const [panelList, setPanelList] = useState<
+    { id: string; expanded: boolean }[]
+  >([]);
 
   const handleDrawerToggle = () => setDrawerOpen((prev) => !prev);
 
   const handlePanelToggle = (id: string) => {
     setPanelList((prev) =>
       prev.map((panel) =>
-        panel.id === id ? { ...panel, expanded: !panel.expanded } : panel
-      )
+        panel.id === id ? { ...panel, expanded: !panel.expanded } : panel,
+      ),
     );
   };
 
