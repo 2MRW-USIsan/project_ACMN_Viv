@@ -14,7 +14,7 @@ const ROUTE_LIST = [
 export function useConfigurationsMock() {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [panelList, setPanelList] = useState<
-    { id: string; expanded: boolean }[]
+    { id: string; panelKey: string; panelLabel: string; expanded: boolean }[]
   >([]);
 
   const handleDrawerToggle = () => setDrawerOpen((prev) => !prev);
@@ -27,9 +27,32 @@ export function useConfigurationsMock() {
     );
   };
 
+  const handlePanelKeyChange = (id: string, value: string) => {
+    setPanelList((prev) =>
+      prev.map((panel) =>
+        panel.id === id ? { ...panel, panelKey: value } : panel,
+      ),
+    );
+  };
+
+  const handlePanelLabelChange = (id: string, value: string) => {
+    setPanelList((prev) =>
+      prev.map((panel) =>
+        panel.id === id ? { ...panel, panelLabel: value } : panel,
+      ),
+    );
+  };
+
+  const handlePanelDelete = (id: string) => {
+    setPanelList((prev) => prev.filter((panel) => panel.id !== id));
+  };
+
   const handlePanelAdd = () => {
     const id = crypto.randomUUID();
-    setPanelList((prev) => [...prev, { id, expanded: false }]);
+    setPanelList((prev) => [
+      ...prev,
+      { id, panelKey: "", panelLabel: "", expanded: false },
+    ]);
   };
 
   const viewModel: ConfigurationsViewModel = {
@@ -42,6 +65,9 @@ export function useConfigurationsMock() {
     yamlPanelList: {
       todoPanelList: panelList,
       todoOnPanelToggle: handlePanelToggle,
+      todoOnPanelKeyChange: handlePanelKeyChange,
+      todoOnPanelLabelChange: handlePanelLabelChange,
+      todoOnPanelDelete: handlePanelDelete,
       todoOnPanelAdd: handlePanelAdd,
     },
   };

@@ -12,8 +12,16 @@ export interface ConfigurationsViewModel {
     todoRouteList: { label: string; href: string }[];
   };
   yamlPanelList: {
-    todoPanelList: { id: string; expanded: boolean }[];
+    todoPanelList: {
+      id: string;
+      panelKey: string;
+      panelLabel: string;
+      expanded: boolean;
+    }[];
     todoOnPanelToggle: (id: string) => void;
+    todoOnPanelKeyChange: (id: string, value: string) => void;
+    todoOnPanelLabelChange: (id: string, value: string) => void;
+    todoOnPanelDelete: (id: string) => void;
     todoOnPanelAdd: () => void;
   };
 }
@@ -32,6 +40,9 @@ export function useConfigurationsComposer(contexts: ConfigurationsContexts) {
     yamlPanelList: {
       todoPanelList: properties.todoPanelList,
       todoOnPanelToggle: handlers.todoOnPanelToggle,
+      todoOnPanelKeyChange: handlers.todoOnPanelKeyChange,
+      todoOnPanelLabelChange: handlers.todoOnPanelLabelChange,
+      todoOnPanelDelete: handlers.todoOnPanelDelete,
       todoOnPanelAdd: handlers.todoOnPanelAdd,
     },
   };

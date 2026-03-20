@@ -6,8 +6,16 @@ import { PanelItemMolecule } from "@/components/molecules/PanelItemMolecule";
 
 interface YamlPanelListOrganismProps {
   props: {
-    todoPanelList: { id: string; expanded: boolean }[];
+    todoPanelList: {
+      id: string;
+      panelKey: string;
+      panelLabel: string;
+      expanded: boolean;
+    }[];
     todoOnPanelToggle: (id: string) => void;
+    todoOnPanelKeyChange: (id: string, value: string) => void;
+    todoOnPanelLabelChange: (id: string, value: string) => void;
+    todoOnPanelDelete: (id: string) => void;
     todoOnPanelAdd: () => void;
   };
 }
@@ -20,8 +28,13 @@ export function YamlPanelListOrganism({ props }: YamlPanelListOrganismProps) {
           key={panel.id}
           props={{
             id: panel.id,
+            panelKey: panel.panelKey,
+            panelLabel: panel.panelLabel,
             expanded: panel.expanded,
             onToggle: props.todoOnPanelToggle,
+            onKeyChange: props.todoOnPanelKeyChange,
+            onLabelChange: props.todoOnPanelLabelChange,
+            onDelete: props.todoOnPanelDelete,
           }}
         />
       ))}

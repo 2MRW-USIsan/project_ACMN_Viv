@@ -6,7 +6,12 @@ export interface ConfigurationsProperties {
   todoTitle: string;
   todoDrawerOpen: boolean;
   todoRouteList: { label: string; href: string }[];
-  todoPanelList: { id: string; expanded: boolean }[];
+  todoPanelList: {
+    id: string;
+    panelKey: string;
+    panelLabel: string;
+    expanded: boolean;
+  }[];
 }
 
 export function useConfigurationsProperties(_contexts: ConfigurationsContexts) {
