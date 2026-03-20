@@ -1,14 +1,34 @@
 "use client";
 
 import { ConfigurationsContexts } from "@/hooks/configurations/state/useConfigurationsContext";
+import { SubPanelType, SubPanelItem } from "@/components/molecules/SubPanelSelectorMolecule";
 
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface ConfigurationsProperties {
-  // プロパティの詳細は工程2〜3で追加する
+  todoTitle: string;
+  todoDrawerOpen: boolean;
+  todoRouteList: { label: string; href: string }[];
+  todoPanelList: {
+    id: string;
+    panelKey: string;
+    panelLabel: string;
+    expanded: boolean;
+    subPanels: Partial<Record<SubPanelType, SubPanelItem>>;
+  }[];
 }
 
 export function useConfigurationsProperties(_contexts: ConfigurationsContexts) {
-  const properties: ConfigurationsProperties = {};
+  const properties: ConfigurationsProperties = {
+    todoTitle: "Configurations",
+    todoDrawerOpen: false,
+    todoRouteList: [
+      { label: "Configurations", href: "/configurations" },
+      { label: "Posting Clerk", href: "/posting-clerk" },
+      { label: "Preset Builder", href: "/preset-builder" },
+      { label: "Prompt Forger", href: "/prompt-forger" },
+      { label: "Sample", href: "/sample" },
+    ],
+    todoPanelList: [],
+  };
 
   return { properties };
 }

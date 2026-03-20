@@ -33,7 +33,6 @@ export function SampleEditorOrganism({ props }: SampleEditorOrganismProps) {
           label: "タイトル",
           defaultValue: props.title,
           onBlur: props.onTitleChange,
-          fullWidth: true,
         }}
       />
       <TextFieldAtom
@@ -43,7 +42,6 @@ export function SampleEditorOrganism({ props }: SampleEditorOrganismProps) {
           onBlur: props.onDescriptionChange,
           multiline: true,
           rows: 3,
-          fullWidth: true,
         }}
       />
       <Stack direction="row" spacing={1}>
