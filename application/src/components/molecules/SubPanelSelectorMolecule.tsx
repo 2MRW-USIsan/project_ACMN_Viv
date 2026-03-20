@@ -1,6 +1,6 @@
 "use client";
 
-import { CheckboxAtom } from "@/components/atoms/CheckboxAtom";
+import { SelectableChipAtom } from "@/components/atoms/SelectableChipAtom";
 import { FlexLayoutAtom } from "@/components/atoms/FlexLayoutAtom";
 import { IndentedBoxAtom } from "@/components/atoms/IndentedBoxAtom";
 import { PanelItemMolecule } from "@/components/molecules/PanelItemMolecule";
@@ -37,12 +37,12 @@ export function SubPanelSelectorMolecule({
     <>
       <FlexLayoutAtom>
         {SUB_PANEL_TYPES.map((subType) => (
-          <CheckboxAtom
+          <SelectableChipAtom
             key={subType}
             props={{
               label: subType,
-              checked: !!props.subPanels[subType],
-              onChange: () => props.onToggleEnabled(props.panelId, subType),
+              selected: !!props.subPanels[subType],
+              onClick: () => props.onToggleEnabled(props.panelId, subType),
             }}
           />
         ))}
