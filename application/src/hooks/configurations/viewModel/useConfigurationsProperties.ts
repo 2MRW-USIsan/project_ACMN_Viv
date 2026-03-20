@@ -2,13 +2,24 @@
 
 import { ConfigurationsContexts } from "@/hooks/configurations/state/useConfigurationsContext";
 
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface ConfigurationsProperties {
-  // プロパティの詳細は工程2〜3で追加する
+  todoDrawerOpen: boolean;
+  todoRouteList: { label: string; href: string }[];
+  todoPanelList: { id: string; expanded: boolean }[];
 }
 
 export function useConfigurationsProperties(_contexts: ConfigurationsContexts) {
-  const properties: ConfigurationsProperties = {};
+  const properties: ConfigurationsProperties = {
+    todoDrawerOpen: false,
+    todoRouteList: [
+      { label: "Configurations", href: "/configurations" },
+      { label: "Posting Clerk", href: "/posting-clerk" },
+      { label: "Preset Builder", href: "/preset-builder" },
+      { label: "Prompt Forger", href: "/prompt-forger" },
+      { label: "Sample", href: "/sample" },
+    ],
+    todoPanelList: [],
+  };
 
   return { properties };
 }

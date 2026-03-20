@@ -2,13 +2,22 @@
 
 import { ConfigurationsContexts } from "@/hooks/configurations/state/useConfigurationsContext";
 
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface ConfigurationsHandlers {
-  // ハンドラの詳細は工程2〜3で追加する
+  todoDrawerOnToggle: () => void;
+  todoOnPanelToggle: (id: string) => void;
+  todoOnPanelAdd: () => void;
 }
 
 export function useConfigurationsHandlers(_contexts: ConfigurationsContexts) {
-  const handlers: ConfigurationsHandlers = {};
+  const todoDrawerOnToggle = () => {};
+  const todoOnPanelToggle = (_id: string) => {};
+  const todoOnPanelAdd = () => {};
+
+  const handlers: ConfigurationsHandlers = {
+    todoDrawerOnToggle,
+    todoOnPanelToggle,
+    todoOnPanelAdd,
+  };
 
   return { handlers };
 }
