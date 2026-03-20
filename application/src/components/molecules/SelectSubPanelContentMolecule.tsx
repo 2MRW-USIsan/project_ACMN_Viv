@@ -1,72 +1,77 @@
 "use client";
 
+import { useState } from "react";
 import { AddPanelButtonAtom } from "@/components/atoms/AddPanelButtonAtom";
+import { DeleteIconButtonAtom } from "@/components/atoms/DeleteIconButtonAtom";
 import { DividerAtom } from "@/components/atoms/DividerAtom";
+import { IndentedBoxAtom } from "@/components/atoms/IndentedBoxAtom";
 import { LabelAtom } from "@/components/atoms/LabelAtom";
+import { LabeledSwitchAtom } from "@/components/atoms/LabeledSwitchAtom";
 import { ListAtom } from "@/components/atoms/ListAtom";
-import { PanelItemMolecule } from "@/components/molecules/PanelItemMolecule";
+import { ListItemAtom } from "@/components/atoms/ListItemAtom";
+import { PanelHeaderLayoutAtom } from "@/components/atoms/PanelHeaderLayoutAtom";
 import { TextFieldAtom } from "@/components/atoms/TextFieldAtom";
-import { SelectItemPanel } from "@/types/subPanel";
-
-const LABEL = "Select Items:";
+import { SelectItem } from "@/types/subPanel";
 
 interface SelectSubPanelContentMoleculeProps {
   props: {
-    selectItems: SelectItemPanel[];
-    onToggleExpanded: (itemId: string) => void;
-    onKeyChange: (itemId: string, value: string) => void;
+    selectItems: SelectItem[];
+    onAddItem: () => void;
+    onDeleteItem: (itemId: string) => void;
     onLabelChange: (itemId: string, value: string) => void;
-    onLabelTextChange: (itemId: string, value: string) => void;
     onPromptChange: (itemId: string, value: string) => void;
-    onDelete: (itemId: string) => void;
-    onAdd: () => void;
   };
 }
 
 export function SelectSubPanelContentMolecule({
   props,
 }: SelectSubPanelContentMoleculeProps) {
-  const headingLabelProps = { text: LABEL };
+  const [isShuffled, setIsShuffled] = useState(false);
+  const selectItems = props.selectItems ?? [];
+
+  const shuffleSwitchProps = {
+    label: "Shuffle",
+    checked: isShuffled,
+    onChange: setIsShuffled,
+  };
+  const headingLabelProps = { text: "List Items:" };
   const addButtonProps = {
-    onAdd: props.onAdd,
-    hasItems: props.selectItems.length > 0,
+    onAdd: props.onAddItem,
+    hasItems: selectItems.length > 0,
   };
 
   return (
-    <ListAtom>
-      <LabelAtom props={headingLabelProps} />
-      <DividerAtom />
-      {props.selectItems.map((item) => {
-        const panelItemProps = {
-          id: item.id,
-          panelKey: item.panelKey,
-          panelLabel: item.panelLabel,
-          expanded: item.expanded,
-          onToggle: (_id: string) => props.onToggleExpanded(item.id),
-          onKeyChange: (_id: string, value: string) =>
-            props.onKeyChange(item.id, value),
-          onLabelChange: (_id: string, value: string) =>
-            props.onLabelChange(item.id, value),
-          onDelete: (_id: string) => props.onDelete(item.id),
-        };
-        const labelTextFieldProps = {
-          label: "Label",
-          defaultValue: item.labelText,
-          onBlur: (value: string) => props.onLabelTextChange(item.id, value),
-        };
-        const promptTextFieldProps = {
-          label: "Prompt",
-          defaultValue: item.promptText,
-          onBlur: (value: string) => props.onPromptChange(item.id, value),
-        };
-        return (
-          <PanelItemMolecule key={item.id} props={panelItemProps}>
-            <TextFieldAtom props={labelTextFieldProps} />
-            <TextFieldAtom props={promptTextFieldProps} />
-          </PanelItemMolecule>
-        );
-      })}
-      <AddPanelButtonAtom props={addButtonProps} />
-    </ListAtom>
+    <IndentedBoxAtom>
+      <ListAtom>
+        <LabeledSwitchAtom props={shuffleSwitchProps} />
+        <LabelAtom props={headingLabelProps} />
+        <DividerAtom />
+        {selectItems.map((item) => {
+          const labelFieldProps = {
+            label: "Label",
+            defaultValue: item.label,
+            onBlur: (value: string) => props.onLabelChange(item.id, value),
+          };
+          const promptFieldProps = {
+            label: "Prompt",
+            defaultValue: item.prompt,
+            onBlur: (value: string) => props.onPromptChange(item.id, value),
+          };
+          const deleteButtonProps = {
+            onClick: () => props.onDeleteItem(item.id),
+          };
+          return (
+            <ListItemAtom key={item.id}>
+              <PanelHeaderLayoutAtom>
+                <TextFieldAtom props={labelFieldProps} />
+                <TextFieldAtom props={promptFieldProps} />
+                <DeleteIconButtonAtom props={deleteButtonProps} />
+              </PanelHeaderLayoutAtom>
+            </ListItemAtom>
+          );
+        })}
+        <AddPanelButtonAtom props={addButtonProps} />
+      </ListAtom>
+    </IndentedBoxAtom>
   );
 }

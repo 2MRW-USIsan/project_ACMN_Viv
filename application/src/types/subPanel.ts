@@ -7,15 +7,12 @@ export const SUB_PANEL_CONTENT_FIELD_KEYS = {
 } as const;
 
 export type SubPanelContentFieldKey =
-  (typeof SUB_PANEL_CONTENT_FIELD_KEYS)[Exclude<SubPanelType, "select">];
+  (typeof SUB_PANEL_CONTENT_FIELD_KEYS)[keyof typeof SUB_PANEL_CONTENT_FIELD_KEYS];
 
-export interface SelectItemPanel {
+export interface SelectItem {
   id: string;
-  panelKey: string;
-  panelLabel: string;
-  expanded: boolean;
-  labelText: string;
-  promptText: string;
+  label: string;
+  prompt: string;
 }
 
 export interface SubPanelItem {
@@ -25,5 +22,5 @@ export interface SubPanelItem {
   expanded: boolean;
   ordersText: string;
   switchText: string;
-  selectItems: SelectItemPanel[];
+  selectItems: SelectItem[];
 }

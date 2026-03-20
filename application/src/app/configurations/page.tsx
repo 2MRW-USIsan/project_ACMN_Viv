@@ -5,6 +5,5 @@ import { useConfigurationsMock } from "@/hooks/configurations/mock/useConfigurat
 
 export default function ConfigurationsPage() {
   const { viewModel } = useConfigurationsMock();
-  const { viewModel: viewModelMock } = useConfigurationsMock();
-  return <ConfigurationsTemplate props={viewModelMock} />;
+  return <ConfigurationsTemplate props={viewModel} />;
 }

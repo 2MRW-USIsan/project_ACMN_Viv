@@ -63,41 +63,31 @@ export interface ConfigurationsViewModel {
       subPanelId: string,
     ) => void;
     todoOnSubPanelAdd: (panelId: string, subType: SubPanelType) => void;
-    todoOnSelectItemToggleExpanded: (
+    todoOnSelectItemAdd: (
       panelId: string,
+      subType: SubPanelType,
       subPanelId: string,
-      itemId: string,
     ) => void;
-    todoOnSelectItemKeyChange: (
+    todoOnSelectItemDelete: (
       panelId: string,
+      subType: SubPanelType,
       subPanelId: string,
       itemId: string,
-      value: string,
     ) => void;
     todoOnSelectItemLabelChange: (
       panelId: string,
-      subPanelId: string,
-      itemId: string,
-      value: string,
-    ) => void;
-    todoOnSelectItemLabelTextChange: (
-      panelId: string,
+      subType: SubPanelType,
       subPanelId: string,
       itemId: string,
       value: string,
     ) => void;
     todoOnSelectItemPromptChange: (
       panelId: string,
+      subType: SubPanelType,
       subPanelId: string,
       itemId: string,
       value: string,
     ) => void;
-    todoOnSelectItemDelete: (
-      panelId: string,
-      subPanelId: string,
-      itemId: string,
-    ) => void;
-    todoOnSelectItemAdd: (panelId: string, subPanelId: string) => void;
   };
 }
 
@@ -126,13 +116,10 @@ export function useConfigurationsComposer(contexts: ConfigurationsContexts) {
       todoOnSubPanelContentChange: handlers.todoOnSubPanelContentChange,
       todoOnSubPanelDelete: handlers.todoOnSubPanelDelete,
       todoOnSubPanelAdd: handlers.todoOnSubPanelAdd,
-      todoOnSelectItemToggleExpanded: handlers.todoOnSelectItemToggleExpanded,
-      todoOnSelectItemKeyChange: handlers.todoOnSelectItemKeyChange,
-      todoOnSelectItemLabelChange: handlers.todoOnSelectItemLabelChange,
-      todoOnSelectItemLabelTextChange: handlers.todoOnSelectItemLabelTextChange,
-      todoOnSelectItemPromptChange: handlers.todoOnSelectItemPromptChange,
-      todoOnSelectItemDelete: handlers.todoOnSelectItemDelete,
       todoOnSelectItemAdd: handlers.todoOnSelectItemAdd,
+      todoOnSelectItemDelete: handlers.todoOnSelectItemDelete,
+      todoOnSelectItemLabelChange: handlers.todoOnSelectItemLabelChange,
+      todoOnSelectItemPromptChange: handlers.todoOnSelectItemPromptChange,
     },
   };
 
