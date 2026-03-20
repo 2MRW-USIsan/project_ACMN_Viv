@@ -1,32 +1,47 @@
 "use client";
 
-import { SelectableChipAtom } from "@/components/atoms/SelectableChipAtom";
 import { FlexLayoutAtom } from "@/components/atoms/FlexLayoutAtom";
 import { IndentedBoxAtom } from "@/components/atoms/IndentedBoxAtom";
-import { PanelItemMolecule } from "@/components/molecules/PanelItemMolecule";
+import { SelectableChipAtom } from "@/components/atoms/SelectableChipAtom";
+import { SubPanelListOrganism } from "@/components/organisms/SubPanelListOrganism";
+import { SUB_PANEL_TYPES, SubPanelItem, SubPanelType } from "@/types/subPanel";
 
-const SUB_PANEL_TYPES = ["orders", "switch", "select"] as const;
-export type SubPanelType = (typeof SUB_PANEL_TYPES)[number];
-
-export interface SubPanelItem {
-  id: string;
-  panelKey: string;
-  panelLabel: string;
-  expanded: boolean;
-}
+export type { SubPanelItem, SubPanelType };
 
 interface SubPanelSelectorMoleculeProps {
   props: {
     panelId: string;
-    subPanels: Partial<Record<SubPanelType, SubPanelItem>>;
+    subPanels: Partial<Record<SubPanelType, SubPanelItem[]>>;
     onToggleEnabled: (panelId: string, subType: SubPanelType) => void;
-    onToggleExpanded: (panelId: string, subType: SubPanelType) => void;
-    onKeyChange: (panelId: string, subType: SubPanelType, value: string) => void;
+    onToggleExpanded: (
+      panelId: string,
+      subType: SubPanelType,
+      subPanelId: string,
+    ) => void;
+    onKeyChange: (
+      panelId: string,
+      subType: SubPanelType,
+      subPanelId: string,
+      value: string,
+    ) => void;
     onLabelChange: (
       panelId: string,
       subType: SubPanelType,
+      subPanelId: string,
       value: string,
     ) => void;
+    onContentChange: (
+      panelId: string,
+      subType: SubPanelType,
+      subPanelId: string,
+      value: string,
+    ) => void;
+    onDelete: (
+      panelId: string,
+      subType: SubPanelType,
+      subPanelId: string,
+    ) => void;
+    onAdd: (panelId: string, subType: SubPanelType) => void;
   };
 }
 
@@ -48,24 +63,21 @@ export function SubPanelSelectorMolecule({
         ))}
       </FlexLayoutAtom>
       {SUB_PANEL_TYPES.map((subType) => {
-        const subPanel = props.subPanels[subType];
-        if (!subPanel) return null;
+        const subPanelList = props.subPanels[subType];
+        if (!subPanelList || subPanelList.length === 0) return null;
         return (
           <IndentedBoxAtom key={subType}>
-            <PanelItemMolecule
+            <SubPanelListOrganism
               props={{
-                id: subPanel.id,
-                panelKey: subPanel.panelKey,
-                panelLabel: subPanel.panelLabel,
-                expanded: subPanel.expanded,
-                onToggle: () =>
-                  props.onToggleExpanded(props.panelId, subType),
-                onKeyChange: (_id, value) =>
-                  props.onKeyChange(props.panelId, subType, value),
-                onLabelChange: (_id, value) =>
-                  props.onLabelChange(props.panelId, subType, value),
-                onDelete: () =>
-                  props.onToggleEnabled(props.panelId, subType),
+                subType,
+                panelId: props.panelId,
+                subPanelList,
+                onToggleExpanded: props.onToggleExpanded,
+                onKeyChange: props.onKeyChange,
+                onLabelChange: props.onLabelChange,
+                onContentChange: props.onContentChange,
+                onDelete: props.onDelete,
+                onAdd: props.onAdd,
               }}
             />
           </IndentedBoxAtom>

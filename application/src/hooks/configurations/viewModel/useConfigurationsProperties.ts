@@ -12,7 +12,7 @@ export interface ConfigurationsProperties {
     panelKey: string;
     panelLabel: string;
     expanded: boolean;
-    subPanels: Partial<Record<SubPanelType, SubPanelItem>>;
+    subPanels: Partial<Record<SubPanelType, SubPanelItem[]>>;
   }[];
 }
 

@@ -14,17 +14,32 @@ export interface ConfigurationsHandlers {
   todoOnSubPanelToggleExpanded: (
     panelId: string,
     subType: SubPanelType,
+    subPanelId: string,
   ) => void;
   todoOnSubPanelKeyChange: (
     panelId: string,
     subType: SubPanelType,
+    subPanelId: string,
     value: string,
   ) => void;
   todoOnSubPanelLabelChange: (
     panelId: string,
     subType: SubPanelType,
+    subPanelId: string,
     value: string,
   ) => void;
+  todoOnSubPanelContentChange: (
+    panelId: string,
+    subType: SubPanelType,
+    subPanelId: string,
+    value: string,
+  ) => void;
+  todoOnSubPanelDelete: (
+    panelId: string,
+    subType: SubPanelType,
+    subPanelId: string,
+  ) => void;
+  todoOnSubPanelAdd: (panelId: string, subType: SubPanelType) => void;
 }
 
 export function useConfigurationsHandlers(_contexts: ConfigurationsContexts) {
@@ -41,17 +56,32 @@ export function useConfigurationsHandlers(_contexts: ConfigurationsContexts) {
   const todoOnSubPanelToggleExpanded = (
     _panelId: string,
     _subType: SubPanelType,
+    _subPanelId: string,
   ) => {};
   const todoOnSubPanelKeyChange = (
     _panelId: string,
     _subType: SubPanelType,
+    _subPanelId: string,
     _value: string,
   ) => {};
   const todoOnSubPanelLabelChange = (
     _panelId: string,
     _subType: SubPanelType,
+    _subPanelId: string,
     _value: string,
   ) => {};
+  const todoOnSubPanelContentChange = (
+    _panelId: string,
+    _subType: SubPanelType,
+    _subPanelId: string,
+    _value: string,
+  ) => {};
+  const todoOnSubPanelDelete = (
+    _panelId: string,
+    _subType: SubPanelType,
+    _subPanelId: string,
+  ) => {};
+  const todoOnSubPanelAdd = (_panelId: string, _subType: SubPanelType) => {};
 
   const handlers: ConfigurationsHandlers = {
     todoDrawerOnToggle,
@@ -64,6 +94,9 @@ export function useConfigurationsHandlers(_contexts: ConfigurationsContexts) {
     todoOnSubPanelToggleExpanded,
     todoOnSubPanelKeyChange,
     todoOnSubPanelLabelChange,
+    todoOnSubPanelContentChange,
+    todoOnSubPanelDelete,
+    todoOnSubPanelAdd,
   };
 
   return { handlers };

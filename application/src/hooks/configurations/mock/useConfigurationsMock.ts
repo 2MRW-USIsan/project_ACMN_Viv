@@ -6,6 +6,7 @@ import {
   SubPanelType,
   SubPanelItem,
 } from "@/components/molecules/SubPanelSelectorMolecule";
+import { SUB_PANEL_CONTENT_FIELD_KEYS } from "@/types/subPanel";
 
 const ROUTE_LIST = [
   { label: "Configurations", href: "/configurations" },
@@ -20,7 +21,7 @@ type PanelItem = {
   panelKey: string;
   panelLabel: string;
   expanded: boolean;
-  subPanels: Partial<Record<SubPanelType, SubPanelItem>>;
+  subPanels: Partial<Record<SubPanelType, SubPanelItem[]>>;
 };
 
 export function useConfigurationsMock() {
@@ -76,12 +77,17 @@ export function useConfigurationsMock() {
         if (updated[subType]) {
           delete updated[subType];
         } else {
-          updated[subType] = {
-            id: crypto.randomUUID(),
-            panelKey: "",
-            panelLabel: "",
-            expanded: false,
-          };
+          updated[subType] = [
+            {
+              id: crypto.randomUUID(),
+              panelKey: "",
+              panelLabel: "",
+              expanded: false,
+              ordersText: "",
+              switchText: "",
+              selectText: "",
+            },
+          ];
         }
         return { ...panel, subPanels: updated };
       }),
@@ -91,17 +97,22 @@ export function useConfigurationsMock() {
   const handleSubPanelToggleExpanded = (
     panelId: string,
     subType: SubPanelType,
+    subPanelId: string,
   ) => {
     setPanelList((prev) =>
       prev.map((panel) => {
         if (panel.id !== panelId) return panel;
-        const subPanel = panel.subPanels[subType];
-        if (!subPanel) return panel;
+        const subPanelList = panel.subPanels[subType];
+        if (!subPanelList) return panel;
         return {
           ...panel,
           subPanels: {
             ...panel.subPanels,
-            [subType]: { ...subPanel, expanded: !subPanel.expanded },
+            [subType]: subPanelList.map((subPanel) =>
+              subPanel.id === subPanelId
+                ? { ...subPanel, expanded: !subPanel.expanded }
+                : subPanel,
+            ),
           },
         };
       }),
@@ -111,18 +122,23 @@ export function useConfigurationsMock() {
   const handleSubPanelKeyChange = (
     panelId: string,
     subType: SubPanelType,
+    subPanelId: string,
     value: string,
   ) => {
     setPanelList((prev) =>
       prev.map((panel) => {
         if (panel.id !== panelId) return panel;
-        const subPanel = panel.subPanels[subType];
-        if (!subPanel) return panel;
+        const subPanelList = panel.subPanels[subType];
+        if (!subPanelList) return panel;
         return {
           ...panel,
           subPanels: {
             ...panel.subPanels,
-            [subType]: { ...subPanel, panelKey: value },
+            [subType]: subPanelList.map((subPanel) =>
+              subPanel.id === subPanelId
+                ? { ...subPanel, panelKey: value }
+                : subPanel,
+            ),
           },
         };
       }),
@@ -132,18 +148,109 @@ export function useConfigurationsMock() {
   const handleSubPanelLabelChange = (
     panelId: string,
     subType: SubPanelType,
+    subPanelId: string,
     value: string,
   ) => {
     setPanelList((prev) =>
       prev.map((panel) => {
         if (panel.id !== panelId) return panel;
-        const subPanel = panel.subPanels[subType];
-        if (!subPanel) return panel;
+        const subPanelList = panel.subPanels[subType];
+        if (!subPanelList) return panel;
         return {
           ...panel,
           subPanels: {
             ...panel.subPanels,
-            [subType]: { ...subPanel, panelLabel: value },
+            [subType]: subPanelList.map((subPanel) =>
+              subPanel.id === subPanelId
+                ? { ...subPanel, panelLabel: value }
+                : subPanel,
+            ),
+          },
+        };
+      }),
+    );
+  };
+
+  const handleSubPanelContentChange = (
+    panelId: string,
+    subType: SubPanelType,
+    subPanelId: string,
+    value: string,
+  ) => {
+    const contentFieldKey = SUB_PANEL_CONTENT_FIELD_KEYS[subType];
+
+    setPanelList((prev) =>
+      prev.map((panel) => {
+        if (panel.id !== panelId) return panel;
+        const subPanelList = panel.subPanels[subType];
+        if (!subPanelList) return panel;
+        return {
+          ...panel,
+          subPanels: {
+            ...panel.subPanels,
+            [subType]: subPanelList.map((subPanel) =>
+              subPanel.id === subPanelId
+                ? { ...subPanel, [contentFieldKey]: value }
+                : subPanel,
+            ),
+          },
+        };
+      }),
+    );
+  };
+
+  const handleSubPanelDelete = (
+    panelId: string,
+    subType: SubPanelType,
+    subPanelId: string,
+  ) => {
+    setPanelList((prev) =>
+      prev.map((panel) => {
+        if (panel.id !== panelId) return panel;
+        const subPanelList = panel.subPanels[subType];
+        if (!subPanelList) return panel;
+
+        const nextSubPanelList = subPanelList.filter(
+          (subPanel) => subPanel.id !== subPanelId,
+        );
+
+        if (nextSubPanelList.length === 0) {
+          const nextSubPanels = { ...panel.subPanels };
+          delete nextSubPanels[subType];
+          return { ...panel, subPanels: nextSubPanels };
+        }
+
+        return {
+          ...panel,
+          subPanels: {
+            ...panel.subPanels,
+            [subType]: nextSubPanelList,
+          },
+        };
+      }),
+    );
+  };
+
+  const handleSubPanelAdd = (panelId: string, subType: SubPanelType) => {
+    setPanelList((prev) =>
+      prev.map((panel) => {
+        if (panel.id !== panelId) return panel;
+
+        const nextSubPanel: SubPanelItem = {
+          id: crypto.randomUUID(),
+          panelKey: "",
+          panelLabel: "",
+          expanded: false,
+          ordersText: "",
+          switchText: "",
+          selectText: "",
+        };
+
+        return {
+          ...panel,
+          subPanels: {
+            ...panel.subPanels,
+            [subType]: [...(panel.subPanels[subType] ?? []), nextSubPanel],
           },
         };
       }),
@@ -168,6 +275,9 @@ export function useConfigurationsMock() {
       todoOnSubPanelToggleExpanded: handleSubPanelToggleExpanded,
       todoOnSubPanelKeyChange: handleSubPanelKeyChange,
       todoOnSubPanelLabelChange: handleSubPanelLabelChange,
+      todoOnSubPanelContentChange: handleSubPanelContentChange,
+      todoOnSubPanelDelete: handleSubPanelDelete,
+      todoOnSubPanelAdd: handleSubPanelAdd,
     },
   };
 

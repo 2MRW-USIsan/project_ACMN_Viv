@@ -23,7 +23,7 @@ export interface ConfigurationsViewModel {
       panelKey: string;
       panelLabel: string;
       expanded: boolean;
-      subPanels: Partial<Record<SubPanelType, SubPanelItem>>;
+      subPanels: Partial<Record<SubPanelType, SubPanelItem[]>>;
     }[];
     todoOnPanelToggle: (id: string) => void;
     todoOnPanelKeyChange: (id: string, value: string) => void;
@@ -37,17 +37,32 @@ export interface ConfigurationsViewModel {
     todoOnSubPanelToggleExpanded: (
       panelId: string,
       subType: SubPanelType,
+      subPanelId: string,
     ) => void;
     todoOnSubPanelKeyChange: (
       panelId: string,
       subType: SubPanelType,
+      subPanelId: string,
       value: string,
     ) => void;
     todoOnSubPanelLabelChange: (
       panelId: string,
       subType: SubPanelType,
+      subPanelId: string,
       value: string,
     ) => void;
+    todoOnSubPanelContentChange: (
+      panelId: string,
+      subType: SubPanelType,
+      subPanelId: string,
+      value: string,
+    ) => void;
+    todoOnSubPanelDelete: (
+      panelId: string,
+      subType: SubPanelType,
+      subPanelId: string,
+    ) => void;
+    todoOnSubPanelAdd: (panelId: string, subType: SubPanelType) => void;
   };
 }
 
@@ -73,6 +88,9 @@ export function useConfigurationsComposer(contexts: ConfigurationsContexts) {
       todoOnSubPanelToggleExpanded: handlers.todoOnSubPanelToggleExpanded,
       todoOnSubPanelKeyChange: handlers.todoOnSubPanelKeyChange,
       todoOnSubPanelLabelChange: handlers.todoOnSubPanelLabelChange,
+      todoOnSubPanelContentChange: handlers.todoOnSubPanelContentChange,
+      todoOnSubPanelDelete: handlers.todoOnSubPanelDelete,
+      todoOnSubPanelAdd: handlers.todoOnSubPanelAdd,
     },
   };
 

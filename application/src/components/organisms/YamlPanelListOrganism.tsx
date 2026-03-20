@@ -1,13 +1,15 @@
 "use client";
 
-import { ListAtom } from "@/components/atoms/ListAtom";
 import { AddPanelButtonAtom } from "@/components/atoms/AddPanelButtonAtom";
+import { ListAtom } from "@/components/atoms/ListAtom";
 import { PanelItemMolecule } from "@/components/molecules/PanelItemMolecule";
 import {
+  SubPanelItem,
   SubPanelSelectorMolecule,
   SubPanelType,
-  SubPanelItem,
 } from "@/components/molecules/SubPanelSelectorMolecule";
+import { DividerAtom } from "../atoms/DividerAtom";
+import { LabelAtom } from "../atoms/LabelAtom";
 
 interface YamlPanelListOrganismProps {
   props: {
@@ -16,7 +18,7 @@ interface YamlPanelListOrganismProps {
       panelKey: string;
       panelLabel: string;
       expanded: boolean;
-      subPanels: Partial<Record<SubPanelType, SubPanelItem>>;
+      subPanels: Partial<Record<SubPanelType, SubPanelItem[]>>;
     }[];
     todoOnPanelToggle: (id: string) => void;
     todoOnPanelKeyChange: (id: string, value: string) => void;
@@ -30,23 +32,40 @@ interface YamlPanelListOrganismProps {
     todoOnSubPanelToggleExpanded: (
       panelId: string,
       subType: SubPanelType,
+      subPanelId: string,
     ) => void;
     todoOnSubPanelKeyChange: (
       panelId: string,
       subType: SubPanelType,
+      subPanelId: string,
       value: string,
     ) => void;
     todoOnSubPanelLabelChange: (
       panelId: string,
       subType: SubPanelType,
+      subPanelId: string,
       value: string,
     ) => void;
+    todoOnSubPanelContentChange: (
+      panelId: string,
+      subType: SubPanelType,
+      subPanelId: string,
+      value: string,
+    ) => void;
+    todoOnSubPanelDelete: (
+      panelId: string,
+      subType: SubPanelType,
+      subPanelId: string,
+    ) => void;
+    todoOnSubPanelAdd: (panelId: string, subType: SubPanelType) => void;
   };
 }
 
 export function YamlPanelListOrganism({ props }: YamlPanelListOrganismProps) {
   return (
     <ListAtom>
+      <LabelAtom props={{ text: "Blocs Items:" }} />
+      <DividerAtom />
       {props.todoPanelList.map((panel) => (
         <PanelItemMolecule
           key={panel.id}
@@ -69,6 +88,9 @@ export function YamlPanelListOrganism({ props }: YamlPanelListOrganismProps) {
               onToggleExpanded: props.todoOnSubPanelToggleExpanded,
               onKeyChange: props.todoOnSubPanelKeyChange,
               onLabelChange: props.todoOnSubPanelLabelChange,
+              onContentChange: props.todoOnSubPanelContentChange,
+              onDelete: props.todoOnSubPanelDelete,
+              onAdd: props.todoOnSubPanelAdd,
             }}
           />
         </PanelItemMolecule>
