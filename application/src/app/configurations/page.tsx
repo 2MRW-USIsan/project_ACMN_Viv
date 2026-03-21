@@ -1,6 +1,6 @@
 "use client";
 
-import { ConfigurationsTemplate } from "@/components/templates/ConfigurationsTemplate";
+import { ConfigurationsTemplate } from "@/components/template/ConfigurationsTemplate";
 import { useConfigurationsMock } from "@/hooks/configurations/mock/useConfigurationsMock";
 
 export default function ConfigurationsPage() {

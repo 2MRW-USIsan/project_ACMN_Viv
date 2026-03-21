@@ -18,6 +18,13 @@ export const acmnTheme = createTheme({
   },
   spacing: 6,
   components: {
+    MuiFormControlLabel: {
+      styleOverrides: {
+        root: {
+          margin: 0,
+        },
+      },
+    },
     MuiTextField: {
       defaultProps: {
         size: "small",
@@ -28,6 +35,13 @@ export const acmnTheme = createTheme({
       styleOverrides: {
         root: {
           height: 22,
+        },
+      },
+    },
+    MuiDivider: {
+      styleOverrides: {
+        root: {
+          marginTop: "0.5em",
         },
       },
     },

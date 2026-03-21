@@ -40,7 +40,7 @@ function SwitchSubPanelContentMolecule({
   return <TextFieldAtom props={textFieldProps} />;
 }
 
-function SelectSubPanelContentMolecule({
+function SelectSubPanelTextContentMolecule({
   value,
   onValueChange,
 }: SubTypeTextFieldProps) {
@@ -58,7 +58,7 @@ const SUB_PANEL_COMPONENTS: Record<
 > = {
   orders: OrdersSubPanelContentMolecule,
   switch: SwitchSubPanelContentMolecule,
-  select: SelectSubPanelContentMolecule,
+  select: SelectSubPanelTextContentMolecule,
 };
 
 export function SubPanelContentMolecule({
