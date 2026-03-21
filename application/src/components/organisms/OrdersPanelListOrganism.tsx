@@ -36,6 +36,7 @@ export function OrdersPanelListOrganism({
   const addButtonProps = {
     onAdd: () => props.onAdd(props.panelId),
     hasItems: props.subPanelList.length > 0,
+    label: "Add Group",
   };
 
   return (

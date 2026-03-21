@@ -20,6 +20,7 @@ export function LabeledSwitchAtom({ props }: LabeledSwitchAtomProps) {
         />
       }
       label={props.label}
+      labelPlacement={"start"}
     />
   );
 }
