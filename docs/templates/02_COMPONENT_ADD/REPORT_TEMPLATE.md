@@ -25,11 +25,11 @@
 
 本工程で新規作成したコンポーネントを Atomic Design 階層ごとに列挙する。
 
-#### templates
+#### template
 
 | コンポーネント名 | ファイルパス | 役割 |
 |---|---|---|
-| `{Page}Template` | `components/templates/{Page}Template.tsx` | （説明） |
+| `{Page}Template` | `components/template/{Page}Template.tsx` | （説明） |
 
 #### organisms
 
@@ -163,11 +163,11 @@ export interface {Page}ViewModel {
 
 ### 2. 追加コンポーネント一覧
 
-#### templates
+#### template
 
 | コンポーネント名 | ファイルパス | 役割 |
 |---|---|---|
-| `SampleTemplate` | `components/templates/SampleTemplate.tsx` | ページ全体のレイアウト。一覧とエディタを横並びに配置する |
+| `SampleTemplate` | `components/template/SampleTemplate.tsx` | ページ全体のレイアウト。一覧とエディタを横並びに配置する |
 
 #### organisms
 

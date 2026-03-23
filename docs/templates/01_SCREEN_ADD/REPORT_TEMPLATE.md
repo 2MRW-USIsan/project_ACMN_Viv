@@ -90,7 +90,7 @@ export function use{Page}ViewModel(): {Page}ViewModelReturns {
 ```tsx
 // app/xxx/page.tsx
 import { use{Page}ViewModel } from "@/hooks/xxx/viewModel/use{Page}ViewModel";
-import { {Page}Template } from "@/components/templates/{Page}Template";
+import { {Page}Template } from "@/components/template/{Page}Template";
 
 export default function {Page}Page() {
   const { viewModel } = use{Page}ViewModel();
@@ -202,7 +202,7 @@ export function useSampleViewModel(): SampleViewModelReturns {
 ```tsx
 // app/sample/page.tsx
 import { useSampleViewModel } from "@/hooks/sample/viewModel/useSampleViewModel";
-import { SampleTemplate } from "@/components/templates/SampleTemplate";
+import { SampleTemplate } from "@/components/template/SampleTemplate";
 
 export default function SamplePage() {
   const { viewModel } = useSampleViewModel();
