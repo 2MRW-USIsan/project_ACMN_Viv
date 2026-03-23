@@ -1,5 +1,7 @@
 import { createTheme } from "@mui/material/styles";
 
+const DRAWER_WIDTH = 240;
+
 export const acmnTheme = createTheme({
   palette: {
     primary: {
@@ -29,6 +31,39 @@ export const acmnTheme = createTheme({
         root: {
           height: 22,
         },
+      },
+    },
+    MuiAppBar: {
+      defaultProps: {
+        position: "fixed",
+      },
+      styleOverrides: {
+        root: {
+          zIndex: 1201,
+        },
+      },
+    },
+    MuiDrawer: {
+      defaultProps: {
+        variant: "persistent",
+      },
+      styleOverrides: {
+        root: {
+          width: DRAWER_WIDTH,
+          flexShrink: 0,
+        },
+        paper: {
+          width: DRAWER_WIDTH,
+          boxSizing: "border-box",
+        },
+      },
+    },
+    MuiBackdrop: {
+      styleOverrides: {
+        root: ({ theme }) => ({
+          zIndex: theme.zIndex.drawer - 1,
+          backgroundColor: "rgba(0, 0, 0, 0.35)",
+        }),
       },
     },
   },

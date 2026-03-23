@@ -1,33 +1,22 @@
 "use client";
-import { Drawer } from "@mui/material";
-
-const DRAWER_WIDTH = 240;
+import { Backdrop, Drawer, Toolbar } from "@mui/material";
 
 interface DrawerAtomProps {
   props: {
     open: boolean;
+    onOverlayClick?: () => void;
   };
   children?: React.ReactNode;
 }
 
 export function DrawerAtom({ props, children }: DrawerAtomProps) {
   return (
-    <Drawer
-      variant="permanent"
-      sx={{
-        width: props.open ? DRAWER_WIDTH : 0,
-        flexShrink: 0,
-        overflow: "hidden",
-        "& .MuiDrawer-paper": {
-          width: props.open ? DRAWER_WIDTH : 0,
-          boxSizing: "border-box",
-          position: "relative",
-          height: "100%",
-          overflow: "hidden",
-        },
-      }}
-    >
-      {children}
-    </Drawer>
+    <>
+      <Backdrop open={props.open} onClick={props.onOverlayClick} />
+      <Drawer open={props.open}>
+        <Toolbar />
+        {children}
+      </Drawer>
+    </>
   );
 }

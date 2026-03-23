@@ -4,7 +4,9 @@ import { PromptForgerContexts } from "@/hooks/promptForger/state/usePromptForger
 import { usePromptForgerInitialize } from "@/hooks/promptForger/controller/usePromptForgerInitialize";
 import { usePromptForgerEffects } from "@/hooks/promptForger/controller/usePromptForgerEffects";
 
-export function usePromptForgerController(contexts: PromptForgerContexts): void {
+export function usePromptForgerController(
+  contexts: PromptForgerContexts,
+): void {
   usePromptForgerInitialize(contexts);
   usePromptForgerEffects(contexts);
 }

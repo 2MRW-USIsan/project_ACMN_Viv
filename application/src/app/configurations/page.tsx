@@ -2,7 +2,7 @@
 
 // import { useConfigurationsViewModel } from "@/hooks/configurations/viewModel/useConfigurationsViewModel";
 import { useConfigurationsViewModelMocks } from "@/hooks/configurations/mocks/useConfigurationsViewModelMocks";
-import { ConfigurationsTemplate } from "@/components/templates/ConfigurationsTemplate";
+import { ConfigurationsTemplate } from "@/components/template/ConfigurationsTemplate";
 
 export default function ConfigurationsPage() {
   // const { viewModel } = useConfigurationsViewModel();

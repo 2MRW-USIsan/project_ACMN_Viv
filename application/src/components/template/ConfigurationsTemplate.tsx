@@ -1,7 +1,7 @@
 "use client";
 import { Box } from "@mui/material";
 import { ConfigurationsViewModel } from "@/hooks/configurations/viewModel/useConfigurationsComposer";
-import { NavigationLayoutOrganism } from "@/components/organisms/NavigationLayoutOrganism";
+import { NavigationLayoutOrganism } from "@/components/organisms/navigation/NavigationLayoutOrganism";
 
 interface ConfigurationsTemplateProps {
   props: ConfigurationsViewModel;

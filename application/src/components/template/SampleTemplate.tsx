@@ -2,8 +2,8 @@
 
 import { Stack, Divider, Paper } from "@mui/material";
 import { SampleViewModel } from "@/hooks/sample/viewModel/useSampleComposer";
-import { SampleListOrganism } from "@/components/organisms/SampleListOrganism";
-import { SampleEditorOrganism } from "@/components/organisms/SampleEditorOrganism";
+import { SampleListOrganism } from "@/components/organisms/sample/SampleListOrganism";
+import { SampleEditorOrganism } from "@/components/organisms/sample/SampleEditorOrganism";
 
 interface SampleTemplateProps {
   props: SampleViewModel;

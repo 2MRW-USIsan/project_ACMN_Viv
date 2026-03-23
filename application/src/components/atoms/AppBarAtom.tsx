@@ -11,7 +11,7 @@ interface AppBarAtomProps {
 
 export function AppBarAtom({ props }: AppBarAtomProps) {
   return (
-    <AppBar position="static">
+    <AppBar>
       <Toolbar>
         <IconButton
           edge="start"

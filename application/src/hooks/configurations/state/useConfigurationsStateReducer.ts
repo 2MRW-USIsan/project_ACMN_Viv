@@ -1,7 +1,10 @@
 "use client";
 
 import { useEffect, useReducer } from "react";
-import { ConfigurationsFetchItem, ConfigurationsRequest } from "@/hooks/configurations/state/useConfigurationsService";
+import {
+  ConfigurationsFetchItem,
+  ConfigurationsRequest,
+} from "@/hooks/configurations/state/useConfigurationsService";
 
 export interface ConfigurationsReducerState {
   isDrawerOpen: boolean;
@@ -40,7 +43,10 @@ export function useConfigurationsStateReducer(): ConfigurationsReducerReturn {
       case "INITIALIZE":
         return initItem;
       case "TOGGLE_DRAWER":
-        return { ...(state ?? initItem), isDrawerOpen: !(state ?? initItem).isDrawerOpen };
+        return {
+          ...(state ?? initItem),
+          isDrawerOpen: !(state ?? initItem).isDrawerOpen,
+        };
       default:
         return state;
     }

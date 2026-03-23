@@ -1,7 +1,10 @@
 "use client";
 
 import { useConfigurationsService } from "@/hooks/configurations/state/useConfigurationsService";
-import { useConfigurationsStateReducer, ConfigurationsContexts } from "@/hooks/configurations/state/useConfigurationsStateReducer";
+import {
+  useConfigurationsStateReducer,
+  ConfigurationsContexts,
+} from "@/hooks/configurations/state/useConfigurationsStateReducer";
 
 export type { ConfigurationsContexts };
 

@@ -14,10 +14,26 @@ export function useConfigurationsViewModelMocks() {
       appBarTitle: "Configuration Page",
       isDrawerOpen,
       navItems: [
-        { label: "Configurations Page", href: "/configurations", isActive: true },
-        { label: "Prompt-Forger Page", href: "/prompt-forger", isActive: false },
-        { label: "Preset-Builder Page", href: "/preset-builder", isActive: false },
-        { label: "Posting-Clerk Page", href: "/posting-clerk", isActive: false },
+        {
+          label: "Configurations Page",
+          href: "/configurations",
+          isActive: true,
+        },
+        {
+          label: "Prompt-Forger Page",
+          href: "/prompt-forger",
+          isActive: false,
+        },
+        {
+          label: "Preset-Builder Page",
+          href: "/preset-builder",
+          isActive: false,
+        },
+        {
+          label: "Posting-Clerk Page",
+          href: "/posting-clerk",
+          isActive: false,
+        },
       ],
       onMenuClick: () => setIsDrawerOpen((prev) => !prev),
       onNavItemClick: (href: string) => router.push(href),

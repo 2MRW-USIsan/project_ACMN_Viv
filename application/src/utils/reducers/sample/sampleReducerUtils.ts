@@ -38,8 +38,7 @@ export const removeItem = (
   itemList: state.itemList.filter((i) => i.id !== payload.id),
   selectedItem:
     state.selectedItem?.id === payload.id ? null : state.selectedItem,
-  editorTitle:
-    state.selectedItem?.id === payload.id ? "" : state.editorTitle,
+  editorTitle: state.selectedItem?.id === payload.id ? "" : state.editorTitle,
   editorDescription:
     state.selectedItem?.id === payload.id ? "" : state.editorDescription,
 });
@@ -77,5 +76,3 @@ export const setIsLoading = (
   ...state,
   isLoading: payload.isLoading,
 });
-
-

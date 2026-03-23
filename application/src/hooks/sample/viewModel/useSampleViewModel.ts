@@ -2,7 +2,10 @@
 
 import { useSampleContext } from "@/hooks/sample/state/useSampleContext";
 import { useSampleController } from "@/hooks/sample/controller/useSampleController";
-import { useSampleComposer, SampleViewModel } from "@/hooks/sample/viewModel/useSampleComposer";
+import {
+  useSampleComposer,
+  SampleViewModel,
+} from "@/hooks/sample/viewModel/useSampleComposer";
 
 export type { SampleViewModel };
 
