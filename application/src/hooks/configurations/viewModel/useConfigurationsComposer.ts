@@ -1,6 +1,7 @@
 "use client";
 
 import { NavItem } from "@/types/navigation";
+import { BlocItem } from "@/types/configurationsItem";
 import { ConfigurationsContexts } from "@/hooks/configurations/state/useConfigurationsContext";
 import { useConfigurationsProperties } from "@/hooks/configurations/viewModel/useConfigurationsProperties";
 import { useConfigurationsHandlers } from "@/hooks/configurations/viewModel/useConfigurationsHandlers";
@@ -12,6 +13,29 @@ export interface ConfigurationsViewModel {
     navItems: NavItem[];
     onMenuClick: () => void;
     onNavItemClick: (href: string) => void;
+  };
+  configurations: {
+    sets: {
+      options: string[];
+      selectedSet: string;
+      onSetChange: (value: string) => void;
+      onLoad: () => void;
+    };
+    name: {
+      options: string[];
+      selectedName: string;
+      hasChanges: boolean;
+      onNameChange: (value: string) => void;
+      onSave: () => void;
+    };
+    blocInfoPanels: {
+      items: BlocItem[];
+      onRemoveItem: (id: string) => void;
+      onToggleExpand: (id: string) => void;
+      onAddBloc: () => void;
+      onItemShortLabelChange: (id: string, value: string) => void;
+      onItemLongLabelChange: (id: string, value: string) => void;
+    };
   };
 }
 
@@ -27,6 +51,29 @@ export function useConfigurationsComposer(contexts: ConfigurationsContexts) {
         navItems: properties.navItems,
         onMenuClick: handlers.onDrawerToggle,
         onNavItemClick: handlers.onNavItemClick,
+      },
+      configurations: {
+        sets: {
+          options: properties.sets.options,
+          selectedSet: properties.sets.selectedSet,
+          onSetChange: handlers.onSetChange,
+          onLoad: handlers.onLoad,
+        },
+        name: {
+          options: properties.name.options,
+          selectedName: properties.name.selectedName,
+          hasChanges: properties.name.hasChanges,
+          onNameChange: handlers.onNameChange,
+          onSave: handlers.onSave,
+        },
+        blocInfoPanels: {
+          items: properties.blocItems,
+          onRemoveItem: handlers.onRemoveItem,
+          onToggleExpand: handlers.onToggleExpand,
+          onAddBloc: handlers.onAddBloc,
+          onItemShortLabelChange: handlers.onItemShortLabelChange,
+          onItemLongLabelChange: handlers.onItemLongLabelChange,
+        },
       },
     } satisfies ConfigurationsViewModel,
   };
