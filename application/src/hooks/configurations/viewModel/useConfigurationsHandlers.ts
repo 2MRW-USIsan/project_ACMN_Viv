@@ -1,14 +1,25 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { ConfigurationsContexts } from "@/hooks/configurations/state/useConfigurationsContext";
 
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface ConfigurationsHandlers {
-  // ハンドラの詳細は工程2〜3で追加する
+  onDrawerToggle: () => void;
+  onNavItemClick: (href: string) => void;
 }
 
-export function useConfigurationsHandlers(_contexts: ConfigurationsContexts) {
-  const handlers: ConfigurationsHandlers = {};
+export function useConfigurationsHandlers(contexts: ConfigurationsContexts) {
+  const router = useRouter();
+  const { action } = contexts.reducer;
+
+  const handleNavItemClick = (href: string) => {
+    router.push(href);
+  };
+
+  const handlers: ConfigurationsHandlers = {
+    onDrawerToggle: action.toggleDrawer,
+    onNavItemClick: handleNavItemClick,
+  };
 
   return { handlers };
 }

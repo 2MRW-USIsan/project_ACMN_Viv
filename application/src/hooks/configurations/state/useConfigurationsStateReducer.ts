@@ -1,16 +1,17 @@
 "use client";
 
 import { useEffect, useReducer } from "react";
-import { ConfigurationsFetchItem, ConfigurationsRequest } from "@/hooks/configurations/state/useConfigurationsService";
+import {
+  ConfigurationsFetchItem,
+  ConfigurationsRequest,
+} from "@/hooks/configurations/state/useConfigurationsService";
 
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface ConfigurationsReducerState {
-  // 状態の詳細は工程2〜3で追加する
+  isDrawerOpen: boolean;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface ConfigurationsReducerAction {
-  // アクションの詳細は工程2〜3で追加する
+  toggleDrawer: () => void;
 }
 
 export interface ConfigurationsReducerReturn {
@@ -31,14 +32,21 @@ export interface ConfigurationsContexts {
 
 export function useConfigurationsStateReducer(): ConfigurationsReducerReturn {
   type STATE = ConfigurationsReducerState | undefined;
-  type ACTION = { type: "INITIALIZE" };
+  type ACTION = { type: "INITIALIZE" } | { type: "TOGGLE_DRAWER" };
 
-  const initItem: ConfigurationsReducerState = {};
+  const initItem: ConfigurationsReducerState = {
+    isDrawerOpen: true,
+  };
 
   const reducer = (state: STATE, action: ACTION): STATE => {
     switch (action.type) {
       case "INITIALIZE":
         return initItem;
+      case "TOGGLE_DRAWER":
+        return {
+          ...(state ?? initItem),
+          isDrawerOpen: !(state ?? initItem).isDrawerOpen,
+        };
       default:
         return state;
     }
@@ -52,6 +60,8 @@ export function useConfigurationsStateReducer(): ConfigurationsReducerReturn {
 
   return {
     state: state ?? initItem,
-    action: {},
+    action: {
+      toggleDrawer: () => dispatch({ type: "TOGGLE_DRAWER" }),
+    },
   };
 }

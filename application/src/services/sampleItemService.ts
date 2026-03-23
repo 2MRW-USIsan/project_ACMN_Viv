@@ -1,8 +1,5 @@
 import { SampleItem, SampleItemInput } from "@/types/sampleItem";
-import {
-  sampleItemSchema,
-  sampleItemArraySchema,
-} from "@/schemas/sampleItem";
+import { sampleItemSchema, sampleItemArraySchema } from "@/schemas/sampleItem";
 
 export async function fetchSampleItems(): Promise<SampleItem[]> {
   const res = await fetch("/api/sampleItems");

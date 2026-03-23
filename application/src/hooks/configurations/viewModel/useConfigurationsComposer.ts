@@ -1,19 +1,33 @@
 "use client";
 
+import { NavItem } from "@/types/navigation";
 import { ConfigurationsContexts } from "@/hooks/configurations/state/useConfigurationsContext";
 import { useConfigurationsProperties } from "@/hooks/configurations/viewModel/useConfigurationsProperties";
 import { useConfigurationsHandlers } from "@/hooks/configurations/viewModel/useConfigurationsHandlers";
 
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface ConfigurationsViewModel {
-  // ViewModel の詳細は工程2〜3で追加する
+  navigation: {
+    appBarTitle: string;
+    isDrawerOpen: boolean;
+    navItems: NavItem[];
+    onMenuClick: () => void;
+    onNavItemClick: (href: string) => void;
+  };
 }
 
 export function useConfigurationsComposer(contexts: ConfigurationsContexts) {
-  const { properties: _properties } = useConfigurationsProperties(contexts);
-  const { handlers: _handlers } = useConfigurationsHandlers(contexts);
+  const { properties } = useConfigurationsProperties(contexts);
+  const { handlers } = useConfigurationsHandlers(contexts);
 
   return {
-    viewModel: {} satisfies ConfigurationsViewModel,
+    viewModel: {
+      navigation: {
+        appBarTitle: properties.navTitle,
+        isDrawerOpen: properties.isDrawerOpen,
+        navItems: properties.navItems,
+        onMenuClick: handlers.onDrawerToggle,
+        onNavItemClick: handlers.onNavItemClick,
+      },
+    } satisfies ConfigurationsViewModel,
   };
 }

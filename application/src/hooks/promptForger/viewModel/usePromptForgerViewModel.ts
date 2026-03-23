@@ -2,7 +2,10 @@
 
 import { usePromptForgerContext } from "@/hooks/promptForger/state/usePromptForgerContext";
 import { usePromptForgerController } from "@/hooks/promptForger/controller/usePromptForgerController";
-import { usePromptForgerComposer, PromptForgerViewModel } from "@/hooks/promptForger/viewModel/usePromptForgerComposer";
+import {
+  usePromptForgerComposer,
+  PromptForgerViewModel,
+} from "@/hooks/promptForger/viewModel/usePromptForgerComposer";
 
 export type { PromptForgerViewModel };
 
