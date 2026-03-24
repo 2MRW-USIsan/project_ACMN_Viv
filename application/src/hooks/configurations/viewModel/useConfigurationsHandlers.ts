@@ -9,7 +9,7 @@ export interface ConfigurationsHandlers {
   // 工程3で状態管理と連携予定
   onSetChange: (value: string) => void;
   onLoad: () => void;
-  onNameChange: (value: string) => void;
+  onNameBlur: (value: string) => void;
   onSave: () => void;
   onRemoveItem: (id: string) => void;
   onToggleExpand: (id: string) => void;
@@ -32,7 +32,7 @@ export function useConfigurationsHandlers(contexts: ConfigurationsContexts) {
     // 工程3で実装
     onSetChange: () => {},
     onLoad: () => {},
-    onNameChange: () => {},
+    onNameBlur: () => {},
     onSave: () => {},
     onRemoveItem: () => {},
     onToggleExpand: () => {},

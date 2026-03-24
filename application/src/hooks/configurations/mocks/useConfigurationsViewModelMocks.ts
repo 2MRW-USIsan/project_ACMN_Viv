@@ -12,7 +12,7 @@ export function useConfigurationsViewModelMocks() {
 
   const configOptions = ["Loadable Config...", "Config A", "Config B"];
   const [selectedSet, setSelectedSet] = useState("Loadable Config...");
-  const [selectedName, setSelectedName] = useState("Loadable Config...");
+  const [nameValue, setNameValue] = useState("Loadable Config...");
   const [blocItems, setBlocItems] = useState<BlocItem[]>([
     { id: "1", shortLabel: "Label", longLabel: "Label", isExpanded: false },
     { id: "2", shortLabel: "Label", longLabel: "Label", isExpanded: false },
@@ -93,10 +93,9 @@ export function useConfigurationsViewModelMocks() {
         onLoad: () => {},
       },
       name: {
-        options: configOptions,
-        selectedName,
+        nameValue,
         hasChanges: true,
-        onNameChange: setSelectedName,
+        onNameBlur: setNameValue,
         onSave: () => {},
       },
       blocInfoPanels: {

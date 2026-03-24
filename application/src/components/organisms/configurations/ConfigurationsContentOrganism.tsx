@@ -6,6 +6,7 @@ import { LabelAtom } from "@/components/atoms/LabelAtom";
 import { ButtonAtom } from "@/components/atoms/ButtonAtom";
 import { BoxAtom } from "@/components/atoms/BoxAtom";
 import { SelectAtom } from "@/components/atoms/SelectAtom";
+import { TextFieldAtom } from "@/components/atoms/TextFieldAtom";
 import { ListAtom } from "@/components/atoms/ListAtom";
 import { ListItemAtom } from "@/components/atoms/ListItemAtom";
 import { CollapseAtom } from "@/components/atoms/CollapseAtom";
@@ -20,10 +21,9 @@ interface ConfigurationsContentOrganismProps {
       onLoad: () => void;
     };
     name: {
-      options: string[];
-      selectedName: string;
+      nameValue: string;
       hasChanges: boolean;
-      onNameChange: (value: string) => void;
+      onNameBlur: (value: string) => void;
       onSave: () => void;
     };
     blocInfoPanels: {
@@ -64,12 +64,13 @@ export function ConfigurationsContentOrganism({
         {/* Name row */}
         <Stack direction="row" alignItems="center" spacing={1} sx={{ mb: 0.5 }}>
           <LabelAtom props={{ text: "Name:", variant: "body2" }} />
-          <SelectAtom
+          <TextFieldAtom
             props={{
-              value: name.selectedName,
-              options: name.options,
-              onChange: name.onNameChange,
+              label: "Name",
+              defaultValue: name.nameValue,
+              onBlur: name.onNameBlur,
               fullWidth: true,
+              size: "small",
             }}
           />
           {name.hasChanges && (

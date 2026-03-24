@@ -22,10 +22,9 @@ export interface ConfigurationsViewModel {
       onLoad: () => void;
     };
     name: {
-      options: string[];
-      selectedName: string;
+      nameValue: string;
       hasChanges: boolean;
-      onNameChange: (value: string) => void;
+      onNameBlur: (value: string) => void;
       onSave: () => void;
     };
     blocInfoPanels: {
@@ -60,10 +59,9 @@ export function useConfigurationsComposer(contexts: ConfigurationsContexts) {
           onLoad: handlers.onLoad,
         },
         name: {
-          options: properties.name.options,
-          selectedName: properties.name.selectedName,
+          nameValue: properties.name.nameValue,
           hasChanges: properties.name.hasChanges,
-          onNameChange: handlers.onNameChange,
+          onNameBlur: handlers.onNameBlur,
           onSave: handlers.onSave,
         },
         blocInfoPanels: {

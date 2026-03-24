@@ -13,8 +13,7 @@ export interface ConfigurationsProperties {
     selectedSet: string;
   };
   name: {
-    options: string[];
-    selectedName: string;
+    nameValue: string;
     hasChanges: boolean;
   };
   blocItems: BlocItem[];
@@ -36,7 +35,7 @@ export function useConfigurationsProperties(contexts: ConfigurationsContexts) {
     navItems: NAV_ITEMS,
     // 工程3で状態管理と連携予定
     sets: { options: [], selectedSet: "" },
-    name: { options: [], selectedName: "", hasChanges: false },
+    name: { nameValue: "", hasChanges: false },
     blocItems: [],
   };
 
