@@ -1,19 +1,18 @@
 "use client";
 
-import { Box, Divider, Stack, Toolbar } from "@mui/material";
+import { Box, Divider, Toolbar } from "@mui/material";
 import { BlocItem } from "@/types/configurationsItem";
 import { LabelAtom } from "@/components/atoms/LabelAtom";
-import { ButtonAtom } from "@/components/atoms/ButtonAtom";
 import { BoxAtom } from "@/components/atoms/BoxAtom";
-import { SelectAtom } from "@/components/atoms/SelectAtom";
-import { TextFieldAtom } from "@/components/atoms/TextFieldAtom";
 import { ListAtom } from "@/components/atoms/ListAtom";
 import { ListItemAtom } from "@/components/atoms/ListItemAtom";
 import { CollapseAtom } from "@/components/atoms/CollapseAtom";
 import { BlocItemRowMolecule } from "@/components/molecules/BlocItemRowMolecule";
+import { ConfigurationsHeaderOrganism } from "@/components/organisms/configurations/ConfigurationsHeaderOrganism";
 
 interface ConfigurationsContentOrganismProps {
   props: {
+    isLoaded: boolean;
     sets: {
       options: string[];
       selectedSet: string;
@@ -40,51 +39,15 @@ interface ConfigurationsContentOrganismProps {
 export function ConfigurationsContentOrganism({
   props,
 }: ConfigurationsContentOrganismProps) {
-  const { sets, name, blocInfoPanels } = props;
+  const { isLoaded, sets, name, blocInfoPanels } = props;
 
   return (
     <Box>
       <Toolbar />
       {/* Header Section */}
-      <Box sx={{ px: 2, pt: 1, pb: 0.5 }}>
-        {/* Sets row */}
-        <Stack direction="row" alignItems="center" spacing={1} sx={{ mb: 0.5 }}>
-          <LabelAtom props={{ text: "Sets:", variant: "body2" }} />
-          <SelectAtom
-            props={{
-              value: sets.selectedSet,
-              options: sets.options,
-              onChange: sets.onSetChange,
-              fullWidth: true,
-            }}
-          />
-          <ButtonAtom props={{ label: "Load", onClick: sets.onLoad }} />
-        </Stack>
-
-        {/* Name row */}
-        <Stack direction="row" alignItems="center" spacing={1} sx={{ mb: 0.5 }}>
-          <LabelAtom props={{ text: "Name:", variant: "body2" }} />
-          <TextFieldAtom
-            props={{
-              label: "Name",
-              defaultValue: name.nameValue,
-              onBlur: name.onNameBlur,
-              fullWidth: true,
-              size: "small",
-            }}
-          />
-          {name.hasChanges && (
-            <LabelAtom
-              props={{
-                text: "having some changes",
-                variant: "body2",
-                color: "text.secondary",
-              }}
-            />
-          )}
-          <ButtonAtom props={{ label: "Save", onClick: name.onSave }} />
-        </Stack>
-      </Box>
+      <ConfigurationsHeaderOrganism
+        props={{ isLoaded, sets, name }}
+      />
 
       {/* Bloc Items List */}
       <Box>

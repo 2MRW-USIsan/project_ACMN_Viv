@@ -9,6 +9,7 @@ import { BlocItem } from "@/types/configurationsItem";
 export function useConfigurationsViewModelMocks() {
   const router = useRouter();
   const [isDrawerOpen, setIsDrawerOpen] = useState(true);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   const configOptions = ["Loadable Config...", "Config A", "Config B"];
   const [selectedSet, setSelectedSet] = useState("Loadable Config...");
@@ -86,11 +87,12 @@ export function useConfigurationsViewModelMocks() {
       onNavItemClick: (href: string) => router.push(href),
     },
     configurations: {
+      isLoaded,
       sets: {
         options: configOptions,
         selectedSet,
         onSetChange: setSelectedSet,
-        onLoad: () => {},
+        onLoad: () => setIsLoaded(true),
       },
       name: {
         nameValue,

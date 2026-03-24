@@ -8,6 +8,7 @@ export interface ConfigurationsProperties {
   isDrawerOpen: boolean;
   navTitle: string;
   navItems: NavItem[];
+  isLoaded: boolean;
   sets: {
     options: string[];
     selectedSet: string;
@@ -34,6 +35,7 @@ export function useConfigurationsProperties(contexts: ConfigurationsContexts) {
     navTitle: "Configuration Page",
     navItems: NAV_ITEMS,
     // 工程3で状態管理と連携予定
+    isLoaded: false,
     sets: { options: [], selectedSet: "" },
     name: { nameValue: "", hasChanges: false },
     blocItems: [],

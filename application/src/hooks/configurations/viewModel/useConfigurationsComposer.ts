@@ -15,6 +15,7 @@ export interface ConfigurationsViewModel {
     onNavItemClick: (href: string) => void;
   };
   configurations: {
+    isLoaded: boolean;
     sets: {
       options: string[];
       selectedSet: string;
@@ -52,6 +53,7 @@ export function useConfigurationsComposer(contexts: ConfigurationsContexts) {
         onNavItemClick: handlers.onNavItemClick,
       },
       configurations: {
+        isLoaded: properties.isLoaded,
         sets: {
           options: properties.sets.options,
           selectedSet: properties.sets.selectedSet,
