@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Divider, Stack } from "@mui/material";
+import { Box, Divider, Stack, Toolbar } from "@mui/material";
 import { BlocItem } from "@/types/configurationsItem";
 import { LabelAtom } from "@/components/atoms/LabelAtom";
 import { ButtonAtom } from "@/components/atoms/ButtonAtom";
@@ -40,6 +40,7 @@ export function ConfigurationsContentOrganism({
 
   return (
     <Box>
+      <Toolbar />
       {/* Header Section */}
       <Box sx={{ px: 2, pt: 1, pb: 0.5 }}>
         {/* Sets row */}
