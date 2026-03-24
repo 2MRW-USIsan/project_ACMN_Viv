@@ -84,15 +84,15 @@ export function ConfigurationsContentOrganism({
           )}
           <ButtonAtom props={{ label: "Save", onClick: name.onSave }} />
         </Stack>
-
-        {/* Bloc Info Panels label */}
-        <LabelAtom props={{ text: "Bloc Info Panels:", variant: "body2" }} />
       </Box>
 
-      <Divider />
-
       {/* Bloc Items List */}
-      <ListAtom props={{ disablePadding: true }}>
+      <Box>
+        <Box sx={{ px: 2, py: 0.5 }}>
+          <LabelAtom props={{ text: "Bloc Info Panels:", variant: "body2" }} />
+        </Box>
+        <Divider />
+        <ListAtom props={{ disablePadding: true }}>
         {blocInfoPanels.items.map((item, index) => (
           <ListItemAtom
             key={item.id}
@@ -124,7 +124,8 @@ export function ConfigurationsContentOrganism({
             {index < blocInfoPanels.items.length - 1 && <Divider />}
           </ListItemAtom>
         ))}
-      </ListAtom>
+        </ListAtom>
+      </Box>
 
       <Divider />
 
