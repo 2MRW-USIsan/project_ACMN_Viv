@@ -1,7 +1,7 @@
 "use client";
 
 import { NavItem } from "@/types/navigation";
-import { BlocItem } from "@/types/configurationsItem";
+import { BlocItem, BlocItemData } from "@/types/configurationsItem";
 import { ConfigurationsContexts } from "@/hooks/configurations/state/useConfigurationsContext";
 import { useConfigurationsProperties } from "@/hooks/configurations/viewModel/useConfigurationsProperties";
 import { useConfigurationsHandlers } from "@/hooks/configurations/viewModel/useConfigurationsHandlers";
@@ -15,27 +15,53 @@ export interface ConfigurationsViewModel {
     onNavItemClick: (href: string) => void;
   };
   configurations: {
-    isLoaded: boolean;
-    sets: {
-      options: string[];
-      selectedSet: string;
-      onSetChange: (value: string) => void;
-      onLoad: () => void;
+    header: {
+      isLoaded: boolean;
+      sets: {
+        options: string[];
+        selectedSet: string;
+        onSetChange: (value: string) => void;
+        onLoad: () => void;
+      };
+      name: {
+        nameValue: string;
+        hasChanges: boolean;
+        onNameBlur: (value: string) => void;
+        onSave: () => void;
+      };
     };
-    name: {
-      nameValue: string;
-      hasChanges: boolean;
-      onNameBlur: (value: string) => void;
-      onSave: () => void;
+    blocPanelInfo: {
+      frame: {
+        label: {
+          text: string;
+          variant?: "h4" | "h5" | "h6" | "subtitle1" | "subtitle2" | "body1" | "body2" | "caption";
+        };
+      };
+      blocs: {
+        items: BlocItem[];
+      };
+      addPanel: {
+        onAddBloc: () => void;
+      };
     };
-    blocInfoPanels: {
-      items: BlocItem[];
-      onRemoveItem: (id: string) => void;
-      onToggleExpand: (id: string) => void;
-      onAddBloc: () => void;
-      onItemShortLabelChange: (id: string, value: string) => void;
-      onItemLongLabelChange: (id: string, value: string) => void;
-    };
+  };
+}
+
+function toBlocItemViewModel(
+  item: BlocItemData,
+  handlers: {
+    onRemoveItem: (id: string) => void;
+    onToggleExpand: (id: string) => void;
+    onItemShortLabelChange: (id: string, value: string) => void;
+    onItemLongLabelChange: (id: string, value: string) => void;
+  }
+): BlocItem {
+  return {
+    id: item.id,
+    blocItem: {
+      blocItem: item,
+      handlers,
+    },
   };
 }
 
@@ -53,26 +79,38 @@ export function useConfigurationsComposer(contexts: ConfigurationsContexts) {
         onNavItemClick: handlers.onNavItemClick,
       },
       configurations: {
-        isLoaded: properties.isLoaded,
-        sets: {
-          options: properties.sets.options,
-          selectedSet: properties.sets.selectedSet,
-          onSetChange: handlers.onSetChange,
-          onLoad: handlers.onLoad,
+        header: {
+          isLoaded: properties.isLoaded,
+          sets: {
+            options: properties.sets.options,
+            selectedSet: properties.sets.selectedSet,
+            onSetChange: handlers.onSetChange,
+            onLoad: handlers.onLoad,
+          },
+          name: {
+            nameValue: properties.name.nameValue,
+            hasChanges: properties.name.hasChanges,
+            onNameBlur: handlers.onNameBlur,
+            onSave: handlers.onSave,
+          },
         },
-        name: {
-          nameValue: properties.name.nameValue,
-          hasChanges: properties.name.hasChanges,
-          onNameBlur: handlers.onNameBlur,
-          onSave: handlers.onSave,
-        },
-        blocInfoPanels: {
-          items: properties.blocItems,
-          onRemoveItem: handlers.onRemoveItem,
-          onToggleExpand: handlers.onToggleExpand,
-          onAddBloc: handlers.onAddBloc,
-          onItemShortLabelChange: handlers.onItemShortLabelChange,
-          onItemLongLabelChange: handlers.onItemLongLabelChange,
+        blocPanelInfo: {
+          frame: {
+            label: { text: "Bloc Info Panels:", variant: "body2" },
+          },
+          blocs: {
+            items: properties.blocItems.map((item) =>
+              toBlocItemViewModel(item, {
+                onRemoveItem: handlers.onRemoveItem,
+                onToggleExpand: handlers.onToggleExpand,
+                onItemShortLabelChange: handlers.onItemShortLabelChange,
+                onItemLongLabelChange: handlers.onItemLongLabelChange,
+              })
+            ),
+          },
+          addPanel: {
+            onAddBloc: handlers.onAddBloc,
+          },
         },
       },
     } satisfies ConfigurationsViewModel,

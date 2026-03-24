@@ -1,7 +1,7 @@
 "use client";
 
 import { NavItem } from "@/types/navigation";
-import { BlocItem } from "@/types/configurationsItem";
+import { BlocItemData } from "@/types/configurationsItem";
 import { ConfigurationsContexts } from "@/hooks/configurations/state/useConfigurationsContext";
 
 export interface ConfigurationsProperties {
@@ -17,7 +17,7 @@ export interface ConfigurationsProperties {
     nameValue: string;
     hasChanges: boolean;
   };
-  blocItems: BlocItem[];
+  blocItems: BlocItemData[];
 }
 
 const NAV_ITEMS: NavItem[] = [

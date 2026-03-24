@@ -2,7 +2,7 @@
 import { Box, BoxProps } from "@mui/material";
 
 interface BoxAtomProps {
-  props: BoxProps;
+  props?: BoxProps;
   children?: React.ReactNode;
 }
 

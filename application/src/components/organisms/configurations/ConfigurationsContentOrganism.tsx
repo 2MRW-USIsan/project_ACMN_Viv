@@ -1,32 +1,40 @@
 "use client";
 
-import { Box, Toolbar } from "@mui/material";
+import { BackgroundAtom } from "@/components/atoms/BackgroundAtom";
 import { BlocItem } from "@/types/configurationsItem";
 import { ConfigurationsHeaderOrganism } from "@/components/organisms/configurations/ConfigurationsHeaderOrganism";
 import { ConfigurationsBlocInfoPanelsOrganism } from "@/components/organisms/configurations/ConfigurationsBlocInfoPanelsOrganism";
 
 interface ConfigurationsContentOrganismProps {
   props: {
-    isLoaded: boolean;
-    sets: {
-      options: string[];
-      selectedSet: string;
-      onSetChange: (value: string) => void;
-      onLoad: () => void;
+    header: {
+      isLoaded: boolean;
+      sets: {
+        options: string[];
+        selectedSet: string;
+        onSetChange: (value: string) => void;
+        onLoad: () => void;
+      };
+      name: {
+        nameValue: string;
+        hasChanges: boolean;
+        onNameBlur: (value: string) => void;
+        onSave: () => void;
+      };
     };
-    name: {
-      nameValue: string;
-      hasChanges: boolean;
-      onNameBlur: (value: string) => void;
-      onSave: () => void;
-    };
-    blocInfoPanels: {
-      items: BlocItem[];
-      onRemoveItem: (id: string) => void;
-      onToggleExpand: (id: string) => void;
-      onAddBloc: () => void;
-      onItemShortLabelChange: (id: string, value: string) => void;
-      onItemLongLabelChange: (id: string, value: string) => void;
+    blocPanelInfo: {
+      frame: {
+        label: {
+          text: string;
+          variant?: "h4" | "h5" | "h6" | "subtitle1" | "subtitle2" | "body1" | "body2" | "caption";
+        };
+      };
+      blocs: {
+        items: BlocItem[];
+      };
+      addPanel: {
+        onAddBloc: () => void;
+      };
     };
   };
 }
@@ -34,17 +42,12 @@ interface ConfigurationsContentOrganismProps {
 export function ConfigurationsContentOrganism({
   props,
 }: ConfigurationsContentOrganismProps) {
-  const { isLoaded, sets, name, blocInfoPanels } = props;
-
   return (
-    <Box>
-      <Toolbar />
+    <BackgroundAtom>
       {/* Header Section */}
-      <ConfigurationsHeaderOrganism
-        props={{ isLoaded, sets, name }}
-      />
+      <ConfigurationsHeaderOrganism props={props.header} />
       {/* Bloc Info Panels Section */}
-      <ConfigurationsBlocInfoPanelsOrganism props={blocInfoPanels} />
-    </Box>
+      <ConfigurationsBlocInfoPanelsOrganism props={props.blocPanelInfo} />
+    </BackgroundAtom>
   );
 }

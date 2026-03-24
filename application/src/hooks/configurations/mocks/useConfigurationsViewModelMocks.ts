@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { ConfigurationsViewModel } from "@/hooks/configurations/viewModel/useConfigurationsComposer";
-import { BlocItem } from "@/types/configurationsItem";
+import { BlocItem, BlocItemData } from "@/types/configurationsItem";
 
 // 暫定モックフック。ViewModel実装後に削除予定。実装ルール適用外。
 export function useConfigurationsViewModelMocks() {
@@ -14,7 +14,7 @@ export function useConfigurationsViewModelMocks() {
   const configOptions = ["Loadable Config...", "Config A", "Config B"];
   const [selectedSet, setSelectedSet] = useState("Loadable Config...");
   const [nameValue, setNameValue] = useState("Loadable Config...");
-  const [blocItems, setBlocItems] = useState<BlocItem[]>([
+  const [blocItems, setBlocItems] = useState<BlocItemData[]>([
     { id: "1", shortLabel: "Label", longLabel: "Label", isExpanded: false },
     { id: "2", shortLabel: "Label", longLabel: "Label", isExpanded: false },
     { id: "3", shortLabel: "Label", longLabel: "Label", isExpanded: true },
@@ -57,6 +57,19 @@ export function useConfigurationsViewModelMocks() {
     );
   };
 
+  const blocItemViewModels: BlocItem[] = blocItems.map((item) => ({
+    id: item.id,
+    blocItem: {
+      blocItem: item,
+      handlers: {
+        onRemoveItem: handleRemoveItem,
+        onToggleExpand: handleToggleExpand,
+        onItemShortLabelChange: handleItemShortLabelChange,
+        onItemLongLabelChange: handleItemLongLabelChange,
+      },
+    },
+  }));
+
   const viewModel: ConfigurationsViewModel = {
     navigation: {
       appBarTitle: "Configuration Page",
@@ -87,26 +100,31 @@ export function useConfigurationsViewModelMocks() {
       onNavItemClick: (href: string) => router.push(href),
     },
     configurations: {
-      isLoaded,
-      sets: {
-        options: configOptions,
-        selectedSet,
-        onSetChange: setSelectedSet,
-        onLoad: () => setIsLoaded(true),
+      header: {
+        isLoaded,
+        sets: {
+          options: configOptions,
+          selectedSet,
+          onSetChange: setSelectedSet,
+          onLoad: () => setIsLoaded(true),
+        },
+        name: {
+          nameValue,
+          hasChanges: true,
+          onNameBlur: setNameValue,
+          onSave: () => {},
+        },
       },
-      name: {
-        nameValue,
-        hasChanges: true,
-        onNameBlur: setNameValue,
-        onSave: () => {},
-      },
-      blocInfoPanels: {
-        items: blocItems,
-        onRemoveItem: handleRemoveItem,
-        onToggleExpand: handleToggleExpand,
-        onAddBloc: handleAddBloc,
-        onItemShortLabelChange: handleItemShortLabelChange,
-        onItemLongLabelChange: handleItemLongLabelChange,
+      blocPanelInfo: {
+        frame: {
+          label: { text: "Bloc Info Panels:", variant: "body2" },
+        },
+        blocs: {
+          items: blocItemViewModels,
+        },
+        addPanel: {
+          onAddBloc: handleAddBloc,
+        },
       },
     },
   };

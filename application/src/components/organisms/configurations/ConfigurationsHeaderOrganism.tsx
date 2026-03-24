@@ -1,10 +1,8 @@
 "use client";
 
-import { Box, Stack } from "@mui/material";
-import { LabelAtom } from "@/components/atoms/LabelAtom";
-import { ButtonAtom } from "@/components/atoms/ButtonAtom";
-import { SelectAtom } from "@/components/atoms/SelectAtom";
-import { TextFieldAtom } from "@/components/atoms/TextFieldAtom";
+import { BoxAtom } from "@/components/atoms/BoxAtom";
+import { ConfigurationsNameEditorMolecule } from "@/components/molecules/ConfigurationsNameEditorMolecule";
+import { ConfigurationsSetSelectorMolecule } from "@/components/molecules/ConfigurationsSetSelectorMolecule";
 
 interface ConfigurationsHeaderOrganismProps {
   props: {
@@ -30,44 +28,35 @@ export function ConfigurationsHeaderOrganism({
   const { isLoaded, sets, name } = props;
 
   return (
-    <Box sx={{ px: 2, pt: 1, pb: 0.5 }}>
+    <BoxAtom props={{ sx: { px: 2, pt: 1, pb: 0.5 } }}>
       {!isLoaded ? (
-        <Stack direction="row" alignItems="center" spacing={1} sx={{ mb: 0.5 }}>
-          <LabelAtom props={{ text: "Sets:", variant: "body2" }} />
-          <SelectAtom
-            props={{
+        <ConfigurationsSetSelectorMolecule
+          props={{
+            styling: {
+              direction: "row",
+              alignItems: "center",
+              spacing: 1,
+              sx: { mb: 0.5 },
+            },
+            label: {
+              text: "Sets:",
+              variant: "body2",
+            },
+            selector: {
               value: sets.selectedSet,
               options: sets.options,
               onChange: sets.onSetChange,
               fullWidth: true,
-            }}
-          />
-          <ButtonAtom props={{ label: "Load", onClick: sets.onLoad }} />
-        </Stack>
+            },
+            load: {
+              label: "Load",
+              onClick: sets.onLoad,
+            },
+          }}
+        />
       ) : (
-        <Stack direction="row" alignItems="center" spacing={1} sx={{ mb: 0.5 }}>
-          <LabelAtom props={{ text: "Name:", variant: "body2" }} />
-          <TextFieldAtom
-            props={{
-              label: "Name",
-              defaultValue: name.nameValue,
-              onBlur: name.onNameBlur,
-              fullWidth: true,
-              size: "small",
-            }}
-          />
-          {name.hasChanges && (
-            <LabelAtom
-              props={{
-                text: "having some changes",
-                variant: "body2",
-                color: "text.secondary",
-              }}
-            />
-          )}
-          <ButtonAtom props={{ label: "Save", onClick: name.onSave }} />
-        </Stack>
+        <ConfigurationsNameEditorMolecule props={name} />
       )}
-    </Box>
+    </BoxAtom>
   );
 }
