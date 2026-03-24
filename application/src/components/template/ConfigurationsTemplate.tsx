@@ -1,7 +1,7 @@
 "use client";
-import { Box } from "@mui/material";
 import { ConfigurationsViewModel } from "@/hooks/configurations/viewModel/useConfigurationsComposer";
 import { NavigationLayoutOrganism } from "@/components/organisms/navigation/NavigationLayoutOrganism";
+import { ConfigurationsContentOrganism } from "@/components/organisms/configurations/ConfigurationsContentOrganism";
 
 interface ConfigurationsTemplateProps {
   props: ConfigurationsViewModel;
@@ -10,7 +10,7 @@ interface ConfigurationsTemplateProps {
 export function ConfigurationsTemplate({ props }: ConfigurationsTemplateProps) {
   return (
     <NavigationLayoutOrganism props={props.navigation}>
-      <Box sx={{ flex: 1, height: "100%", bgcolor: "grey.500" }} />
+      <ConfigurationsContentOrganism props={props.configurations} />
     </NavigationLayoutOrganism>
   );
 }

@@ -11,6 +11,7 @@ interface TextFieldAtomProps {
     multiline?: boolean;
     rows?: number;
     fullWidth?: boolean;
+    size?: "small" | "medium";
   };
 }
 
@@ -34,6 +35,7 @@ export function TextFieldAtom({ props }: TextFieldAtomProps) {
       multiline={props.multiline}
       rows={props.rows}
       fullWidth={props.fullWidth}
+      size={props.size}
     />
   );
 }

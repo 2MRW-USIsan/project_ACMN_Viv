@@ -1,12 +1,23 @@
 "use client";
 
 import { NavItem } from "@/types/navigation";
+import { BlocItemData } from "@/types/configurationsItem";
 import { ConfigurationsContexts } from "@/hooks/configurations/state/useConfigurationsContext";
 
 export interface ConfigurationsProperties {
   isDrawerOpen: boolean;
   navTitle: string;
   navItems: NavItem[];
+  isLoaded: boolean;
+  sets: {
+    options: string[];
+    selectedSet: string;
+  };
+  name: {
+    nameValue: string;
+    hasChanges: boolean;
+  };
+  blocItems: BlocItemData[];
 }
 
 const NAV_ITEMS: NavItem[] = [
@@ -23,6 +34,11 @@ export function useConfigurationsProperties(contexts: ConfigurationsContexts) {
     isDrawerOpen: state.isDrawerOpen,
     navTitle: "Configuration Page",
     navItems: NAV_ITEMS,
+    // 工程3で状態管理と連携予定
+    isLoaded: false,
+    sets: { options: [], selectedSet: "" },
+    name: { nameValue: "", hasChanges: false },
+    blocItems: [],
   };
 
   return { properties };
