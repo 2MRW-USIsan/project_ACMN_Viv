@@ -4,7 +4,11 @@ import { Box, Divider, Stack, Toolbar } from "@mui/material";
 import { BlocItem } from "@/types/configurationsItem";
 import { LabelAtom } from "@/components/atoms/LabelAtom";
 import { ButtonAtom } from "@/components/atoms/ButtonAtom";
+import { BoxAtom } from "@/components/atoms/BoxAtom";
 import { SelectAtom } from "@/components/atoms/SelectAtom";
+import { ListAtom } from "@/components/atoms/ListAtom";
+import { ListItemAtom } from "@/components/atoms/ListItemAtom";
+import { CollapseAtom } from "@/components/atoms/CollapseAtom";
 import { BlocItemRowMolecule } from "@/components/molecules/BlocItemRowMolecule";
 
 interface ConfigurationsContentOrganismProps {
@@ -87,9 +91,15 @@ export function ConfigurationsContentOrganism({
       <Divider />
 
       {/* Bloc Items List */}
-      <Box>
+      <ListAtom props={{ disablePadding: true }}>
         {blocInfoPanels.items.map((item, index) => (
-          <Box key={item.id}>
+          <ListItemAtom
+            key={item.id}
+            props={{
+              disablePadding: true,
+              sx: { flexDirection: "column", alignItems: "stretch" },
+            }}
+          >
             <BlocItemRowMolecule
               props={{
                 shortLabel: item.shortLabel,
@@ -103,15 +113,17 @@ export function ConfigurationsContentOrganism({
                 onToggleExpand: () => blocInfoPanels.onToggleExpand(item.id),
               }}
             />
-            {item.isExpanded && (
-              <Box
-                sx={{ mx: 2, mb: 1, height: 240, bgcolor: "grey.200", borderRadius: 1 }}
+            <CollapseAtom props={{ in: item.isExpanded }}>
+              <BoxAtom
+                props={{
+                  sx: { mx: 2, mb: 1, height: 240, bgcolor: "grey.200", borderRadius: 1 },
+                }}
               />
-            )}
+            </CollapseAtom>
             {index < blocInfoPanels.items.length - 1 && <Divider />}
-          </Box>
+          </ListItemAtom>
         ))}
-      </Box>
+      </ListAtom>
 
       <Divider />
 
