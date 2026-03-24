@@ -129,17 +129,17 @@ export function ConfigurationsContentOrganism({
 
       <Divider />
 
-      {/* Add Bloc Button */}
-      <Box sx={{ py: 0.5 }}>
-        <ButtonAtom
+      {/* Add Bloc */}
+      <ListAtom props={{ disablePadding: true }}>
+        <ListItemAtom
           props={{
-            label: "Add Bloc +",
             onClick: blocInfoPanels.onAddBloc,
-            variant: "text",
-            fullWidth: true,
+            sx: { justifyContent: "center", cursor: "pointer" },
           }}
-        />
-      </Box>
+        >
+          <LabelAtom props={{ text: "Add Bloc +", variant: "body2" }} />
+        </ListItemAtom>
+      </ListAtom>
     </Box>
   );
 }
