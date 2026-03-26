@@ -1,14 +1,28 @@
 "use client";
 
 import { ConfigurationsContexts } from "@/hooks/configurations/state/useConfigurationsContext";
+import { BlocPanelState } from "@/hooks/configurations/state/useConfigurationsStateReducer";
 
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+const CONFIG_SET_OPTIONS = ["Config Set A", "Config Set B", "Config Set C"];
+
 export interface ConfigurationsProperties {
-  // プロパティの詳細は工程2〜3で追加する
+  configSetOptions: string[];
+  selectedConfigSet: string;
+  configName: string;
+  hasChanges: boolean;
+  panels: BlocPanelState[];
 }
 
-export function useConfigurationsProperties(_contexts: ConfigurationsContexts) {
-  const properties: ConfigurationsProperties = {};
+export function useConfigurationsProperties(contexts: ConfigurationsContexts) {
+  const { state } = contexts.reducer;
+
+  const properties: ConfigurationsProperties = {
+    configSetOptions: CONFIG_SET_OPTIONS,
+    selectedConfigSet: state.selectedConfigSet,
+    configName: state.configName,
+    hasChanges: state.hasChanges,
+    panels: state.panels,
+  };
 
   return { properties };
 }

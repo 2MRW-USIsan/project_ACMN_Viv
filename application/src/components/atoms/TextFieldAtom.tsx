@@ -5,12 +5,14 @@ import { useRef, useEffect } from "react";
 
 interface TextFieldAtomProps {
   props: {
-    label: string;
+    label?: string;
     defaultValue: string;
     onBlur: (value: string) => void;
     multiline?: boolean;
     rows?: number;
     fullWidth?: boolean;
+    size?: "small" | "medium";
+    placeholder?: string;
   };
 }
 
@@ -34,6 +36,8 @@ export function TextFieldAtom({ props }: TextFieldAtomProps) {
       multiline={props.multiline}
       rows={props.rows}
       fullWidth={props.fullWidth}
+      size={props.size}
+      placeholder={props.placeholder}
     />
   );
 }
