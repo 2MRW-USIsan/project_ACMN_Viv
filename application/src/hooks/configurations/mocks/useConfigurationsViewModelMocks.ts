@@ -21,7 +21,7 @@ interface ConfigurationsViewModelMocksReturns {
 export function useConfigurationsViewModelMocks(): ConfigurationsViewModelMocksReturns {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [selectedConfig, setSelectedConfig] = useState(MOCK_CONFIG_ITEMS[0]);
-  const [configEditValue, setConfigEditValue] = useState("サンプル設定値");
+  const [configEditValue, setConfigEditValue] = useState("");
   const pathname = usePathname();
   const router = useRouter();
 
@@ -53,6 +53,11 @@ export function useConfigurationsViewModelMocks(): ConfigurationsViewModelMocksR
             onSelect: handleConfigSelect,
             editValue: configEditValue,
             onEditBlur: handleConfigEditBlur,
+            onLoad: () => {},
+            onNew: () => {},
+            onSave: () => {},
+            onChange: () => {},
+            onDelete: () => {},
           },
         },
       },
