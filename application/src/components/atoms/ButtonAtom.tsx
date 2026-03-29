@@ -2,7 +2,7 @@
 
 import { Button, CircularProgress } from "@mui/material";
 
-interface ButtonAtomProps {
+export interface ButtonAtomProps {
   props: {
     label: string;
     onClick: () => void;

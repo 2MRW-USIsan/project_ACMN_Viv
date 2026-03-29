@@ -1,52 +1,39 @@
 "use client";
 
 import { Stack } from "@mui/material";
-import { NavItem } from "@/components/atoms/DrawerAtom";
-import { LabelAtom } from "@/components/atoms/LabelAtom";
+import { LabelAtom, LabelAtomProps } from "@/components/atoms/LabelAtom";
 import { DividerAtom } from "@/components/atoms/DividerAtom";
-import { SelectAtom } from "@/components/atoms/SelectAtom";
-import { TextFieldAtom } from "@/components/atoms/TextFieldAtom";
-import { ButtonAtom } from "@/components/atoms/ButtonAtom";
-import { NavLinkAtom } from "@/components/atoms/NavLinkAtom";
+import { SelectAtom, SelectAtomProps } from "@/components/atoms/SelectAtom";
+import { TextFieldAtom, TextFieldAtomProps } from "@/components/atoms/TextFieldAtom";
+import { ButtonAtom, ButtonAtomProps } from "@/components/atoms/ButtonAtom";
+import { NavLinkAtom, NavLinkAtomProps } from "@/components/atoms/NavLinkAtom";
 
 export interface NavigationConfigurations {
-  selectItems: string[];
-  selectedItem: string;
-  onSelect: (item: string) => void;
-  editValue: string;
-  onEditBlur: (value: string) => void;
-  onLoad: () => void;
-  onNew: () => void;
-  onSave: () => void;
-  onChange: () => void;
-  onDelete: () => void;
+  setLabel: LabelAtomProps["props"];
+  select: SelectAtomProps["props"];
+  loadButton: ButtonAtomProps["props"];
+  newButton: ButtonAtomProps["props"];
+  nameLabel: LabelAtomProps["props"];
+  editField: TextFieldAtomProps["props"];
+  saveButton: ButtonAtomProps["props"];
+  changeButton: ButtonAtomProps["props"];
+  deleteButton: ButtonAtomProps["props"];
 }
 
-interface NavigationOrganismProps {
+export interface NavigationOrganismProps {
   props: {
-    navItems: NavItem[];
-    activePath: string;
-    onNavigate: (href: string) => void;
+    activeItemLabel?: LabelAtomProps["props"];
+    links: NavLinkAtomProps["props"][];
     configurations?: NavigationConfigurations;
   };
 }
 
 export function NavigationOrganism({ props }: NavigationOrganismProps) {
-  const activeItem = props.navItems.find((item) => item.href === props.activePath);
-  const otherItems = props.navItems.filter((item) => item.href !== props.activePath);
-
   return (
     <Stack spacing={1} p={1}>
-      {activeItem && (
+      {props.activeItemLabel && (
         <>
-          <LabelAtom
-            props={{
-              text: `✓ ${activeItem.label}`,
-              variant: "subtitle1",
-              color: "success.main",
-              fontWeight: "bold",
-            }}
-          />
+          <LabelAtom props={props.activeItemLabel} />
           <DividerAtom />
         </>
       )}
@@ -54,79 +41,28 @@ export function NavigationOrganism({ props }: NavigationOrganismProps) {
       {props.configurations && (
         <Stack spacing={1} pt={0.5}>
           <Stack direction="row" alignItems="center" spacing={0.5}>
-            <LabelAtom props={{ text: "Sets:", variant: "body2" }} />
-            <SelectAtom
-              props={{
-                value: props.configurations.selectedItem,
-                options: props.configurations.selectItems,
-                onChange: props.configurations.onSelect,
-              }}
-            />
-            <ButtonAtom
-              props={{
-                label: "Load",
-                onClick: props.configurations.onLoad,
-                size: "small",
-              }}
-            />
-            <ButtonAtom
-              props={{
-                label: "New",
-                onClick: props.configurations.onNew,
-                size: "small",
-              }}
-            />
+            <LabelAtom props={props.configurations.setLabel} />
+            <SelectAtom props={props.configurations.select} />
+            <ButtonAtom props={props.configurations.loadButton} />
+            <ButtonAtom props={props.configurations.newButton} />
           </Stack>
 
           <Stack direction="row" alignItems="center" spacing={0.5}>
-            <LabelAtom props={{ text: "Name:", variant: "body2" }} />
-            <TextFieldAtom
-              props={{
-                placeholder: "text field...",
-                defaultValue: props.configurations.editValue,
-                onBlur: props.configurations.onEditBlur,
-                size: "small",
-              }}
-            />
-            <ButtonAtom
-              props={{
-                label: "Save",
-                onClick: props.configurations.onSave,
-                size: "small",
-              }}
-            />
-            <ButtonAtom
-              props={{
-                label: "change",
-                onClick: props.configurations.onChange,
-                size: "small",
-              }}
-            />
+            <LabelAtom props={props.configurations.nameLabel} />
+            <TextFieldAtom props={props.configurations.editField} />
+            <ButtonAtom props={props.configurations.saveButton} />
+            <ButtonAtom props={props.configurations.changeButton} />
           </Stack>
 
           <Stack direction="row" justifyContent="flex-end">
-            <ButtonAtom
-              props={{
-                label: "- Delete ? -",
-                onClick: props.configurations.onDelete,
-                size: "small",
-                variant: "text",
-                color: "error",
-              }}
-            />
+            <ButtonAtom props={props.configurations.deleteButton} />
           </Stack>
         </Stack>
       )}
 
       <Stack spacing={0.5} pt={0.5}>
-        {otherItems.map((item) => (
-          <NavLinkAtom
-            key={item.href}
-            props={{
-              label: item.label,
-              onClick: () => props.onNavigate(item.href),
-            }}
-          />
+        {props.links.map((linkProps) => (
+          <NavLinkAtom key={linkProps.label} props={linkProps} />
         ))}
       </Stack>
     </Stack>

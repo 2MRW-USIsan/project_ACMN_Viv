@@ -6,9 +6,9 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import AddIcon from "@mui/icons-material/Add";
 
-type IconType = "removeCircle" | "expandMore" | "expandLess" | "add";
+export type IconType = "removeCircle" | "expandMore" | "expandLess" | "add";
 
-interface IconButtonAtomProps {
+export interface IconButtonAtomProps {
   props: {
     icon: IconType;
     onClick: () => void;

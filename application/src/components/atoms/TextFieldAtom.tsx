@@ -3,7 +3,7 @@
 import { TextField } from "@mui/material";
 import { useRef, useEffect } from "react";
 
-interface TextFieldAtomProps {
+export interface TextFieldAtomProps {
   props: {
     label?: string;
     placeholder?: string;

@@ -2,7 +2,7 @@
 
 import { Select, MenuItem, FormControl } from "@mui/material";
 
-interface SelectAtomProps {
+export interface SelectAtomProps {
   props: {
     value: string;
     options: string[];

@@ -3,7 +3,7 @@
 import { Chip } from "@mui/material";
 import CheckIcon from "@mui/icons-material/Check";
 
-interface ChipCheckboxAtomProps {
+export interface ChipCheckboxAtomProps {
   props: {
     label: string;
     checked: boolean;
