@@ -2,6 +2,7 @@
 
 import { DividerAtom } from "@/components/atoms/DividerAtom";
 import { LabelAtom } from "@/components/atoms/LabelAtom";
+import { SectionPlaceholderMolecule } from "@/components/molecules/SectionPlaceholderMolecule";
 import { ConfigBodySection } from "@/hooks/configurations/viewModel/useConfigurationsComposer";
 import { Box } from "@mui/material";
 
@@ -16,7 +17,7 @@ export function ConfigurationOrdersSectionOrganism({
     <Box mt={2}>
       <LabelAtom props={props.titleLabel} />
       <DividerAtom />
-      <>TODO: Orders Sections Contents</>
+      <SectionPlaceholderMolecule props={{ placeholderLabel: props.placeholderLabel }} />
     </Box>
   );
 }
