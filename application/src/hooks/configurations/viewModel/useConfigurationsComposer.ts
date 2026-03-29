@@ -6,6 +6,13 @@ import { ConfigurationsContexts } from "@/hooks/configurations/state/useConfigur
 import { useConfigurationsProperties } from "@/hooks/configurations/viewModel/useConfigurationsProperties";
 import { useConfigurationsHandlers } from "@/hooks/configurations/viewModel/useConfigurationsHandlers";
 
+export interface BlocItem {
+  id: string;
+  keyValue: string;
+  labelValue: string;
+  availableBlocTypes: string[];
+}
+
 export interface ConfigurationsViewModel {
   navigationLayout: {
     appBar: {
@@ -22,6 +29,13 @@ export interface ConfigurationsViewModel {
       onNavigate: (href: string) => void;
       configurations?: NavigationConfigurations;
     };
+  };
+  configBody: {
+    blocs: BlocItem[];
+    onKeyChange: (id: string, value: string) => void;
+    onLabelChange: (id: string, value: string) => void;
+    onRemoveBloc: (id: string) => void;
+    onAddBloc: () => void;
   };
 }
 
@@ -46,6 +60,13 @@ export function useConfigurationsComposer(contexts: ConfigurationsContexts) {
           activePath: "",
           onNavigate: () => {},
         },
+      },
+      configBody: {
+        blocs: [],
+        onKeyChange: () => {},
+        onLabelChange: () => {},
+        onRemoveBloc: () => {},
+        onAddBloc: () => {},
       },
     } satisfies ConfigurationsViewModel,
   };
