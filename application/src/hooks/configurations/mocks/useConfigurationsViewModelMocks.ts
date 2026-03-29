@@ -44,6 +44,8 @@ export function useConfigurationsViewModelMocks(): ConfigurationsViewModelMocksR
         drawer: {
           open: drawerOpen,
           onClose: handleDrawerClose,
+        },
+        navigation: {
           navItems: NAV_ITEMS,
           activePath: pathname,
           onNavigate: handleNavigate,

@@ -2,7 +2,10 @@
 
 import { AppBarAtom } from "@/components/atoms/AppBarAtom";
 import { DrawerAtom, NavItem } from "@/components/atoms/DrawerAtom";
-import { NavigationOrganism, NavigationConfigurations } from "@/components/organisms/NavigationOrganism";
+import {
+  NavigationConfigurations,
+  NavigationOrganism,
+} from "@/components/organisms/NavigationOrganism";
 
 interface NavigationLayoutOrganismProps {
   props: {
@@ -13,6 +16,8 @@ interface NavigationLayoutOrganismProps {
     drawer: {
       open: boolean;
       onClose: () => void;
+    };
+    navigation: {
       navItems: NavItem[];
       activePath: string;
       onNavigate: (href: string) => void;
@@ -30,14 +35,7 @@ export function NavigationLayoutOrganism({
     <>
       <AppBarAtom props={props.appBar} />
       <DrawerAtom props={props.drawer}>
-        <NavigationOrganism
-          props={{
-            navItems: props.drawer.navItems,
-            activePath: props.drawer.activePath,
-            onNavigate: props.drawer.onNavigate,
-            configurations: props.drawer.configurations,
-          }}
-        />
+        <NavigationOrganism props={props.navigation} />
       </DrawerAtom>
       {children}
     </>

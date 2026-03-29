@@ -15,6 +15,8 @@ export interface ConfigurationsViewModel {
     drawer: {
       open: boolean;
       onClose: () => void;
+    };
+    navigation: {
       navItems: NavItem[];
       activePath: string;
       onNavigate: (href: string) => void;
@@ -38,6 +40,8 @@ export function useConfigurationsComposer(contexts: ConfigurationsContexts) {
         drawer: {
           open: false,
           onClose: () => {},
+        },
+        navigation: {
           navItems: [],
           activePath: "",
           onNavigate: () => {},
