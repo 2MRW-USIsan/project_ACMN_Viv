@@ -2,13 +2,26 @@
 
 import { ConfigurationsContexts } from "@/hooks/configurations/state/useConfigurationsContext";
 
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface ConfigurationsHandlers {
-  // ハンドラの詳細は工程2〜3で追加する
+  onConfigSelect: (config: string) => void;
+  onConfigNameChange: (name: string) => void;
+  onConfigValueChange: (value: string) => void;
+  onSave: () => void;
+  onCancel: () => void;
 }
 
-export function useConfigurationsHandlers(_contexts: ConfigurationsContexts) {
-  const handlers: ConfigurationsHandlers = {};
+export function useConfigurationsHandlers(contexts: ConfigurationsContexts) {
+  const { action } = contexts.reducer;
+
+  const handlers: ConfigurationsHandlers = {
+    onConfigSelect: action.setSelectedConfig,
+    onConfigNameChange: action.setConfigName,
+    onConfigValueChange: action.setConfigValue,
+    onSave: () => {
+      // 保存処理は工程3で追加する
+    },
+    onCancel: action.resetForm,
+  };
 
   return { handlers };
 }

@@ -2,9 +2,8 @@
 
 import { useConfigurationsFetchReducer } from "@/hooks/configurations/state/useConfigurationsFetchReducer";
 
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface ConfigurationsFetchItem {
-  // フェッチ状態の詳細は工程3で追加する
+  configOptions: string[];
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
@@ -22,7 +21,9 @@ export function useConfigurationsService(): ConfigurationsServiceReturns {
   useConfigurationsFetchReducer();
 
   return {
-    fetchItem: {},
+    fetchItem: {
+      configOptions: [],
+    },
     request: {},
   };
 }

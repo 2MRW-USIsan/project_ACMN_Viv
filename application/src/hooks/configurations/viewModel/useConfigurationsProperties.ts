@@ -2,13 +2,25 @@
 
 import { ConfigurationsContexts } from "@/hooks/configurations/state/useConfigurationsContext";
 
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface ConfigurationsProperties {
-  // プロパティの詳細は工程2〜3で追加する
+  configOptions: string[];
+  selectedConfig: string;
+  configName: string;
+  configValue: string;
+  isLoading: boolean;
 }
 
-export function useConfigurationsProperties(_contexts: ConfigurationsContexts) {
-  const properties: ConfigurationsProperties = {};
+export function useConfigurationsProperties(contexts: ConfigurationsContexts) {
+  const { state } = contexts.reducer;
+  const { fetchItem } = contexts.service;
+
+  const properties: ConfigurationsProperties = {
+    configOptions: fetchItem.configOptions ?? [],
+    selectedConfig: state.selectedConfig,
+    configName: state.configName,
+    configValue: state.configValue,
+    isLoading: state.isLoading,
+  };
 
   return { properties };
 }

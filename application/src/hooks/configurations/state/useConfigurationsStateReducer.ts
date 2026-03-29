@@ -3,14 +3,18 @@
 import { useEffect, useReducer } from "react";
 import { ConfigurationsFetchItem, ConfigurationsRequest } from "@/hooks/configurations/state/useConfigurationsService";
 
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface ConfigurationsReducerState {
-  // 状態の詳細は工程2〜3で追加する
+  selectedConfig: string;
+  configName: string;
+  configValue: string;
+  isLoading: boolean;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface ConfigurationsReducerAction {
-  // アクションの詳細は工程2〜3で追加する
+  setSelectedConfig: (config: string) => void;
+  setConfigName: (name: string) => void;
+  setConfigValue: (value: string) => void;
+  resetForm: () => void;
 }
 
 export interface ConfigurationsReducerReturn {
@@ -31,14 +35,32 @@ export interface ConfigurationsContexts {
 
 export function useConfigurationsStateReducer(): ConfigurationsReducerReturn {
   type STATE = ConfigurationsReducerState | undefined;
-  type ACTION = { type: "INITIALIZE" };
+  type ACTION =
+    | { type: "INITIALIZE" }
+    | { type: "SET_SELECTED_CONFIG"; payload: string }
+    | { type: "SET_CONFIG_NAME"; payload: string }
+    | { type: "SET_CONFIG_VALUE"; payload: string }
+    | { type: "RESET_FORM" };
 
-  const initItem: ConfigurationsReducerState = {};
+  const initItem: ConfigurationsReducerState = {
+    selectedConfig: "",
+    configName: "",
+    configValue: "",
+    isLoading: false,
+  };
 
   const reducer = (state: STATE, action: ACTION): STATE => {
     switch (action.type) {
       case "INITIALIZE":
         return initItem;
+      case "SET_SELECTED_CONFIG":
+        return { ...(state ?? initItem), selectedConfig: action.payload };
+      case "SET_CONFIG_NAME":
+        return { ...(state ?? initItem), configName: action.payload };
+      case "SET_CONFIG_VALUE":
+        return { ...(state ?? initItem), configValue: action.payload };
+      case "RESET_FORM":
+        return { ...(state ?? initItem), configName: "", configValue: "" };
       default:
         return state;
     }
@@ -50,8 +72,15 @@ export function useConfigurationsStateReducer(): ConfigurationsReducerReturn {
     dispatch({ type: "INITIALIZE" });
   }, []);
 
+  const action: ConfigurationsReducerAction = {
+    setSelectedConfig: (config: string) => dispatch({ type: "SET_SELECTED_CONFIG", payload: config }),
+    setConfigName: (name: string) => dispatch({ type: "SET_CONFIG_NAME", payload: name }),
+    setConfigValue: (value: string) => dispatch({ type: "SET_CONFIG_VALUE", payload: value }),
+    resetForm: () => dispatch({ type: "RESET_FORM" }),
+  };
+
   return {
     state: state ?? initItem,
-    action: {},
+    action,
   };
 }
