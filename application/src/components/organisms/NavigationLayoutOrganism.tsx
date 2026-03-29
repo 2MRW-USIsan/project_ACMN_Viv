@@ -1,46 +1,36 @@
 "use client";
 
-import { useState } from "react";
-import { usePathname, useRouter } from "next/navigation";
 import { Box } from "@mui/material";
 import { AppBarAtom, APPBAR_HEIGHT } from "@/components/atoms/AppBarAtom";
 import { DrawerAtom, NavItem } from "@/components/atoms/DrawerAtom";
 
-const NAV_ITEMS: NavItem[] = [
-  { href: "/configurations", label: "Configurations" },
-  { href: "/posting-clerk", label: "Posting Clerk" },
-  { href: "/preset-builder", label: "Preset Builder" },
-  { href: "/prompt-forger", label: "Prompt Forger" },
-];
-
 interface NavigationLayoutOrganismProps {
-  children: React.ReactNode;
+  props: {
+    title: string;
+    drawerOpen: boolean;
+    navItems: NavItem[];
+    activePath: string;
+    onMenuOpen: () => void;
+    onDrawerClose: () => void;
+    onNavigate: (href: string) => void;
+  };
+  children?: React.ReactNode;
 }
 
 export function NavigationLayoutOrganism({
+  props,
   children,
 }: NavigationLayoutOrganismProps) {
-  const [drawerOpen, setDrawerOpen] = useState(false);
-  const pathname = usePathname();
-  const router = useRouter();
-
-  const handleMenuOpen = () => setDrawerOpen(true);
-  const handleDrawerClose = () => setDrawerOpen(false);
-  const handleNavigate = (href: string) => {
-    router.push(href);
-    setDrawerOpen(false);
-  };
-
   return (
     <>
-      <AppBarAtom props={{ title: "ACMN", onMenuOpen: handleMenuOpen }} />
+      <AppBarAtom props={{ title: props.title, onMenuOpen: props.onMenuOpen }} />
       <DrawerAtom
         props={{
-          open: drawerOpen,
-          onClose: handleDrawerClose,
-          navItems: NAV_ITEMS,
-          activePath: pathname,
-          onNavigate: handleNavigate,
+          open: props.drawerOpen,
+          onClose: props.onDrawerClose,
+          navItems: props.navItems,
+          activePath: props.activePath,
+          onNavigate: props.onNavigate,
         }}
       />
       <Box component="main" sx={{ mt: `${APPBAR_HEIGHT}px` }}>

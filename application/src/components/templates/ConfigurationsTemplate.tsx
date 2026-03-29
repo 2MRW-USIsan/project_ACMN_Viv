@@ -7,6 +7,6 @@ interface ConfigurationsTemplateProps {
   props: ConfigurationsViewModel;
 }
 
-export function ConfigurationsTemplate({ props: _props }: ConfigurationsTemplateProps) {
-  return <NavigationLayoutOrganism>{null}</NavigationLayoutOrganism>;
+export function ConfigurationsTemplate({ props }: ConfigurationsTemplateProps) {
+  return <NavigationLayoutOrganism props={props.navigationLayout} />;
 }
