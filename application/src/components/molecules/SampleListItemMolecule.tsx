@@ -1,17 +1,17 @@
 "use client";
 
 import { Stack } from "@mui/material";
-import { SampleItem } from "@/types/sampleItem";
-import { LabelAtom } from "@/components/atoms/LabelAtom";
-import { ButtonAtom } from "@/components/atoms/ButtonAtom";
+import { LabelAtom, LabelAtomProps } from "@/components/atoms/LabelAtom";
+import { ButtonAtom, ButtonAtomProps } from "@/components/atoms/ButtonAtom";
 
-interface SampleListItemMoleculeProps {
+export interface SampleListItemMoleculeProps {
   props: {
-    item: SampleItem;
+    titleLabel: LabelAtomProps["props"];
+    descriptionLabel: LabelAtomProps["props"];
+    deleteButton: ButtonAtomProps["props"];
     isSelected: boolean;
     isLoading: boolean;
-    onSelect: (item: SampleItem) => void;
-    onDelete: (id: string) => Promise<void>;
+    onSelect: () => void;
   };
 }
 
@@ -29,28 +29,14 @@ export function SampleListItemMolecule({ props }: SampleListItemMoleculeProps) {
         bgcolor: props.isSelected ? "primary.50" : "background.paper",
         cursor: "pointer",
       }}
-      onClick={() => props.onSelect(props.item)}
+      onClick={props.onSelect}
     >
       <Stack spacing={0.5} flex={1} mr={1}>
-        <LabelAtom props={{ text: props.item.title, fontWeight: "bold" }} />
-        <LabelAtom
-          props={{
-            text: props.item.description,
-            variant: "body2",
-            color: "text.secondary",
-          }}
-        />
+        <LabelAtom props={props.titleLabel} />
+        <LabelAtom props={props.descriptionLabel} />
       </Stack>
       <span onClick={(e) => e.stopPropagation()}>
-        <ButtonAtom
-          props={{
-            label: "削除",
-            variant: "outlined",
-            color: "error",
-            isLoading: props.isLoading,
-            onClick: () => props.onDelete(props.item.id),
-          }}
-        />
+        <ButtonAtom props={props.deleteButton} />
       </span>
     </Stack>
   );

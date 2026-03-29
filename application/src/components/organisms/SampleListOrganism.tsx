@@ -1,50 +1,34 @@
 "use client";
 
 import { Stack, CircularProgress } from "@mui/material";
-import { SampleItem } from "@/types/sampleItem";
-import { LabelAtom } from "@/components/atoms/LabelAtom";
-import { SampleListItemMolecule } from "@/components/molecules/SampleListItemMolecule";
+import { LabelAtom, LabelAtomProps } from "@/components/atoms/LabelAtom";
+import {
+  SampleListItemMolecule,
+  SampleListItemMoleculeProps,
+} from "@/components/molecules/SampleListItemMolecule";
 
 interface SampleListOrganismProps {
   props: {
-    items: SampleItem[];
-    selectedItem: SampleItem | null;
+    titleLabel: LabelAtomProps["props"];
+    emptyLabel: LabelAtomProps["props"];
+    items: Array<SampleListItemMoleculeProps["props"] & { key: string }>;
     isLoading: boolean;
-    onSelectItem: (item: SampleItem) => void;
-    onDeleteItem: (id: string) => Promise<void>;
   };
 }
 
 export function SampleListOrganism({ props }: SampleListOrganismProps) {
   return (
     <Stack spacing={1}>
-      <LabelAtom
-        props={{ text: "データリスト", variant: "h6", fontWeight: "bold" }}
-      />
+      <LabelAtom props={props.titleLabel} />
       {props.isLoading && props.items.length === 0 ? (
         <Stack alignItems="center" p={2}>
           <CircularProgress size={24} />
         </Stack>
       ) : props.items.length === 0 ? (
-        <LabelAtom
-          props={{
-            text: "データがありません。",
-            variant: "body2",
-            color: "text.secondary",
-          }}
-        />
+        <LabelAtom props={props.emptyLabel} />
       ) : (
-        props.items.map((item) => (
-          <SampleListItemMolecule
-            key={item.id}
-            props={{
-              item,
-              isSelected: props.selectedItem?.id === item.id,
-              isLoading: props.isLoading,
-              onSelect: props.onSelectItem,
-              onDelete: props.onDeleteItem,
-            }}
-          />
+        props.items.map(({ key, ...itemProps }) => (
+          <SampleListItemMolecule key={key} props={itemProps} />
         ))
       )}
     </Stack>

@@ -2,7 +2,7 @@
 
 import { Typography } from "@mui/material";
 
-interface LabelAtomProps {
+export interface LabelAtomProps {
   props: {
     text: string;
     variant?:

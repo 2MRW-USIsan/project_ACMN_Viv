@@ -2,7 +2,7 @@
 
 import { Link } from "@mui/material";
 
-interface NavLinkAtomProps {
+export interface NavLinkAtomProps {
   props: {
     label: string;
     onClick: () => void;
