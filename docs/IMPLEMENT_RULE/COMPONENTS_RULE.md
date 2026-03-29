@@ -74,7 +74,7 @@ export default function EditorPage() {
 - 自身で状態を持たない。
 
 ```tsx
-// 例: /components/templates/EditorTemplate.tsx
+// 例: /components/template/EditorTemplate.tsx
 interface EditorTemplateProps {
   props: EditorViewModel;
 }
@@ -219,7 +219,7 @@ export function CanvasAtom({ props }: CanvasAtomProps) {
 | 階層 | 粒度 | 状態管理 | 配置 |
 |------|------|----------|------|
 | pages | ページ単位 | ViewModelフックを呼び出す | `/app/**/page.tsx` |
-| template | ページレイアウト単位 | 持たない | `/components/templates/` |
+| template | ページレイアウト単位 | 持たない | `/components/template/` |
 | organisms | 機能単位 | 持たない | `/components/organisms/` |
 | molecules | 部品単位（複数atoms） | 持たない | `/components/molecules/` |
 | atoms | 最小単位（MUIラッパー） | 例外①UI内部状態、例外②パフォーマンス目的のDOM操作（useRef/useEffect必須） | `/components/atoms/` |

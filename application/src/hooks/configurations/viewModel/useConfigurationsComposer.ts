@@ -1,12 +1,24 @@
 "use client";
 
+import { NavItem } from "@/components/atoms/DrawerAtom";
 import { ConfigurationsContexts } from "@/hooks/configurations/state/useConfigurationsContext";
 import { useConfigurationsProperties } from "@/hooks/configurations/viewModel/useConfigurationsProperties";
 import { useConfigurationsHandlers } from "@/hooks/configurations/viewModel/useConfigurationsHandlers";
 
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface ConfigurationsViewModel {
-  // ViewModel の詳細は工程2〜3で追加する
+  navigationLayout: {
+    appBar: {
+      title: string;
+      onMenuOpen: () => void;
+    };
+    drawer: {
+      open: boolean;
+      onClose: () => void;
+      navItems: NavItem[];
+      activePath: string;
+      onNavigate: (href: string) => void;
+    };
+  };
 }
 
 export function useConfigurationsComposer(contexts: ConfigurationsContexts) {
@@ -14,6 +26,21 @@ export function useConfigurationsComposer(contexts: ConfigurationsContexts) {
   const { handlers: _handlers } = useConfigurationsHandlers(contexts);
 
   return {
-    viewModel: {} satisfies ConfigurationsViewModel,
+    viewModel: {
+      navigationLayout: {
+        // NavigationLayout のスタブ実装（工程2〜3で実際の値に置き換える）
+        appBar: {
+          title: "ACMN",
+          onMenuOpen: () => {},
+        },
+        drawer: {
+          open: false,
+          onClose: () => {},
+          navItems: [],
+          activePath: "",
+          onNavigate: () => {},
+        },
+      },
+    } satisfies ConfigurationsViewModel,
   };
 }

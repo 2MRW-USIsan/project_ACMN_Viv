@@ -42,11 +42,11 @@
 
 | 工程 | 依頼書 | 成果物報告書 | スコープ |
 |---|---|---|---|
-| 1. 画面追加 | [REQUEST](./docs/templates/01_SCREEN_ADD/REQUEST_TEMPLATE.md) | [REPORT](./docs/templates/01_SCREEN_ADD/REPORT_TEMPLATE.md) | AppRouter パス追加・全フック空実装 |
-| 2. コンポーネント追加 | [REQUEST](./docs/templates/02_COMPONENT_ADD/REQUEST_TEMPLATE.md) | [REPORT](./docs/templates/02_COMPONENT_ADD/REPORT_TEMPLATE.md) | コンポーネント追加・StateReducer 状態追加 |
-| 3. CRUD処理の追加 | [REQUEST](./docs/templates/03_CRUD_ADD/REQUEST_TEMPLATE.md) | [REPORT](./docs/templates/03_CRUD_ADD/REPORT_TEMPLATE.md) | StateReducer・FetchReducer 状態・ハンドラ追加 |
-| 4. 副作用影響の変更 | [REQUEST](./docs/templates/04_SIDE_EFFECT/REQUEST_TEMPLATE.md) | [REPORT](./docs/templates/04_SIDE_EFFECT/REPORT_TEMPLATE.md) | ハンドラ調整・Controller 実装 |
-| 5. リファクタリング | [REQUEST](./docs/templates/05_REFACTOR/REQUEST_TEMPLATE.md) | [REPORT](./docs/templates/05_REFACTOR/REPORT_TEMPLATE.md) | 型定義・ユーティリティ統合・外部化 |
+| 1. 画面追加 | [REQUEST](./docs/template/01_SCREEN_ADD/REQUEST_TEMPLATE.md) | [REPORT](./docs/template/01_SCREEN_ADD/REPORT_TEMPLATE.md) | AppRouter パス追加・全フック空実装 |
+| 2. コンポーネント追加 | [REQUEST](./docs/template/02_COMPONENT_ADD/REQUEST_TEMPLATE.md) | [REPORT](./docs/template/02_COMPONENT_ADD/REPORT_TEMPLATE.md) | コンポーネント追加・StateReducer 状態追加 |
+| 3. CRUD処理の追加 | [REQUEST](./docs/template/03_CRUD_ADD/REQUEST_TEMPLATE.md) | [REPORT](./docs/template/03_CRUD_ADD/REPORT_TEMPLATE.md) | StateReducer・FetchReducer 状態・ハンドラ追加 |
+| 4. 副作用影響の変更 | [REQUEST](./docs/template/04_SIDE_EFFECT/REQUEST_TEMPLATE.md) | [REPORT](./docs/template/04_SIDE_EFFECT/REPORT_TEMPLATE.md) | ハンドラ調整・Controller 実装 |
+| 5. リファクタリング | [REQUEST](./docs/template/05_REFACTOR/REQUEST_TEMPLATE.md) | [REPORT](./docs/template/05_REFACTOR/REPORT_TEMPLATE.md) | 型定義・ユーティリティ統合・外部化 |
 
 ---
 
