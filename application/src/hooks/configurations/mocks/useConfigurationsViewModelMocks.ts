@@ -255,7 +255,7 @@ export function useConfigurationsViewModelMocks(): ConfigurationsViewModelMocksR
                   variant: "body2",
                 },
                 placeholderLabel: {
-                  text: `${typeName} component placeholder`,
+                  text: "Blank",
                   variant: "body1",
                   color: "text.secondary",
                 },
