@@ -7,13 +7,17 @@ import { useConfigurationsHandlers } from "@/hooks/configurations/viewModel/useC
 
 export interface ConfigurationsViewModel {
   navigationLayout: {
-    title: string;
-    drawerOpen: boolean;
-    navItems: NavItem[];
-    activePath: string;
-    onMenuOpen: () => void;
-    onDrawerClose: () => void;
-    onNavigate: (href: string) => void;
+    appBar: {
+      title: string;
+      onMenuOpen: () => void;
+    };
+    drawer: {
+      open: boolean;
+      onClose: () => void;
+      navItems: NavItem[];
+      activePath: string;
+      onNavigate: (href: string) => void;
+    };
   };
 }
 
@@ -25,13 +29,17 @@ export function useConfigurationsComposer(contexts: ConfigurationsContexts) {
     viewModel: {
       navigationLayout: {
         // NavigationLayout のスタブ実装（工程2〜3で実際の値に置き換える）
-        title: "ACMN",
-        drawerOpen: false,
-        navItems: [],
-        activePath: "",
-        onMenuOpen: () => {},
-        onDrawerClose: () => {},
-        onNavigate: () => {},
+        appBar: {
+          title: "ACMN",
+          onMenuOpen: () => {},
+        },
+        drawer: {
+          open: false,
+          onClose: () => {},
+          navItems: [],
+          activePath: "",
+          onNavigate: () => {},
+        },
       },
     } satisfies ConfigurationsViewModel,
   };

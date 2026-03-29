@@ -31,13 +31,17 @@ export function useConfigurationsViewModelMocks(): ConfigurationsViewModelMocksR
   return {
     viewModel: {
       navigationLayout: {
-        title: "ACMN",
-        drawerOpen,
-        navItems: NAV_ITEMS,
-        activePath: pathname,
-        onMenuOpen: handleMenuOpen,
-        onDrawerClose: handleDrawerClose,
-        onNavigate: handleNavigate,
+        appBar: {
+          title: "ACMN",
+          onMenuOpen: handleMenuOpen,
+        },
+        drawer: {
+          open: drawerOpen,
+          onClose: handleDrawerClose,
+          navItems: NAV_ITEMS,
+          activePath: pathname,
+          onNavigate: handleNavigate,
+        },
       },
     },
   };
