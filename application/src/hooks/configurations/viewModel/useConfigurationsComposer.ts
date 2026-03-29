@@ -1,6 +1,7 @@
 "use client";
 
 import { NavItem } from "@/components/atoms/DrawerAtom";
+import { NavigationConfigurations } from "@/components/organisms/NavigationOrganism";
 import { ConfigurationsContexts } from "@/hooks/configurations/state/useConfigurationsContext";
 import { useConfigurationsProperties } from "@/hooks/configurations/viewModel/useConfigurationsProperties";
 import { useConfigurationsHandlers } from "@/hooks/configurations/viewModel/useConfigurationsHandlers";
@@ -17,6 +18,7 @@ export interface ConfigurationsViewModel {
       navItems: NavItem[];
       activePath: string;
       onNavigate: (href: string) => void;
+      configurations?: NavigationConfigurations;
     };
   };
 }

@@ -12,12 +12,16 @@ const NAV_ITEMS: NavItem[] = [
   { href: "/prompt-forger", label: "Prompt Forger" },
 ];
 
+const MOCK_CONFIG_ITEMS = ["config-default", "config-production", "config-staging"];
+
 interface ConfigurationsViewModelMocksReturns {
   viewModel: ConfigurationsViewModel;
 }
 
 export function useConfigurationsViewModelMocks(): ConfigurationsViewModelMocksReturns {
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [selectedConfig, setSelectedConfig] = useState(MOCK_CONFIG_ITEMS[0]);
+  const [configEditValue, setConfigEditValue] = useState("サンプル設定値");
   const pathname = usePathname();
   const router = useRouter();
 
@@ -27,6 +31,8 @@ export function useConfigurationsViewModelMocks(): ConfigurationsViewModelMocksR
     router.push(href);
     setDrawerOpen(false);
   };
+  const handleConfigSelect = (item: string) => setSelectedConfig(item);
+  const handleConfigEditBlur = (value: string) => setConfigEditValue(value);
 
   return {
     viewModel: {
@@ -41,6 +47,13 @@ export function useConfigurationsViewModelMocks(): ConfigurationsViewModelMocksR
           navItems: NAV_ITEMS,
           activePath: pathname,
           onNavigate: handleNavigate,
+          configurations: {
+            selectItems: MOCK_CONFIG_ITEMS,
+            selectedItem: selectedConfig,
+            onSelect: handleConfigSelect,
+            editValue: configEditValue,
+            onEditBlur: handleConfigEditBlur,
+          },
         },
       },
     },

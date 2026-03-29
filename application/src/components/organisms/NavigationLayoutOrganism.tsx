@@ -1,7 +1,8 @@
 "use client";
 
 import { AppBarAtom } from "@/components/atoms/AppBarAtom";
-import { DrawerAtom } from "@/components/atoms/DrawerAtom";
+import { DrawerAtom, NavItem } from "@/components/atoms/DrawerAtom";
+import { NavigationOrganism, NavigationConfigurations } from "@/components/organisms/NavigationOrganism";
 
 interface NavigationLayoutOrganismProps {
   props: {
@@ -12,6 +13,10 @@ interface NavigationLayoutOrganismProps {
     drawer: {
       open: boolean;
       onClose: () => void;
+      navItems: NavItem[];
+      activePath: string;
+      onNavigate: (href: string) => void;
+      configurations?: NavigationConfigurations;
     };
   };
   children?: React.ReactNode;
@@ -25,7 +30,14 @@ export function NavigationLayoutOrganism({
     <>
       <AppBarAtom props={props.appBar} />
       <DrawerAtom props={props.drawer}>
-        <>TODO: NavigationOrganism</>
+        <NavigationOrganism
+          props={{
+            navItems: props.drawer.navItems,
+            activePath: props.drawer.activePath,
+            onNavigate: props.drawer.onNavigate,
+            configurations: props.drawer.configurations,
+          }}
+        />
       </DrawerAtom>
       {children}
     </>
