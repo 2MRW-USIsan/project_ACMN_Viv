@@ -1,6 +1,7 @@
 "use client";
 
 import { NavItem } from "@/components/atoms/DrawerAtom";
+import { NavigationConfigurations } from "@/components/organisms/NavigationOrganism";
 import { ConfigurationsContexts } from "@/hooks/configurations/state/useConfigurationsContext";
 import { useConfigurationsProperties } from "@/hooks/configurations/viewModel/useConfigurationsProperties";
 import { useConfigurationsHandlers } from "@/hooks/configurations/viewModel/useConfigurationsHandlers";
@@ -14,9 +15,12 @@ export interface ConfigurationsViewModel {
     drawer: {
       open: boolean;
       onClose: () => void;
+    };
+    navigation: {
       navItems: NavItem[];
       activePath: string;
       onNavigate: (href: string) => void;
+      configurations?: NavigationConfigurations;
     };
   };
 }
@@ -36,6 +40,8 @@ export function useConfigurationsComposer(contexts: ConfigurationsContexts) {
         drawer: {
           open: false,
           onClose: () => {},
+        },
+        navigation: {
           navItems: [],
           activePath: "",
           onNavigate: () => {},
