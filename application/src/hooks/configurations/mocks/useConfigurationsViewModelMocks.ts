@@ -8,6 +8,7 @@ import {
   ConfigBodySectionType,
   ConfigurationsViewModel,
   OrdersGrpItem,
+  OrdersTypeOption,
 } from "@/hooks/configurations/viewModel/useConfigurationsComposer";
 
 const NAV_ITEMS: NavItem[] = [
@@ -16,6 +17,8 @@ const NAV_ITEMS: NavItem[] = [
   { href: "/preset-builder", label: "Preset Builder" },
   { href: "/prompt-forger", label: "Prompt Forger" },
 ];
+
+const ORDERS_TYPE_OPTIONS: OrdersTypeOption[] = ["random", "complex", "scripts", "colors"];
 
 const MOCK_CONFIG_ITEMS = ["config-default", "config-production", "config-staging"];
 
@@ -64,6 +67,15 @@ export function useConfigurationsViewModelMocks(): ConfigurationsViewModelMocksR
   >({});
   const [ordersGrpExpandedIds, setOrdersGrpExpandedIds] = useState<
     Record<string, Set<string>>
+  >({});
+  const [ordersItemItems, setOrdersItemItems] = useState<
+    Record<string, Array<{ id: string; keyValue: string; labelValue: string }>>
+  >({});
+  const [ordersItemExpandedIds, setOrdersItemExpandedIds] = useState<
+    Record<string, Set<string>>
+  >({});
+  const [selectedOrdersItemTypes, setSelectedOrdersItemTypes] = useState<
+    Record<string, OrdersTypeOption>
   >({});
   const pathname = usePathname();
   const router = useRouter();
@@ -175,6 +187,53 @@ export function useConfigurationsViewModelMocks(): ConfigurationsViewModelMocksR
         g.id === grpId ? { ...g, labelValue: value } : g
       ),
     }));
+  };
+
+  const handleAddOrdersItem = (grpId: string) => {
+    const newId = `orders-item-${Date.now()}`;
+    setOrdersItemItems((prev) => ({
+      ...prev,
+      [grpId]: [
+        ...(prev[grpId] ?? []),
+        { id: newId, keyValue: "", labelValue: "" },
+      ],
+    }));
+  };
+  const handleRemoveOrdersItem = (grpId: string, itemId: string) => {
+    setOrdersItemItems((prev) => ({
+      ...prev,
+      [grpId]: (prev[grpId] ?? []).filter((i) => i.id !== itemId),
+    }));
+  };
+  const handleToggleOrdersItemExpanded = (grpId: string, itemId: string) => {
+    setOrdersItemExpandedIds((prev) => {
+      const current = new Set(prev[grpId] ?? []);
+      if (current.has(itemId)) {
+        current.delete(itemId);
+      } else {
+        current.add(itemId);
+      }
+      return { ...prev, [grpId]: current };
+    });
+  };
+  const handleOrdersItemKeyChange = (grpId: string, itemId: string, value: string) => {
+    setOrdersItemItems((prev) => ({
+      ...prev,
+      [grpId]: (prev[grpId] ?? []).map((i) =>
+        i.id === itemId ? { ...i, keyValue: value } : i
+      ),
+    }));
+  };
+  const handleOrdersItemLabelChange = (grpId: string, itemId: string, value: string) => {
+    setOrdersItemItems((prev) => ({
+      ...prev,
+      [grpId]: (prev[grpId] ?? []).map((i) =>
+        i.id === itemId ? { ...i, labelValue: value } : i
+      ),
+    }));
+  };
+  const handleSelectOrdersItemType = (itemId: string, type: OrdersTypeOption) => {
+    setSelectedOrdersItemTypes((prev) => ({ ...prev, [itemId]: type }));
   };
 
   return {
@@ -363,6 +422,65 @@ export function useConfigurationsViewModelMocks(): ConfigurationsViewModelMocksR
                         text: "Order Items:",
                         variant: "body2",
                       },
+                      ordersItemSection: (() => {
+                        const items = ordersItemItems[grp.id] ?? [];
+                        const expandedItemIds = ordersItemExpandedIds[grp.id] ?? new Set<string>();
+                        return {
+                          ordersItemPanels: items.map((item) => {
+                            const selectedType = selectedOrdersItemTypes[item.id] ?? null;
+                            return {
+                              key: item.id,
+                              panelLabel: { text: "Item:", variant: "body2" as const },
+                              keyLabel: { text: "Key:", variant: "body2" as const },
+                              keyField: {
+                                placeholder: "text field...",
+                                defaultValue: item.keyValue,
+                                onBlur: (value: string) =>
+                                  handleOrdersItemKeyChange(grp.id, item.id, value),
+                                size: "small" as const,
+                                fullWidth: true,
+                              },
+                              labelLabel: { text: "Label:", variant: "body2" as const },
+                              labelField: {
+                                placeholder: "text field...",
+                                defaultValue: item.labelValue,
+                                onBlur: (value: string) =>
+                                  handleOrdersItemLabelChange(grp.id, item.id, value),
+                                size: "small" as const,
+                                fullWidth: true,
+                              },
+                              removeButton: {
+                                icon: "removeCircle" as const,
+                                onClick: () => handleRemoveOrdersItem(grp.id, item.id),
+                                color: "default" as const,
+                              },
+                              toggleButton: {
+                                icon: expandedItemIds.has(item.id)
+                                  ? ("expandLess" as const)
+                                  : ("expandMore" as const),
+                                onClick: () =>
+                                  handleToggleOrdersItemExpanded(grp.id, item.id),
+                              },
+                              isExpanded: expandedItemIds.has(item.id),
+                              ordersTypeLabel: { text: "Orders Type:", variant: "body2" as const },
+                              ordersTypeChips: ORDERS_TYPE_OPTIONS.map((type) => ({
+                                key: type,
+                                label: type,
+                                checked: selectedType === type,
+                                onChange: () => handleSelectOrdersItemType(item.id, type),
+                              })),
+                              selectedTypeLabel: selectedType
+                                ? { text: `${selectedType.charAt(0).toUpperCase()}${selectedType.slice(1)}:`, variant: "body2" as const }
+                                : null,
+                            };
+                          }),
+                          addItemRowLabel: { text: "Add Orders Item:", variant: "body2" as const },
+                          addItemButton: {
+                            icon: "add" as const,
+                            onClick: () => handleAddOrdersItem(grp.id),
+                          },
+                        };
+                      })(),
                     })),
                     addGrpRowLabel: {
                       text: "Add Orders Grp:",

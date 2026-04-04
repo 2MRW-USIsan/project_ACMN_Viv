@@ -1,5 +1,6 @@
 "use client";
 
+import { ConfigurationOrdersItemSectionOrganism } from "@/components/organisms/ConfigurationOrdersItemSectionOrganism";
 import { DividerAtom } from "@/components/atoms/DividerAtom";
 import { IconButtonAtom } from "@/components/atoms/IconButtonAtom";
 import { LabelAtom } from "@/components/atoms/LabelAtom";
@@ -13,8 +14,6 @@ import {
   ListItem,
   Stack,
 } from "@mui/material";
-
-const ORDER_ITEMS_BLANK_LABEL = { text: "Blank", variant: "body1" as const, fontWeight: "bold" as const };
 
 interface ConfigurationOrdersSectionOrganismProps {
   props: ConfigBodySection;
@@ -69,7 +68,7 @@ export function ConfigurationOrdersSectionOrganism({
                 <IconButtonAtom props={grp.toggleButton} />
               </ListItem>
 
-              {/* Expanded content: Order Items + Blank area */}
+              {/* Expanded content: Order Items section */}
               <Collapse in={grp.isExpanded} timeout="auto" unmountOnExit>
                 <Box
                   sx={{
@@ -80,19 +79,7 @@ export function ConfigurationOrdersSectionOrganism({
                   }}
                 >
                   <LabelAtom props={grp.orderItemsLabel} />
-                  <Box
-                    sx={{
-                      bgcolor: "grey.200",
-                      borderRadius: 1,
-                      p: 4,
-                      mt: 1,
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <LabelAtom props={ORDER_ITEMS_BLANK_LABEL} />
-                  </Box>
+                  <ConfigurationOrdersItemSectionOrganism props={grp.ordersItemSection} />
                 </Box>
               </Collapse>
             </Box>
