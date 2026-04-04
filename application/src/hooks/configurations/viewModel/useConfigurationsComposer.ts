@@ -24,6 +24,29 @@ export interface OrdersGrpItem {
   labelValue: string;
 }
 
+export type OrdersTypeOption = "random" | "complex" | "scripts" | "colors";
+
+export interface OrdersItemPanel {
+  key: string;
+  panelLabel: LabelAtomProps["props"];
+  keyLabel: LabelAtomProps["props"];
+  keyField: TextFieldAtomProps["props"];
+  labelLabel: LabelAtomProps["props"];
+  labelField: TextFieldAtomProps["props"];
+  removeButton: IconButtonAtomProps["props"];
+  toggleButton: IconButtonAtomProps["props"];
+  isExpanded: boolean;
+  ordersTypeLabel: LabelAtomProps["props"];
+  ordersTypeChips: Array<ChipCheckboxAtomProps["props"] & { key: string }>;
+  selectedTypeLabel: LabelAtomProps["props"] | null;
+}
+
+export interface OrdersItemSection {
+  ordersItemPanels: OrdersItemPanel[];
+  addItemRowLabel: LabelAtomProps["props"];
+  addItemButton: IconButtonAtomProps["props"];
+}
+
 export interface OrdersGrpPanel {
   key: string;
   panelLabel: LabelAtomProps["props"];
@@ -35,6 +58,7 @@ export interface OrdersGrpPanel {
   toggleButton: IconButtonAtomProps["props"];
   isExpanded: boolean;
   orderItemsLabel: LabelAtomProps["props"];
+  ordersItemSection: OrdersItemSection;
 }
 
 export type ConfigBodySectionType = "Orders" | "Switch" | "Select";
