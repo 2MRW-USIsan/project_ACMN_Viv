@@ -18,6 +18,25 @@ export interface BlocItem {
   availableBlocTypes: string[];
 }
 
+export interface OrdersGrpItem {
+  id: string;
+  keyValue: string;
+  labelValue: string;
+}
+
+export interface OrdersGrpPanel {
+  key: string;
+  panelLabel: LabelAtomProps["props"];
+  keyLabel: LabelAtomProps["props"];
+  keyField: TextFieldAtomProps["props"];
+  labelLabel: LabelAtomProps["props"];
+  labelField: TextFieldAtomProps["props"];
+  removeButton: IconButtonAtomProps["props"];
+  toggleButton: IconButtonAtomProps["props"];
+  isExpanded: boolean;
+  orderItemsLabel: LabelAtomProps["props"];
+}
+
 export type ConfigBodySectionType = "Orders" | "Switch" | "Select";
 
 export interface ConfigBodySection {
@@ -25,6 +44,9 @@ export interface ConfigBodySection {
   type: ConfigBodySectionType;
   titleLabel: LabelAtomProps["props"];
   placeholderLabel: LabelAtomProps["props"];
+  ordersGrpPanels?: OrdersGrpPanel[];
+  addGrpRowLabel?: LabelAtomProps["props"];
+  addGrpButton?: IconButtonAtomProps["props"];
 }
 
 export interface ConfigBodyBlocPanel {

@@ -7,6 +7,7 @@ import {
   BlocItem,
   ConfigBodySectionType,
   ConfigurationsViewModel,
+  OrdersGrpItem,
 } from "@/hooks/configurations/viewModel/useConfigurationsComposer";
 
 const NAV_ITEMS: NavItem[] = [
@@ -56,6 +57,12 @@ export function useConfigurationsViewModelMocks(): ConfigurationsViewModelMocksR
   const [blocs, setBlocs] = useState<BlocItem[]>(INITIAL_BLOCS);
   const [expandedIds, setExpandedIds] = useState<Set<string>>(new Set());
   const [selectedBlocTypes, setSelectedBlocTypes] = useState<
+    Record<string, Set<string>>
+  >({});
+  const [ordersGrpItems, setOrdersGrpItems] = useState<
+    Record<string, OrdersGrpItem[]>
+  >({});
+  const [ordersGrpExpandedIds, setOrdersGrpExpandedIds] = useState<
     Record<string, Set<string>>
   >({});
   const pathname = usePathname();
@@ -116,6 +123,58 @@ export function useConfigurationsViewModelMocks(): ConfigurationsViewModelMocksR
         availableBlocTypes: ["Orders", "Switch", "Select"],
       },
     ]);
+  };
+
+  const handleAddOrdersGrp = (sectionKey: string) => {
+    const newId = `orders-grp-${Date.now()}`;
+    setOrdersGrpItems((prev) => ({
+      ...prev,
+      [sectionKey]: [
+        ...(prev[sectionKey] ?? []),
+        { id: newId, keyValue: "", labelValue: "" },
+      ],
+    }));
+  };
+  const handleRemoveOrdersGrp = (sectionKey: string, grpId: string) => {
+    setOrdersGrpItems((prev) => ({
+      ...prev,
+      [sectionKey]: (prev[sectionKey] ?? []).filter((g) => g.id !== grpId),
+    }));
+  };
+  const handleToggleOrdersGrpExpanded = (sectionKey: string, grpId: string) => {
+    setOrdersGrpExpandedIds((prev) => {
+      const current = new Set(prev[sectionKey] ?? []);
+      if (current.has(grpId)) {
+        current.delete(grpId);
+      } else {
+        current.add(grpId);
+      }
+      return { ...prev, [sectionKey]: current };
+    });
+  };
+  const handleOrdersGrpKeyChange = (
+    sectionKey: string,
+    grpId: string,
+    value: string
+  ) => {
+    setOrdersGrpItems((prev) => ({
+      ...prev,
+      [sectionKey]: (prev[sectionKey] ?? []).map((g) =>
+        g.id === grpId ? { ...g, keyValue: value } : g
+      ),
+    }));
+  };
+  const handleOrdersGrpLabelChange = (
+    sectionKey: string,
+    grpId: string,
+    value: string
+  ) => {
+    setOrdersGrpItems((prev) => ({
+      ...prev,
+      [sectionKey]: (prev[sectionKey] ?? []).map((g) =>
+        g.id === grpId ? { ...g, labelValue: value } : g
+      ),
+    }));
   };
 
   return {
@@ -247,19 +306,88 @@ export function useConfigurationsViewModelMocks(): ConfigurationsViewModelMocksR
             })),
             sections: bloc.availableBlocTypes
               .filter((typeName) => checkedTypes.has(typeName))
-              .map((typeName) => ({
-                key: typeName,
-                type: typeName as ConfigBodySectionType,
-                titleLabel: {
-                  text: `${typeName}:`,
-                  variant: "body2",
-                },
-                placeholderLabel: {
-                  text: `${typeName} component placeholder`,
-                  variant: "body1",
-                  color: "text.secondary",
-                },
-              })),
+              .map((typeName) => {
+                const sectionKey = `${bloc.id}-${typeName}`;
+                if (typeName === "Orders") {
+                  const grps = ordersGrpItems[sectionKey] ?? [];
+                  const expandedGrpIds =
+                    ordersGrpExpandedIds[sectionKey] ?? new Set<string>();
+                  return {
+                    key: typeName,
+                    type: typeName as ConfigBodySectionType,
+                    titleLabel: {
+                      text: `${typeName}:`,
+                      variant: "body2",
+                    },
+                    placeholderLabel: {
+                      text: `${typeName} component placeholder`,
+                      variant: "body1",
+                      color: "text.secondary",
+                    },
+                    ordersGrpPanels: grps.map((grp) => ({
+                      key: grp.id,
+                      panelLabel: { text: "Orders Grp:", variant: "body2" },
+                      keyLabel: { text: "Key:", variant: "body2" },
+                      keyField: {
+                        placeholder: "text field...",
+                        defaultValue: grp.keyValue,
+                        onBlur: (value: string) =>
+                          handleOrdersGrpKeyChange(sectionKey, grp.id, value),
+                        size: "small",
+                        fullWidth: true,
+                      },
+                      labelLabel: { text: "Label:", variant: "body2" },
+                      labelField: {
+                        placeholder: "text field...",
+                        defaultValue: grp.labelValue,
+                        onBlur: (value: string) =>
+                          handleOrdersGrpLabelChange(sectionKey, grp.id, value),
+                        size: "small",
+                        fullWidth: true,
+                      },
+                      removeButton: {
+                        icon: "removeCircle" as const,
+                        onClick: () =>
+                          handleRemoveOrdersGrp(sectionKey, grp.id),
+                        color: "default" as const,
+                      },
+                      toggleButton: {
+                        icon: expandedGrpIds.has(grp.id)
+                          ? ("expandLess" as const)
+                          : ("expandMore" as const),
+                        onClick: () =>
+                          handleToggleOrdersGrpExpanded(sectionKey, grp.id),
+                      },
+                      isExpanded: expandedGrpIds.has(grp.id),
+                      orderItemsLabel: {
+                        text: "Order Items:",
+                        variant: "body2",
+                      },
+                    })),
+                    addGrpRowLabel: {
+                      text: "Add Orders Grp:",
+                      variant: "body2",
+                    },
+                    addGrpButton: {
+                      icon: "add" as const,
+                      onClick: () => handleAddOrdersGrp(sectionKey),
+                    },
+                  };
+                }
+                return {
+                  key: typeName,
+                  type: typeName as ConfigBodySectionType,
+                  titleLabel: {
+                    text: `${typeName}:`,
+                    variant: "body2",
+                  },
+                  placeholderLabel: {
+                    text: `${typeName} component placeholder`,
+                    variant: "body1",
+                    color: "text.secondary",
+                  },
+                };
+              }),
           };
         }),
         addRowLabel: {
