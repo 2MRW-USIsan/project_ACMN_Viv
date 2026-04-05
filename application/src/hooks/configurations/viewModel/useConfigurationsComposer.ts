@@ -162,6 +162,54 @@ export interface SwitchGrpPanel {
   switchItemSection: SwitchItemSection;
 }
 
+export interface ListItemPanel {
+  key: string;
+  valueLabel: LabelAtomProps["props"];
+  valueField: TextFieldAtomProps["props"];
+  promptLabel: LabelAtomProps["props"];
+  promptField: TextFieldAtomProps["props"];
+  removeButton: IconButtonAtomProps["props"];
+}
+
+export interface SelectorPanel {
+  key: string;
+  panelLabel: LabelAtomProps["props"];
+  keyLabel: LabelAtomProps["props"];
+  keyField: TextFieldAtomProps["props"];
+  labelLabel: LabelAtomProps["props"];
+  labelField: TextFieldAtomProps["props"];
+  removeButton: IconButtonAtomProps["props"];
+  toggleButton: IconButtonAtomProps["props"];
+  isExpanded: boolean;
+  listItemsLabel: LabelAtomProps["props"];
+  listItemPanels: ListItemPanel[];
+  addListItemRowLabel: LabelAtomProps["props"];
+  addListItemButton: IconButtonAtomProps["props"];
+}
+
+export interface SelectItemSection {
+  shuffleLabel: LabelAtomProps["props"];
+  shuffleSwitch: SwitchAtomProps["props"];
+  selectorsLabel: LabelAtomProps["props"];
+  selectorPanels: SelectorPanel[];
+  addSelectorRowLabel: LabelAtomProps["props"];
+  addSelectorButton: IconButtonAtomProps["props"];
+}
+
+export interface SelectGrpPanel {
+  key: string;
+  panelLabel: LabelAtomProps["props"];
+  keyLabel: LabelAtomProps["props"];
+  keyField: TextFieldAtomProps["props"];
+  labelLabel: LabelAtomProps["props"];
+  labelField: TextFieldAtomProps["props"];
+  removeButton: IconButtonAtomProps["props"];
+  toggleButton: IconButtonAtomProps["props"];
+  isExpanded: boolean;
+  selectItemsLabel: LabelAtomProps["props"];
+  selectItemSection: SelectItemSection;
+}
+
 export type ConfigBodySectionType = "Orders" | "Switch" | "Select";
 
 export interface ConfigBodySection {
@@ -175,6 +223,9 @@ export interface ConfigBodySection {
   switchGrpPanels?: SwitchGrpPanel[];
   addSwitchGrpRowLabel?: LabelAtomProps["props"];
   addSwitchGrpButton?: IconButtonAtomProps["props"];
+  selectGrpPanels?: SelectGrpPanel[];
+  addSelectGrpRowLabel?: LabelAtomProps["props"];
+  addSelectGrpButton?: IconButtonAtomProps["props"];
 }
 
 export interface ConfigBodyBlocPanel {
