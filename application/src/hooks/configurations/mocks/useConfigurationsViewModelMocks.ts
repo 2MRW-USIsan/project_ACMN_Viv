@@ -10,6 +10,8 @@ import {
   ConfigurationsViewModel,
   OrdersGrpItem,
   OrdersTypeOption,
+  SelectGrpPanel,
+  SelectorPanel,
   SwitchGrpPanel,
 } from "@/hooks/configurations/viewModel/useConfigurationsComposer";
 
@@ -101,6 +103,22 @@ export function useConfigurationsViewModelMocks(): ConfigurationsViewModelMocksR
     Record<string, Array<{ id: string; labelValue: string; valueValue: string; altValue: string }>>
   >({});
   const [switchRandomize, setSwitchRandomize] = useState<Record<string, boolean>>({});
+  const [selectGrpItems, setSelectGrpItems] = useState<
+    Record<string, Array<{ id: string; keyValue: string; labelValue: string }>>
+  >({});
+  const [selectGrpExpandedIds, setSelectGrpExpandedIds] = useState<
+    Record<string, Set<string>>
+  >({});
+  const [selectShuffle, setSelectShuffle] = useState<Record<string, boolean>>({});
+  const [selectorItems, setSelectorItems] = useState<
+    Record<string, Array<{ id: string; keyValue: string; labelValue: string }>>
+  >({});
+  const [selectorExpandedIds, setSelectorExpandedIds] = useState<
+    Record<string, Set<string>>
+  >({});
+  const [listItems, setListItems] = useState<
+    Record<string, Array<{ id: string; valueValue: string; promptValue: string }>>
+  >({});
   const pathname = usePathname();
   const router = useRouter();
 
@@ -477,6 +495,128 @@ export function useConfigurationsViewModelMocks(): ConfigurationsViewModelMocksR
       ...prev,
       [grpId]: (prev[grpId] ?? []).map((i) =>
         i.id === itemId ? { ...i, altValue: value } : i
+      ),
+    }));
+  };
+
+  const handleAddSelectGrp = (sectionKey: string) => {
+    const newId = `select-grp-${Date.now()}`;
+    setSelectGrpItems((prev) => ({
+      ...prev,
+      [sectionKey]: [
+        ...(prev[sectionKey] ?? []),
+        { id: newId, keyValue: "", labelValue: "" },
+      ],
+    }));
+  };
+  const handleRemoveSelectGrp = (sectionKey: string, grpId: string) => {
+    setSelectGrpItems((prev) => ({
+      ...prev,
+      [sectionKey]: (prev[sectionKey] ?? []).filter((g) => g.id !== grpId),
+    }));
+  };
+  const handleToggleSelectGrpExpanded = (sectionKey: string, grpId: string) => {
+    setSelectGrpExpandedIds((prev) => {
+      const current = new Set(prev[sectionKey] ?? []);
+      if (current.has(grpId)) {
+        current.delete(grpId);
+      } else {
+        current.add(grpId);
+      }
+      return { ...prev, [sectionKey]: current };
+    });
+  };
+  const handleSelectGrpKeyChange = (sectionKey: string, grpId: string, value: string) => {
+    setSelectGrpItems((prev) => ({
+      ...prev,
+      [sectionKey]: (prev[sectionKey] ?? []).map((g) =>
+        g.id === grpId ? { ...g, keyValue: value } : g
+      ),
+    }));
+  };
+  const handleSelectGrpLabelChange = (sectionKey: string, grpId: string, value: string) => {
+    setSelectGrpItems((prev) => ({
+      ...prev,
+      [sectionKey]: (prev[sectionKey] ?? []).map((g) =>
+        g.id === grpId ? { ...g, labelValue: value } : g
+      ),
+    }));
+  };
+  const handleToggleSelectShuffle = (grpId: string, checked: boolean) => {
+    setSelectShuffle((prev) => ({ ...prev, [grpId]: checked }));
+  };
+  const handleAddSelector = (grpId: string) => {
+    const newId = `selector-${Date.now()}`;
+    setSelectorItems((prev) => ({
+      ...prev,
+      [grpId]: [
+        ...(prev[grpId] ?? []),
+        { id: newId, keyValue: "", labelValue: "" },
+      ],
+    }));
+  };
+  const handleRemoveSelector = (grpId: string, selectorId: string) => {
+    setSelectorItems((prev) => ({
+      ...prev,
+      [grpId]: (prev[grpId] ?? []).filter((s) => s.id !== selectorId),
+    }));
+  };
+  const handleToggleSelectorExpanded = (grpId: string, selectorId: string) => {
+    setSelectorExpandedIds((prev) => {
+      const current = new Set(prev[grpId] ?? []);
+      if (current.has(selectorId)) {
+        current.delete(selectorId);
+      } else {
+        current.add(selectorId);
+      }
+      return { ...prev, [grpId]: current };
+    });
+  };
+  const handleSelectorKeyChange = (grpId: string, selectorId: string, value: string) => {
+    setSelectorItems((prev) => ({
+      ...prev,
+      [grpId]: (prev[grpId] ?? []).map((s) =>
+        s.id === selectorId ? { ...s, keyValue: value } : s
+      ),
+    }));
+  };
+  const handleSelectorLabelChange = (grpId: string, selectorId: string, value: string) => {
+    setSelectorItems((prev) => ({
+      ...prev,
+      [grpId]: (prev[grpId] ?? []).map((s) =>
+        s.id === selectorId ? { ...s, labelValue: value } : s
+      ),
+    }));
+  };
+  const handleAddListItem = (selectorId: string) => {
+    const newId = `list-item-${Date.now()}`;
+    setListItems((prev) => ({
+      ...prev,
+      [selectorId]: [
+        ...(prev[selectorId] ?? []),
+        { id: newId, valueValue: "", promptValue: "" },
+      ],
+    }));
+  };
+  const handleRemoveListItem = (selectorId: string, itemId: string) => {
+    setListItems((prev) => ({
+      ...prev,
+      [selectorId]: (prev[selectorId] ?? []).filter((i) => i.id !== itemId),
+    }));
+  };
+  const handleListItemValueChange = (selectorId: string, itemId: string, value: string) => {
+    setListItems((prev) => ({
+      ...prev,
+      [selectorId]: (prev[selectorId] ?? []).map((i) =>
+        i.id === itemId ? { ...i, valueValue: value } : i
+      ),
+    }));
+  };
+  const handleListItemPromptChange = (selectorId: string, itemId: string, value: string) => {
+    setListItems((prev) => ({
+      ...prev,
+      [selectorId]: (prev[selectorId] ?? []).map((i) =>
+        i.id === itemId ? { ...i, promptValue: value } : i
       ),
     }));
   };
@@ -999,6 +1139,155 @@ export function useConfigurationsViewModelMocks(): ConfigurationsViewModelMocksR
                     addSwitchGrpButton: {
                       icon: "add" as const,
                       onClick: () => handleAddSwitchGrp(sectionKey),
+                    },
+                  };
+                }
+                if (typeName === "Select") {
+                  const grps = selectGrpItems[sectionKey] ?? [];
+                  const expandedGrpIds = selectGrpExpandedIds[sectionKey] ?? new Set<string>();
+                  return {
+                    key: typeName,
+                    type: typeName as ConfigBodySectionType,
+                    titleLabel: {
+                      text: `${typeName}:`,
+                      variant: "body2",
+                    },
+                    placeholderLabel: {
+                      text: `${typeName} component placeholder`,
+                      variant: "body1",
+                      color: "text.secondary",
+                    },
+                    selectGrpPanels: grps.map((grp): SelectGrpPanel => {
+                      const selectors = selectorItems[grp.id] ?? [];
+                      const expandedSelectorIds = selectorExpandedIds[grp.id] ?? new Set<string>();
+                      const isShuffled = selectShuffle[grp.id] ?? false;
+                      return {
+                        key: grp.id,
+                        panelLabel: { text: "Select Grp:", variant: "body2" as const },
+                        keyLabel: { text: "Key:", variant: "body2" as const },
+                        keyField: {
+                          placeholder: "text field...",
+                          defaultValue: grp.keyValue,
+                          onBlur: (value: string) =>
+                            handleSelectGrpKeyChange(sectionKey, grp.id, value),
+                          size: "small" as const,
+                          fullWidth: true,
+                        },
+                        labelLabel: { text: "Label:", variant: "body2" as const },
+                        labelField: {
+                          placeholder: "text field...",
+                          defaultValue: grp.labelValue,
+                          onBlur: (value: string) =>
+                            handleSelectGrpLabelChange(sectionKey, grp.id, value),
+                          size: "small" as const,
+                          fullWidth: true,
+                        },
+                        removeButton: {
+                          icon: "removeCircle" as const,
+                          onClick: () => handleRemoveSelectGrp(sectionKey, grp.id),
+                          color: "default" as const,
+                        },
+                        toggleButton: {
+                          icon: expandedGrpIds.has(grp.id)
+                            ? ("expandLess" as const)
+                            : ("expandMore" as const),
+                          onClick: () => handleToggleSelectGrpExpanded(sectionKey, grp.id),
+                        },
+                        isExpanded: expandedGrpIds.has(grp.id),
+                        selectItemsLabel: { text: "Select Items:", variant: "body2" as const },
+                        selectItemSection: {
+                          shuffleLabel: { text: "Shuffle:", variant: "body2" as const },
+                          shuffleSwitch: {
+                            checked: isShuffled,
+                            onChange: (checked: boolean) =>
+                              handleToggleSelectShuffle(grp.id, checked),
+                          },
+                          selectorsLabel: { text: "Selectors:", variant: "body2" as const },
+                          selectorPanels: selectors.map((selector): SelectorPanel => {
+                            const items = listItems[selector.id] ?? [];
+                            return {
+                              key: selector.id,
+                              panelLabel: { text: "Selector:", variant: "body2" as const },
+                              keyLabel: { text: "Key:", variant: "body2" as const },
+                              keyField: {
+                                placeholder: "text field...",
+                                defaultValue: selector.keyValue,
+                                onBlur: (value: string) =>
+                                  handleSelectorKeyChange(grp.id, selector.id, value),
+                                size: "small" as const,
+                                fullWidth: true,
+                              },
+                              labelLabel: { text: "Label:", variant: "body2" as const },
+                              labelField: {
+                                placeholder: "text field...",
+                                defaultValue: selector.labelValue,
+                                onBlur: (value: string) =>
+                                  handleSelectorLabelChange(grp.id, selector.id, value),
+                                size: "small" as const,
+                                fullWidth: true,
+                              },
+                              removeButton: {
+                                icon: "removeCircle" as const,
+                                onClick: () => handleRemoveSelector(grp.id, selector.id),
+                                color: "default" as const,
+                              },
+                              toggleButton: {
+                                icon: expandedSelectorIds.has(selector.id)
+                                  ? ("expandLess" as const)
+                                  : ("expandMore" as const),
+                                onClick: () =>
+                                  handleToggleSelectorExpanded(grp.id, selector.id),
+                              },
+                              isExpanded: expandedSelectorIds.has(selector.id),
+                              listItemsLabel: { text: "List Items:", variant: "body2" as const },
+                              listItemPanels: items.map((item) => ({
+                                key: item.id,
+                                valueLabel: { text: "Value:", variant: "body2" as const },
+                                valueField: {
+                                  placeholder: "text field...",
+                                  defaultValue: item.valueValue,
+                                  onBlur: (value: string) =>
+                                    handleListItemValueChange(selector.id, item.id, value),
+                                  size: "small" as const,
+                                  fullWidth: true,
+                                },
+                                promptLabel: { text: "Prompt:", variant: "body2" as const },
+                                promptField: {
+                                  placeholder: "text field...",
+                                  defaultValue: item.promptValue,
+                                  onBlur: (value: string) =>
+                                    handleListItemPromptChange(selector.id, item.id, value),
+                                  size: "small" as const,
+                                  fullWidth: true,
+                                },
+                                removeButton: {
+                                  icon: "removeCircle" as const,
+                                  onClick: () => handleRemoveListItem(selector.id, item.id),
+                                  color: "default" as const,
+                                },
+                              })),
+                              addListItemRowLabel: { text: "Add Switch:", variant: "body2" as const },
+                              addListItemButton: {
+                                icon: "add" as const,
+                                onClick: () => handleAddListItem(selector.id),
+                              },
+                            };
+                          }),
+                          addSelectorRowLabel: { text: "Add Selector:", variant: "body2" as const },
+                          addSelectorButton: {
+                            icon: "add" as const,
+                            onClick: () => handleAddSelector(grp.id),
+                          },
+                        },
+                      };
+                    }),
+                    addSelectGrpRowLabel: {
+                      text: "Add Select Grp:",
+                      variant: "body2",
+                    },
+                    addSelectGrpButton: {
+                      icon: "add" as const,
+                      onClick: () => handleAddSelectGrp(sectionKey),
                     },
                   };
                 }
