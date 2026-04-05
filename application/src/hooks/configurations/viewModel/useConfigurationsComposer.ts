@@ -26,6 +26,34 @@ export interface OrdersGrpItem {
 
 export type OrdersTypeOption = "random" | "complex" | "scripts" | "colors";
 
+export interface RandomRowItem {
+  key: string;
+  valueLabel: LabelAtomProps["props"];
+  valueField: TextFieldAtomProps["props"];
+  promptLabel: LabelAtomProps["props"];
+  promptField: TextFieldAtomProps["props"];
+  weightLabel: LabelAtomProps["props"];
+  weightField: TextFieldAtomProps["props"];
+  removeButton: IconButtonAtomProps["props"];
+}
+
+export interface RandomSection {
+  headerLabel: LabelAtomProps["props"];
+  randomRows: RandomRowItem[];
+  addRowLabel: LabelAtomProps["props"];
+  addRowButton: IconButtonAtomProps["props"];
+}
+
+export interface ScriptsSection {
+  scriptLabel: LabelAtomProps["props"];
+  scriptInfoLabel: LabelAtomProps["props"];
+}
+
+export interface ColorsSection {
+  colorLabel: LabelAtomProps["props"];
+  colorInfoLabel: LabelAtomProps["props"];
+}
+
 export interface ComplexRandomItemPanel {
   key: string;
   valueLabel: LabelAtomProps["props"];
@@ -74,7 +102,10 @@ export interface OrdersItemPanel {
   ordersTypeLabel: LabelAtomProps["props"];
   ordersTypeChips: Array<ChipCheckboxAtomProps["props"] & { key: string }>;
   selectedTypeLabel: LabelAtomProps["props"] | null;
-  complexSection?: ComplexSection;
+  randomSection: RandomSection | null;
+  complexSection: ComplexSection | null;
+  scriptsSection: ScriptsSection | null;
+  colorsSection: ColorsSection | null;
 }
 
 export interface OrdersItemSection {

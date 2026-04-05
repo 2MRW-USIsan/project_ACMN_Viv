@@ -5,9 +5,9 @@ import { usePathname, useRouter } from "next/navigation";
 import { NavItem } from "@/components/atoms/DrawerAtom";
 import {
   BlocItem,
+  ComplexSection,
   ConfigBodySectionType,
   ConfigurationsViewModel,
-  ComplexSection,
   OrdersGrpItem,
   OrdersTypeOption,
 } from "@/hooks/configurations/viewModel/useConfigurationsComposer";
@@ -77,6 +77,9 @@ export function useConfigurationsViewModelMocks(): ConfigurationsViewModelMocksR
   >({});
   const [selectedOrdersItemTypes, setSelectedOrdersItemTypes] = useState<
     Record<string, OrdersTypeOption>
+  >({});
+  const [randomItems, setRandomItems] = useState<
+    Record<string, Array<{ id: string; valueValue: string; promptValue: string; weightValue: string }>>
   >({});
   const [complexCategoryItems, setComplexCategoryItems] = useState<
     Record<string, Array<{ id: string; value: string; prompt: string; weight: string }>>
@@ -244,6 +247,47 @@ export function useConfigurationsViewModelMocks(): ConfigurationsViewModelMocksR
   };
   const handleSelectOrdersItemType = (itemId: string, type: OrdersTypeOption) => {
     setSelectedOrdersItemTypes((prev) => ({ ...prev, [itemId]: type }));
+  };
+
+  const handleAddRandomRow = (itemId: string) => {
+    const newId = `random-row-${Date.now()}`;
+    setRandomItems((prev) => ({
+      ...prev,
+      [itemId]: [
+        ...(prev[itemId] ?? []),
+        { id: newId, valueValue: "", promptValue: "", weightValue: "" },
+      ],
+    }));
+  };
+  const handleRemoveRandomRow = (itemId: string, rowId: string) => {
+    setRandomItems((prev) => ({
+      ...prev,
+      [itemId]: (prev[itemId] ?? []).filter((r) => r.id !== rowId),
+    }));
+  };
+  const handleRandomValueChange = (itemId: string, rowId: string, value: string) => {
+    setRandomItems((prev) => ({
+      ...prev,
+      [itemId]: (prev[itemId] ?? []).map((r) =>
+        r.id === rowId ? { ...r, valueValue: value } : r
+      ),
+    }));
+  };
+  const handleRandomPromptChange = (itemId: string, rowId: string, value: string) => {
+    setRandomItems((prev) => ({
+      ...prev,
+      [itemId]: (prev[itemId] ?? []).map((r) =>
+        r.id === rowId ? { ...r, promptValue: value } : r
+      ),
+    }));
+  };
+  const handleRandomWeightChange = (itemId: string, rowId: string, value: string) => {
+    setRandomItems((prev) => ({
+      ...prev,
+      [itemId]: (prev[itemId] ?? []).map((r) =>
+        r.id === rowId ? { ...r, weightValue: value } : r
+      ),
+    }));
   };
 
   const handleAddComplexCategory = (itemId: string) => {
@@ -575,6 +619,49 @@ export function useConfigurationsViewModelMocks(): ConfigurationsViewModelMocksR
                               selectedTypeLabel: selectedType
                                 ? { text: `${selectedType.charAt(0).toUpperCase()}${selectedType.slice(1)}:`, variant: "body2" as const }
                                 : null,
+                              randomSection: selectedType === "random"
+                                ? {
+                                    headerLabel: { text: "Random:", variant: "body2" as const },
+                                    randomRows: (randomItems[item.id] ?? []).map((row) => ({
+                                      key: row.id,
+                                      valueLabel: { text: "Value:", variant: "body2" as const },
+                                      valueField: {
+                                        placeholder: "text field...",
+                                        defaultValue: row.valueValue,
+                                        onBlur: (value: string) =>
+                                          handleRandomValueChange(item.id, row.id, value),
+                                        size: "small" as const,
+                                      },
+                                      promptLabel: { text: "Prompt:", variant: "body2" as const },
+                                      promptField: {
+                                        placeholder: "text field...",
+                                        defaultValue: row.promptValue,
+                                        onBlur: (value: string) =>
+                                          handleRandomPromptChange(item.id, row.id, value),
+                                        size: "small" as const,
+                                      },
+                                      weightLabel: { text: "Weight:", variant: "body2" as const },
+                                      weightField: {
+                                        placeholder: "counter",
+                                        defaultValue: row.weightValue,
+                                        onBlur: (value: string) =>
+                                          handleRandomWeightChange(item.id, row.id, value),
+                                        size: "small" as const,
+                                      },
+                                      removeButton: {
+                                        icon: "removeCircle" as const,
+                                        onClick: () =>
+                                          handleRemoveRandomRow(item.id, row.id),
+                                        color: "default" as const,
+                                      },
+                                    })),
+                                    addRowLabel: { text: "Add Random Item:", variant: "body2" as const },
+                                    addRowButton: {
+                                      icon: "add" as const,
+                                      onClick: () => handleAddRandomRow(item.id),
+                                    },
+                                  }
+                                : null,
                               complexSection: selectedType === "complex"
                                 ? ((): ComplexSection => {
                                     const categories = complexCategoryItems[item.id] ?? [];
@@ -672,7 +759,19 @@ export function useConfigurationsViewModelMocks(): ConfigurationsViewModelMocksR
                                       },
                                     };
                                   })()
-                                : undefined,
+                                : null,
+                              scriptsSection: selectedType === "scripts"
+                                ? {
+                                    scriptLabel: { text: "Scripts:", variant: "body2" as const, fontWeight: "bold" as const },
+                                    scriptInfoLabel: { text: "--- Here is the Scripts Information. ---", variant: "body2" as const, color: "text.secondary" },
+                                  }
+                                : null,
+                              colorsSection: selectedType === "colors"
+                                ? {
+                                    colorLabel: { text: "Colors:", variant: "body2" as const, fontWeight: "bold" as const },
+                                    colorInfoLabel: { text: "--- Here is the Colors Information(#RRGGBB). ---", variant: "body2" as const, color: "text.secondary" },
+                                  }
+                                : null,
                             };
                           }),
                           addItemRowLabel: { text: "Add Orders Item:", variant: "body2" as const },
