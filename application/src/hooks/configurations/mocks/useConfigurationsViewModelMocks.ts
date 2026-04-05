@@ -559,6 +559,18 @@ export function useConfigurationsViewModelMocks(): ConfigurationsViewModelMocksR
                                     },
                                   }
                                 : null,
+                              scriptsSection: selectedType === "scripts"
+                                ? {
+                                    scriptLabel: { text: "Scripts:", variant: "body2" as const, fontWeight: "bold" as const },
+                                    scriptInfoLabel: { text: "--- Here is the Scripts Information. ---", variant: "body2" as const, color: "text.secondary" },
+                                  }
+                                : null,
+                              colorsSection: selectedType === "colors"
+                                ? {
+                                    colorLabel: { text: "Colors:", variant: "body2" as const, fontWeight: "bold" as const },
+                                    colorInfoLabel: { text: "--- Here is the Colors Information(#RRGGBB). ---", variant: "body2" as const, color: "text.secondary" },
+                                  }
+                                : null,
                             };
                           }),
                           addItemRowLabel: { text: "Add Orders Item:", variant: "body2" as const },
