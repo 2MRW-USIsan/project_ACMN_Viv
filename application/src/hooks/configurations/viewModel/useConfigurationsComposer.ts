@@ -10,6 +10,7 @@ import { NavLinkAtomProps } from "@/components/atoms/NavLinkAtom";
 import { TextFieldAtomProps } from "@/components/atoms/TextFieldAtom";
 import { IconButtonAtomProps } from "@/components/atoms/IconButtonAtom";
 import { ChipCheckboxAtomProps } from "@/components/atoms/ChipCheckboxAtom";
+import { SwitchAtomProps } from "@/components/atoms/SwitchAtom";
 
 export interface BlocItem {
   id: string;
@@ -128,6 +129,39 @@ export interface OrdersGrpPanel {
   ordersItemSection: OrdersItemSection;
 }
 
+export interface SwitchItemPanel {
+  key: string;
+  labelLabel: LabelAtomProps["props"];
+  labelField: TextFieldAtomProps["props"];
+  valueLabel: LabelAtomProps["props"];
+  valueField: TextFieldAtomProps["props"];
+  altLabel: LabelAtomProps["props"];
+  altField: TextFieldAtomProps["props"];
+  removeButton: IconButtonAtomProps["props"];
+}
+
+export interface SwitchItemSection {
+  randomizeLabel: LabelAtomProps["props"];
+  randomizeSwitch: SwitchAtomProps["props"];
+  switchItemPanels: SwitchItemPanel[];
+  addSwitchRowLabel: LabelAtomProps["props"];
+  addSwitchButton: IconButtonAtomProps["props"];
+}
+
+export interface SwitchGrpPanel {
+  key: string;
+  panelLabel: LabelAtomProps["props"];
+  keyLabel: LabelAtomProps["props"];
+  keyField: TextFieldAtomProps["props"];
+  labelLabel: LabelAtomProps["props"];
+  labelField: TextFieldAtomProps["props"];
+  removeButton: IconButtonAtomProps["props"];
+  toggleButton: IconButtonAtomProps["props"];
+  isExpanded: boolean;
+  switchItemsLabel: LabelAtomProps["props"];
+  switchItemSection: SwitchItemSection;
+}
+
 export type ConfigBodySectionType = "Orders" | "Switch" | "Select";
 
 export interface ConfigBodySection {
@@ -138,6 +172,9 @@ export interface ConfigBodySection {
   ordersGrpPanels?: OrdersGrpPanel[];
   addGrpRowLabel?: LabelAtomProps["props"];
   addGrpButton?: IconButtonAtomProps["props"];
+  switchGrpPanels?: SwitchGrpPanel[];
+  addSwitchGrpRowLabel?: LabelAtomProps["props"];
+  addSwitchGrpButton?: IconButtonAtomProps["props"];
 }
 
 export interface ConfigBodyBlocPanel {

@@ -10,6 +10,7 @@ import {
   ConfigurationsViewModel,
   OrdersGrpItem,
   OrdersTypeOption,
+  SwitchGrpPanel,
 } from "@/hooks/configurations/viewModel/useConfigurationsComposer";
 
 const NAV_ITEMS: NavItem[] = [
@@ -90,6 +91,16 @@ export function useConfigurationsViewModelMocks(): ConfigurationsViewModelMocksR
   const [complexRandomItems, setComplexRandomItems] = useState<
     Record<string, Array<{ id: string; value: string; prompt: string; weight: string }>>
   >({});
+  const [switchGrpItems, setSwitchGrpItems] = useState<
+    Record<string, Array<{ id: string; keyValue: string; labelValue: string }>>
+  >({});
+  const [switchGrpExpandedIds, setSwitchGrpExpandedIds] = useState<
+    Record<string, Set<string>>
+  >({});
+  const [switchItems, setSwitchItems] = useState<
+    Record<string, Array<{ id: string; labelValue: string; valueValue: string; altValue: string }>>
+  >({});
+  const [switchRandomize, setSwitchRandomize] = useState<Record<string, boolean>>({});
   const pathname = usePathname();
   const router = useRouter();
 
@@ -379,6 +390,93 @@ export function useConfigurationsViewModelMocks(): ConfigurationsViewModelMocksR
       ...prev,
       [categoryId]: (prev[categoryId] ?? []).map((r) =>
         r.id === randomItemId ? { ...r, weight: value } : r
+      ),
+    }));
+  };
+
+  const handleAddSwitchGrp = (sectionKey: string) => {
+    const newId = `switch-grp-${Date.now()}`;
+    setSwitchGrpItems((prev) => ({
+      ...prev,
+      [sectionKey]: [
+        ...(prev[sectionKey] ?? []),
+        { id: newId, keyValue: "", labelValue: "" },
+      ],
+    }));
+  };
+  const handleRemoveSwitchGrp = (sectionKey: string, grpId: string) => {
+    setSwitchGrpItems((prev) => ({
+      ...prev,
+      [sectionKey]: (prev[sectionKey] ?? []).filter((g) => g.id !== grpId),
+    }));
+  };
+  const handleToggleSwitchGrpExpanded = (sectionKey: string, grpId: string) => {
+    setSwitchGrpExpandedIds((prev) => {
+      const current = new Set(prev[sectionKey] ?? []);
+      if (current.has(grpId)) {
+        current.delete(grpId);
+      } else {
+        current.add(grpId);
+      }
+      return { ...prev, [sectionKey]: current };
+    });
+  };
+  const handleSwitchGrpKeyChange = (sectionKey: string, grpId: string, value: string) => {
+    setSwitchGrpItems((prev) => ({
+      ...prev,
+      [sectionKey]: (prev[sectionKey] ?? []).map((g) =>
+        g.id === grpId ? { ...g, keyValue: value } : g
+      ),
+    }));
+  };
+  const handleSwitchGrpLabelChange = (sectionKey: string, grpId: string, value: string) => {
+    setSwitchGrpItems((prev) => ({
+      ...prev,
+      [sectionKey]: (prev[sectionKey] ?? []).map((g) =>
+        g.id === grpId ? { ...g, labelValue: value } : g
+      ),
+    }));
+  };
+  const handleToggleSwitchRandomize = (grpId: string, checked: boolean) => {
+    setSwitchRandomize((prev) => ({ ...prev, [grpId]: checked }));
+  };
+  const handleAddSwitchItem = (grpId: string) => {
+    const newId = `switch-item-${Date.now()}`;
+    setSwitchItems((prev) => ({
+      ...prev,
+      [grpId]: [
+        ...(prev[grpId] ?? []),
+        { id: newId, labelValue: "", valueValue: "", altValue: "" },
+      ],
+    }));
+  };
+  const handleRemoveSwitchItem = (grpId: string, itemId: string) => {
+    setSwitchItems((prev) => ({
+      ...prev,
+      [grpId]: (prev[grpId] ?? []).filter((i) => i.id !== itemId),
+    }));
+  };
+  const handleSwitchItemLabelChange = (grpId: string, itemId: string, value: string) => {
+    setSwitchItems((prev) => ({
+      ...prev,
+      [grpId]: (prev[grpId] ?? []).map((i) =>
+        i.id === itemId ? { ...i, labelValue: value } : i
+      ),
+    }));
+  };
+  const handleSwitchItemValueChange = (grpId: string, itemId: string, value: string) => {
+    setSwitchItems((prev) => ({
+      ...prev,
+      [grpId]: (prev[grpId] ?? []).map((i) =>
+        i.id === itemId ? { ...i, valueValue: value } : i
+      ),
+    }));
+  };
+  const handleSwitchItemAltChange = (grpId: string, itemId: string, value: string) => {
+    setSwitchItems((prev) => ({
+      ...prev,
+      [grpId]: (prev[grpId] ?? []).map((i) =>
+        i.id === itemId ? { ...i, altValue: value } : i
       ),
     }));
   };
@@ -789,6 +887,118 @@ export function useConfigurationsViewModelMocks(): ConfigurationsViewModelMocksR
                     addGrpButton: {
                       icon: "add" as const,
                       onClick: () => handleAddOrdersGrp(sectionKey),
+                    },
+                  };
+                }
+                if (typeName === "Switch") {
+                  const grps = switchGrpItems[sectionKey] ?? [];
+                  const expandedGrpIds = switchGrpExpandedIds[sectionKey] ?? new Set<string>();
+                  return {
+                    key: typeName,
+                    type: typeName as ConfigBodySectionType,
+                    titleLabel: {
+                      text: `${typeName}:`,
+                      variant: "body2",
+                    },
+                    placeholderLabel: {
+                      text: `${typeName} component placeholder`,
+                      variant: "body1",
+                      color: "text.secondary",
+                    },
+                    switchGrpPanels: grps.map((grp): SwitchGrpPanel => {
+                      const items = switchItems[grp.id] ?? [];
+                      const isRandomized = switchRandomize[grp.id] ?? false;
+                      return {
+                        key: grp.id,
+                        panelLabel: { text: "Switch Grp:", variant: "body2" as const },
+                        keyLabel: { text: "Key:", variant: "body2" as const },
+                        keyField: {
+                          placeholder: "text field...",
+                          defaultValue: grp.keyValue,
+                          onBlur: (value: string) =>
+                            handleSwitchGrpKeyChange(sectionKey, grp.id, value),
+                          size: "small" as const,
+                          fullWidth: true,
+                        },
+                        labelLabel: { text: "Label:", variant: "body2" as const },
+                        labelField: {
+                          placeholder: "text field...",
+                          defaultValue: grp.labelValue,
+                          onBlur: (value: string) =>
+                            handleSwitchGrpLabelChange(sectionKey, grp.id, value),
+                          size: "small" as const,
+                          fullWidth: true,
+                        },
+                        removeButton: {
+                          icon: "removeCircle" as const,
+                          onClick: () => handleRemoveSwitchGrp(sectionKey, grp.id),
+                          color: "default" as const,
+                        },
+                        toggleButton: {
+                          icon: expandedGrpIds.has(grp.id)
+                            ? ("expandLess" as const)
+                            : ("expandMore" as const),
+                          onClick: () => handleToggleSwitchGrpExpanded(sectionKey, grp.id),
+                        },
+                        isExpanded: expandedGrpIds.has(grp.id),
+                        switchItemsLabel: { text: "Switch Items:", variant: "body2" as const },
+                        switchItemSection: {
+                          randomizeLabel: { text: "Randomize:", variant: "body2" as const },
+                          randomizeSwitch: {
+                            checked: isRandomized,
+                            onChange: (checked: boolean) =>
+                              handleToggleSwitchRandomize(grp.id, checked),
+                          },
+                          switchItemPanels: items.map((item) => ({
+                            key: item.id,
+                            labelLabel: { text: "Label:", variant: "body2" as const },
+                            labelField: {
+                              placeholder: "text field...",
+                              defaultValue: item.labelValue,
+                              onBlur: (value: string) =>
+                                handleSwitchItemLabelChange(grp.id, item.id, value),
+                              size: "small" as const,
+                              fullWidth: true,
+                            },
+                            valueLabel: { text: "Value:", variant: "body2" as const },
+                            valueField: {
+                              placeholder: "text field...",
+                              defaultValue: item.valueValue,
+                              onBlur: (value: string) =>
+                                handleSwitchItemValueChange(grp.id, item.id, value),
+                              size: "small" as const,
+                              fullWidth: true,
+                            },
+                            altLabel: { text: "Alt:", variant: "body2" as const },
+                            altField: {
+                              placeholder: "text field...",
+                              defaultValue: item.altValue,
+                              onBlur: (value: string) =>
+                                handleSwitchItemAltChange(grp.id, item.id, value),
+                              size: "small" as const,
+                              fullWidth: true,
+                            },
+                            removeButton: {
+                              icon: "removeCircle" as const,
+                              onClick: () => handleRemoveSwitchItem(grp.id, item.id),
+                              color: "default" as const,
+                            },
+                          })),
+                          addSwitchRowLabel: { text: "Add Switch:", variant: "body2" as const },
+                          addSwitchButton: {
+                            icon: "add" as const,
+                            onClick: () => handleAddSwitchItem(grp.id),
+                          },
+                        },
+                      };
+                    }),
+                    addSwitchGrpRowLabel: {
+                      text: "Add Switch Grp:",
+                      variant: "body2",
+                    },
+                    addSwitchGrpButton: {
+                      icon: "add" as const,
+                      onClick: () => handleAddSwitchGrp(sectionKey),
                     },
                   };
                 }
