@@ -659,7 +659,7 @@ export function useConfigurationsViewModelMocks(): ConfigurationsViewModelMocksR
                                             color: "default" as const,
                                           },
                                         })),
-                                        addRandomItemRowLabel: { text: "Add Random Item :", variant: "body2" as const },
+                                        addRandomItemRowLabel: { text: "Add Random Item:", variant: "body2" as const },
                                         addRandomItemButton: {
                                           icon: "add" as const,
                                           onClick: () => handleAddRandomItem(cat.id),
