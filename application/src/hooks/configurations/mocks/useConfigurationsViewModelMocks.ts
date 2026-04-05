@@ -5,6 +5,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { NavItem } from "@/components/atoms/DrawerAtom";
 import {
   BlocItem,
+  ComplexSection,
   ConfigBodySectionType,
   ConfigurationsViewModel,
   OrdersGrpItem,
@@ -79,6 +80,15 @@ export function useConfigurationsViewModelMocks(): ConfigurationsViewModelMocksR
   >({});
   const [randomItems, setRandomItems] = useState<
     Record<string, Array<{ id: string; valueValue: string; promptValue: string; weightValue: string }>>
+  >({});
+  const [complexCategoryItems, setComplexCategoryItems] = useState<
+    Record<string, Array<{ id: string; value: string; prompt: string; weight: string }>>
+  >({});
+  const [complexCategoryExpandedIds, setComplexCategoryExpandedIds] = useState<
+    Record<string, Set<string>>
+  >({});
+  const [complexRandomItems, setComplexRandomItems] = useState<
+    Record<string, Array<{ id: string; value: string; prompt: string; weight: string }>>
   >({});
   const pathname = usePathname();
   const router = useRouter();
@@ -276,6 +286,99 @@ export function useConfigurationsViewModelMocks(): ConfigurationsViewModelMocksR
       ...prev,
       [itemId]: (prev[itemId] ?? []).map((r) =>
         r.id === rowId ? { ...r, weightValue: value } : r
+      ),
+    }));
+  };
+
+  const handleAddComplexCategory = (itemId: string) => {
+    const newId = `complex-cat-${Date.now()}`;
+    setComplexCategoryItems((prev) => ({
+      ...prev,
+      [itemId]: [
+        ...(prev[itemId] ?? []),
+        { id: newId, value: "", prompt: "", weight: "" },
+      ],
+    }));
+  };
+  const handleRemoveComplexCategory = (itemId: string, categoryId: string) => {
+    setComplexCategoryItems((prev) => ({
+      ...prev,
+      [itemId]: (prev[itemId] ?? []).filter((c) => c.id !== categoryId),
+    }));
+  };
+  const handleToggleComplexCategoryExpanded = (itemId: string, categoryId: string) => {
+    setComplexCategoryExpandedIds((prev) => {
+      const current = new Set(prev[itemId] ?? []);
+      if (current.has(categoryId)) {
+        current.delete(categoryId);
+      } else {
+        current.add(categoryId);
+      }
+      return { ...prev, [itemId]: current };
+    });
+  };
+  const handleComplexCategoryValueChange = (itemId: string, categoryId: string, value: string) => {
+    setComplexCategoryItems((prev) => ({
+      ...prev,
+      [itemId]: (prev[itemId] ?? []).map((c) =>
+        c.id === categoryId ? { ...c, value } : c
+      ),
+    }));
+  };
+  const handleComplexCategoryPromptChange = (itemId: string, categoryId: string, value: string) => {
+    setComplexCategoryItems((prev) => ({
+      ...prev,
+      [itemId]: (prev[itemId] ?? []).map((c) =>
+        c.id === categoryId ? { ...c, prompt: value } : c
+      ),
+    }));
+  };
+  const handleComplexCategoryWeightChange = (itemId: string, categoryId: string, value: string) => {
+    setComplexCategoryItems((prev) => ({
+      ...prev,
+      [itemId]: (prev[itemId] ?? []).map((c) =>
+        c.id === categoryId ? { ...c, weight: value } : c
+      ),
+    }));
+  };
+
+  const handleAddRandomItem = (categoryId: string) => {
+    const newId = `random-item-${Date.now()}`;
+    setComplexRandomItems((prev) => ({
+      ...prev,
+      [categoryId]: [
+        ...(prev[categoryId] ?? []),
+        { id: newId, value: "", prompt: "", weight: "" },
+      ],
+    }));
+  };
+  const handleRemoveRandomItem = (categoryId: string, randomItemId: string) => {
+    setComplexRandomItems((prev) => ({
+      ...prev,
+      [categoryId]: (prev[categoryId] ?? []).filter((r) => r.id !== randomItemId),
+    }));
+  };
+  const handleRandomItemValueChange = (categoryId: string, randomItemId: string, value: string) => {
+    setComplexRandomItems((prev) => ({
+      ...prev,
+      [categoryId]: (prev[categoryId] ?? []).map((r) =>
+        r.id === randomItemId ? { ...r, value } : r
+      ),
+    }));
+  };
+  const handleRandomItemPromptChange = (categoryId: string, randomItemId: string, value: string) => {
+    setComplexRandomItems((prev) => ({
+      ...prev,
+      [categoryId]: (prev[categoryId] ?? []).map((r) =>
+        r.id === randomItemId ? { ...r, prompt: value } : r
+      ),
+    }));
+  };
+  const handleRandomItemWeightChange = (categoryId: string, randomItemId: string, value: string) => {
+    setComplexRandomItems((prev) => ({
+      ...prev,
+      [categoryId]: (prev[categoryId] ?? []).map((r) =>
+        r.id === randomItemId ? { ...r, weight: value } : r
       ),
     }));
   };
@@ -558,6 +661,104 @@ export function useConfigurationsViewModelMocks(): ConfigurationsViewModelMocksR
                                       onClick: () => handleAddRandomRow(item.id),
                                     },
                                   }
+                                : null,
+                              complexSection: selectedType === "complex"
+                                ? ((): ComplexSection => {
+                                    const categories = complexCategoryItems[item.id] ?? [];
+                                    const expandedCatIds = complexCategoryExpandedIds[item.id] ?? new Set<string>();
+                                    return {
+                                      categoryPanels: categories.map((cat) => ({
+                                        key: cat.id,
+                                        categoryLabel: { text: "Category:", variant: "body2" as const },
+                                        valueLabel: { text: "Value:", variant: "body2" as const },
+                                        valueField: {
+                                          placeholder: "text field...",
+                                          defaultValue: cat.value,
+                                          onBlur: (value: string) =>
+                                            handleComplexCategoryValueChange(item.id, cat.id, value),
+                                          size: "small" as const,
+                                          fullWidth: true,
+                                        },
+                                        promptLabel: { text: "Prompt:", variant: "body2" as const },
+                                        promptField: {
+                                          placeholder: "text field...",
+                                          defaultValue: cat.prompt,
+                                          onBlur: (value: string) =>
+                                            handleComplexCategoryPromptChange(item.id, cat.id, value),
+                                          size: "small" as const,
+                                          fullWidth: true,
+                                        },
+                                        weightLabel: { text: "Weight:", variant: "body2" as const },
+                                        weightField: {
+                                          placeholder: "counter",
+                                          defaultValue: cat.weight,
+                                          onBlur: (value: string) =>
+                                            handleComplexCategoryWeightChange(item.id, cat.id, value),
+                                          size: "small" as const,
+                                          fullWidth: true,
+                                        },
+                                        removeButton: {
+                                          icon: "removeCircle" as const,
+                                          onClick: () => handleRemoveComplexCategory(item.id, cat.id),
+                                          color: "default" as const,
+                                        },
+                                        toggleButton: {
+                                          icon: expandedCatIds.has(cat.id)
+                                            ? ("expandLess" as const)
+                                            : ("expandMore" as const),
+                                          onClick: () =>
+                                            handleToggleComplexCategoryExpanded(item.id, cat.id),
+                                        },
+                                        isExpanded: expandedCatIds.has(cat.id),
+                                        randomSectionLabel: { text: "Random:", variant: "body2" as const },
+                                        randomItemPanels: (complexRandomItems[cat.id] ?? []).map((rand) => ({
+                                          key: rand.id,
+                                          valueLabel: { text: "Value:", variant: "body2" as const },
+                                          valueField: {
+                                            placeholder: "text field...",
+                                            defaultValue: rand.value,
+                                            onBlur: (value: string) =>
+                                              handleRandomItemValueChange(cat.id, rand.id, value),
+                                            size: "small" as const,
+                                            fullWidth: true,
+                                          },
+                                          promptLabel: { text: "Prompt:", variant: "body2" as const },
+                                          promptField: {
+                                            placeholder: "text field...",
+                                            defaultValue: rand.prompt,
+                                            onBlur: (value: string) =>
+                                              handleRandomItemPromptChange(cat.id, rand.id, value),
+                                            size: "small" as const,
+                                            fullWidth: true,
+                                          },
+                                          weightLabel: { text: "Weight:", variant: "body2" as const },
+                                          weightField: {
+                                            placeholder: "counter",
+                                            defaultValue: rand.weight,
+                                            onBlur: (value: string) =>
+                                              handleRandomItemWeightChange(cat.id, rand.id, value),
+                                            size: "small" as const,
+                                            fullWidth: true,
+                                          },
+                                          removeButton: {
+                                            icon: "removeCircle" as const,
+                                            onClick: () => handleRemoveRandomItem(cat.id, rand.id),
+                                            color: "default" as const,
+                                          },
+                                        })),
+                                        addRandomItemRowLabel: { text: "Add Random Item:", variant: "body2" as const },
+                                        addRandomItemButton: {
+                                          icon: "add" as const,
+                                          onClick: () => handleAddRandomItem(cat.id),
+                                        },
+                                      })),
+                                      addCategoryRowLabel: { text: "Add Complex Category:", variant: "body2" as const },
+                                      addCategoryButton: {
+                                        icon: "add" as const,
+                                        onClick: () => handleAddComplexCategory(item.id),
+                                      },
+                                    };
+                                  })()
                                 : null,
                               scriptsSection: selectedType === "scripts"
                                 ? {

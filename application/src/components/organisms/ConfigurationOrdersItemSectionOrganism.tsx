@@ -4,6 +4,7 @@ import { ChipCheckboxAtom } from "@/components/atoms/ChipCheckboxAtom";
 import { IconButtonAtom } from "@/components/atoms/IconButtonAtom";
 import { LabelAtom } from "@/components/atoms/LabelAtom";
 import { TextFieldAtom } from "@/components/atoms/TextFieldAtom";
+import { ConfigurationComplexSectionOrganism } from "@/components/organisms/ConfigurationComplexSectionOrganism";
 import { OrdersRandomSectionOrganism } from "@/components/organisms/OrdersRandomSectionOrganism";
 import { ConfigurationOrdersItemColorsOrganism } from "@/components/organisms/ConfigurationOrdersItemColorsOrganism";
 import { ConfigurationOrdersItemScriptsOrganism } from "@/components/organisms/ConfigurationOrdersItemScriptsOrganism";
@@ -68,7 +69,7 @@ export function ConfigurationOrdersItemSectionOrganism({
               <IconButtonAtom props={item.toggleButton} />
             </ListItem>
 
-            {/* Expanded content: Orders Type chips + selected type label + Blank */}
+            {/* Expanded content: Orders Type chips + selected type label + section */}
             <Collapse in={item.isExpanded} timeout="auto" unmountOnExit>
               <Box
                 sx={{
@@ -85,10 +86,12 @@ export function ConfigurationOrdersItemSectionOrganism({
                   ))}
                 </Stack>
 
-                {(item.randomSection || item.scriptsSection || item.colorsSection || item.selectedTypeLabel) && (
+                {(item.randomSection || item.complexSection || item.scriptsSection || item.colorsSection || item.selectedTypeLabel) && (
                   <Box mt={1}>
                     {item.randomSection ? (
                       <OrdersRandomSectionOrganism props={item.randomSection} />
+                    ) : item.complexSection ? (
+                      <ConfigurationComplexSectionOrganism props={item.complexSection} />
                     ) : item.scriptsSection ? (
                       <ConfigurationOrdersItemScriptsOrganism props={item.scriptsSection} />
                     ) : item.colorsSection ? (
