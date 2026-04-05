@@ -4,6 +4,7 @@ import { ChipCheckboxAtom } from "@/components/atoms/ChipCheckboxAtom";
 import { IconButtonAtom } from "@/components/atoms/IconButtonAtom";
 import { LabelAtom } from "@/components/atoms/LabelAtom";
 import { TextFieldAtom } from "@/components/atoms/TextFieldAtom";
+import { ConfigurationComplexSectionOrganism } from "@/components/organisms/ConfigurationComplexSectionOrganism";
 import { OrdersItemSection } from "@/hooks/configurations/viewModel/useConfigurationsComposer";
 import {
   Box,
@@ -85,19 +86,23 @@ export function ConfigurationOrdersItemSectionOrganism({
                 {item.selectedTypeLabel && (
                   <Box mt={1}>
                     <LabelAtom props={item.selectedTypeLabel} />
-                    <Box
-                      sx={{
-                        bgcolor: "grey.200",
-                        borderRadius: 1,
-                        p: 4,
-                        mt: 1,
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                      }}
-                    >
-                      <LabelAtom props={BLANK_LABEL} />
-                    </Box>
+                    {item.complexSection ? (
+                      <ConfigurationComplexSectionOrganism props={item.complexSection} />
+                    ) : (
+                      <Box
+                        sx={{
+                          bgcolor: "grey.200",
+                          borderRadius: 1,
+                          p: 4,
+                          mt: 1,
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
+                        <LabelAtom props={BLANK_LABEL} />
+                      </Box>
+                    )}
                   </Box>
                 )}
               </Box>
