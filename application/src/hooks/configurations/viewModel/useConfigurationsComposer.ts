@@ -26,6 +26,24 @@ export interface OrdersGrpItem {
 
 export type OrdersTypeOption = "random" | "complex" | "scripts" | "colors";
 
+export interface RandomRowItem {
+  key: string;
+  valueLabel: LabelAtomProps["props"];
+  valueField: TextFieldAtomProps["props"];
+  promptLabel: LabelAtomProps["props"];
+  promptField: TextFieldAtomProps["props"];
+  weightLabel: LabelAtomProps["props"];
+  weightField: TextFieldAtomProps["props"];
+  removeButton: IconButtonAtomProps["props"];
+}
+
+export interface RandomSection {
+  headerLabel: LabelAtomProps["props"];
+  randomRows: RandomRowItem[];
+  addRowLabel: LabelAtomProps["props"];
+  addRowButton: IconButtonAtomProps["props"];
+}
+
 export interface OrdersItemPanel {
   key: string;
   panelLabel: LabelAtomProps["props"];
@@ -39,6 +57,7 @@ export interface OrdersItemPanel {
   ordersTypeLabel: LabelAtomProps["props"];
   ordersTypeChips: Array<ChipCheckboxAtomProps["props"] & { key: string }>;
   selectedTypeLabel: LabelAtomProps["props"] | null;
+  randomSection: RandomSection | null;
 }
 
 export interface OrdersItemSection {
