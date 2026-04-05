@@ -44,6 +44,16 @@ export interface RandomSection {
   addRowButton: IconButtonAtomProps["props"];
 }
 
+export interface ScriptsSection {
+  scriptLabel: LabelAtomProps["props"];
+  scriptInfoLabel: LabelAtomProps["props"];
+}
+
+export interface ColorsSection {
+  colorLabel: LabelAtomProps["props"];
+  colorInfoLabel: LabelAtomProps["props"];
+}
+
 export interface OrdersItemPanel {
   key: string;
   panelLabel: LabelAtomProps["props"];
@@ -58,6 +68,8 @@ export interface OrdersItemPanel {
   ordersTypeChips: Array<ChipCheckboxAtomProps["props"] & { key: string }>;
   selectedTypeLabel: LabelAtomProps["props"] | null;
   randomSection: RandomSection | null;
+  scriptsSection: ScriptsSection | null;
+  colorsSection: ColorsSection | null;
 }
 
 export interface OrdersItemSection {

@@ -5,6 +5,8 @@ import { IconButtonAtom } from "@/components/atoms/IconButtonAtom";
 import { LabelAtom } from "@/components/atoms/LabelAtom";
 import { TextFieldAtom } from "@/components/atoms/TextFieldAtom";
 import { OrdersRandomSectionOrganism } from "@/components/organisms/OrdersRandomSectionOrganism";
+import { ConfigurationOrdersItemColorsOrganism } from "@/components/organisms/ConfigurationOrdersItemColorsOrganism";
+import { ConfigurationOrdersItemScriptsOrganism } from "@/components/organisms/ConfigurationOrdersItemScriptsOrganism";
 import { OrdersItemSection } from "@/hooks/configurations/viewModel/useConfigurationsComposer";
 import {
   Box,
@@ -83,27 +85,33 @@ export function ConfigurationOrdersItemSectionOrganism({
                   ))}
                 </Stack>
 
-                {item.selectedTypeLabel && (
+                {(item.randomSection || item.scriptsSection || item.colorsSection || item.selectedTypeLabel) && (
                   <Box mt={1}>
                     {item.randomSection ? (
                       <OrdersRandomSectionOrganism props={item.randomSection} />
+                    ) : item.scriptsSection ? (
+                      <ConfigurationOrdersItemScriptsOrganism props={item.scriptsSection} />
+                    ) : item.colorsSection ? (
+                      <ConfigurationOrdersItemColorsOrganism props={item.colorsSection} />
                     ) : (
-                      <>
-                        <LabelAtom props={item.selectedTypeLabel} />
-                        <Box
-                          sx={{
-                            bgcolor: "grey.200",
-                            borderRadius: 1,
-                            p: 4,
-                            mt: 1,
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                          }}
-                        >
-                          <LabelAtom props={BLANK_LABEL} />
-                        </Box>
-                      </>
+                      item.selectedTypeLabel && (
+                        <>
+                          <LabelAtom props={item.selectedTypeLabel} />
+                          <Box
+                            sx={{
+                              bgcolor: "grey.200",
+                              borderRadius: 1,
+                              p: 4,
+                              mt: 1,
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                            }}
+                          >
+                            <LabelAtom props={BLANK_LABEL} />
+                          </Box>
+                        </>
+                      )
                     )}
                   </Box>
                 )}
