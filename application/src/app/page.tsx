@@ -8,7 +8,6 @@ export default function Home() {
     { href: "/posting-clerk", label: "Posting Clerk" },
     { href: "/preset-builder", label: "Preset Builder" },
     { href: "/prompt-forger", label: "Prompt Forger" },
-    { href: "/sample", label: "Sample" },
   ];
 
   return (
