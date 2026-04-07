@@ -5,6 +5,7 @@ import { LabelAtom } from "@/components/atoms/LabelAtom";
 import { DividerAtom } from "@/components/atoms/DividerAtom";
 import { SwitchAtom } from "@/components/atoms/SwitchAtom";
 import { IconButtonAtom } from "@/components/atoms/IconButtonAtom";
+import { GridLayoutAtom } from "@/components/atoms/GridLayoutAtom";
 import { ForgerSwitchSection } from "@/hooks/promptForger/viewModel/usePromptForgerComposer";
 
 interface PromptForgerSwitchSectionOrganismProps {
@@ -33,12 +34,12 @@ export function PromptForgerSwitchSectionOrganism({
                 sx={{ display: "flex", flexWrap: "wrap", pt: 0.5 }}
               >
                 {grp.switchItems.map((item) => (
-                  <Box key={item.key} sx={{ width: "50%", minWidth: 160 }}>
+                  <GridLayoutAtom key={item.key} props={{ width: "50%", minWidth: 160 }}>
                     <Stack direction="row" alignItems="center" spacing={0.5}>
                       <LabelAtom props={item.itemLabel} />
                       <SwitchAtom props={item.switchControl} />
                     </Stack>
-                  </Box>
+                  </GridLayoutAtom>
                 ))}
               </Box>
             </Box>

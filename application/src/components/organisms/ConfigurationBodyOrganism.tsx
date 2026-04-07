@@ -5,6 +5,7 @@ import { DividerAtom } from "@/components/atoms/DividerAtom";
 import { IconButtonAtom, IconButtonAtomProps } from "@/components/atoms/IconButtonAtom";
 import { LabelAtom, LabelAtomProps } from "@/components/atoms/LabelAtom";
 import { TextFieldAtom } from "@/components/atoms/TextFieldAtom";
+import { GridLayoutAtom } from "@/components/atoms/GridLayoutAtom";
 import { ConfigBodyBlocPanel } from "@/hooks/configurations/viewModel/useConfigurationsComposer";
 import { ConfigurationOrdersSectionOrganism } from "@/components/organisms/ConfigurationOrdersSectionOrganism";
 import { ConfigurationSelectSectionOrganism } from "@/components/organisms/ConfigurationSelectSectionOrganism";
@@ -32,7 +33,7 @@ export function ConfigurationBodyOrganism({
   props,
 }: ConfigurationBodyOrganismProps) {
   return (
-    <Stack spacing={2} p={3} maxWidth={960} mx="auto">
+    <GridLayoutAtom props={{ container: true }}>
       <Toolbar />
       <Stack direction="row" alignItems="center" spacing={1}>
         <LabelAtom props={props.headerLabel} />
@@ -67,14 +68,14 @@ export function ConfigurationBodyOrganism({
                 >
                   <LabelAtom props={bloc.panelLabel} />
                   <LabelAtom props={bloc.keyLabel} />
-                  <Box sx={{ width: 160 }}>
+                  <GridLayoutAtom props={{ width: 160 }}>
                     <TextFieldAtom props={bloc.keyField} />
-                  </Box>
+                  </GridLayoutAtom>
 
                   <LabelAtom props={bloc.labelLabel} />
-                  <Box sx={{ flex: 1, minWidth: 160 }}>
+                  <GridLayoutAtom props={{ flex: 1, minWidth: 160 }}>
                     <TextFieldAtom props={bloc.labelField} />
-                  </Box>
+                  </GridLayoutAtom>
 
                   <IconButtonAtom props={bloc.removeButton} />
                   <IconButtonAtom props={bloc.toggleButton} />
@@ -148,6 +149,6 @@ export function ConfigurationBodyOrganism({
           </ListItem>
         </List>
       </Box>
-    </Stack>
+    </GridLayoutAtom>
   );
 }

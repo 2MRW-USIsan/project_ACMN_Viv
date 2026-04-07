@@ -1,9 +1,10 @@
 "use client";
 
-import { Box, Collapse, Stack } from "@mui/material";
+import { Collapse, Stack } from "@mui/material";
 import { LabelAtom } from "@/components/atoms/LabelAtom";
 import { DividerAtom } from "@/components/atoms/DividerAtom";
 import { IconButtonAtom } from "@/components/atoms/IconButtonAtom";
+import { GridLayoutAtom } from "@/components/atoms/GridLayoutAtom";
 import { PromptForgerOrdersSectionOrganism } from "@/components/organisms/prompt-forger/PromptForgerOrdersSectionOrganism";
 import { PromptForgerSwitchSectionOrganism } from "@/components/organisms/prompt-forger/PromptForgerSwitchSectionOrganism";
 import { PromptForgerSelectSectionOrganism } from "@/components/organisms/prompt-forger/PromptForgerSelectSectionOrganism";
@@ -17,7 +18,7 @@ export function PromptForgerBlocSectionOrganism({
   props,
 }: PromptForgerBlocSectionOrganismProps) {
   return (
-    <Box>
+    <GridLayoutAtom props={{}}>
       <Stack direction="row" alignItems="center" justifyContent="space-between">
         <LabelAtom props={props.titleLabel} />
         <IconButtonAtom props={props.toggleButton} />
@@ -37,6 +38,6 @@ export function PromptForgerBlocSectionOrganism({
           )}
         </Stack>
       </Collapse>
-    </Box>
+    </GridLayoutAtom>
   );
 }

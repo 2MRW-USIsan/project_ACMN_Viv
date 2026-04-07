@@ -3,6 +3,7 @@
 import { IconButtonAtom } from "@/components/atoms/IconButtonAtom";
 import { LabelAtom } from "@/components/atoms/LabelAtom";
 import { TextFieldAtom } from "@/components/atoms/TextFieldAtom";
+import { GridLayoutAtom } from "@/components/atoms/GridLayoutAtom";
 import { RandomSection } from "@/hooks/configurations/viewModel/useConfigurationsComposer";
 import { Box, Divider, List, ListItem, Stack } from "@mui/material";
 
@@ -42,19 +43,19 @@ export function OrdersRandomSectionOrganism({
             }}
           >
             <LabelAtom props={row.valueLabel} />
-            <Box sx={{ width: 160 }}>
+            <GridLayoutAtom props={{ width: 160 }}>
               <TextFieldAtom props={row.valueField} />
-            </Box>
+            </GridLayoutAtom>
 
             <LabelAtom props={row.promptLabel} />
-            <Box sx={{ width: 160 }}>
+            <GridLayoutAtom props={{ width: 160 }}>
               <TextFieldAtom props={row.promptField} />
-            </Box>
+            </GridLayoutAtom>
 
             <LabelAtom props={row.weightLabel} />
-            <Box sx={{ width: 100 }}>
+            <GridLayoutAtom props={{ width: 100 }}>
               <TextFieldAtom props={row.weightField} />
-            </Box>
+            </GridLayoutAtom>
 
             <IconButtonAtom props={row.removeButton} />
           </ListItem>

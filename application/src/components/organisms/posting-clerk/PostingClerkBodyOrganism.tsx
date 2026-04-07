@@ -6,6 +6,7 @@ import { DividerAtom } from "@/components/atoms/DividerAtom";
 import { TextFieldAtom, TextFieldAtomProps } from "@/components/atoms/TextFieldAtom";
 import { ButtonAtom, ButtonAtomProps } from "@/components/atoms/ButtonAtom";
 import { IconButtonAtom, IconButtonAtomProps } from "@/components/atoms/IconButtonAtom";
+import { GridLayoutAtom } from "@/components/atoms/GridLayoutAtom";
 
 export interface UrlItemPanel {
   key: string;
@@ -69,7 +70,7 @@ interface PostingClerkBodyOrganismProps {
 
 export function PostingClerkBodyOrganism({ props }: PostingClerkBodyOrganismProps) {
   return (
-    <Stack spacing={2} p={3} maxWidth={960} mx="auto">
+    <GridLayoutAtom props={{ container: true }}>
       <Toolbar />
 
       {/* Information Field */}
@@ -84,9 +85,9 @@ export function PostingClerkBodyOrganism({ props }: PostingClerkBodyOrganismProp
 
         <Stack direction="row" alignItems="center" spacing={1}>
           <LabelAtom props={props.titleLabel} />
-          <Box sx={{ flex: 1, maxWidth: 400 }}>
+          <GridLayoutAtom props={{ flex: 1, maxWidth: 400 }}>
             <TextFieldAtom props={props.titleField} />
-          </Box>
+          </GridLayoutAtom>
         </Stack>
 
         <Stack direction="row" alignItems="center" spacing={1}>
@@ -103,27 +104,27 @@ export function PostingClerkBodyOrganism({ props }: PostingClerkBodyOrganismProp
       <Stack spacing={1} pl={2}>
         <Stack direction="row" alignItems="center" spacing={1}>
           <LabelAtom props={props.titleJpLabel} />
-          <Box sx={{ flex: 1, maxWidth: 400 }}>
+          <GridLayoutAtom props={{ flex: 1, maxWidth: 400 }}>
             <TextFieldAtom props={props.titleJpField} />
-          </Box>
+          </GridLayoutAtom>
         </Stack>
 
         <Stack direction="row" alignItems="center" spacing={1}>
           <LabelAtom props={props.titleEnLabel} />
-          <Box sx={{ flex: 1, maxWidth: 400 }}>
+          <GridLayoutAtom props={{ flex: 1, maxWidth: 400 }}>
             <TextFieldAtom props={props.titleEnField} />
-          </Box>
+          </GridLayoutAtom>
         </Stack>
 
         <Stack direction="row" alignItems="center" spacing={1}>
           <LabelAtom props={props.symbolLabel} />
-          <Box sx={{ width: 80 }}>
+          <GridLayoutAtom props={{ width: 80 }}>
             <TextFieldAtom props={props.symbolField} />
-          </Box>
+          </GridLayoutAtom>
           <LabelAtom props={props.picsLabel} />
-          <Box sx={{ width: 80 }}>
+          <GridLayoutAtom props={{ width: 80 }}>
             <TextFieldAtom props={props.picsField} />
-          </Box>
+          </GridLayoutAtom>
         </Stack>
       </Stack>
 
@@ -161,13 +162,13 @@ export function PostingClerkBodyOrganism({ props }: PostingClerkBodyOrganismProp
                 {platform.urlItems.map((urlItem) => (
                   <Stack key={urlItem.key} direction="row" alignItems="center" spacing={1}>
                     <LabelAtom props={urlItem.nameLabel} />
-                    <Box sx={{ width: 140 }}>
+                    <GridLayoutAtom props={{ width: 140 }}>
                       <TextFieldAtom props={urlItem.nameField} />
-                    </Box>
+                    </GridLayoutAtom>
                     <LabelAtom props={urlItem.urlLabel} />
-                    <Box sx={{ flex: 1 }}>
+                    <GridLayoutAtom props={{ flex: 1 }}>
                       <TextFieldAtom props={urlItem.urlField} />
-                    </Box>
+                    </GridLayoutAtom>
                     <IconButtonAtom props={urlItem.removeButton} />
                   </Stack>
                 ))}
@@ -188,13 +189,13 @@ export function PostingClerkBodyOrganism({ props }: PostingClerkBodyOrganismProp
         {props.quoteItems.map((quoteItem) => (
           <Stack key={quoteItem.key} direction="row" alignItems="center" spacing={1}>
             <LabelAtom props={quoteItem.quoteLabel} />
-            <Box sx={{ flex: 1, maxWidth: 400 }}>
+            <GridLayoutAtom props={{ flex: 1, maxWidth: 400 }}>
               <TextFieldAtom props={quoteItem.quoteField} />
-            </Box>
+            </GridLayoutAtom>
             <ButtonAtom props={quoteItem.copyButton} />
           </Stack>
         ))}
       </Stack>
-    </Stack>
+    </GridLayoutAtom>
   );
 }

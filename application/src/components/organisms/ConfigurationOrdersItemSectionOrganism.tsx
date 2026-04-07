@@ -1,5 +1,6 @@
 "use client";
 
+import { GridLayoutAtom } from "@/components/atoms/GridLayoutAtom";
 import { ChipCheckboxAtom } from "@/components/atoms/ChipCheckboxAtom";
 import { IconButtonAtom } from "@/components/atoms/IconButtonAtom";
 import { LabelAtom } from "@/components/atoms/LabelAtom";
@@ -56,14 +57,14 @@ export function ConfigurationOrdersItemSectionOrganism({
             >
               <LabelAtom props={item.panelLabel} />
               <LabelAtom props={item.keyLabel} />
-              <Box sx={{ width: 160 }}>
+              <GridLayoutAtom props={{ width: 160 }}>
                 <TextFieldAtom props={item.keyField} />
-              </Box>
+              </GridLayoutAtom>
 
               <LabelAtom props={item.labelLabel} />
-              <Box sx={{ flex: 1, minWidth: 160 }}>
+              <GridLayoutAtom props={{ flex: 1, minWidth: 160 }}>
                 <TextFieldAtom props={item.labelField} />
-              </Box>
+              </GridLayoutAtom>
 
               <IconButtonAtom props={item.removeButton} />
               <IconButtonAtom props={item.toggleButton} />

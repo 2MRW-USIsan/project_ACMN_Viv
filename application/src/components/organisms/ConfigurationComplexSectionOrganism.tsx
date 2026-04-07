@@ -5,6 +5,7 @@ import { IconButtonAtom } from "@/components/atoms/IconButtonAtom";
 import { LabelAtom } from "@/components/atoms/LabelAtom";
 import { TextFieldAtom } from "@/components/atoms/TextFieldAtom";
 import { ComplexSection } from "@/hooks/configurations/viewModel/useConfigurationsComposer";
+import { GridLayoutAtom } from "@/components/atoms/GridLayoutAtom";
 import {
   Box,
   Collapse,
@@ -50,19 +51,19 @@ export function ConfigurationComplexSectionOrganism({
             >
               <LabelAtom props={category.categoryLabel} />
               <LabelAtom props={category.valueLabel} />
-              <Box sx={{ width: 140 }}>
+              <GridLayoutAtom props={{ width: 140 }}>
                 <TextFieldAtom props={category.valueField} />
-              </Box>
+              </GridLayoutAtom>
 
               <LabelAtom props={category.promptLabel} />
-              <Box sx={{ flex: 1, minWidth: 140 }}>
+              <GridLayoutAtom props={{ flex: 1, minWidth: 140 }}>
                 <TextFieldAtom props={category.promptField} />
-              </Box>
+              </GridLayoutAtom>
 
               <LabelAtom props={category.weightLabel} />
-              <Box sx={{ width: 100 }}>
+              <GridLayoutAtom props={{ width: 100 }}>
                 <TextFieldAtom props={category.weightField} />
-              </Box>
+              </GridLayoutAtom>
 
               <IconButtonAtom props={category.removeButton} />
               <IconButtonAtom props={category.toggleButton} />
@@ -91,19 +92,19 @@ export function ConfigurationComplexSectionOrganism({
                       flexWrap="wrap"
                     >
                       <LabelAtom props={item.valueLabel} />
-                      <Box sx={{ width: 140 }}>
+                      <GridLayoutAtom props={{ width: 140 }}>
                         <TextFieldAtom props={item.valueField} />
-                      </Box>
+                      </GridLayoutAtom>
 
                       <LabelAtom props={item.promptLabel} />
-                      <Box sx={{ flex: 1, minWidth: 140 }}>
+                      <GridLayoutAtom props={{ flex: 1, minWidth: 140 }}>
                         <TextFieldAtom props={item.promptField} />
-                      </Box>
+                      </GridLayoutAtom>
 
                       <LabelAtom props={item.weightLabel} />
-                      <Box sx={{ width: 100 }}>
+                      <GridLayoutAtom props={{ width: 100 }}>
                         <TextFieldAtom props={item.weightField} />
-                      </Box>
+                      </GridLayoutAtom>
 
                       <IconButtonAtom props={item.removeButton} />
                     </Stack>

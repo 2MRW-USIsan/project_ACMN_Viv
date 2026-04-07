@@ -5,6 +5,7 @@ import { DividerAtom } from "@/components/atoms/DividerAtom";
 import { IconButtonAtom } from "@/components/atoms/IconButtonAtom";
 import { LabelAtom } from "@/components/atoms/LabelAtom";
 import { TextFieldAtom } from "@/components/atoms/TextFieldAtom";
+import { GridLayoutAtom } from "@/components/atoms/GridLayoutAtom";
 import { ConfigBodySection } from "@/hooks/configurations/viewModel/useConfigurationsComposer";
 import {
   Box,
@@ -55,14 +56,14 @@ export function ConfigurationOrdersSectionOrganism({
               >
                 <LabelAtom props={grp.panelLabel} />
                 <LabelAtom props={grp.keyLabel} />
-                <Box sx={{ width: 160 }}>
+                <GridLayoutAtom props={{ width: 160 }}>
                   <TextFieldAtom props={grp.keyField} />
-                </Box>
+                </GridLayoutAtom>
 
                 <LabelAtom props={grp.labelLabel} />
-                <Box sx={{ flex: 1, minWidth: 160 }}>
+                <GridLayoutAtom props={{ flex: 1, minWidth: 160 }}>
                   <TextFieldAtom props={grp.labelField} />
-                </Box>
+                </GridLayoutAtom>
 
                 <IconButtonAtom props={grp.removeButton} />
                 <IconButtonAtom props={grp.toggleButton} />

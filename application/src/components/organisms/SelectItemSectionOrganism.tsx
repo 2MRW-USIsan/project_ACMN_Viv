@@ -1,5 +1,6 @@
 "use client";
 
+import { GridLayoutAtom } from "@/components/atoms/GridLayoutAtom";
 import { IconButtonAtom } from "@/components/atoms/IconButtonAtom";
 import { LabelAtom } from "@/components/atoms/LabelAtom";
 import { SwitchAtom } from "@/components/atoms/SwitchAtom";
@@ -67,14 +68,14 @@ export function SelectItemSectionOrganism({
               >
                 <LabelAtom props={selector.panelLabel} />
                 <LabelAtom props={selector.keyLabel} />
-                <Box sx={{ width: 160 }}>
+                <GridLayoutAtom props={{ width: 160 }}>
                   <TextFieldAtom props={selector.keyField} />
-                </Box>
+                </GridLayoutAtom>
 
                 <LabelAtom props={selector.labelLabel} />
-                <Box sx={{ flex: 1, minWidth: 160 }}>
+                <GridLayoutAtom props={{ flex: 1, minWidth: 160 }}>
                   <TextFieldAtom props={selector.labelField} />
-                </Box>
+                </GridLayoutAtom>
 
                 <IconButtonAtom props={selector.removeButton} />
                 <IconButtonAtom props={selector.toggleButton} />
@@ -106,14 +107,14 @@ export function SelectItemSectionOrganism({
                       }}
                     >
                       <LabelAtom props={item.valueLabel} />
-                      <Box sx={{ width: 160 }}>
+                      <GridLayoutAtom props={{ width: 160 }}>
                         <TextFieldAtom props={item.valueField} />
-                      </Box>
+                      </GridLayoutAtom>
 
                       <LabelAtom props={item.promptLabel} />
-                      <Box sx={{ flex: 1, minWidth: 160 }}>
+                      <GridLayoutAtom props={{ flex: 1, minWidth: 160 }}>
                         <TextFieldAtom props={item.promptField} />
-                      </Box>
+                      </GridLayoutAtom>
 
                       <IconButtonAtom props={item.removeButton} />
                     </ListItem>

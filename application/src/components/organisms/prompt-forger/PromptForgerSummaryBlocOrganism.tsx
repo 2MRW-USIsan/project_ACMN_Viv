@@ -1,12 +1,13 @@
 "use client";
 
-import { Box, Collapse, Stack } from "@mui/material";
+import { Collapse, Stack } from "@mui/material";
 import { LabelAtom } from "@/components/atoms/LabelAtom";
 import { DividerAtom } from "@/components/atoms/DividerAtom";
 import { ButtonAtom } from "@/components/atoms/ButtonAtom";
 import { TextFieldAtom } from "@/components/atoms/TextFieldAtom";
 import { RadioButtonAtom } from "@/components/atoms/RadioButtonAtom";
 import { IconButtonAtom } from "@/components/atoms/IconButtonAtom";
+import { GridLayoutAtom } from "@/components/atoms/GridLayoutAtom";
 import { SummaryBlocPanel } from "@/hooks/promptForger/viewModel/usePromptForgerComposer";
 
 interface PromptForgerSummaryBlocOrganismProps {
@@ -19,7 +20,7 @@ export function PromptForgerSummaryBlocOrganism({
   const { tuneupComposition, promptIdea } = props;
 
   return (
-    <Box>
+    <GridLayoutAtom props={{}}>
       <Stack direction="row" alignItems="center" justifyContent="space-between">
         <LabelAtom props={props.titleLabel} />
         <IconButtonAtom props={props.toggleButton} />
@@ -30,7 +31,7 @@ export function PromptForgerSummaryBlocOrganism({
         <Stack spacing={1} pl={2} pt={1}>
 
           {/* Tune-up Composition */}
-          <Box>
+          <GridLayoutAtom props={{}}>
             <Stack direction="row" alignItems="center" justifyContent="space-between">
               <LabelAtom props={tuneupComposition.titleLabel} />
               <IconButtonAtom props={tuneupComposition.toggleButton} />
@@ -68,10 +69,10 @@ export function PromptForgerSummaryBlocOrganism({
                 </Stack>
               </Stack>
             </Collapse>
-          </Box>
+          </GridLayoutAtom>
 
           {/* Prompt Idea */}
-          <Box>
+          <GridLayoutAtom props={{}}>
             <Stack direction="row" alignItems="center" justifyContent="space-between">
               <LabelAtom props={promptIdea.titleLabel} />
               <IconButtonAtom props={promptIdea.toggleButton} />
@@ -88,10 +89,10 @@ export function PromptForgerSummaryBlocOrganism({
                 <TextFieldAtom props={promptIdea.summaryPromptField} />
               </Stack>
             </Collapse>
-          </Box>
+          </GridLayoutAtom>
 
         </Stack>
       </Collapse>
-    </Box>
+    </GridLayoutAtom>
   );
 }

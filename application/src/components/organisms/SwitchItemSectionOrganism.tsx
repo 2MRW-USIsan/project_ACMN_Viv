@@ -4,6 +4,7 @@ import { IconButtonAtom } from "@/components/atoms/IconButtonAtom";
 import { LabelAtom } from "@/components/atoms/LabelAtom";
 import { SwitchAtom } from "@/components/atoms/SwitchAtom";
 import { TextFieldAtom } from "@/components/atoms/TextFieldAtom";
+import { GridLayoutAtom } from "@/components/atoms/GridLayoutAtom";
 import { SwitchItemSection } from "@/hooks/configurations/viewModel/useConfigurationsComposer";
 import { Box, Divider, List, ListItem, Stack } from "@mui/material";
 
@@ -52,19 +53,19 @@ export function SwitchItemSectionOrganism({
               }}
             >
               <LabelAtom props={item.labelLabel} />
-              <Box sx={{ width: 120 }}>
+              <GridLayoutAtom props={{ width: 120 }}>
                 <TextFieldAtom props={item.labelField} />
-              </Box>
+              </GridLayoutAtom>
 
               <LabelAtom props={item.valueLabel} />
-              <Box sx={{ flex: 1, minWidth: 120 }}>
+              <GridLayoutAtom props={{ flex: 1, minWidth: 120 }}>
                 <TextFieldAtom props={item.valueField} />
-              </Box>
+              </GridLayoutAtom>
 
               <LabelAtom props={item.altLabel} />
-              <Box sx={{ flex: 1, minWidth: 120 }}>
+              <GridLayoutAtom props={{ flex: 1, minWidth: 120 }}>
                 <TextFieldAtom props={item.altField} />
-              </Box>
+              </GridLayoutAtom>
 
               <IconButtonAtom props={item.removeButton} />
             </ListItem>

@@ -1,10 +1,11 @@
 "use client";
 
-import { Box, Stack, Toolbar } from "@mui/material";
+import { Stack, Toolbar } from "@mui/material";
 import { LabelAtom, LabelAtomProps } from "@/components/atoms/LabelAtom";
 import { DividerAtom } from "@/components/atoms/DividerAtom";
 import { TextFieldAtom, TextFieldAtomProps } from "@/components/atoms/TextFieldAtom";
 import { ButtonAtom, ButtonAtomProps } from "@/components/atoms/ButtonAtom";
+import { GridLayoutAtom } from "@/components/atoms/GridLayoutAtom";
 
 export interface PresetBuilderBodyViewModel {
   infoSectionLabel: LabelAtomProps["props"];
@@ -33,7 +34,7 @@ interface PresetBuilderBodyOrganismProps {
 
 export function PresetBuilderBodyOrganism({ props }: PresetBuilderBodyOrganismProps) {
   return (
-    <Stack spacing={2} p={3} maxWidth={960} mx="auto">
+    <GridLayoutAtom props={{ container: true }}>
       <Toolbar />
 
       {/* Information Field */}
@@ -48,9 +49,9 @@ export function PresetBuilderBodyOrganism({ props }: PresetBuilderBodyOrganismPr
 
         <Stack direction="row" alignItems="center" spacing={1}>
           <LabelAtom props={props.titleLabel} />
-          <Box sx={{ flex: 1, maxWidth: 400 }}>
+          <GridLayoutAtom props={{ flex: 1, maxWidth: 400 }}>
             <TextFieldAtom props={props.titleField} />
-          </Box>
+          </GridLayoutAtom>
           <ButtonAtom props={props.saveButton} />
         </Stack>
 
@@ -87,6 +88,6 @@ export function PresetBuilderBodyOrganism({ props }: PresetBuilderBodyOrganismPr
           <TextFieldAtom props={props.orderPresetsField} />
         </Stack>
       </Stack>
-    </Stack>
+    </GridLayoutAtom>
   );
 }

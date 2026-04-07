@@ -6,6 +6,7 @@ import { DividerAtom } from "@/components/atoms/DividerAtom";
 import { SelectAtom } from "@/components/atoms/SelectAtom";
 import { ButtonAtom } from "@/components/atoms/ButtonAtom";
 import { IconButtonAtom } from "@/components/atoms/IconButtonAtom";
+import { GridLayoutAtom } from "@/components/atoms/GridLayoutAtom";
 import { ForgerSelectSection } from "@/hooks/promptForger/viewModel/usePromptForgerComposer";
 
 interface PromptForgerSelectSectionOrganismProps {
@@ -39,9 +40,9 @@ export function PromptForgerSelectSectionOrganism({
                 {grp.selectRows.map((row) => (
                   <Stack key={row.key} direction="row" alignItems="center" spacing={1}>
                     <LabelAtom props={row.label} />
-                    <Box sx={{ flex: 1 }}>
+                    <GridLayoutAtom props={{ flex: 1 }}>
                       <SelectAtom props={row.select} />
-                    </Box>
+                    </GridLayoutAtom>
                     <ButtonAtom props={row.reloadButton} />
                   </Stack>
                 ))}

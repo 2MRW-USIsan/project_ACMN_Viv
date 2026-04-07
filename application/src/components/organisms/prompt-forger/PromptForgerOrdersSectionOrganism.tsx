@@ -6,6 +6,7 @@ import { DividerAtom } from "@/components/atoms/DividerAtom";
 import { TextFieldAtom } from "@/components/atoms/TextFieldAtom";
 import { ButtonAtom } from "@/components/atoms/ButtonAtom";
 import { IconButtonAtom } from "@/components/atoms/IconButtonAtom";
+import { GridLayoutAtom } from "@/components/atoms/GridLayoutAtom";
 import { ForgerOrdersSection } from "@/hooks/promptForger/viewModel/usePromptForgerComposer";
 
 interface PromptForgerOrdersSectionOrganismProps {
@@ -39,9 +40,9 @@ export function PromptForgerOrdersSectionOrganism({
 
               <Stack direction="row" alignItems="center" spacing={1} pt={1}>
                 <LabelAtom props={grp.promptLabel} />
-                <Box sx={{ flex: 1 }}>
+                <GridLayoutAtom props={{ flex: 1 }}>
                   <TextFieldAtom props={grp.promptField} />
-                </Box>
+                </GridLayoutAtom>
                 <ButtonAtom props={grp.resetButton} />
                 <ButtonAtom props={grp.clearButton} />
               </Stack>

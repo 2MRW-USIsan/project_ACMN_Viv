@@ -1,10 +1,11 @@
 "use client";
 
-import { Box, Stack, Toolbar } from "@mui/material";
+import { Stack, Toolbar } from "@mui/material";
 import { LabelAtom } from "@/components/atoms/LabelAtom";
 import { DividerAtom } from "@/components/atoms/DividerAtom";
 import { TextFieldAtom } from "@/components/atoms/TextFieldAtom";
 import { ButtonAtom } from "@/components/atoms/ButtonAtom";
+import { GridLayoutAtom } from "@/components/atoms/GridLayoutAtom";
 import { PromptForgerBlocSectionOrganism } from "@/components/organisms/prompt-forger/PromptForgerBlocSectionOrganism";
 import { PromptForgerSummaryBlocOrganism } from "@/components/organisms/prompt-forger/PromptForgerSummaryBlocOrganism";
 import { PromptForgerBodyViewModel } from "@/hooks/promptForger/viewModel/usePromptForgerComposer";
@@ -15,7 +16,7 @@ interface PromptForgerBodyOrganismProps {
 
 export function PromptForgerBodyOrganism({ props }: PromptForgerBodyOrganismProps) {
   return (
-    <Stack spacing={2} p={3} maxWidth={960} mx="auto">
+    <GridLayoutAtom props={{ container: true }}>
       <Toolbar />
 
       {/* Information Field */}
@@ -30,9 +31,9 @@ export function PromptForgerBodyOrganism({ props }: PromptForgerBodyOrganismProp
 
         <Stack direction="row" alignItems="center" spacing={1}>
           <LabelAtom props={props.titleLabel} />
-          <Box sx={{ flex: 1, maxWidth: 400 }}>
+          <GridLayoutAtom props={{ flex: 1, maxWidth: 400 }}>
             <TextFieldAtom props={props.titleField} />
-          </Box>
+          </GridLayoutAtom>
         </Stack>
 
         <Stack direction="row" alignItems="center" spacing={1}>
@@ -53,6 +54,6 @@ export function PromptForgerBodyOrganism({ props }: PromptForgerBodyOrganismProp
 
         <PromptForgerSummaryBlocOrganism props={props.summaryBloc} />
       </Stack>
-    </Stack>
+    </GridLayoutAtom>
   );
 }
