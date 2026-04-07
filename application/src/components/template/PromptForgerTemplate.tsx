@@ -1,11 +1,17 @@
 "use client";
 
-import { PromptForgerViewModel } from "@/hooks/promptForger/viewModel/usePromptForgerViewModel";
+import { NavigationLayoutOrganism } from "@/components/organisms/NavigationLayoutOrganism";
+import { PromptForgerBodyOrganism } from "@/components/organisms/prompt-forger/PromptForgerBodyOrganism";
+import { PromptForgerViewModel } from "@/hooks/promptForger/viewModel/usePromptForgerComposer";
 
-interface Props {
+interface PromptForgerTemplateProps {
   props: PromptForgerViewModel;
 }
 
-export function PromptForgerTemplate(_props: Props) {
-  return <></>;
+export function PromptForgerTemplate({ props }: PromptForgerTemplateProps) {
+  return (
+    <NavigationLayoutOrganism props={props.navigationLayout}>
+      <PromptForgerBodyOrganism props={props.promptForgerBody} />
+    </NavigationLayoutOrganism>
+  );
 }
