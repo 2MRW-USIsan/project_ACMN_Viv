@@ -9,6 +9,11 @@ interface GridLayoutAtomProps {
     width?: number | string;
     flex?: number | string;
     minWidth?: number | string;
+    mt?: number;
+    px?: number;
+    py?: number;
+    display?: string;
+    justifyContent?: string;
   };
   children?: React.ReactNode;
 }
@@ -22,13 +27,20 @@ export function GridLayoutAtom({ props = {}, children }: GridLayoutAtomProps) {
     );
   }
 
+  const { width, flex, maxWidth, minWidth, mt, px, py, display, justifyContent } = props;
+
   return (
     <Box
       sx={{
-        ...(props.width !== undefined && { width: props.width }),
-        ...(props.flex !== undefined && { flex: props.flex }),
-        ...(props.maxWidth !== undefined && { maxWidth: props.maxWidth }),
-        ...(props.minWidth !== undefined && { minWidth: props.minWidth }),
+        ...(width !== undefined && { width }),
+        ...(flex !== undefined && { flex }),
+        ...(maxWidth !== undefined && { maxWidth }),
+        ...(minWidth !== undefined && { minWidth }),
+        ...(mt !== undefined && { mt }),
+        ...(px !== undefined && { px }),
+        ...(py !== undefined && { py }),
+        ...(display !== undefined && { display }),
+        ...(justifyContent !== undefined && { justifyContent }),
       }}
     >
       {children}

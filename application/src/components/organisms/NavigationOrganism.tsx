@@ -1,6 +1,7 @@
 "use client";
 
-import { Stack } from "@mui/material";
+import { GridLayoutAtom } from "@/components/atoms/GridLayoutAtom";
+import { StackAtom } from "@/components/atoms/StackAtom";
 import { LabelAtom, LabelAtomProps } from "@/components/atoms/LabelAtom";
 import { DividerAtom } from "@/components/atoms/DividerAtom";
 import { SelectAtom, SelectAtomProps } from "@/components/atoms/SelectAtom";
@@ -52,13 +53,14 @@ export interface NavigationOrganismProps {
 
 export function NavigationOrganism({ props }: NavigationOrganismProps) {
   return (
-    <Stack spacing={1} p={1}>
+    <GridLayoutAtom props={{ px: 1, py: 1 }}>
+    <StackAtom props={{ spacing: 1 }}>
       {props.linksAbove && props.linksAbove.length > 0 && (
-        <Stack spacing={0.5} pb={0.5}>
+        <StackAtom props={{ spacing: 0.5, pb: 0.5 }}>
           {props.linksAbove.map((linkProps) => (
             <NavLinkAtom key={linkProps.label} props={linkProps} />
           ))}
-        </Stack>
+        </StackAtom>
       )}
 
       {props.activeItemLabel && (
@@ -69,65 +71,66 @@ export function NavigationOrganism({ props }: NavigationOrganismProps) {
       )}
 
       {props.configurations && (
-        <Stack spacing={1} pt={0.5}>
-          <Stack direction="row" alignItems="center" spacing={0.5}>
+        <StackAtom props={{ spacing: 1, pt: 0.5 }}>
+          <StackAtom props={{ direction: "row", alignItems: "center", spacing: 0.5 }}>
             <LabelAtom props={props.configurations.setLabel} />
             <SelectAtom props={props.configurations.select} />
             <ButtonAtom props={props.configurations.loadButton} />
             <ButtonAtom props={props.configurations.newButton} />
-          </Stack>
+          </StackAtom>
 
-          <Stack direction="row" alignItems="center" spacing={0.5}>
+          <StackAtom props={{ direction: "row", alignItems: "center", spacing: 0.5 }}>
             <LabelAtom props={props.configurations.nameLabel} />
             <TextFieldAtom props={props.configurations.editField} />
             <ButtonAtom props={props.configurations.saveButton} />
             <ButtonAtom props={props.configurations.changeButton} />
-          </Stack>
+          </StackAtom>
 
-          <Stack direction="row" justifyContent="flex-end">
+          <StackAtom props={{ direction: "row", justifyContent: "flex-end" }}>
             <ButtonAtom props={props.configurations.deleteButton} />
-          </Stack>
-        </Stack>
+          </StackAtom>
+        </StackAtom>
       )}
 
       {props.presets && (
-        <Stack spacing={1} pt={0.5}>
-          <Stack direction="row" alignItems="center" spacing={0.5}>
+        <StackAtom props={{ spacing: 1, pt: 0.5 }}>
+          <StackAtom props={{ direction: "row", alignItems: "center", spacing: 0.5 }}>
             <LabelAtom props={props.presets.groupLabel} />
             <SelectAtom props={props.presets.groupSelect} />
             <ButtonAtom props={props.presets.loadButton} />
             <ButtonAtom props={props.presets.newButton} />
-          </Stack>
+          </StackAtom>
 
-          <Stack direction="row" alignItems="center" spacing={0.5}>
+          <StackAtom props={{ direction: "row", alignItems: "center", spacing: 0.5 }}>
             <LabelAtom props={props.presets.nameLabel} />
             <TextFieldAtom props={props.presets.nameField} />
             <ButtonAtom props={props.presets.saveButton} />
             <ButtonAtom props={props.presets.changeButton} />
-          </Stack>
+          </StackAtom>
 
-          <Stack direction="row" justifyContent="flex-end">
+          <StackAtom props={{ direction: "row", justifyContent: "flex-end" }}>
             <ButtonAtom props={props.presets.deleteButton} />
-          </Stack>
+          </StackAtom>
 
           <DividerAtom />
 
-          <Stack spacing={0.5}>
+          <StackAtom props={{ spacing: 0.5 }}>
             {props.presets.presetItemPanels.map((item) => (
-              <Stack key={item.key} direction="row" alignItems="center">
+              <StackAtom key={item.key} props={{ direction: "row", alignItems: "center" }}>
                 <RadioButtonAtom props={item.radio} />
                 <LabelAtom props={item.label} />
-              </Stack>
+              </StackAtom>
             ))}
-          </Stack>
-        </Stack>
+          </StackAtom>
+        </StackAtom>
       )}
 
-      <Stack spacing={0.5} pt={0.5}>
+      <StackAtom props={{ spacing: 0.5, pt: 0.5 }}>
         {props.links.map((linkProps) => (
           <NavLinkAtom key={linkProps.label} props={linkProps} />
         ))}
-      </Stack>
-    </Stack>
+      </StackAtom>
+    </StackAtom>
+    </GridLayoutAtom>
   );
 }

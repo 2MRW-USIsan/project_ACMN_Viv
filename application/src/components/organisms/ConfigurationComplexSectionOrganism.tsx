@@ -1,19 +1,17 @@
 "use client";
 
+import { CollapseAtom } from "@/components/atoms/CollapseAtom";
 import { DividerAtom } from "@/components/atoms/DividerAtom";
+import { GridLayoutAtom } from "@/components/atoms/GridLayoutAtom";
 import { IconButtonAtom } from "@/components/atoms/IconButtonAtom";
 import { LabelAtom } from "@/components/atoms/LabelAtom";
+import { ListFrameAtom } from "@/components/atoms/ListFrameAtom";
+import { ListRowAtom } from "@/components/atoms/ListRowAtom";
+import { PanelContentAtom } from "@/components/atoms/PanelContentAtom";
+import { PanelFrameAtom } from "@/components/atoms/PanelFrameAtom";
+import { StackAtom } from "@/components/atoms/StackAtom";
 import { TextFieldAtom } from "@/components/atoms/TextFieldAtom";
 import { ComplexSection } from "@/hooks/configurations/viewModel/useConfigurationsComposer";
-import { GridLayoutAtom } from "@/components/atoms/GridLayoutAtom";
-import {
-  Box,
-  Collapse,
-  Divider,
-  List,
-  ListItem,
-  Stack,
-} from "@mui/material";
 
 interface ConfigurationComplexSectionOrganismProps {
   props: ComplexSection;
@@ -23,32 +21,14 @@ export function ConfigurationComplexSectionOrganism({
   props,
 }: ConfigurationComplexSectionOrganismProps) {
   return (
-    <Box
-      sx={{
-        border: "1px solid",
-        borderColor: "divider",
-        borderRadius: 1,
-        overflow: "hidden",
-        mt: 1,
-      }}
-    >
-      <List disablePadding>
+    <PanelFrameAtom props={{ mt: 1 }}>
+      <ListFrameAtom>
         {props.categoryPanels.map((category, index) => (
-          <Box key={category.key}>
-            {index > 0 && <Divider />}
+          <GridLayoutAtom key={category.key}>
+            {index > 0 && <DividerAtom />}
 
             {/* Category row */}
-            <ListItem
-              disablePadding
-              sx={{
-                px: 2,
-                py: 1,
-                display: "flex",
-                alignItems: "center",
-                gap: 1,
-                flexWrap: "wrap",
-              }}
-            >
+            <ListRowAtom props={{ variant: "item" }}>
               <LabelAtom props={category.categoryLabel} />
               <LabelAtom props={category.valueLabel} />
               <GridLayoutAtom props={{ width: 140 }}>
@@ -67,29 +47,19 @@ export function ConfigurationComplexSectionOrganism({
 
               <IconButtonAtom props={category.removeButton} />
               <IconButtonAtom props={category.toggleButton} />
-            </ListItem>
+            </ListRowAtom>
 
             {/* Expanded random sub-section */}
-            <Collapse in={category.isExpanded} timeout="auto" unmountOnExit>
-              <Box
-                sx={{
-                  borderTop: "1px solid",
-                  borderColor: "divider",
-                  px: 3,
-                  py: 2,
-                }}
-              >
+            <CollapseAtom props={{ isOpen: category.isExpanded }}>
+              <PanelContentAtom>
                 <LabelAtom props={category.randomSectionLabel} />
                 <DividerAtom />
 
-                <Stack spacing={1} mt={1}>
+                <StackAtom props={{ spacing: 1, mt: 1 }}>
                   {category.randomItemPanels.map((item) => (
-                    <Stack
+                    <StackAtom
                       key={item.key}
-                      direction="row"
-                      alignItems="center"
-                      gap={1}
-                      flexWrap="wrap"
+                      props={{ direction: "row", alignItems: "center", gap: 1, flexWrap: "wrap" }}
                     >
                       <LabelAtom props={item.valueLabel} />
                       <GridLayoutAtom props={{ width: 140 }}>
@@ -107,43 +77,29 @@ export function ConfigurationComplexSectionOrganism({
                       </GridLayoutAtom>
 
                       <IconButtonAtom props={item.removeButton} />
-                    </Stack>
+                    </StackAtom>
                   ))}
-                </Stack>
+                </StackAtom>
 
                 {/* Add Random Item row */}
-                <Stack
-                  direction="row"
-                  alignItems="center"
-                  justifyContent="center"
-                  spacing={0.5}
-                  mt={2}
-                >
+                <StackAtom props={{ direction: "row", alignItems: "center", justifyContent: "center", spacing: 0.5, mt: 2 }}>
                   <LabelAtom props={category.addRandomItemRowLabel} />
                   <IconButtonAtom props={category.addRandomItemButton} />
-                </Stack>
-              </Box>
-            </Collapse>
-          </Box>
+                </StackAtom>
+              </PanelContentAtom>
+            </CollapseAtom>
+          </GridLayoutAtom>
         ))}
 
         {/* Add Complex Category row */}
-        <Divider />
-        <ListItem
-          disablePadding
-          sx={{
-            px: 2,
-            py: 1.5,
-            display: "flex",
-            justifyContent: "center",
-          }}
-        >
-          <Stack direction="row" alignItems="center" spacing={0.5}>
+        <DividerAtom />
+        <ListRowAtom props={{ variant: "footer" }}>
+          <StackAtom props={{ direction: "row", alignItems: "center", spacing: 0.5 }}>
             <LabelAtom props={props.addCategoryRowLabel} />
             <IconButtonAtom props={props.addCategoryButton} />
-          </Stack>
-        </ListItem>
-      </List>
-    </Box>
+          </StackAtom>
+        </ListRowAtom>
+      </ListFrameAtom>
+    </PanelFrameAtom>
   );
 }

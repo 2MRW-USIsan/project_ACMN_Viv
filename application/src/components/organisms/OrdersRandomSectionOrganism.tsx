@@ -1,11 +1,15 @@
 "use client";
 
+import { DividerAtom } from "@/components/atoms/DividerAtom";
+import { GridLayoutAtom } from "@/components/atoms/GridLayoutAtom";
 import { IconButtonAtom } from "@/components/atoms/IconButtonAtom";
 import { LabelAtom } from "@/components/atoms/LabelAtom";
+import { ListFrameAtom } from "@/components/atoms/ListFrameAtom";
+import { ListRowAtom } from "@/components/atoms/ListRowAtom";
+import { PanelFrameAtom } from "@/components/atoms/PanelFrameAtom";
+import { StackAtom } from "@/components/atoms/StackAtom";
 import { TextFieldAtom } from "@/components/atoms/TextFieldAtom";
-import { GridLayoutAtom } from "@/components/atoms/GridLayoutAtom";
 import { RandomSection } from "@/hooks/configurations/viewModel/useConfigurationsComposer";
-import { Box, Divider, List, ListItem, Stack } from "@mui/material";
 
 interface OrdersRandomSectionOrganismProps {
   props: RandomSection;
@@ -15,33 +19,14 @@ export function OrdersRandomSectionOrganism({
   props,
 }: OrdersRandomSectionOrganismProps) {
   return (
-    <Box
-      sx={{
-        border: "1px solid",
-        borderColor: "divider",
-        borderRadius: 1,
-        overflow: "hidden",
-        mt: 1,
-      }}
-    >
-      <Box sx={{ px: 2, py: 1 }}>
+    <PanelFrameAtom props={{ mt: 1 }}>
+      <GridLayoutAtom props={{ px: 2, py: 1 }}>
         <LabelAtom props={props.headerLabel} />
-      </Box>
-      <Divider />
-      <List disablePadding>
+      </GridLayoutAtom>
+      <DividerAtom />
+      <ListFrameAtom>
         {props.randomRows.map((row) => (
-          <ListItem
-            key={row.key}
-            disablePadding
-            sx={{
-              px: 2,
-              py: 1,
-              display: "flex",
-              alignItems: "center",
-              gap: 1,
-              flexWrap: "wrap",
-            }}
-          >
+          <ListRowAtom key={row.key} props={{ variant: "item" }}>
             <LabelAtom props={row.valueLabel} />
             <GridLayoutAtom props={{ width: 160 }}>
               <TextFieldAtom props={row.valueField} />
@@ -58,24 +43,16 @@ export function OrdersRandomSectionOrganism({
             </GridLayoutAtom>
 
             <IconButtonAtom props={row.removeButton} />
-          </ListItem>
+          </ListRowAtom>
         ))}
-      </List>
-      <Divider />
-      <ListItem
-        disablePadding
-        sx={{
-          px: 2,
-          py: 1.5,
-          display: "flex",
-          justifyContent: "center",
-        }}
-      >
-        <Stack direction="row" alignItems="center" spacing={0.5}>
+      </ListFrameAtom>
+      <DividerAtom />
+      <ListRowAtom props={{ variant: "footer" }}>
+        <StackAtom props={{ direction: "row", alignItems: "center", spacing: 0.5 }}>
           <LabelAtom props={props.addRowLabel} />
           <IconButtonAtom props={props.addRowButton} />
-        </Stack>
-      </ListItem>
-    </Box>
+        </StackAtom>
+      </ListRowAtom>
+    </PanelFrameAtom>
   );
 }

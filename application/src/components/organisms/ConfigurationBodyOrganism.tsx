@@ -1,24 +1,22 @@
 "use client";
 
 import { ChipCheckboxAtom } from "@/components/atoms/ChipCheckboxAtom";
+import { CollapseAtom } from "@/components/atoms/CollapseAtom";
 import { DividerAtom } from "@/components/atoms/DividerAtom";
+import { GridLayoutAtom } from "@/components/atoms/GridLayoutAtom";
 import { IconButtonAtom, IconButtonAtomProps } from "@/components/atoms/IconButtonAtom";
 import { LabelAtom, LabelAtomProps } from "@/components/atoms/LabelAtom";
+import { ListFrameAtom } from "@/components/atoms/ListFrameAtom";
+import { ListRowAtom } from "@/components/atoms/ListRowAtom";
+import { PanelContentAtom } from "@/components/atoms/PanelContentAtom";
+import { PanelFrameAtom } from "@/components/atoms/PanelFrameAtom";
+import { StackAtom } from "@/components/atoms/StackAtom";
 import { TextFieldAtom } from "@/components/atoms/TextFieldAtom";
-import { GridLayoutAtom } from "@/components/atoms/GridLayoutAtom";
+import { ToolbarSpacerAtom } from "@/components/atoms/ToolbarSpacerAtom";
 import { ConfigBodyBlocPanel } from "@/hooks/configurations/viewModel/useConfigurationsComposer";
 import { ConfigurationOrdersSectionOrganism } from "@/components/organisms/ConfigurationOrdersSectionOrganism";
 import { ConfigurationSelectSectionOrganism } from "@/components/organisms/ConfigurationSelectSectionOrganism";
 import { ConfigurationSwitchSectionOrganism } from "@/components/organisms/ConfigurationSwitchSectionOrganism";
-import {
-  Box,
-  Collapse,
-  Divider,
-  List,
-  ListItem,
-  Stack,
-  Toolbar,
-} from "@mui/material";
 
 interface ConfigurationBodyOrganismProps {
   props: {
@@ -34,38 +32,21 @@ export function ConfigurationBodyOrganism({
 }: ConfigurationBodyOrganismProps) {
   return (
     <GridLayoutAtom props={{ container: true }}>
-      <Toolbar />
-      <Stack direction="row" alignItems="center" spacing={1}>
+      <ToolbarSpacerAtom />
+      <StackAtom props={{ direction: "row", alignItems: "center", spacing: 1 }}>
         <LabelAtom props={props.headerLabel} />
-      </Stack>
+      </StackAtom>
       <DividerAtom />
 
-      <Box
-        sx={{
-          border: "1px solid",
-          borderColor: "divider",
-          borderRadius: 1,
-          overflow: "hidden",
-        }}
-      >
-        <List disablePadding>
+      <PanelFrameAtom>
+        <ListFrameAtom>
           {props.blocPanels.map((bloc, index) => {
             return (
-              <Box key={bloc.key}>
-                {index > 0 && <Divider />}
+              <GridLayoutAtom key={bloc.key}>
+                {index > 0 && <DividerAtom />}
 
                 {/* Panel header */}
-                <ListItem
-                  disablePadding
-                  sx={{
-                    px: 2,
-                    py: 1,
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 1,
-                    flexWrap: "wrap",
-                  }}
-                >
+                <ListRowAtom props={{ variant: "item" }}>
                   <LabelAtom props={bloc.panelLabel} />
                   <LabelAtom props={bloc.keyLabel} />
                   <GridLayoutAtom props={{ width: 160 }}>
@@ -79,41 +60,29 @@ export function ConfigurationBodyOrganism({
 
                   <IconButtonAtom props={bloc.removeButton} />
                   <IconButtonAtom props={bloc.toggleButton} />
-                </ListItem>
+                </ListRowAtom>
 
                 {/* Expanded panel content */}
-                <Collapse in={bloc.isExpanded} timeout="auto" unmountOnExit>
-                  <Box
-                    sx={{
-                      borderTop: "1px solid",
-                      borderColor: "divider",
-                      px: 3,
-                      py: 2,
-                    }}
-                  >
+                <CollapseAtom props={{ isOpen: bloc.isExpanded }}>
+                  <PanelContentAtom>
                     {/* Bloc Select chips */}
-                    <Stack
-                      direction="row"
-                      alignItems="center"
-                      spacing={1}
-                      mb={2}
-                    >
+                    <StackAtom props={{ direction: "row", alignItems: "center", spacing: 1, mb: 2 }}>
                       <LabelAtom props={bloc.blocSelectLabel} />
-                      <Stack direction="row" spacing={1} flexWrap="wrap">
+                      <StackAtom props={{ direction: "row", spacing: 1, flexWrap: "wrap" }}>
                         {bloc.blocTypeChips.map(({ key, ...chipProps }) => (
                           <ChipCheckboxAtom
                             key={key}
                             props={chipProps}
                           />
                         ))}
-                      </Stack>
-                    </Stack>
+                      </StackAtom>
+                    </StackAtom>
 
                     <DividerAtom />
 
                     {/* Sub-sections for each checked bloc type */}
                     {bloc.sections.map((section) => (
-                      <Box key={section.key}>
+                      <GridLayoutAtom key={section.key}>
                         {section.type === "Orders" && (
                           <ConfigurationOrdersSectionOrganism props={section} />
                         )}
@@ -123,32 +92,24 @@ export function ConfigurationBodyOrganism({
                         {section.type === "Select" && (
                           <ConfigurationSelectSectionOrganism props={section} />
                         )}
-                      </Box>
+                      </GridLayoutAtom>
                     ))}
-                  </Box>
-                </Collapse>
-              </Box>
+                  </PanelContentAtom>
+                </CollapseAtom>
+              </GridLayoutAtom>
             );
           })}
 
           {/* Add Bloc row */}
-          <Divider />
-          <ListItem
-            disablePadding
-            sx={{
-              px: 2,
-              py: 1.5,
-              display: "flex",
-              justifyContent: "center",
-            }}
-          >
-            <Stack direction="row" alignItems="center" spacing={0.5}>
+          <DividerAtom />
+          <ListRowAtom props={{ variant: "footer" }}>
+            <StackAtom props={{ direction: "row", alignItems: "center", spacing: 0.5 }}>
               <LabelAtom props={props.addRowLabel} />
               <IconButtonAtom props={props.addButton} />
-            </Stack>
-          </ListItem>
-        </List>
-      </Box>
+            </StackAtom>
+          </ListRowAtom>
+        </ListFrameAtom>
+      </PanelFrameAtom>
     </GridLayoutAtom>
   );
 }

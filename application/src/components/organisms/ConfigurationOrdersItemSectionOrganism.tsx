@@ -1,23 +1,23 @@
 "use client";
 
-import { GridLayoutAtom } from "@/components/atoms/GridLayoutAtom";
+import { Box } from "@mui/material";
 import { ChipCheckboxAtom } from "@/components/atoms/ChipCheckboxAtom";
+import { CollapseAtom } from "@/components/atoms/CollapseAtom";
+import { DividerAtom } from "@/components/atoms/DividerAtom";
+import { GridLayoutAtom } from "@/components/atoms/GridLayoutAtom";
 import { IconButtonAtom } from "@/components/atoms/IconButtonAtom";
 import { LabelAtom } from "@/components/atoms/LabelAtom";
+import { ListFrameAtom } from "@/components/atoms/ListFrameAtom";
+import { ListRowAtom } from "@/components/atoms/ListRowAtom";
+import { PanelContentAtom } from "@/components/atoms/PanelContentAtom";
+import { PanelFrameAtom } from "@/components/atoms/PanelFrameAtom";
+import { StackAtom } from "@/components/atoms/StackAtom";
 import { TextFieldAtom } from "@/components/atoms/TextFieldAtom";
 import { ConfigurationComplexSectionOrganism } from "@/components/organisms/ConfigurationComplexSectionOrganism";
 import { OrdersRandomSectionOrganism } from "@/components/organisms/OrdersRandomSectionOrganism";
 import { ConfigurationOrdersItemColorsOrganism } from "@/components/organisms/ConfigurationOrdersItemColorsOrganism";
 import { ConfigurationOrdersItemScriptsOrganism } from "@/components/organisms/ConfigurationOrdersItemScriptsOrganism";
 import { OrdersItemSection } from "@/hooks/configurations/viewModel/useConfigurationsComposer";
-import {
-  Box,
-  Collapse,
-  Divider,
-  List,
-  ListItem,
-  Stack,
-} from "@mui/material";
 
 const BLANK_LABEL = { text: "Blank", variant: "body1" as const, fontWeight: "bold" as const };
 
@@ -29,32 +29,14 @@ export function ConfigurationOrdersItemSectionOrganism({
   props,
 }: ConfigurationOrdersItemSectionOrganismProps) {
   return (
-    <Box
-      sx={{
-        border: "1px solid",
-        borderColor: "divider",
-        borderRadius: 1,
-        overflow: "hidden",
-        mt: 1,
-      }}
-    >
-      <List disablePadding>
+    <PanelFrameAtom props={{ mt: 1 }}>
+      <ListFrameAtom>
         {props.ordersItemPanels.map((item, index) => (
-          <Box key={item.key}>
-            {index > 0 && <Divider />}
+          <GridLayoutAtom key={item.key}>
+            {index > 0 && <DividerAtom />}
 
             {/* Item panel header */}
-            <ListItem
-              disablePadding
-              sx={{
-                px: 2,
-                py: 1,
-                display: "flex",
-                alignItems: "center",
-                gap: 1,
-                flexWrap: "wrap",
-              }}
-            >
+            <ListRowAtom props={{ variant: "item" }}>
               <LabelAtom props={item.panelLabel} />
               <LabelAtom props={item.keyLabel} />
               <GridLayoutAtom props={{ width: 160 }}>
@@ -68,27 +50,20 @@ export function ConfigurationOrdersItemSectionOrganism({
 
               <IconButtonAtom props={item.removeButton} />
               <IconButtonAtom props={item.toggleButton} />
-            </ListItem>
+            </ListRowAtom>
 
             {/* Expanded content: Orders Type chips + selected type label + section */}
-            <Collapse in={item.isExpanded} timeout="auto" unmountOnExit>
-              <Box
-                sx={{
-                  borderTop: "1px solid",
-                  borderColor: "divider",
-                  px: 3,
-                  py: 2,
-                }}
-              >
-                <Stack direction="row" alignItems="center" spacing={1} flexWrap="wrap">
+            <CollapseAtom props={{ isOpen: item.isExpanded }}>
+              <PanelContentAtom>
+                <StackAtom props={{ direction: "row", alignItems: "center", spacing: 1, flexWrap: "wrap" }}>
                   <LabelAtom props={item.ordersTypeLabel} />
                   {item.ordersTypeChips.map((chip) => (
                     <ChipCheckboxAtom key={chip.key} props={chip} />
                   ))}
-                </Stack>
+                </StackAtom>
 
                 {(item.randomSection || item.complexSection || item.scriptsSection || item.colorsSection || item.selectedTypeLabel) && (
-                  <Box mt={1}>
+                  <GridLayoutAtom props={{ mt: 1 }}>
                     {item.randomSection ? (
                       <OrdersRandomSectionOrganism props={item.randomSection} />
                     ) : item.complexSection ? (
@@ -117,30 +92,22 @@ export function ConfigurationOrdersItemSectionOrganism({
                         </>
                       )
                     )}
-                  </Box>
+                  </GridLayoutAtom>
                 )}
-              </Box>
-            </Collapse>
-          </Box>
+              </PanelContentAtom>
+            </CollapseAtom>
+          </GridLayoutAtom>
         ))}
 
         {/* Add Orders Item row */}
-        <Divider />
-        <ListItem
-          disablePadding
-          sx={{
-            px: 2,
-            py: 1.5,
-            display: "flex",
-            justifyContent: "center",
-          }}
-        >
-          <Stack direction="row" alignItems="center" spacing={0.5}>
+        <DividerAtom />
+        <ListRowAtom props={{ variant: "footer" }}>
+          <StackAtom props={{ direction: "row", alignItems: "center", spacing: 0.5 }}>
             <LabelAtom props={props.addItemRowLabel} />
             <IconButtonAtom props={props.addItemButton} />
-          </Stack>
-        </ListItem>
-      </List>
-    </Box>
+          </StackAtom>
+        </ListRowAtom>
+      </ListFrameAtom>
+    </PanelFrameAtom>
   );
 }

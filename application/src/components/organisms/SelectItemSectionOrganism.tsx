@@ -1,19 +1,112 @@
 "use client";
 
+import { CollapseAtom } from "@/components/atoms/CollapseAtom";
+import { DividerAtom } from "@/components/atoms/DividerAtom";
 import { GridLayoutAtom } from "@/components/atoms/GridLayoutAtom";
 import { IconButtonAtom } from "@/components/atoms/IconButtonAtom";
 import { LabelAtom } from "@/components/atoms/LabelAtom";
+import { ListFrameAtom } from "@/components/atoms/ListFrameAtom";
+import { ListRowAtom } from "@/components/atoms/ListRowAtom";
+import { PanelContentAtom } from "@/components/atoms/PanelContentAtom";
+import { PanelFrameAtom } from "@/components/atoms/PanelFrameAtom";
+import { StackAtom } from "@/components/atoms/StackAtom";
 import { SwitchAtom } from "@/components/atoms/SwitchAtom";
 import { TextFieldAtom } from "@/components/atoms/TextFieldAtom";
 import { SelectItemSection } from "@/hooks/configurations/viewModel/useConfigurationsComposer";
-import {
-  Box,
-  Collapse,
-  Divider,
-  List,
-  ListItem,
-  Stack,
-} from "@mui/material";
+
+interface SelectItemSectionOrganismProps {
+  props: SelectItemSection;
+}
+
+export function SelectItemSectionOrganism({
+  props,
+}: SelectItemSectionOrganismProps) {
+  return (
+    <GridLayoutAtom>
+      {/* Shuffle row */}
+      <ListRowAtom props={{ variant: "plain" }}>
+        <LabelAtom props={props.shuffleLabel} />
+        <SwitchAtom props={props.shuffleSwitch} />
+      </ListRowAtom>
+
+      <DividerAtom />
+
+      {/* Selectors label */}
+      <GridLayoutAtom props={{ py: 1 }}>
+        <LabelAtom props={props.selectorsLabel} />
+      </GridLayoutAtom>
+
+      {/* Selector panels */}
+      <PanelFrameAtom>
+        <ListFrameAtom>
+          {props.selectorPanels.map((selector, index) => (
+            <GridLayoutAtom key={selector.key}>
+              {index > 0 && <DividerAtom />}
+
+              {/* Selector header row */}
+              <ListRowAtom>
+                <LabelAtom props={selector.panelLabel} />
+                <LabelAtom props={selector.keyLabel} />
+                <GridLayoutAtom props={{ width: 160 }}>
+                  <TextFieldAtom props={selector.keyField} />
+                </GridLayoutAtom>
+
+                <LabelAtom props={selector.labelLabel} />
+                <GridLayoutAtom props={{ flex: 1, minWidth: 160 }}>
+                  <TextFieldAtom props={selector.labelField} />
+                </GridLayoutAtom>
+
+                <IconButtonAtom props={selector.removeButton} />
+                <IconButtonAtom props={selector.toggleButton} />
+              </ListRowAtom>
+
+              {/* Expanded content: List Items */}
+              <CollapseAtom props={{ isOpen: selector.isExpanded }}>
+                <PanelContentAtom>
+                  <LabelAtom props={selector.listItemsLabel} />
+
+                  {selector.listItemPanels.map((item) => (
+                    <ListRowAtom key={item.key} props={{ variant: "compact" }}>
+                      <LabelAtom props={item.valueLabel} />
+                      <GridLayoutAtom props={{ width: 160 }}>
+                        <TextFieldAtom props={item.valueField} />
+                      </GridLayoutAtom>
+
+                      <LabelAtom props={item.promptLabel} />
+                      <GridLayoutAtom props={{ flex: 1, minWidth: 160 }}>
+                        <TextFieldAtom props={item.promptField} />
+                      </GridLayoutAtom>
+
+                      <IconButtonAtom props={item.removeButton} />
+                    </ListRowAtom>
+                  ))}
+
+                  {/* Add list item row */}
+                  <DividerAtom props={{ mt: 1 }} />
+                  <StackAtom props={{ justifyContent: "center", pt: 1 }}>
+                    <StackAtom props={{ direction: "row", alignItems: "center", spacing: 0.5 }}>
+                      <LabelAtom props={selector.addListItemRowLabel} />
+                      <IconButtonAtom props={selector.addListItemButton} />
+                    </StackAtom>
+                  </StackAtom>
+                </PanelContentAtom>
+              </CollapseAtom>
+            </GridLayoutAtom>
+          ))}
+
+          {/* Add Selector row */}
+          <DividerAtom />
+          <ListRowAtom props={{ variant: "footer" }}>
+            <StackAtom props={{ direction: "row", alignItems: "center", spacing: 0.5 }}>
+              <LabelAtom props={props.addSelectorRowLabel} />
+              <IconButtonAtom props={props.addSelectorButton} />
+            </StackAtom>
+          </ListRowAtom>
+        </ListFrameAtom>
+      </PanelFrameAtom>
+    </GridLayoutAtom>
+  );
+}
 
 interface SelectItemSectionOrganismProps {
   props: SelectItemSection;
