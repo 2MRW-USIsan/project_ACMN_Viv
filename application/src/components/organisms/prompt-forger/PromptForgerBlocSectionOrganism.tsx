@@ -18,7 +18,7 @@ export function PromptForgerBlocSectionOrganism({
   props,
 }: PromptForgerBlocSectionOrganismProps) {
   return (
-    <GridLayoutAtom props={{}}>
+    <GridLayoutAtom>
       <Stack direction="row" alignItems="center" justifyContent="space-between">
         <LabelAtom props={props.titleLabel} />
         <IconButtonAtom props={props.toggleButton} />

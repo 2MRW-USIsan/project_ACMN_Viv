@@ -20,7 +20,7 @@ export function PromptForgerSummaryBlocOrganism({
   const { tuneupComposition, promptIdea } = props;
 
   return (
-    <GridLayoutAtom props={{}}>
+    <GridLayoutAtom>
       <Stack direction="row" alignItems="center" justifyContent="space-between">
         <LabelAtom props={props.titleLabel} />
         <IconButtonAtom props={props.toggleButton} />
@@ -31,7 +31,7 @@ export function PromptForgerSummaryBlocOrganism({
         <Stack spacing={1} pl={2} pt={1}>
 
           {/* Tune-up Composition */}
-          <GridLayoutAtom props={{}}>
+          <GridLayoutAtom>
             <Stack direction="row" alignItems="center" justifyContent="space-between">
               <LabelAtom props={tuneupComposition.titleLabel} />
               <IconButtonAtom props={tuneupComposition.toggleButton} />
@@ -72,7 +72,7 @@ export function PromptForgerSummaryBlocOrganism({
           </GridLayoutAtom>
 
           {/* Prompt Idea */}
-          <GridLayoutAtom props={{}}>
+          <GridLayoutAtom>
             <Stack direction="row" alignItems="center" justifyContent="space-between">
               <LabelAtom props={promptIdea.titleLabel} />
               <IconButtonAtom props={promptIdea.toggleButton} />

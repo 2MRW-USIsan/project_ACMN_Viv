@@ -3,7 +3,7 @@
 import { Box, Stack } from "@mui/material";
 
 interface GridLayoutAtomProps {
-  props: {
+  props?: {
     container?: boolean;
     maxWidth?: number;
     width?: number | string;
@@ -13,7 +13,7 @@ interface GridLayoutAtomProps {
   children?: React.ReactNode;
 }
 
-export function GridLayoutAtom({ props, children }: GridLayoutAtomProps) {
+export function GridLayoutAtom({ props = {}, children }: GridLayoutAtomProps) {
   if (props.container) {
     return (
       <Stack spacing={2} p={3} maxWidth={props.maxWidth ?? 960} mx="auto">
