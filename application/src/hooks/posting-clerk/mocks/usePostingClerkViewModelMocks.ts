@@ -58,7 +58,9 @@ export function usePostingClerkViewModelMocks(): PostingClerkViewModelMocksRetur
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [selectedGroup, setSelectedGroup] = useState(MOCK_GROUP_OPTIONS[0]);
   const [nameEditValue, setNameEditValue] = useState("");
-  const [selectedItemId, setSelectedItemId] = useState<string>(MOCK_POSTING_ITEMS[0].id);
+  const [selectedItemId, setSelectedItemId] = useState<string>(
+    MOCK_POSTING_ITEMS[0].id,
+  );
 
   const [titleValue, setTitleValue] = useState("");
   const [titleJpValue, setTitleJpValue] = useState("");
@@ -66,12 +68,16 @@ export function usePostingClerkViewModelMocks(): PostingClerkViewModelMocksRetur
   const [symbolValue, setSymbolValue] = useState("");
   const [picsValue, setPicsValue] = useState("");
 
-  const [platformExpanded, setPlatformExpanded] = useState<Record<PlatformKey, boolean>>({
+  const [platformExpanded, setPlatformExpanded] = useState<
+    Record<PlatformKey, boolean>
+  >({
     patreon: true,
     pixiv: true,
   });
 
-  const [platformUrlItems, setPlatformUrlItems] = useState<Record<PlatformKey, UrlItem[]>>({
+  const [platformUrlItems, setPlatformUrlItems] = useState<
+    Record<PlatformKey, UrlItem[]>
+  >({
     patreon: [
       { id: "url-p-01", nameValue: "", urlValue: "" },
       { id: "url-p-02", nameValue: "", urlValue: "" },
@@ -82,13 +88,15 @@ export function usePostingClerkViewModelMocks(): PostingClerkViewModelMocksRetur
     ],
   });
 
-  const [platformPreviewValues, setPlatformPreviewValues] = useState<Record<PlatformKey, string>>({
+  const [platformPreviewValues, setPlatformPreviewValues] = useState<
+    Record<PlatformKey, string>
+  >({
     patreon: "",
     pixiv: "",
   });
 
   const [quoteValues, setQuoteValues] = useState<Record<string, string>>(
-    Object.fromEntries(MOCK_QUOTE_KEYS.map((k) => [k, ""]))
+    Object.fromEntries(MOCK_QUOTE_KEYS.map((k) => [k, ""])),
   );
 
   const pathname = usePathname();
@@ -127,19 +135,27 @@ export function usePostingClerkViewModelMocks(): PostingClerkViewModelMocksRetur
       [platform]: prev[platform].filter((item) => item.id !== id),
     }));
 
-  const handleUrlNameBlur = (platform: PlatformKey, id: string, value: string) =>
+  const handleUrlNameBlur = (
+    platform: PlatformKey,
+    id: string,
+    value: string,
+  ) =>
     setPlatformUrlItems((prev) => ({
       ...prev,
       [platform]: prev[platform].map((item) =>
-        item.id === id ? { ...item, nameValue: value } : item
+        item.id === id ? { ...item, nameValue: value } : item,
       ),
     }));
 
-  const handleUrlValueBlur = (platform: PlatformKey, id: string, value: string) =>
+  const handleUrlValueBlur = (
+    platform: PlatformKey,
+    id: string,
+    value: string,
+  ) =>
     setPlatformUrlItems((prev) => ({
       ...prev,
       [platform]: prev[platform].map((item) =>
-        item.id === id ? { ...item, urlValue: value } : item
+        item.id === id ? { ...item, urlValue: value } : item,
       ),
     }));
 
@@ -150,14 +166,14 @@ export function usePostingClerkViewModelMocks(): PostingClerkViewModelMocksRetur
     setQuoteValues((prev) => ({ ...prev, [key]: value }));
 
   const linksAbove = NAV_ITEMS.filter(
-    (item) => item.href !== pathname && item.href === "/configurations"
+    (item) => item.href !== pathname && item.href === "/configurations",
   ).map((item) => ({
     label: item.label,
     onClick: () => handleNavigate(item.href),
   }));
 
   const linksBelow = NAV_ITEMS.filter(
-    (item) => item.href !== pathname && item.href !== "/configurations"
+    (item) => item.href !== pathname && item.href !== "/configurations",
   ).map((item) => ({
     label: item.label,
     onClick: () => handleNavigate(item.href),
@@ -176,32 +192,51 @@ export function usePostingClerkViewModelMocks(): PostingClerkViewModelMocksRetur
 
   const platformPreviews = PLATFORM_KEYS.map((platform) => ({
     key: platform,
-    sectionLabel: { text: PLATFORM_LABELS[platform], variant: "subtitle1" as const },
+    sectionLabel: {
+      text: PLATFORM_LABELS[platform],
+      variant: "subtitle1" as const,
+    },
     isExpanded: platformExpanded[platform],
     toggleButton: {
-      icon: platformExpanded[platform] ? ("expandLess" as const) : ("expandMore" as const),
+      icon: platformExpanded[platform]
+        ? ("expandLess" as const)
+        : ("expandMore" as const),
       onClick: () => handleTogglePlatform(platform),
     },
     titleLabel: { text: "Title:", variant: "body2" as const },
-    titleCopyButton: { label: "Copy", onClick: () => {}, size: "small" as const },
+    titleCopyButton: {
+      label: "Copy",
+      onClick: () => {},
+      size: "small" as const,
+    },
     descLabel: { text: "Desc:", variant: "body2" as const },
-    descCopyButton: { label: "Copy", onClick: () => {}, size: "small" as const },
+    descCopyButton: {
+      label: "Copy",
+      onClick: () => {},
+      size: "small" as const,
+    },
     urlsLabel: { text: "URLs:", variant: "body2" as const },
-    urlsAddButton: { label: "Add", onClick: () => handleAddUrl(platform), size: "small" as const },
+    urlsAddButton: {
+      label: "Add",
+      onClick: () => handleAddUrl(platform),
+      size: "small" as const,
+    },
     urlItems: platformUrlItems[platform].map((urlItem) => ({
       key: urlItem.id,
       nameLabel: { text: "Name:", variant: "body2" as const },
       nameField: {
         placeholder: "text field...",
         defaultValue: urlItem.nameValue,
-        onBlur: (value: string) => handleUrlNameBlur(platform, urlItem.id, value),
+        onBlur: (value: string) =>
+          handleUrlNameBlur(platform, urlItem.id, value),
         size: "small" as const,
       },
       urlLabel: { text: "URL:", variant: "body2" as const },
       urlField: {
         placeholder: "text field...",
         defaultValue: urlItem.urlValue,
-        onBlur: (value: string) => handleUrlValueBlur(platform, urlItem.id, value),
+        onBlur: (value: string) =>
+          handleUrlValueBlur(platform, urlItem.id, value),
         size: "small" as const,
         fullWidth: true,
       },
@@ -298,7 +333,10 @@ export function usePostingClerkViewModelMocks(): PostingClerkViewModelMocksRetur
           fullWidth: true,
         },
         statusLabel: { text: "Status:", variant: "body2" },
-        statusValueLabel: { text: "- there are some changes... -", variant: "body2" },
+        statusValueLabel: {
+          text: "- there are some changes... -",
+          variant: "body2",
+        },
         saveButton: { label: "Save", onClick: () => {}, size: "small" },
         clerkingSectionLabel: { text: "Clerking Field:", variant: "subtitle1" },
         titleJpLabel: { text: "Title[JP]:", variant: "body2" },

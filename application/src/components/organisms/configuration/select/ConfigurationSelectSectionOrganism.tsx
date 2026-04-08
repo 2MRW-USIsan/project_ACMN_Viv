@@ -6,14 +6,7 @@ import { LabelAtom } from "@/components/atoms/LabelAtom";
 import { TextFieldAtom } from "@/components/atoms/TextFieldAtom";
 import { SelectItemSectionOrganism } from "./SelectItemSectionOrganism";
 import { ConfigBodySection } from "@/hooks/configurations/viewModel/useConfigurationsComposer";
-import {
-  Box,
-  Collapse,
-  Divider,
-  List,
-  ListItem,
-  Stack,
-} from "@mui/material";
+import { Box, Collapse, Divider, List, ListItem, Stack } from "@mui/material";
 
 interface ConfigurationSelectSectionOrganismProps {
   props: ConfigBodySection;
@@ -110,4 +103,3 @@ export function ConfigurationSelectSectionOrganism({
     </Box>
   );
 }
-

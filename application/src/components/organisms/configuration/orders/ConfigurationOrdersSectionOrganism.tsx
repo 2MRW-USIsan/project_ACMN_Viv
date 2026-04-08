@@ -6,14 +6,7 @@ import { IconButtonAtom } from "@/components/atoms/IconButtonAtom";
 import { LabelAtom } from "@/components/atoms/LabelAtom";
 import { TextFieldAtom } from "@/components/atoms/TextFieldAtom";
 import { ConfigBodySection } from "@/hooks/configurations/viewModel/useConfigurationsComposer";
-import {
-  Box,
-  Collapse,
-  Divider,
-  List,
-  ListItem,
-  Stack,
-} from "@mui/material";
+import { Box, Collapse, Divider, List, ListItem, Stack } from "@mui/material";
 
 interface ConfigurationOrdersSectionOrganismProps {
   props: ConfigBodySection;
@@ -79,7 +72,9 @@ export function ConfigurationOrdersSectionOrganism({
                   }}
                 >
                   <LabelAtom props={grp.orderItemsLabel} />
-                  <ConfigurationOrdersItemSectionOrganism props={grp.ordersItemSection} />
+                  <ConfigurationOrdersItemSectionOrganism
+                    props={grp.ordersItemSection}
+                  />
                 </Box>
               </Collapse>
             </Box>

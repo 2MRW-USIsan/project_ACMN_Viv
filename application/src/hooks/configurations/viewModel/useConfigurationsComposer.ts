@@ -1,16 +1,15 @@
 "use client";
 
-import { NavItem } from "@/components/atoms/DrawerAtom";
-import { NavigationConfigurations } from "@/components/organisms/NavigationOrganism";
-import { ConfigurationsContexts } from "@/hooks/configurations/state/useConfigurationsContext";
-import { useConfigurationsProperties } from "@/hooks/configurations/viewModel/useConfigurationsProperties";
-import { useConfigurationsHandlers } from "@/hooks/configurations/viewModel/useConfigurationsHandlers";
+import { ChipCheckboxAtomProps } from "@/components/atoms/ChipCheckboxAtom";
+import { IconButtonAtomProps } from "@/components/atoms/IconButtonAtom";
 import { LabelAtomProps } from "@/components/atoms/LabelAtom";
 import { NavLinkAtomProps } from "@/components/atoms/NavLinkAtom";
-import { TextFieldAtomProps } from "@/components/atoms/TextFieldAtom";
-import { IconButtonAtomProps } from "@/components/atoms/IconButtonAtom";
-import { ChipCheckboxAtomProps } from "@/components/atoms/ChipCheckboxAtom";
 import { SwitchAtomProps } from "@/components/atoms/SwitchAtom";
+import { TextFieldAtomProps } from "@/components/atoms/TextFieldAtom";
+import { NavigationConfigurations } from "@/components/organisms/navigation/NavigationOrganism";
+import { ConfigurationsContexts } from "@/hooks/configurations/state/useConfigurationsContext";
+import { useConfigurationsHandlers } from "@/hooks/configurations/viewModel/useConfigurationsHandlers";
+import { useConfigurationsProperties } from "@/hooks/configurations/viewModel/useConfigurationsProperties";
 
 export interface BlocItem {
   id: string;

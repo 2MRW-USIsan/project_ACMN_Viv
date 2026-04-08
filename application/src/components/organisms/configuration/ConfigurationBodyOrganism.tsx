@@ -2,7 +2,10 @@
 
 import { ChipCheckboxAtom } from "@/components/atoms/ChipCheckboxAtom";
 import { DividerAtom } from "@/components/atoms/DividerAtom";
-import { IconButtonAtom, IconButtonAtomProps } from "@/components/atoms/IconButtonAtom";
+import {
+  IconButtonAtom,
+  IconButtonAtomProps,
+} from "@/components/atoms/IconButtonAtom";
 import { LabelAtom, LabelAtomProps } from "@/components/atoms/LabelAtom";
 import { TextFieldAtom } from "@/components/atoms/TextFieldAtom";
 import { ConfigBodyBlocPanel } from "@/hooks/configurations/viewModel/useConfigurationsComposer";
@@ -100,10 +103,7 @@ export function ConfigurationBodyOrganism({
                       <LabelAtom props={bloc.blocSelectLabel} />
                       <Stack direction="row" spacing={1} flexWrap="wrap">
                         {bloc.blocTypeChips.map(({ key, ...chipProps }) => (
-                          <ChipCheckboxAtom
-                            key={key}
-                            props={chipProps}
-                          />
+                          <ChipCheckboxAtom key={key} props={chipProps} />
                         ))}
                       </Stack>
                     </Stack>

@@ -33,7 +33,9 @@ export function usePresetBuilderViewModelMocks(): PresetBuilderViewModelMocksRet
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [selectedGroup, setSelectedGroup] = useState(MOCK_GROUP_OPTIONS[0]);
   const [nameEditValue, setNameEditValue] = useState("");
-  const [selectedPresetId, setSelectedPresetId] = useState<string>(MOCK_PRESET_ITEMS[0].id);
+  const [selectedPresetId, setSelectedPresetId] = useState<string>(
+    MOCK_PRESET_ITEMS[0].id,
+  );
   const [titleValue, setTitleValue] = useState("");
   const [presetsTemplateValue, setPresetsTemplateValue] = useState("");
   const [orderPresetsValue, setOrderPresetsValue] = useState("");
@@ -51,18 +53,19 @@ export function usePresetBuilderViewModelMocks(): PresetBuilderViewModelMocksRet
   const handleNameEditBlur = (value: string) => setNameEditValue(value);
   const handleSelectPreset = (id: string) => setSelectedPresetId(id);
   const handleTitleBlur = (value: string) => setTitleValue(value);
-  const handlePresetsTemplateBlur = (value: string) => setPresetsTemplateValue(value);
+  const handlePresetsTemplateBlur = (value: string) =>
+    setPresetsTemplateValue(value);
   const handleOrderPresetsBlur = (value: string) => setOrderPresetsValue(value);
 
   const linksAbove = NAV_ITEMS.filter(
-    (item) => item.href !== pathname && item.href === "/configurations"
+    (item) => item.href !== pathname && item.href === "/configurations",
   ).map((item) => ({
     label: item.label,
     onClick: () => handleNavigate(item.href),
   }));
 
   const linksBelow = NAV_ITEMS.filter(
-    (item) => item.href !== pathname && item.href !== "/configurations"
+    (item) => item.href !== pathname && item.href !== "/configurations",
   ).map((item) => ({
     label: item.label,
     onClick: () => handleNavigate(item.href),

@@ -9,4 +9,3 @@ export default function PresetBuilderPage() {
   const { viewModel } = usePresetBuilderViewModelMocks();
   return <PresetBuilderTemplate props={viewModel} />;
 }
-

@@ -3,7 +3,10 @@
 import { Box, Stack, Toolbar } from "@mui/material";
 import { LabelAtom, LabelAtomProps } from "@/components/atoms/LabelAtom";
 import { DividerAtom } from "@/components/atoms/DividerAtom";
-import { TextFieldAtom, TextFieldAtomProps } from "@/components/atoms/TextFieldAtom";
+import {
+  TextFieldAtom,
+  TextFieldAtomProps,
+} from "@/components/atoms/TextFieldAtom";
 import { ButtonAtom, ButtonAtomProps } from "@/components/atoms/ButtonAtom";
 
 export interface PresetBuilderBodyViewModel {
@@ -31,7 +34,9 @@ interface PresetBuilderBodyOrganismProps {
   props: PresetBuilderBodyViewModel;
 }
 
-export function PresetBuilderBodyOrganism({ props }: PresetBuilderBodyOrganismProps) {
+export function PresetBuilderBodyOrganism({
+  props,
+}: PresetBuilderBodyOrganismProps) {
   return (
     <Stack spacing={2} p={3} maxWidth={960} mx="auto">
       <Toolbar />

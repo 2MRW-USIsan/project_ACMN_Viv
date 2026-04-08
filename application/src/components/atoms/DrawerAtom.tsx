@@ -1,9 +1,6 @@
 "use client";
 
-import {
-  Drawer,
-  List,
-} from "@mui/material";
+import { Drawer, List } from "@mui/material";
 
 export interface NavItem {
   href: string;

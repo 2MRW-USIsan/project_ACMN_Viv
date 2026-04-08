@@ -4,10 +4,16 @@ import { Stack } from "@mui/material";
 import { LabelAtom, LabelAtomProps } from "@/components/atoms/LabelAtom";
 import { DividerAtom } from "@/components/atoms/DividerAtom";
 import { SelectAtom, SelectAtomProps } from "@/components/atoms/SelectAtom";
-import { TextFieldAtom, TextFieldAtomProps } from "@/components/atoms/TextFieldAtom";
+import {
+  TextFieldAtom,
+  TextFieldAtomProps,
+} from "@/components/atoms/TextFieldAtom";
 import { ButtonAtom, ButtonAtomProps } from "@/components/atoms/ButtonAtom";
 import { NavLinkAtom, NavLinkAtomProps } from "@/components/atoms/NavLinkAtom";
-import { RadioButtonAtom, RadioButtonAtomProps } from "@/components/atoms/RadioButtonAtom";
+import {
+  RadioButtonAtom,
+  RadioButtonAtomProps,
+} from "@/components/atoms/RadioButtonAtom";
 
 export interface NavigationConfigurations {
   setLabel: LabelAtomProps["props"];

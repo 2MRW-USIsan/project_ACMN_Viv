@@ -3,9 +3,15 @@
 import { Box, Collapse, Stack, Toolbar } from "@mui/material";
 import { LabelAtom, LabelAtomProps } from "@/components/atoms/LabelAtom";
 import { DividerAtom } from "@/components/atoms/DividerAtom";
-import { TextFieldAtom, TextFieldAtomProps } from "@/components/atoms/TextFieldAtom";
+import {
+  TextFieldAtom,
+  TextFieldAtomProps,
+} from "@/components/atoms/TextFieldAtom";
 import { ButtonAtom, ButtonAtomProps } from "@/components/atoms/ButtonAtom";
-import { IconButtonAtom, IconButtonAtomProps } from "@/components/atoms/IconButtonAtom";
+import {
+  IconButtonAtom,
+  IconButtonAtomProps,
+} from "@/components/atoms/IconButtonAtom";
 
 export interface UrlItemPanel {
   key: string;
@@ -67,7 +73,9 @@ interface PostingClerkBodyOrganismProps {
   props: PostingClerkBodyViewModel;
 }
 
-export function PostingClerkBodyOrganism({ props }: PostingClerkBodyOrganismProps) {
+export function PostingClerkBodyOrganism({
+  props,
+}: PostingClerkBodyOrganismProps) {
   return (
     <Stack spacing={2} p={3} maxWidth={960} mx="auto">
       <Toolbar />
@@ -133,9 +141,18 @@ export function PostingClerkBodyOrganism({ props }: PostingClerkBodyOrganismProp
       {props.platformPreviews.map((platform) => (
         <Box
           key={platform.key}
-          sx={{ border: "1px solid", borderColor: "divider", borderRadius: 1, p: 2 }}
+          sx={{
+            border: "1px solid",
+            borderColor: "divider",
+            borderRadius: 1,
+            p: 2,
+          }}
         >
-          <Stack direction="row" alignItems="center" justifyContent="space-between">
+          <Stack
+            direction="row"
+            alignItems="center"
+            justifyContent="space-between"
+          >
             <LabelAtom props={platform.sectionLabel} />
             <IconButtonAtom props={platform.toggleButton} />
           </Stack>
@@ -159,7 +176,12 @@ export function PostingClerkBodyOrganism({ props }: PostingClerkBodyOrganismProp
 
               <Stack spacing={0.5} pl={2}>
                 {platform.urlItems.map((urlItem) => (
-                  <Stack key={urlItem.key} direction="row" alignItems="center" spacing={1}>
+                  <Stack
+                    key={urlItem.key}
+                    direction="row"
+                    alignItems="center"
+                    spacing={1}
+                  >
                     <LabelAtom props={urlItem.nameLabel} />
                     <Box sx={{ width: 140 }}>
                       <TextFieldAtom props={urlItem.nameField} />
@@ -186,7 +208,12 @@ export function PostingClerkBodyOrganism({ props }: PostingClerkBodyOrganismProp
 
       <Stack spacing={0.5} pl={2}>
         {props.quoteItems.map((quoteItem) => (
-          <Stack key={quoteItem.key} direction="row" alignItems="center" spacing={1}>
+          <Stack
+            key={quoteItem.key}
+            direction="row"
+            alignItems="center"
+            spacing={1}
+          >
             <LabelAtom props={quoteItem.quoteLabel} />
             <Box sx={{ flex: 1, maxWidth: 400 }}>
               <TextFieldAtom props={quoteItem.quoteField} />

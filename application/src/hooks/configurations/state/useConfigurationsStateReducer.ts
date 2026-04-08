@@ -1,7 +1,10 @@
 "use client";
 
 import { useEffect, useReducer } from "react";
-import { ConfigurationsFetchItem, ConfigurationsRequest } from "@/hooks/configurations/state/useConfigurationsService";
+import {
+  ConfigurationsFetchItem,
+  ConfigurationsRequest,
+} from "@/hooks/configurations/state/useConfigurationsService";
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface ConfigurationsReducerState {

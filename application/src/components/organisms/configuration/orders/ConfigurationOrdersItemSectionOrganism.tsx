@@ -9,16 +9,13 @@ import { OrdersRandomSectionOrganism } from "./OrdersRandomSectionOrganism";
 import { ConfigurationOrdersItemColorsOrganism } from "./ConfigurationOrdersItemColorsOrganism";
 import { ConfigurationOrdersItemScriptsOrganism } from "./ConfigurationOrdersItemScriptsOrganism";
 import { OrdersItemSection } from "@/hooks/configurations/viewModel/useConfigurationsComposer";
-import {
-  Box,
-  Collapse,
-  Divider,
-  List,
-  ListItem,
-  Stack,
-} from "@mui/material";
+import { Box, Collapse, Divider, List, ListItem, Stack } from "@mui/material";
 
-const BLANK_LABEL = { text: "Blank", variant: "body1" as const, fontWeight: "bold" as const };
+const BLANK_LABEL = {
+  text: "Blank",
+  variant: "body1" as const,
+  fontWeight: "bold" as const,
+};
 
 interface ConfigurationOrdersItemSectionOrganismProps {
   props: OrdersItemSection;
@@ -79,23 +76,38 @@ export function ConfigurationOrdersItemSectionOrganism({
                   py: 2,
                 }}
               >
-                <Stack direction="row" alignItems="center" spacing={1} flexWrap="wrap">
+                <Stack
+                  direction="row"
+                  alignItems="center"
+                  spacing={1}
+                  flexWrap="wrap"
+                >
                   <LabelAtom props={item.ordersTypeLabel} />
                   {item.ordersTypeChips.map((chip) => (
                     <ChipCheckboxAtom key={chip.key} props={chip} />
                   ))}
                 </Stack>
 
-                {(item.randomSection || item.complexSection || item.scriptsSection || item.colorsSection || item.selectedTypeLabel) && (
+                {(item.randomSection ||
+                  item.complexSection ||
+                  item.scriptsSection ||
+                  item.colorsSection ||
+                  item.selectedTypeLabel) && (
                   <Box mt={1}>
                     {item.randomSection ? (
                       <OrdersRandomSectionOrganism props={item.randomSection} />
                     ) : item.complexSection ? (
-                      <ConfigurationComplexSectionOrganism props={item.complexSection} />
+                      <ConfigurationComplexSectionOrganism
+                        props={item.complexSection}
+                      />
                     ) : item.scriptsSection ? (
-                      <ConfigurationOrdersItemScriptsOrganism props={item.scriptsSection} />
+                      <ConfigurationOrdersItemScriptsOrganism
+                        props={item.scriptsSection}
+                      />
                     ) : item.colorsSection ? (
-                      <ConfigurationOrdersItemColorsOrganism props={item.colorsSection} />
+                      <ConfigurationOrdersItemColorsOrganism
+                        props={item.colorsSection}
+                      />
                     ) : (
                       item.selectedTypeLabel && (
                         <>

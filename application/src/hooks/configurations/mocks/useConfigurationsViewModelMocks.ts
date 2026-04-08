@@ -22,9 +22,18 @@ const NAV_ITEMS: NavItem[] = [
   { href: "/prompt-forger", label: "Prompt Forger" },
 ];
 
-const ORDERS_TYPE_OPTIONS: OrdersTypeOption[] = ["random", "complex", "scripts", "colors"];
+const ORDERS_TYPE_OPTIONS: OrdersTypeOption[] = [
+  "random",
+  "complex",
+  "scripts",
+  "colors",
+];
 
-const MOCK_CONFIG_ITEMS = ["config-default", "config-production", "config-staging"];
+const MOCK_CONFIG_ITEMS = [
+  "config-default",
+  "config-production",
+  "config-staging",
+];
 
 const INITIAL_BLOCS: BlocItem[] = [
   {
@@ -82,16 +91,30 @@ export function useConfigurationsViewModelMocks(): ConfigurationsViewModelMocksR
     Record<string, OrdersTypeOption>
   >({});
   const [randomItems, setRandomItems] = useState<
-    Record<string, Array<{ id: string; valueValue: string; promptValue: string; weightValue: string }>>
+    Record<
+      string,
+      Array<{
+        id: string;
+        valueValue: string;
+        promptValue: string;
+        weightValue: string;
+      }>
+    >
   >({});
   const [complexCategoryItems, setComplexCategoryItems] = useState<
-    Record<string, Array<{ id: string; value: string; prompt: string; weight: string }>>
+    Record<
+      string,
+      Array<{ id: string; value: string; prompt: string; weight: string }>
+    >
   >({});
   const [complexCategoryExpandedIds, setComplexCategoryExpandedIds] = useState<
     Record<string, Set<string>>
   >({});
   const [complexRandomItems, setComplexRandomItems] = useState<
-    Record<string, Array<{ id: string; value: string; prompt: string; weight: string }>>
+    Record<
+      string,
+      Array<{ id: string; value: string; prompt: string; weight: string }>
+    >
   >({});
   const [switchGrpItems, setSwitchGrpItems] = useState<
     Record<string, Array<{ id: string; keyValue: string; labelValue: string }>>
@@ -100,16 +123,28 @@ export function useConfigurationsViewModelMocks(): ConfigurationsViewModelMocksR
     Record<string, Set<string>>
   >({});
   const [switchItems, setSwitchItems] = useState<
-    Record<string, Array<{ id: string; labelValue: string; valueValue: string; altValue: string }>>
+    Record<
+      string,
+      Array<{
+        id: string;
+        labelValue: string;
+        valueValue: string;
+        altValue: string;
+      }>
+    >
   >({});
-  const [switchRandomize, setSwitchRandomize] = useState<Record<string, boolean>>({});
+  const [switchRandomize, setSwitchRandomize] = useState<
+    Record<string, boolean>
+  >({});
   const [selectGrpItems, setSelectGrpItems] = useState<
     Record<string, Array<{ id: string; keyValue: string; labelValue: string }>>
   >({});
   const [selectGrpExpandedIds, setSelectGrpExpandedIds] = useState<
     Record<string, Set<string>>
   >({});
-  const [selectShuffle, setSelectShuffle] = useState<Record<string, boolean>>({});
+  const [selectShuffle, setSelectShuffle] = useState<Record<string, boolean>>(
+    {},
+  );
   const [selectorItems, setSelectorItems] = useState<
     Record<string, Array<{ id: string; keyValue: string; labelValue: string }>>
   >({});
@@ -117,7 +152,10 @@ export function useConfigurationsViewModelMocks(): ConfigurationsViewModelMocksR
     Record<string, Set<string>>
   >({});
   const [listItems, setListItems] = useState<
-    Record<string, Array<{ id: string; valueValue: string; promptValue: string }>>
+    Record<
+      string,
+      Array<{ id: string; valueValue: string; promptValue: string }>
+    >
   >({});
   const pathname = usePathname();
   const router = useRouter();
@@ -155,12 +193,12 @@ export function useConfigurationsViewModelMocks(): ConfigurationsViewModelMocksR
 
   const handleKeyChange = (id: string, value: string) => {
     setBlocs((prev) =>
-      prev.map((b) => (b.id === id ? { ...b, keyValue: value } : b))
+      prev.map((b) => (b.id === id ? { ...b, keyValue: value } : b)),
     );
   };
   const handleLabelChange = (id: string, value: string) => {
     setBlocs((prev) =>
-      prev.map((b) => (b.id === id ? { ...b, labelValue: value } : b))
+      prev.map((b) => (b.id === id ? { ...b, labelValue: value } : b)),
     );
   };
   const handleRemoveBloc = (id: string) => {
@@ -209,24 +247,24 @@ export function useConfigurationsViewModelMocks(): ConfigurationsViewModelMocksR
   const handleOrdersGrpKeyChange = (
     sectionKey: string,
     grpId: string,
-    value: string
+    value: string,
   ) => {
     setOrdersGrpItems((prev) => ({
       ...prev,
       [sectionKey]: (prev[sectionKey] ?? []).map((g) =>
-        g.id === grpId ? { ...g, keyValue: value } : g
+        g.id === grpId ? { ...g, keyValue: value } : g,
       ),
     }));
   };
   const handleOrdersGrpLabelChange = (
     sectionKey: string,
     grpId: string,
-    value: string
+    value: string,
   ) => {
     setOrdersGrpItems((prev) => ({
       ...prev,
       [sectionKey]: (prev[sectionKey] ?? []).map((g) =>
-        g.id === grpId ? { ...g, labelValue: value } : g
+        g.id === grpId ? { ...g, labelValue: value } : g,
       ),
     }));
   };
@@ -258,23 +296,34 @@ export function useConfigurationsViewModelMocks(): ConfigurationsViewModelMocksR
       return { ...prev, [grpId]: current };
     });
   };
-  const handleOrdersItemKeyChange = (grpId: string, itemId: string, value: string) => {
+  const handleOrdersItemKeyChange = (
+    grpId: string,
+    itemId: string,
+    value: string,
+  ) => {
     setOrdersItemItems((prev) => ({
       ...prev,
       [grpId]: (prev[grpId] ?? []).map((i) =>
-        i.id === itemId ? { ...i, keyValue: value } : i
+        i.id === itemId ? { ...i, keyValue: value } : i,
       ),
     }));
   };
-  const handleOrdersItemLabelChange = (grpId: string, itemId: string, value: string) => {
+  const handleOrdersItemLabelChange = (
+    grpId: string,
+    itemId: string,
+    value: string,
+  ) => {
     setOrdersItemItems((prev) => ({
       ...prev,
       [grpId]: (prev[grpId] ?? []).map((i) =>
-        i.id === itemId ? { ...i, labelValue: value } : i
+        i.id === itemId ? { ...i, labelValue: value } : i,
       ),
     }));
   };
-  const handleSelectOrdersItemType = (itemId: string, type: OrdersTypeOption) => {
+  const handleSelectOrdersItemType = (
+    itemId: string,
+    type: OrdersTypeOption,
+  ) => {
     setSelectedOrdersItemTypes((prev) => ({ ...prev, [itemId]: type }));
   };
 
@@ -294,27 +343,39 @@ export function useConfigurationsViewModelMocks(): ConfigurationsViewModelMocksR
       [itemId]: (prev[itemId] ?? []).filter((r) => r.id !== rowId),
     }));
   };
-  const handleRandomValueChange = (itemId: string, rowId: string, value: string) => {
+  const handleRandomValueChange = (
+    itemId: string,
+    rowId: string,
+    value: string,
+  ) => {
     setRandomItems((prev) => ({
       ...prev,
       [itemId]: (prev[itemId] ?? []).map((r) =>
-        r.id === rowId ? { ...r, valueValue: value } : r
+        r.id === rowId ? { ...r, valueValue: value } : r,
       ),
     }));
   };
-  const handleRandomPromptChange = (itemId: string, rowId: string, value: string) => {
+  const handleRandomPromptChange = (
+    itemId: string,
+    rowId: string,
+    value: string,
+  ) => {
     setRandomItems((prev) => ({
       ...prev,
       [itemId]: (prev[itemId] ?? []).map((r) =>
-        r.id === rowId ? { ...r, promptValue: value } : r
+        r.id === rowId ? { ...r, promptValue: value } : r,
       ),
     }));
   };
-  const handleRandomWeightChange = (itemId: string, rowId: string, value: string) => {
+  const handleRandomWeightChange = (
+    itemId: string,
+    rowId: string,
+    value: string,
+  ) => {
     setRandomItems((prev) => ({
       ...prev,
       [itemId]: (prev[itemId] ?? []).map((r) =>
-        r.id === rowId ? { ...r, weightValue: value } : r
+        r.id === rowId ? { ...r, weightValue: value } : r,
       ),
     }));
   };
@@ -335,7 +396,10 @@ export function useConfigurationsViewModelMocks(): ConfigurationsViewModelMocksR
       [itemId]: (prev[itemId] ?? []).filter((c) => c.id !== categoryId),
     }));
   };
-  const handleToggleComplexCategoryExpanded = (itemId: string, categoryId: string) => {
+  const handleToggleComplexCategoryExpanded = (
+    itemId: string,
+    categoryId: string,
+  ) => {
     setComplexCategoryExpandedIds((prev) => {
       const current = new Set(prev[itemId] ?? []);
       if (current.has(categoryId)) {
@@ -346,27 +410,39 @@ export function useConfigurationsViewModelMocks(): ConfigurationsViewModelMocksR
       return { ...prev, [itemId]: current };
     });
   };
-  const handleComplexCategoryValueChange = (itemId: string, categoryId: string, value: string) => {
+  const handleComplexCategoryValueChange = (
+    itemId: string,
+    categoryId: string,
+    value: string,
+  ) => {
     setComplexCategoryItems((prev) => ({
       ...prev,
       [itemId]: (prev[itemId] ?? []).map((c) =>
-        c.id === categoryId ? { ...c, value } : c
+        c.id === categoryId ? { ...c, value } : c,
       ),
     }));
   };
-  const handleComplexCategoryPromptChange = (itemId: string, categoryId: string, value: string) => {
+  const handleComplexCategoryPromptChange = (
+    itemId: string,
+    categoryId: string,
+    value: string,
+  ) => {
     setComplexCategoryItems((prev) => ({
       ...prev,
       [itemId]: (prev[itemId] ?? []).map((c) =>
-        c.id === categoryId ? { ...c, prompt: value } : c
+        c.id === categoryId ? { ...c, prompt: value } : c,
       ),
     }));
   };
-  const handleComplexCategoryWeightChange = (itemId: string, categoryId: string, value: string) => {
+  const handleComplexCategoryWeightChange = (
+    itemId: string,
+    categoryId: string,
+    value: string,
+  ) => {
     setComplexCategoryItems((prev) => ({
       ...prev,
       [itemId]: (prev[itemId] ?? []).map((c) =>
-        c.id === categoryId ? { ...c, weight: value } : c
+        c.id === categoryId ? { ...c, weight: value } : c,
       ),
     }));
   };
@@ -384,30 +460,44 @@ export function useConfigurationsViewModelMocks(): ConfigurationsViewModelMocksR
   const handleRemoveRandomItem = (categoryId: string, randomItemId: string) => {
     setComplexRandomItems((prev) => ({
       ...prev,
-      [categoryId]: (prev[categoryId] ?? []).filter((r) => r.id !== randomItemId),
-    }));
-  };
-  const handleRandomItemValueChange = (categoryId: string, randomItemId: string, value: string) => {
-    setComplexRandomItems((prev) => ({
-      ...prev,
-      [categoryId]: (prev[categoryId] ?? []).map((r) =>
-        r.id === randomItemId ? { ...r, value } : r
+      [categoryId]: (prev[categoryId] ?? []).filter(
+        (r) => r.id !== randomItemId,
       ),
     }));
   };
-  const handleRandomItemPromptChange = (categoryId: string, randomItemId: string, value: string) => {
+  const handleRandomItemValueChange = (
+    categoryId: string,
+    randomItemId: string,
+    value: string,
+  ) => {
     setComplexRandomItems((prev) => ({
       ...prev,
       [categoryId]: (prev[categoryId] ?? []).map((r) =>
-        r.id === randomItemId ? { ...r, prompt: value } : r
+        r.id === randomItemId ? { ...r, value } : r,
       ),
     }));
   };
-  const handleRandomItemWeightChange = (categoryId: string, randomItemId: string, value: string) => {
+  const handleRandomItemPromptChange = (
+    categoryId: string,
+    randomItemId: string,
+    value: string,
+  ) => {
     setComplexRandomItems((prev) => ({
       ...prev,
       [categoryId]: (prev[categoryId] ?? []).map((r) =>
-        r.id === randomItemId ? { ...r, weight: value } : r
+        r.id === randomItemId ? { ...r, prompt: value } : r,
+      ),
+    }));
+  };
+  const handleRandomItemWeightChange = (
+    categoryId: string,
+    randomItemId: string,
+    value: string,
+  ) => {
+    setComplexRandomItems((prev) => ({
+      ...prev,
+      [categoryId]: (prev[categoryId] ?? []).map((r) =>
+        r.id === randomItemId ? { ...r, weight: value } : r,
       ),
     }));
   };
@@ -439,19 +529,27 @@ export function useConfigurationsViewModelMocks(): ConfigurationsViewModelMocksR
       return { ...prev, [sectionKey]: current };
     });
   };
-  const handleSwitchGrpKeyChange = (sectionKey: string, grpId: string, value: string) => {
+  const handleSwitchGrpKeyChange = (
+    sectionKey: string,
+    grpId: string,
+    value: string,
+  ) => {
     setSwitchGrpItems((prev) => ({
       ...prev,
       [sectionKey]: (prev[sectionKey] ?? []).map((g) =>
-        g.id === grpId ? { ...g, keyValue: value } : g
+        g.id === grpId ? { ...g, keyValue: value } : g,
       ),
     }));
   };
-  const handleSwitchGrpLabelChange = (sectionKey: string, grpId: string, value: string) => {
+  const handleSwitchGrpLabelChange = (
+    sectionKey: string,
+    grpId: string,
+    value: string,
+  ) => {
     setSwitchGrpItems((prev) => ({
       ...prev,
       [sectionKey]: (prev[sectionKey] ?? []).map((g) =>
-        g.id === grpId ? { ...g, labelValue: value } : g
+        g.id === grpId ? { ...g, labelValue: value } : g,
       ),
     }));
   };
@@ -474,27 +572,39 @@ export function useConfigurationsViewModelMocks(): ConfigurationsViewModelMocksR
       [grpId]: (prev[grpId] ?? []).filter((i) => i.id !== itemId),
     }));
   };
-  const handleSwitchItemLabelChange = (grpId: string, itemId: string, value: string) => {
+  const handleSwitchItemLabelChange = (
+    grpId: string,
+    itemId: string,
+    value: string,
+  ) => {
     setSwitchItems((prev) => ({
       ...prev,
       [grpId]: (prev[grpId] ?? []).map((i) =>
-        i.id === itemId ? { ...i, labelValue: value } : i
+        i.id === itemId ? { ...i, labelValue: value } : i,
       ),
     }));
   };
-  const handleSwitchItemValueChange = (grpId: string, itemId: string, value: string) => {
+  const handleSwitchItemValueChange = (
+    grpId: string,
+    itemId: string,
+    value: string,
+  ) => {
     setSwitchItems((prev) => ({
       ...prev,
       [grpId]: (prev[grpId] ?? []).map((i) =>
-        i.id === itemId ? { ...i, valueValue: value } : i
+        i.id === itemId ? { ...i, valueValue: value } : i,
       ),
     }));
   };
-  const handleSwitchItemAltChange = (grpId: string, itemId: string, value: string) => {
+  const handleSwitchItemAltChange = (
+    grpId: string,
+    itemId: string,
+    value: string,
+  ) => {
     setSwitchItems((prev) => ({
       ...prev,
       [grpId]: (prev[grpId] ?? []).map((i) =>
-        i.id === itemId ? { ...i, altValue: value } : i
+        i.id === itemId ? { ...i, altValue: value } : i,
       ),
     }));
   };
@@ -526,19 +636,27 @@ export function useConfigurationsViewModelMocks(): ConfigurationsViewModelMocksR
       return { ...prev, [sectionKey]: current };
     });
   };
-  const handleSelectGrpKeyChange = (sectionKey: string, grpId: string, value: string) => {
+  const handleSelectGrpKeyChange = (
+    sectionKey: string,
+    grpId: string,
+    value: string,
+  ) => {
     setSelectGrpItems((prev) => ({
       ...prev,
       [sectionKey]: (prev[sectionKey] ?? []).map((g) =>
-        g.id === grpId ? { ...g, keyValue: value } : g
+        g.id === grpId ? { ...g, keyValue: value } : g,
       ),
     }));
   };
-  const handleSelectGrpLabelChange = (sectionKey: string, grpId: string, value: string) => {
+  const handleSelectGrpLabelChange = (
+    sectionKey: string,
+    grpId: string,
+    value: string,
+  ) => {
     setSelectGrpItems((prev) => ({
       ...prev,
       [sectionKey]: (prev[sectionKey] ?? []).map((g) =>
-        g.id === grpId ? { ...g, labelValue: value } : g
+        g.id === grpId ? { ...g, labelValue: value } : g,
       ),
     }));
   };
@@ -572,19 +690,27 @@ export function useConfigurationsViewModelMocks(): ConfigurationsViewModelMocksR
       return { ...prev, [grpId]: current };
     });
   };
-  const handleSelectorKeyChange = (grpId: string, selectorId: string, value: string) => {
+  const handleSelectorKeyChange = (
+    grpId: string,
+    selectorId: string,
+    value: string,
+  ) => {
     setSelectorItems((prev) => ({
       ...prev,
       [grpId]: (prev[grpId] ?? []).map((s) =>
-        s.id === selectorId ? { ...s, keyValue: value } : s
+        s.id === selectorId ? { ...s, keyValue: value } : s,
       ),
     }));
   };
-  const handleSelectorLabelChange = (grpId: string, selectorId: string, value: string) => {
+  const handleSelectorLabelChange = (
+    grpId: string,
+    selectorId: string,
+    value: string,
+  ) => {
     setSelectorItems((prev) => ({
       ...prev,
       [grpId]: (prev[grpId] ?? []).map((s) =>
-        s.id === selectorId ? { ...s, labelValue: value } : s
+        s.id === selectorId ? { ...s, labelValue: value } : s,
       ),
     }));
   };
@@ -604,19 +730,27 @@ export function useConfigurationsViewModelMocks(): ConfigurationsViewModelMocksR
       [selectorId]: (prev[selectorId] ?? []).filter((i) => i.id !== itemId),
     }));
   };
-  const handleListItemValueChange = (selectorId: string, itemId: string, value: string) => {
+  const handleListItemValueChange = (
+    selectorId: string,
+    itemId: string,
+    value: string,
+  ) => {
     setListItems((prev) => ({
       ...prev,
       [selectorId]: (prev[selectorId] ?? []).map((i) =>
-        i.id === itemId ? { ...i, valueValue: value } : i
+        i.id === itemId ? { ...i, valueValue: value } : i,
       ),
     }));
   };
-  const handleListItemPromptChange = (selectorId: string, itemId: string, value: string) => {
+  const handleListItemPromptChange = (
+    selectorId: string,
+    itemId: string,
+    value: string,
+  ) => {
     setListItems((prev) => ({
       ...prev,
       [selectorId]: (prev[selectorId] ?? []).map((i) =>
-        i.id === itemId ? { ...i, promptValue: value } : i
+        i.id === itemId ? { ...i, promptValue: value } : i,
       ),
     }));
   };
@@ -643,10 +777,12 @@ export function useConfigurationsViewModelMocks(): ConfigurationsViewModelMocksR
               fontWeight: "bold",
             };
           })(),
-          links: NAV_ITEMS.filter((item) => item.href !== pathname).map((item) => ({
-            label: item.label,
-            onClick: () => handleNavigate(item.href),
-          })),
+          links: NAV_ITEMS.filter((item) => item.href !== pathname).map(
+            (item) => ({
+              label: item.label,
+              onClick: () => handleNavigate(item.href),
+            }),
+          ),
           configurations: {
             setLabel: { text: "Sets:", variant: "body2" },
             select: {
@@ -809,34 +945,54 @@ export function useConfigurationsViewModelMocks(): ConfigurationsViewModelMocksR
                       },
                       ordersItemSection: (() => {
                         const items = ordersItemItems[grp.id] ?? [];
-                        const expandedItemIds = ordersItemExpandedIds[grp.id] ?? new Set<string>();
+                        const expandedItemIds =
+                          ordersItemExpandedIds[grp.id] ?? new Set<string>();
                         return {
                           ordersItemPanels: items.map((item) => {
-                            const selectedType = selectedOrdersItemTypes[item.id] ?? null;
+                            const selectedType =
+                              selectedOrdersItemTypes[item.id] ?? null;
                             return {
                               key: item.id,
-                              panelLabel: { text: "Item:", variant: "body2" as const },
-                              keyLabel: { text: "Key:", variant: "body2" as const },
+                              panelLabel: {
+                                text: "Item:",
+                                variant: "body2" as const,
+                              },
+                              keyLabel: {
+                                text: "Key:",
+                                variant: "body2" as const,
+                              },
                               keyField: {
                                 placeholder: "text field...",
                                 defaultValue: item.keyValue,
                                 onBlur: (value: string) =>
-                                  handleOrdersItemKeyChange(grp.id, item.id, value),
+                                  handleOrdersItemKeyChange(
+                                    grp.id,
+                                    item.id,
+                                    value,
+                                  ),
                                 size: "small" as const,
                                 fullWidth: true,
                               },
-                              labelLabel: { text: "Label:", variant: "body2" as const },
+                              labelLabel: {
+                                text: "Label:",
+                                variant: "body2" as const,
+                              },
                               labelField: {
                                 placeholder: "text field...",
                                 defaultValue: item.labelValue,
                                 onBlur: (value: string) =>
-                                  handleOrdersItemLabelChange(grp.id, item.id, value),
+                                  handleOrdersItemLabelChange(
+                                    grp.id,
+                                    item.id,
+                                    value,
+                                  ),
                                 size: "small" as const,
                                 fullWidth: true,
                               },
                               removeButton: {
                                 icon: "removeCircle" as const,
-                                onClick: () => handleRemoveOrdersItem(grp.id, item.id),
+                                onClick: () =>
+                                  handleRemoveOrdersItem(grp.id, item.id),
                                 color: "default" as const,
                               },
                               toggleButton: {
@@ -844,175 +1000,319 @@ export function useConfigurationsViewModelMocks(): ConfigurationsViewModelMocksR
                                   ? ("expandLess" as const)
                                   : ("expandMore" as const),
                                 onClick: () =>
-                                  handleToggleOrdersItemExpanded(grp.id, item.id),
+                                  handleToggleOrdersItemExpanded(
+                                    grp.id,
+                                    item.id,
+                                  ),
                               },
                               isExpanded: expandedItemIds.has(item.id),
-                              ordersTypeLabel: { text: "Orders Type:", variant: "body2" as const },
-                              ordersTypeChips: ORDERS_TYPE_OPTIONS.map((type) => ({
-                                key: type,
-                                label: type,
-                                checked: selectedType === type,
-                                onChange: () => handleSelectOrdersItemType(item.id, type),
-                              })),
+                              ordersTypeLabel: {
+                                text: "Orders Type:",
+                                variant: "body2" as const,
+                              },
+                              ordersTypeChips: ORDERS_TYPE_OPTIONS.map(
+                                (type) => ({
+                                  key: type,
+                                  label: type,
+                                  checked: selectedType === type,
+                                  onChange: () =>
+                                    handleSelectOrdersItemType(item.id, type),
+                                }),
+                              ),
                               selectedTypeLabel: selectedType
-                                ? { text: `${selectedType.charAt(0).toUpperCase()}${selectedType.slice(1)}:`, variant: "body2" as const }
-                                : null,
-                              randomSection: selectedType === "random"
                                 ? {
-                                    headerLabel: { text: "Random:", variant: "body2" as const },
-                                    randomRows: (randomItems[item.id] ?? []).map((row) => ({
-                                      key: row.id,
-                                      valueLabel: { text: "Value:", variant: "body2" as const },
-                                      valueField: {
-                                        placeholder: "text field...",
-                                        defaultValue: row.valueValue,
-                                        onBlur: (value: string) =>
-                                          handleRandomValueChange(item.id, row.id, value),
-                                        size: "small" as const,
-                                      },
-                                      promptLabel: { text: "Prompt:", variant: "body2" as const },
-                                      promptField: {
-                                        placeholder: "text field...",
-                                        defaultValue: row.promptValue,
-                                        onBlur: (value: string) =>
-                                          handleRandomPromptChange(item.id, row.id, value),
-                                        size: "small" as const,
-                                      },
-                                      weightLabel: { text: "Weight:", variant: "body2" as const },
-                                      weightField: {
-                                        placeholder: "counter",
-                                        defaultValue: row.weightValue,
-                                        onBlur: (value: string) =>
-                                          handleRandomWeightChange(item.id, row.id, value),
-                                        size: "small" as const,
-                                      },
-                                      removeButton: {
-                                        icon: "removeCircle" as const,
-                                        onClick: () =>
-                                          handleRemoveRandomRow(item.id, row.id),
-                                        color: "default" as const,
-                                      },
-                                    })),
-                                    addRowLabel: { text: "Add Random Item:", variant: "body2" as const },
-                                    addRowButton: {
-                                      icon: "add" as const,
-                                      onClick: () => handleAddRandomRow(item.id),
-                                    },
+                                    text: `${selectedType.charAt(0).toUpperCase()}${selectedType.slice(1)}:`,
+                                    variant: "body2" as const,
                                   }
                                 : null,
-                              complexSection: selectedType === "complex"
-                                ? ((): ComplexSection => {
-                                    const categories = complexCategoryItems[item.id] ?? [];
-                                    const expandedCatIds = complexCategoryExpandedIds[item.id] ?? new Set<string>();
-                                    return {
-                                      categoryPanels: categories.map((cat) => ({
-                                        key: cat.id,
-                                        categoryLabel: { text: "Category:", variant: "body2" as const },
-                                        valueLabel: { text: "Value:", variant: "body2" as const },
+                              randomSection:
+                                selectedType === "random"
+                                  ? {
+                                      headerLabel: {
+                                        text: "Random:",
+                                        variant: "body2" as const,
+                                      },
+                                      randomRows: (
+                                        randomItems[item.id] ?? []
+                                      ).map((row) => ({
+                                        key: row.id,
+                                        valueLabel: {
+                                          text: "Value:",
+                                          variant: "body2" as const,
+                                        },
                                         valueField: {
                                           placeholder: "text field...",
-                                          defaultValue: cat.value,
+                                          defaultValue: row.valueValue,
                                           onBlur: (value: string) =>
-                                            handleComplexCategoryValueChange(item.id, cat.id, value),
+                                            handleRandomValueChange(
+                                              item.id,
+                                              row.id,
+                                              value,
+                                            ),
                                           size: "small" as const,
-                                          fullWidth: true,
                                         },
-                                        promptLabel: { text: "Prompt:", variant: "body2" as const },
+                                        promptLabel: {
+                                          text: "Prompt:",
+                                          variant: "body2" as const,
+                                        },
                                         promptField: {
                                           placeholder: "text field...",
-                                          defaultValue: cat.prompt,
+                                          defaultValue: row.promptValue,
                                           onBlur: (value: string) =>
-                                            handleComplexCategoryPromptChange(item.id, cat.id, value),
+                                            handleRandomPromptChange(
+                                              item.id,
+                                              row.id,
+                                              value,
+                                            ),
                                           size: "small" as const,
-                                          fullWidth: true,
                                         },
-                                        weightLabel: { text: "Weight:", variant: "body2" as const },
+                                        weightLabel: {
+                                          text: "Weight:",
+                                          variant: "body2" as const,
+                                        },
                                         weightField: {
                                           placeholder: "counter",
-                                          defaultValue: cat.weight,
+                                          defaultValue: row.weightValue,
                                           onBlur: (value: string) =>
-                                            handleComplexCategoryWeightChange(item.id, cat.id, value),
+                                            handleRandomWeightChange(
+                                              item.id,
+                                              row.id,
+                                              value,
+                                            ),
                                           size: "small" as const,
-                                          fullWidth: true,
                                         },
                                         removeButton: {
                                           icon: "removeCircle" as const,
-                                          onClick: () => handleRemoveComplexCategory(item.id, cat.id),
+                                          onClick: () =>
+                                            handleRemoveRandomRow(
+                                              item.id,
+                                              row.id,
+                                            ),
                                           color: "default" as const,
                                         },
-                                        toggleButton: {
-                                          icon: expandedCatIds.has(cat.id)
-                                            ? ("expandLess" as const)
-                                            : ("expandMore" as const),
-                                          onClick: () =>
-                                            handleToggleComplexCategoryExpanded(item.id, cat.id),
-                                        },
-                                        isExpanded: expandedCatIds.has(cat.id),
-                                        randomSectionLabel: { text: "Random:", variant: "body2" as const },
-                                        randomItemPanels: (complexRandomItems[cat.id] ?? []).map((rand) => ({
-                                          key: rand.id,
-                                          valueLabel: { text: "Value:", variant: "body2" as const },
-                                          valueField: {
-                                            placeholder: "text field...",
-                                            defaultValue: rand.value,
-                                            onBlur: (value: string) =>
-                                              handleRandomItemValueChange(cat.id, rand.id, value),
-                                            size: "small" as const,
-                                            fullWidth: true,
-                                          },
-                                          promptLabel: { text: "Prompt:", variant: "body2" as const },
-                                          promptField: {
-                                            placeholder: "text field...",
-                                            defaultValue: rand.prompt,
-                                            onBlur: (value: string) =>
-                                              handleRandomItemPromptChange(cat.id, rand.id, value),
-                                            size: "small" as const,
-                                            fullWidth: true,
-                                          },
-                                          weightLabel: { text: "Weight:", variant: "body2" as const },
-                                          weightField: {
-                                            placeholder: "counter",
-                                            defaultValue: rand.weight,
-                                            onBlur: (value: string) =>
-                                              handleRandomItemWeightChange(cat.id, rand.id, value),
-                                            size: "small" as const,
-                                            fullWidth: true,
-                                          },
-                                          removeButton: {
-                                            icon: "removeCircle" as const,
-                                            onClick: () => handleRemoveRandomItem(cat.id, rand.id),
-                                            color: "default" as const,
-                                          },
-                                        })),
-                                        addRandomItemRowLabel: { text: "Add Random Item:", variant: "body2" as const },
-                                        addRandomItemButton: {
-                                          icon: "add" as const,
-                                          onClick: () => handleAddRandomItem(cat.id),
-                                        },
                                       })),
-                                      addCategoryRowLabel: { text: "Add Complex Category:", variant: "body2" as const },
-                                      addCategoryButton: {
-                                        icon: "add" as const,
-                                        onClick: () => handleAddComplexCategory(item.id),
+                                      addRowLabel: {
+                                        text: "Add Random Item:",
+                                        variant: "body2" as const,
                                       },
-                                    };
-                                  })()
-                                : null,
-                              scriptsSection: selectedType === "scripts"
-                                ? {
-                                    scriptLabel: { text: "Scripts:", variant: "body2" as const, fontWeight: "bold" as const },
-                                    scriptInfoLabel: { text: "--- Here is the Scripts Information. ---", variant: "body2" as const, color: "text.secondary" },
-                                  }
-                                : null,
-                              colorsSection: selectedType === "colors"
-                                ? {
-                                    colorLabel: { text: "Colors:", variant: "body2" as const, fontWeight: "bold" as const },
-                                    colorInfoLabel: { text: "--- Here is the Colors Information(#RRGGBB). ---", variant: "body2" as const, color: "text.secondary" },
-                                  }
-                                : null,
+                                      addRowButton: {
+                                        icon: "add" as const,
+                                        onClick: () =>
+                                          handleAddRandomRow(item.id),
+                                      },
+                                    }
+                                  : null,
+                              complexSection:
+                                selectedType === "complex"
+                                  ? ((): ComplexSection => {
+                                      const categories =
+                                        complexCategoryItems[item.id] ?? [];
+                                      const expandedCatIds =
+                                        complexCategoryExpandedIds[item.id] ??
+                                        new Set<string>();
+                                      return {
+                                        categoryPanels: categories.map(
+                                          (cat) => ({
+                                            key: cat.id,
+                                            categoryLabel: {
+                                              text: "Category:",
+                                              variant: "body2" as const,
+                                            },
+                                            valueLabel: {
+                                              text: "Value:",
+                                              variant: "body2" as const,
+                                            },
+                                            valueField: {
+                                              placeholder: "text field...",
+                                              defaultValue: cat.value,
+                                              onBlur: (value: string) =>
+                                                handleComplexCategoryValueChange(
+                                                  item.id,
+                                                  cat.id,
+                                                  value,
+                                                ),
+                                              size: "small" as const,
+                                              fullWidth: true,
+                                            },
+                                            promptLabel: {
+                                              text: "Prompt:",
+                                              variant: "body2" as const,
+                                            },
+                                            promptField: {
+                                              placeholder: "text field...",
+                                              defaultValue: cat.prompt,
+                                              onBlur: (value: string) =>
+                                                handleComplexCategoryPromptChange(
+                                                  item.id,
+                                                  cat.id,
+                                                  value,
+                                                ),
+                                              size: "small" as const,
+                                              fullWidth: true,
+                                            },
+                                            weightLabel: {
+                                              text: "Weight:",
+                                              variant: "body2" as const,
+                                            },
+                                            weightField: {
+                                              placeholder: "counter",
+                                              defaultValue: cat.weight,
+                                              onBlur: (value: string) =>
+                                                handleComplexCategoryWeightChange(
+                                                  item.id,
+                                                  cat.id,
+                                                  value,
+                                                ),
+                                              size: "small" as const,
+                                              fullWidth: true,
+                                            },
+                                            removeButton: {
+                                              icon: "removeCircle" as const,
+                                              onClick: () =>
+                                                handleRemoveComplexCategory(
+                                                  item.id,
+                                                  cat.id,
+                                                ),
+                                              color: "default" as const,
+                                            },
+                                            toggleButton: {
+                                              icon: expandedCatIds.has(cat.id)
+                                                ? ("expandLess" as const)
+                                                : ("expandMore" as const),
+                                              onClick: () =>
+                                                handleToggleComplexCategoryExpanded(
+                                                  item.id,
+                                                  cat.id,
+                                                ),
+                                            },
+                                            isExpanded: expandedCatIds.has(
+                                              cat.id,
+                                            ),
+                                            randomSectionLabel: {
+                                              text: "Random:",
+                                              variant: "body2" as const,
+                                            },
+                                            randomItemPanels: (
+                                              complexRandomItems[cat.id] ?? []
+                                            ).map((rand) => ({
+                                              key: rand.id,
+                                              valueLabel: {
+                                                text: "Value:",
+                                                variant: "body2" as const,
+                                              },
+                                              valueField: {
+                                                placeholder: "text field...",
+                                                defaultValue: rand.value,
+                                                onBlur: (value: string) =>
+                                                  handleRandomItemValueChange(
+                                                    cat.id,
+                                                    rand.id,
+                                                    value,
+                                                  ),
+                                                size: "small" as const,
+                                                fullWidth: true,
+                                              },
+                                              promptLabel: {
+                                                text: "Prompt:",
+                                                variant: "body2" as const,
+                                              },
+                                              promptField: {
+                                                placeholder: "text field...",
+                                                defaultValue: rand.prompt,
+                                                onBlur: (value: string) =>
+                                                  handleRandomItemPromptChange(
+                                                    cat.id,
+                                                    rand.id,
+                                                    value,
+                                                  ),
+                                                size: "small" as const,
+                                                fullWidth: true,
+                                              },
+                                              weightLabel: {
+                                                text: "Weight:",
+                                                variant: "body2" as const,
+                                              },
+                                              weightField: {
+                                                placeholder: "counter",
+                                                defaultValue: rand.weight,
+                                                onBlur: (value: string) =>
+                                                  handleRandomItemWeightChange(
+                                                    cat.id,
+                                                    rand.id,
+                                                    value,
+                                                  ),
+                                                size: "small" as const,
+                                                fullWidth: true,
+                                              },
+                                              removeButton: {
+                                                icon: "removeCircle" as const,
+                                                onClick: () =>
+                                                  handleRemoveRandomItem(
+                                                    cat.id,
+                                                    rand.id,
+                                                  ),
+                                                color: "default" as const,
+                                              },
+                                            })),
+                                            addRandomItemRowLabel: {
+                                              text: "Add Random Item:",
+                                              variant: "body2" as const,
+                                            },
+                                            addRandomItemButton: {
+                                              icon: "add" as const,
+                                              onClick: () =>
+                                                handleAddRandomItem(cat.id),
+                                            },
+                                          }),
+                                        ),
+                                        addCategoryRowLabel: {
+                                          text: "Add Complex Category:",
+                                          variant: "body2" as const,
+                                        },
+                                        addCategoryButton: {
+                                          icon: "add" as const,
+                                          onClick: () =>
+                                            handleAddComplexCategory(item.id),
+                                        },
+                                      };
+                                    })()
+                                  : null,
+                              scriptsSection:
+                                selectedType === "scripts"
+                                  ? {
+                                      scriptLabel: {
+                                        text: "Scripts:",
+                                        variant: "body2" as const,
+                                        fontWeight: "bold" as const,
+                                      },
+                                      scriptInfoLabel: {
+                                        text: "--- Here is the Scripts Information. ---",
+                                        variant: "body2" as const,
+                                        color: "text.secondary",
+                                      },
+                                    }
+                                  : null,
+                              colorsSection:
+                                selectedType === "colors"
+                                  ? {
+                                      colorLabel: {
+                                        text: "Colors:",
+                                        variant: "body2" as const,
+                                        fontWeight: "bold" as const,
+                                      },
+                                      colorInfoLabel: {
+                                        text: "--- Here is the Colors Information(#RRGGBB). ---",
+                                        variant: "body2" as const,
+                                        color: "text.secondary",
+                                      },
+                                    }
+                                  : null,
                             };
                           }),
-                          addItemRowLabel: { text: "Add Orders Item:", variant: "body2" as const },
+                          addItemRowLabel: {
+                            text: "Add Orders Item:",
+                            variant: "body2" as const,
+                          },
                           addItemButton: {
                             icon: "add" as const,
                             onClick: () => handleAddOrdersItem(grp.id),
@@ -1032,7 +1332,8 @@ export function useConfigurationsViewModelMocks(): ConfigurationsViewModelMocksR
                 }
                 if (typeName === "Switch") {
                   const grps = switchGrpItems[sectionKey] ?? [];
-                  const expandedGrpIds = switchGrpExpandedIds[sectionKey] ?? new Set<string>();
+                  const expandedGrpIds =
+                    switchGrpExpandedIds[sectionKey] ?? new Set<string>();
                   return {
                     key: typeName,
                     type: typeName as ConfigBodySectionType,
@@ -1050,7 +1351,10 @@ export function useConfigurationsViewModelMocks(): ConfigurationsViewModelMocksR
                       const isRandomized = switchRandomize[grp.id] ?? false;
                       return {
                         key: grp.id,
-                        panelLabel: { text: "Switch Grp:", variant: "body2" as const },
+                        panelLabel: {
+                          text: "Switch Grp:",
+                          variant: "body2" as const,
+                        },
                         keyLabel: { text: "Key:", variant: "body2" as const },
                         keyField: {
                           placeholder: "text field...",
@@ -1060,30 +1364,45 @@ export function useConfigurationsViewModelMocks(): ConfigurationsViewModelMocksR
                           size: "small" as const,
                           fullWidth: true,
                         },
-                        labelLabel: { text: "Label:", variant: "body2" as const },
+                        labelLabel: {
+                          text: "Label:",
+                          variant: "body2" as const,
+                        },
                         labelField: {
                           placeholder: "text field...",
                           defaultValue: grp.labelValue,
                           onBlur: (value: string) =>
-                            handleSwitchGrpLabelChange(sectionKey, grp.id, value),
+                            handleSwitchGrpLabelChange(
+                              sectionKey,
+                              grp.id,
+                              value,
+                            ),
                           size: "small" as const,
                           fullWidth: true,
                         },
                         removeButton: {
                           icon: "removeCircle" as const,
-                          onClick: () => handleRemoveSwitchGrp(sectionKey, grp.id),
+                          onClick: () =>
+                            handleRemoveSwitchGrp(sectionKey, grp.id),
                           color: "default" as const,
                         },
                         toggleButton: {
                           icon: expandedGrpIds.has(grp.id)
                             ? ("expandLess" as const)
                             : ("expandMore" as const),
-                          onClick: () => handleToggleSwitchGrpExpanded(sectionKey, grp.id),
+                          onClick: () =>
+                            handleToggleSwitchGrpExpanded(sectionKey, grp.id),
                         },
                         isExpanded: expandedGrpIds.has(grp.id),
-                        switchItemsLabel: { text: "Switch Items:", variant: "body2" as const },
+                        switchItemsLabel: {
+                          text: "Switch Items:",
+                          variant: "body2" as const,
+                        },
                         switchItemSection: {
-                          randomizeLabel: { text: "Randomize:", variant: "body2" as const },
+                          randomizeLabel: {
+                            text: "Randomize:",
+                            variant: "body2" as const,
+                          },
                           randomizeSwitch: {
                             checked: isRandomized,
                             onChange: (checked: boolean) =>
@@ -1091,40 +1410,65 @@ export function useConfigurationsViewModelMocks(): ConfigurationsViewModelMocksR
                           },
                           switchItemPanels: items.map((item) => ({
                             key: item.id,
-                            labelLabel: { text: "Label:", variant: "body2" as const },
+                            labelLabel: {
+                              text: "Label:",
+                              variant: "body2" as const,
+                            },
                             labelField: {
                               placeholder: "text field...",
                               defaultValue: item.labelValue,
                               onBlur: (value: string) =>
-                                handleSwitchItemLabelChange(grp.id, item.id, value),
+                                handleSwitchItemLabelChange(
+                                  grp.id,
+                                  item.id,
+                                  value,
+                                ),
                               size: "small" as const,
                               fullWidth: true,
                             },
-                            valueLabel: { text: "Value:", variant: "body2" as const },
+                            valueLabel: {
+                              text: "Value:",
+                              variant: "body2" as const,
+                            },
                             valueField: {
                               placeholder: "text field...",
                               defaultValue: item.valueValue,
                               onBlur: (value: string) =>
-                                handleSwitchItemValueChange(grp.id, item.id, value),
+                                handleSwitchItemValueChange(
+                                  grp.id,
+                                  item.id,
+                                  value,
+                                ),
                               size: "small" as const,
                               fullWidth: true,
                             },
-                            altLabel: { text: "Alt:", variant: "body2" as const },
+                            altLabel: {
+                              text: "Alt:",
+                              variant: "body2" as const,
+                            },
                             altField: {
                               placeholder: "text field...",
                               defaultValue: item.altValue,
                               onBlur: (value: string) =>
-                                handleSwitchItemAltChange(grp.id, item.id, value),
+                                handleSwitchItemAltChange(
+                                  grp.id,
+                                  item.id,
+                                  value,
+                                ),
                               size: "small" as const,
                               fullWidth: true,
                             },
                             removeButton: {
                               icon: "removeCircle" as const,
-                              onClick: () => handleRemoveSwitchItem(grp.id, item.id),
+                              onClick: () =>
+                                handleRemoveSwitchItem(grp.id, item.id),
                               color: "default" as const,
                             },
                           })),
-                          addSwitchRowLabel: { text: "Add Switch:", variant: "body2" as const },
+                          addSwitchRowLabel: {
+                            text: "Add Switch:",
+                            variant: "body2" as const,
+                          },
                           addSwitchButton: {
                             icon: "add" as const,
                             onClick: () => handleAddSwitchItem(grp.id),
@@ -1144,7 +1488,8 @@ export function useConfigurationsViewModelMocks(): ConfigurationsViewModelMocksR
                 }
                 if (typeName === "Select") {
                   const grps = selectGrpItems[sectionKey] ?? [];
-                  const expandedGrpIds = selectGrpExpandedIds[sectionKey] ?? new Set<string>();
+                  const expandedGrpIds =
+                    selectGrpExpandedIds[sectionKey] ?? new Set<string>();
                   return {
                     key: typeName,
                     type: typeName as ConfigBodySectionType,
@@ -1159,11 +1504,15 @@ export function useConfigurationsViewModelMocks(): ConfigurationsViewModelMocksR
                     },
                     selectGrpPanels: grps.map((grp): SelectGrpPanel => {
                       const selectors = selectorItems[grp.id] ?? [];
-                      const expandedSelectorIds = selectorExpandedIds[grp.id] ?? new Set<string>();
+                      const expandedSelectorIds =
+                        selectorExpandedIds[grp.id] ?? new Set<string>();
                       const isShuffled = selectShuffle[grp.id] ?? false;
                       return {
                         key: grp.id,
-                        panelLabel: { text: "Select Grp:", variant: "body2" as const },
+                        panelLabel: {
+                          text: "Select Grp:",
+                          variant: "body2" as const,
+                        },
                         keyLabel: { text: "Key:", variant: "body2" as const },
                         keyField: {
                           placeholder: "text field...",
@@ -1173,107 +1522,177 @@ export function useConfigurationsViewModelMocks(): ConfigurationsViewModelMocksR
                           size: "small" as const,
                           fullWidth: true,
                         },
-                        labelLabel: { text: "Label:", variant: "body2" as const },
+                        labelLabel: {
+                          text: "Label:",
+                          variant: "body2" as const,
+                        },
                         labelField: {
                           placeholder: "text field...",
                           defaultValue: grp.labelValue,
                           onBlur: (value: string) =>
-                            handleSelectGrpLabelChange(sectionKey, grp.id, value),
+                            handleSelectGrpLabelChange(
+                              sectionKey,
+                              grp.id,
+                              value,
+                            ),
                           size: "small" as const,
                           fullWidth: true,
                         },
                         removeButton: {
                           icon: "removeCircle" as const,
-                          onClick: () => handleRemoveSelectGrp(sectionKey, grp.id),
+                          onClick: () =>
+                            handleRemoveSelectGrp(sectionKey, grp.id),
                           color: "default" as const,
                         },
                         toggleButton: {
                           icon: expandedGrpIds.has(grp.id)
                             ? ("expandLess" as const)
                             : ("expandMore" as const),
-                          onClick: () => handleToggleSelectGrpExpanded(sectionKey, grp.id),
+                          onClick: () =>
+                            handleToggleSelectGrpExpanded(sectionKey, grp.id),
                         },
                         isExpanded: expandedGrpIds.has(grp.id),
-                        selectItemsLabel: { text: "Select Items:", variant: "body2" as const },
+                        selectItemsLabel: {
+                          text: "Select Items:",
+                          variant: "body2" as const,
+                        },
                         selectItemSection: {
-                          shuffleLabel: { text: "Shuffle:", variant: "body2" as const },
+                          shuffleLabel: {
+                            text: "Shuffle:",
+                            variant: "body2" as const,
+                          },
                           shuffleSwitch: {
                             checked: isShuffled,
                             onChange: (checked: boolean) =>
                               handleToggleSelectShuffle(grp.id, checked),
                           },
-                          selectorsLabel: { text: "Selectors:", variant: "body2" as const },
-                          selectorPanels: selectors.map((selector): SelectorPanel => {
-                            const items = listItems[selector.id] ?? [];
-                            return {
-                              key: selector.id,
-                              panelLabel: { text: "Selector:", variant: "body2" as const },
-                              keyLabel: { text: "Key:", variant: "body2" as const },
-                              keyField: {
-                                placeholder: "text field...",
-                                defaultValue: selector.keyValue,
-                                onBlur: (value: string) =>
-                                  handleSelectorKeyChange(grp.id, selector.id, value),
-                                size: "small" as const,
-                                fullWidth: true,
-                              },
-                              labelLabel: { text: "Label:", variant: "body2" as const },
-                              labelField: {
-                                placeholder: "text field...",
-                                defaultValue: selector.labelValue,
-                                onBlur: (value: string) =>
-                                  handleSelectorLabelChange(grp.id, selector.id, value),
-                                size: "small" as const,
-                                fullWidth: true,
-                              },
-                              removeButton: {
-                                icon: "removeCircle" as const,
-                                onClick: () => handleRemoveSelector(grp.id, selector.id),
-                                color: "default" as const,
-                              },
-                              toggleButton: {
-                                icon: expandedSelectorIds.has(selector.id)
-                                  ? ("expandLess" as const)
-                                  : ("expandMore" as const),
-                                onClick: () =>
-                                  handleToggleSelectorExpanded(grp.id, selector.id),
-                              },
-                              isExpanded: expandedSelectorIds.has(selector.id),
-                              listItemsLabel: { text: "List Items:", variant: "body2" as const },
-                              listItemPanels: items.map((item) => ({
-                                key: item.id,
-                                valueLabel: { text: "Value:", variant: "body2" as const },
-                                valueField: {
+                          selectorsLabel: {
+                            text: "Selectors:",
+                            variant: "body2" as const,
+                          },
+                          selectorPanels: selectors.map(
+                            (selector): SelectorPanel => {
+                              const items = listItems[selector.id] ?? [];
+                              return {
+                                key: selector.id,
+                                panelLabel: {
+                                  text: "Selector:",
+                                  variant: "body2" as const,
+                                },
+                                keyLabel: {
+                                  text: "Key:",
+                                  variant: "body2" as const,
+                                },
+                                keyField: {
                                   placeholder: "text field...",
-                                  defaultValue: item.valueValue,
+                                  defaultValue: selector.keyValue,
                                   onBlur: (value: string) =>
-                                    handleListItemValueChange(selector.id, item.id, value),
+                                    handleSelectorKeyChange(
+                                      grp.id,
+                                      selector.id,
+                                      value,
+                                    ),
                                   size: "small" as const,
                                   fullWidth: true,
                                 },
-                                promptLabel: { text: "Prompt:", variant: "body2" as const },
-                                promptField: {
+                                labelLabel: {
+                                  text: "Label:",
+                                  variant: "body2" as const,
+                                },
+                                labelField: {
                                   placeholder: "text field...",
-                                  defaultValue: item.promptValue,
+                                  defaultValue: selector.labelValue,
                                   onBlur: (value: string) =>
-                                    handleListItemPromptChange(selector.id, item.id, value),
+                                    handleSelectorLabelChange(
+                                      grp.id,
+                                      selector.id,
+                                      value,
+                                    ),
                                   size: "small" as const,
                                   fullWidth: true,
                                 },
                                 removeButton: {
                                   icon: "removeCircle" as const,
-                                  onClick: () => handleRemoveListItem(selector.id, item.id),
+                                  onClick: () =>
+                                    handleRemoveSelector(grp.id, selector.id),
                                   color: "default" as const,
                                 },
-                              })),
-                              addListItemRowLabel: { text: "Add Switch:", variant: "body2" as const },
-                              addListItemButton: {
-                                icon: "add" as const,
-                                onClick: () => handleAddListItem(selector.id),
-                              },
-                            };
-                          }),
-                          addSelectorRowLabel: { text: "Add Selector:", variant: "body2" as const },
+                                toggleButton: {
+                                  icon: expandedSelectorIds.has(selector.id)
+                                    ? ("expandLess" as const)
+                                    : ("expandMore" as const),
+                                  onClick: () =>
+                                    handleToggleSelectorExpanded(
+                                      grp.id,
+                                      selector.id,
+                                    ),
+                                },
+                                isExpanded: expandedSelectorIds.has(
+                                  selector.id,
+                                ),
+                                listItemsLabel: {
+                                  text: "List Items:",
+                                  variant: "body2" as const,
+                                },
+                                listItemPanels: items.map((item) => ({
+                                  key: item.id,
+                                  valueLabel: {
+                                    text: "Value:",
+                                    variant: "body2" as const,
+                                  },
+                                  valueField: {
+                                    placeholder: "text field...",
+                                    defaultValue: item.valueValue,
+                                    onBlur: (value: string) =>
+                                      handleListItemValueChange(
+                                        selector.id,
+                                        item.id,
+                                        value,
+                                      ),
+                                    size: "small" as const,
+                                    fullWidth: true,
+                                  },
+                                  promptLabel: {
+                                    text: "Prompt:",
+                                    variant: "body2" as const,
+                                  },
+                                  promptField: {
+                                    placeholder: "text field...",
+                                    defaultValue: item.promptValue,
+                                    onBlur: (value: string) =>
+                                      handleListItemPromptChange(
+                                        selector.id,
+                                        item.id,
+                                        value,
+                                      ),
+                                    size: "small" as const,
+                                    fullWidth: true,
+                                  },
+                                  removeButton: {
+                                    icon: "removeCircle" as const,
+                                    onClick: () =>
+                                      handleRemoveListItem(
+                                        selector.id,
+                                        item.id,
+                                      ),
+                                    color: "default" as const,
+                                  },
+                                })),
+                                addListItemRowLabel: {
+                                  text: "Add Switch:",
+                                  variant: "body2" as const,
+                                },
+                                addListItemButton: {
+                                  icon: "add" as const,
+                                  onClick: () => handleAddListItem(selector.id),
+                                },
+                              };
+                            },
+                          ),
+                          addSelectorRowLabel: {
+                            text: "Add Selector:",
+                            variant: "body2" as const,
+                          },
                           addSelectorButton: {
                             icon: "add" as const,
                             onClick: () => handleAddSelector(grp.id),

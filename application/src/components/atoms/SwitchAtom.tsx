@@ -7,7 +7,14 @@ export interface SwitchAtomProps {
     checked: boolean;
     onChange: (checked: boolean) => void;
     size?: "small" | "medium";
-    color?: "primary" | "secondary" | "success" | "error" | "info" | "warning" | "default";
+    color?:
+      | "primary"
+      | "secondary"
+      | "success"
+      | "error"
+      | "info"
+      | "warning"
+      | "default";
   };
 }
 
