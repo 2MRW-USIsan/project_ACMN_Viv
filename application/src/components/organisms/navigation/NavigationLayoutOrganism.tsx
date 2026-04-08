@@ -5,7 +5,7 @@ import { DrawerAtom } from "@/components/atoms/DrawerAtom";
 import {
   NavigationOrganism,
   NavigationOrganismProps,
-} from "@/components/organisms/NavigationOrganism";
+} from "./NavigationOrganism";
 
 interface NavigationLayoutOrganismProps {
   props: {

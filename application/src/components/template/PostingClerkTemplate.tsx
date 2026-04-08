@@ -1,6 +1,6 @@
 "use client";
 
-import { NavigationLayoutOrganism } from "@/components/organisms/NavigationLayoutOrganism";
+import { NavigationLayoutOrganism } from "@/components/organisms/navigation/NavigationLayoutOrganism";
 import { PostingClerkBodyOrganism } from "@/components/organisms/posting-clerk/PostingClerkBodyOrganism";
 import { PostingClerkViewModel } from "@/hooks/posting-clerk/viewModel/usePostingClerkComposer";
 

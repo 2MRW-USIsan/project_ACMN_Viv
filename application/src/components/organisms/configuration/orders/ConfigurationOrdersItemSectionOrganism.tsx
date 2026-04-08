@@ -4,10 +4,10 @@ import { ChipCheckboxAtom } from "@/components/atoms/ChipCheckboxAtom";
 import { IconButtonAtom } from "@/components/atoms/IconButtonAtom";
 import { LabelAtom } from "@/components/atoms/LabelAtom";
 import { TextFieldAtom } from "@/components/atoms/TextFieldAtom";
-import { ConfigurationComplexSectionOrganism } from "@/components/organisms/ConfigurationComplexSectionOrganism";
-import { OrdersRandomSectionOrganism } from "@/components/organisms/OrdersRandomSectionOrganism";
-import { ConfigurationOrdersItemColorsOrganism } from "@/components/organisms/ConfigurationOrdersItemColorsOrganism";
-import { ConfigurationOrdersItemScriptsOrganism } from "@/components/organisms/ConfigurationOrdersItemScriptsOrganism";
+import { ConfigurationComplexSectionOrganism } from "../ConfigurationComplexSectionOrganism";
+import { OrdersRandomSectionOrganism } from "./OrdersRandomSectionOrganism";
+import { ConfigurationOrdersItemColorsOrganism } from "./ConfigurationOrdersItemColorsOrganism";
+import { ConfigurationOrdersItemScriptsOrganism } from "./ConfigurationOrdersItemScriptsOrganism";
 import { OrdersItemSection } from "@/hooks/configurations/viewModel/useConfigurationsComposer";
 import {
   Box,

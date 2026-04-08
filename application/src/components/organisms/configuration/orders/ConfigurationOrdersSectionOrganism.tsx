@@ -1,6 +1,6 @@
 "use client";
 
-import { ConfigurationOrdersItemSectionOrganism } from "@/components/organisms/ConfigurationOrdersItemSectionOrganism";
+import { ConfigurationOrdersItemSectionOrganism } from "./ConfigurationOrdersItemSectionOrganism";
 import { DividerAtom } from "@/components/atoms/DividerAtom";
 import { IconButtonAtom } from "@/components/atoms/IconButtonAtom";
 import { LabelAtom } from "@/components/atoms/LabelAtom";

@@ -1,6 +1,6 @@
 "use client";
 
-import { NavigationLayoutOrganism } from "@/components/organisms/NavigationLayoutOrganism";
+import { NavigationLayoutOrganism } from "@/components/organisms/navigation/NavigationLayoutOrganism";
 import { PromptForgerBodyOrganism } from "@/components/organisms/prompt-forger/PromptForgerBodyOrganism";
 import { PromptForgerViewModel } from "@/hooks/promptForger/viewModel/usePromptForgerComposer";
 

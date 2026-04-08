@@ -4,7 +4,7 @@ import { DividerAtom } from "@/components/atoms/DividerAtom";
 import { IconButtonAtom } from "@/components/atoms/IconButtonAtom";
 import { LabelAtom } from "@/components/atoms/LabelAtom";
 import { TextFieldAtom } from "@/components/atoms/TextFieldAtom";
-import { SelectItemSectionOrganism } from "@/components/organisms/SelectItemSectionOrganism";
+import { SelectItemSectionOrganism } from "./SelectItemSectionOrganism";
 import { ConfigBodySection } from "@/hooks/configurations/viewModel/useConfigurationsComposer";
 import {
   Box,

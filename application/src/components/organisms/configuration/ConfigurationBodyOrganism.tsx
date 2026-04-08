@@ -6,9 +6,9 @@ import { IconButtonAtom, IconButtonAtomProps } from "@/components/atoms/IconButt
 import { LabelAtom, LabelAtomProps } from "@/components/atoms/LabelAtom";
 import { TextFieldAtom } from "@/components/atoms/TextFieldAtom";
 import { ConfigBodyBlocPanel } from "@/hooks/configurations/viewModel/useConfigurationsComposer";
-import { ConfigurationOrdersSectionOrganism } from "@/components/organisms/ConfigurationOrdersSectionOrganism";
-import { ConfigurationSelectSectionOrganism } from "@/components/organisms/ConfigurationSelectSectionOrganism";
-import { ConfigurationSwitchSectionOrganism } from "@/components/organisms/ConfigurationSwitchSectionOrganism";
+import { ConfigurationOrdersSectionOrganism } from "@/components/organisms/configuration/orders/ConfigurationOrdersSectionOrganism";
+import { ConfigurationSelectSectionOrganism } from "@/components/organisms/configuration/select/ConfigurationSelectSectionOrganism";
+import { ConfigurationSwitchSectionOrganism } from "@/components/organisms/configuration/switch/ConfigurationSwitchSectionOrganism";
 import {
   Box,
   Collapse,
