@@ -1,9 +1,6 @@
 import { ButtonAtom, ButtonAtomProps } from "@/components/atoms/ButtonAtom";
 import { LabelAtom, LabelAtomProps } from "@/components/atoms/LabelAtom";
-import {
-  TextFieldAtom,
-  TextFieldAtomProps,
-} from "@/components/atoms/TextFieldAtom";
+import { TextAreaAtom, TextAreaAtomProps } from "@/components/atoms/TextAreaAtom";
 import { Stack } from "@mui/material";
 
 interface PromptForgerPromptFieldOrganismProps {
@@ -11,7 +8,7 @@ interface PromptForgerPromptFieldOrganismProps {
     shuffleButton: ButtonAtomProps["props"];
     copyButton: ButtonAtomProps["props"];
     summaryPromptLabel: LabelAtomProps["props"];
-    summaryPromptField: TextFieldAtomProps["props"];
+    summaryPromptField: TextAreaAtomProps["props"];
   };
 }
 
@@ -25,7 +22,7 @@ export function PromptForgerPromptFieldOrganism({
         <ButtonAtom props={props.copyButton} />
       </Stack>
       <LabelAtom props={props.summaryPromptLabel} />
-      <TextFieldAtom props={props.summaryPromptField} />
+      <TextAreaAtom props={props.summaryPromptField} />
     </Stack>
   );
 }

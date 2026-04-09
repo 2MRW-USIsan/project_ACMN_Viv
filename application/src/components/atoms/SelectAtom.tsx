@@ -1,29 +1,34 @@
 "use client";
 
-import { Select, MenuItem, FormControl } from "@mui/material";
+import { FormControl, MenuItem, Select } from "@mui/material";
 
 export interface SelectAtomProps {
   props: {
     value: string;
     options: string[];
     onChange: (value: string) => void;
-    fullWidth?: boolean;
   };
 }
 
 export function SelectAtom({ props }: SelectAtomProps) {
   return (
-    <FormControl fullWidth={props.fullWidth}>
+    <FormControl fullWidth>
       <Select
-        value={props.value}
+        value={props.options.length > 0 ? props.value : "-"}
         onChange={(e) => props.onChange(e.target.value)}
         size="small"
       >
-        {props.options.map((option) => (
-          <MenuItem key={option} value={option}>
-            {option}
+        {props.options.length > 0 ? (
+          props.options.map((option) => (
+            <MenuItem key={option} value={option}>
+              {option}
+            </MenuItem>
+          ))
+        ) : (
+          <MenuItem key={"empty"} value={"-"}>
+            {"-"}
           </MenuItem>
-        ))}
+        )}
       </Select>
     </FormControl>
   );

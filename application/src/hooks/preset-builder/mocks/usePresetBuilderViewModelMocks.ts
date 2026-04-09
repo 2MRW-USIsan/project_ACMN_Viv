@@ -109,8 +109,8 @@ export function usePresetBuilderViewModelMocks(): PresetBuilderViewModelMocksRet
             nameLabel: { text: "Name:", variant: "body2" },
             nameField: {
               placeholder: "text field...",
-              defaultValue: nameEditValue,
-              onBlur: handleNameEditBlur,
+              value: nameEditValue,
+              onChange: handleNameEditBlur,
               size: "small",
             },
             saveButton: { label: "Save", onClick: () => {}, size: "small" },

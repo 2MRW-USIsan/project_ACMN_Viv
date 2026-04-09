@@ -1,9 +1,8 @@
 "use client";
 
-import { AppBar, Toolbar, IconButton, Typography } from "@mui/material";
+import { CONST } from "@/const/constants";
 import MenuIcon from "@mui/icons-material/Menu";
-
-export const APPBAR_HEIGHT = 64;
+import { AppBar, IconButton, Toolbar, Typography } from "@mui/material";
 
 interface AppBarAtomProps {
   props: {
@@ -14,7 +13,7 @@ interface AppBarAtomProps {
 
 export function AppBarAtom({ props }: AppBarAtomProps) {
   return (
-    <AppBar position="fixed" sx={{ height: APPBAR_HEIGHT }}>
+    <AppBar position="fixed" sx={{ height: CONST.AppBar.height }}>
       <Toolbar>
         <IconButton
           edge="start"

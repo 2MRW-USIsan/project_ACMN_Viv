@@ -1,17 +1,19 @@
 "use client";
 
-import { Box, Collapse, Stack, Toolbar } from "@mui/material";
-import { LabelAtom, LabelAtomProps } from "@/components/atoms/LabelAtom";
-import { DividerAtom } from "@/components/atoms/DividerAtom";
-import {
-  TextFieldAtom,
-  TextFieldAtomProps,
-} from "@/components/atoms/TextFieldAtom";
 import { ButtonAtom, ButtonAtomProps } from "@/components/atoms/ButtonAtom";
+import { DividerAtom } from "@/components/atoms/DividerAtom";
 import {
   IconButtonAtom,
   IconButtonAtomProps,
 } from "@/components/atoms/IconButtonAtom";
+import { LabelAtom, LabelAtomProps } from "@/components/atoms/LabelAtom";
+import {
+  TextFieldAtom,
+  TextFieldAtomProps,
+} from "@/components/atoms/TextFieldAtom";
+import { TextAreaAtom, TextAreaAtomProps } from "@/components/atoms/TextAreaAtom";
+import { Box, Collapse, Stack, Toolbar } from "@mui/material";
+import { PostingClerkInformSectionOrganism } from "./PostingClerkInformSectionOrganism";
 
 export interface UrlItemPanel {
   key: string;
@@ -35,7 +37,7 @@ export interface PlatformPreviewPanel {
   urlsAddButton: ButtonAtomProps["props"];
   urlItems: UrlItemPanel[];
   previewLabel: LabelAtomProps["props"];
-  previewField: TextFieldAtomProps["props"];
+  previewField: TextAreaAtomProps["props"];
 }
 
 export interface QuoteItemPanel {
@@ -46,14 +48,16 @@ export interface QuoteItemPanel {
 }
 
 export interface PostingClerkBodyViewModel {
-  infoSectionLabel: LabelAtomProps["props"];
-  idLabel: LabelAtomProps["props"];
-  idValueLabel: LabelAtomProps["props"];
-  titleLabel: LabelAtomProps["props"];
-  titleField: TextFieldAtomProps["props"];
-  statusLabel: LabelAtomProps["props"];
-  statusValueLabel: LabelAtomProps["props"];
-  saveButton: ButtonAtomProps["props"];
+  informProps: {
+    infoSectionLabel: LabelAtomProps["props"];
+    idLabel: LabelAtomProps["props"];
+    idValueLabel: LabelAtomProps["props"];
+    titleLabel: LabelAtomProps["props"];
+    titleField: TextFieldAtomProps["props"];
+    statusLabel: LabelAtomProps["props"];
+    statusValueLabel: LabelAtomProps["props"];
+    saveButton: ButtonAtomProps["props"];
+  };
   clerkingSectionLabel: LabelAtomProps["props"];
   titleJpLabel: LabelAtomProps["props"];
   titleJpField: TextFieldAtomProps["props"];
@@ -79,31 +83,7 @@ export function PostingClerkBodyOrganism({
   return (
     <Stack spacing={2} p={3} maxWidth={960} mx="auto">
       <Toolbar />
-
-      {/* Information Field */}
-      <LabelAtom props={props.infoSectionLabel} />
-      <DividerAtom />
-
-      <Stack spacing={1} pl={2}>
-        <Stack direction="row" alignItems="center" spacing={1}>
-          <LabelAtom props={props.idLabel} />
-          <LabelAtom props={props.idValueLabel} />
-        </Stack>
-
-        <Stack direction="row" alignItems="center" spacing={1}>
-          <LabelAtom props={props.titleLabel} />
-          <Box sx={{ flex: 1, maxWidth: 400 }}>
-            <TextFieldAtom props={props.titleField} />
-          </Box>
-        </Stack>
-
-        <Stack direction="row" alignItems="center" spacing={1}>
-          <LabelAtom props={props.statusLabel} />
-          <LabelAtom props={props.statusValueLabel} />
-          <ButtonAtom props={props.saveButton} />
-        </Stack>
-      </Stack>
-
+      <PostingClerkInformSectionOrganism props={props.informProps} />
       {/* Clerking Field */}
       <LabelAtom props={props.clerkingSectionLabel} />
       <DividerAtom />
@@ -196,7 +176,7 @@ export function PostingClerkBodyOrganism({
               </Stack>
 
               <LabelAtom props={platform.previewLabel} />
-              <TextFieldAtom props={platform.previewField} />
+              <TextAreaAtom props={platform.previewField} />
             </Stack>
           </Collapse>
         </Box>

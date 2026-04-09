@@ -803,8 +803,8 @@ export function useConfigurationsViewModelMocks(): ConfigurationsViewModelMocksR
             nameLabel: { text: "Name:", variant: "body2" },
             editField: {
               placeholder: "text field...",
-              defaultValue: configEditValue,
-              onBlur: handleConfigEditBlur,
+              value: configEditValue,
+              onChange: handleConfigEditBlur,
               size: "small",
             },
             saveButton: {
@@ -1358,8 +1358,8 @@ export function useConfigurationsViewModelMocks(): ConfigurationsViewModelMocksR
                         keyLabel: { text: "Key:", variant: "body2" as const },
                         keyField: {
                           placeholder: "text field...",
-                          defaultValue: grp.keyValue,
-                          onBlur: (value: string) =>
+                          value: grp.keyValue,
+                          onChange: (value: string) =>
                             handleSwitchGrpKeyChange(sectionKey, grp.id, value),
                           size: "small" as const,
                           fullWidth: true,
@@ -1370,8 +1370,8 @@ export function useConfigurationsViewModelMocks(): ConfigurationsViewModelMocksR
                         },
                         labelField: {
                           placeholder: "text field...",
-                          defaultValue: grp.labelValue,
-                          onBlur: (value: string) =>
+                          value: grp.labelValue,
+                          onChange: (value: string) =>
                             handleSwitchGrpLabelChange(
                               sectionKey,
                               grp.id,
@@ -1516,8 +1516,8 @@ export function useConfigurationsViewModelMocks(): ConfigurationsViewModelMocksR
                         keyLabel: { text: "Key:", variant: "body2" as const },
                         keyField: {
                           placeholder: "text field...",
-                          defaultValue: grp.keyValue,
-                          onBlur: (value: string) =>
+                          value: grp.keyValue,
+                          onChange: (value: string) =>
                             handleSelectGrpKeyChange(sectionKey, grp.id, value),
                           size: "small" as const,
                           fullWidth: true,
@@ -1528,8 +1528,8 @@ export function useConfigurationsViewModelMocks(): ConfigurationsViewModelMocksR
                         },
                         labelField: {
                           placeholder: "text field...",
-                          defaultValue: grp.labelValue,
-                          onBlur: (value: string) =>
+                          value: grp.labelValue,
+                          onChange: (value: string) =>
                             handleSelectGrpLabelChange(
                               sectionKey,
                               grp.id,
@@ -1585,8 +1585,8 @@ export function useConfigurationsViewModelMocks(): ConfigurationsViewModelMocksR
                                 },
                                 keyField: {
                                   placeholder: "text field...",
-                                  defaultValue: selector.keyValue,
-                                  onBlur: (value: string) =>
+                                  value: selector.keyValue,
+                                  onChange: (value: string) =>
                                     handleSelectorKeyChange(
                                       grp.id,
                                       selector.id,
@@ -1601,8 +1601,8 @@ export function useConfigurationsViewModelMocks(): ConfigurationsViewModelMocksR
                                 },
                                 labelField: {
                                   placeholder: "text field...",
-                                  defaultValue: selector.labelValue,
-                                  onBlur: (value: string) =>
+                                  value: selector.labelValue,
+                                  onChange: (value: string) =>
                                     handleSelectorLabelChange(
                                       grp.id,
                                       selector.id,

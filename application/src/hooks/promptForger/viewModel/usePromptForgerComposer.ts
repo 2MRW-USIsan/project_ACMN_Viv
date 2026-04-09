@@ -7,6 +7,7 @@ import { RadioButtonAtomProps } from "@/components/atoms/RadioButtonAtom";
 import { SelectAtomProps } from "@/components/atoms/SelectAtom";
 import { SwitchAtomProps } from "@/components/atoms/SwitchAtom";
 import { TextFieldAtomProps } from "@/components/atoms/TextFieldAtom";
+import { TextAreaAtomProps } from "@/components/atoms/TextAreaAtom";
 import { NavigationOrganismProps } from "@/components/organisms/navigation/NavigationOrganism";
 import { PromptForgerContexts } from "@/hooks/promptForger/state/usePromptForgerContext";
 import { usePromptForgerHandlers } from "@/hooks/promptForger/viewModel/usePromptForgerHandlers";
@@ -136,7 +137,7 @@ export interface PromptIdeaSection {
     shuffleButton: ButtonAtomProps["props"];
     copyButton: ButtonAtomProps["props"];
     summaryPromptLabel: LabelAtomProps["props"];
-    summaryPromptField: TextFieldAtomProps["props"];
+    summaryPromptField: TextAreaAtomProps["props"];
   };
 }
 
@@ -222,8 +223,8 @@ export function usePromptForgerComposer(contexts: PromptForgerContexts) {
           titleLabel: { text: "Title:", variant: "body2" as const },
           titleField: {
             placeholder: "text field...",
-            defaultValue: "",
-            onBlur: () => {},
+            value: "",
+            onChange: () => {},
             size: "small" as const,
             fullWidth: true,
           },
@@ -302,8 +303,8 @@ export function usePromptForgerComposer(contexts: PromptForgerContexts) {
                   },
                   summaryPromptField: {
                     placeholder: "Text area Field...",
-                    defaultValue: "",
-                    onBlur: () => {},
+                    value: "",
+                    onChange: () => {},
                     multiline: true,
                     rows: 14,
                     fullWidth: true,

@@ -8,6 +8,8 @@ interface DividerAtomProps {
   };
 }
 
-export function DividerAtom({ props = {} }: DividerAtomProps) {
-  return <Divider orientation={props.orientation ?? "horizontal"} />;
+export function DividerAtom({
+  props = { orientation: "horizontal" },
+}: DividerAtomProps) {
+  return <Divider flexItem orientation={props.orientation} />;
 }
