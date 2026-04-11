@@ -5,12 +5,13 @@ import { Typography } from "@mui/material";
 
 export interface LabelAtomProps {
   props: LabelAtomType;
+  style?: LabelAtomType["style"];
 }
 type LabelSize = "TITLE" | "HEADER" | "LABEL" | "BODY" | "INPUT" | "CAPTION";
 
-export function LabelAtom({ props }: LabelAtomProps) {
+export function LabelAtom({ props, style: styleProp }: LabelAtomProps) {
   type MaiLabelSize = "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
-  const { style = { color: "info", size: "CAPTION" } } = props;
+  const style = styleProp ?? props.style ?? { color: "info", size: "CAPTION" };
 
   const labelSize: Record<LabelSize, MaiLabelSize> = {
     TITLE: "h1",

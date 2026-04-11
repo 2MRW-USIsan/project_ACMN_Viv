@@ -5,16 +5,17 @@ import { ButtonAtomType } from "@/types/ui";
 
 export interface ButtonAtomProps {
   props: ButtonAtomType;
+  style?: ButtonAtomType["style"];
 }
 
 type ButtonShape = "FILLED" | "OUTLINED" | "TEXT";
 type ButtonColor = "PRIMARY" | "ALTERED" | "WARNING";
 type ButtonSize = "NORMAL" | "WIDE" | "FULL";
-export function ButtonAtom({ props }: ButtonAtomProps) {
+export function ButtonAtom({ props, style: styleProp }: ButtonAtomProps) {
   type MuiButtonVariant = "contained" | "outlined" | "text";
   type MuiButtonColor = "primary" | "secondary" | "error";
   type MuiButtonSize = "small" | "medium" | "large";
-  const { style = { shape: "TEXT", color: "PRIMARY", size: "NORMAL" } } = props;
+  const style = styleProp ?? props.style ?? { shape: "TEXT", color: "PRIMARY", size: "NORMAL" };
 
   const buttonVariant: Record<ButtonShape, MuiButtonVariant> = {
     FILLED: "contained",

@@ -9,16 +9,17 @@ import { IconButtonAtomType } from "@/types/ui";
 
 export interface IconButtonAtomProps {
   props: IconButtonAtomType;
+  style?: IconButtonAtomType["style"];
 }
 
 type IconColor = "PRIMARY" | "ALTERED" | "DEFAULT";
 type IconSize = "SMALL" | "MEDIUM" | "LARGE";
 type IconType = "removeCircle" | "expandMore" | "expandLess" | "add";
 
-export function IconButtonAtom({ props }: IconButtonAtomProps) {
+export function IconButtonAtom({ props, style: styleProp }: IconButtonAtomProps) {
   type MuiIconColor = "primary" | "secondary" | "default";
   type MuiIconSize = "small" | "medium" | "large";
-  const { style = { color: "DEFAULT", size: "SMALL" } } = props;
+  const style = styleProp ?? props.style ?? { color: "DEFAULT", size: "SMALL" };
 
   const iconShape: Record<IconType, React.ReactElement> = {
     removeCircle: <RemoveCircleOutlineIcon />,

@@ -7,7 +7,6 @@ import { LabelAtom } from "@/components/atoms/display/LabelAtom";
 import { TextFieldAtom } from "@/components/atoms/inputs/TextFieldAtom";
 import { TextAreaAtom } from "@/components/atoms/inputs/TextAreaAtom";
 import {
-  LabelAtomType,
   ButtonAtomType,
   IconButtonAtomType,
   TextFieldAtomType,
@@ -17,12 +16,8 @@ import { Box, Collapse, Stack, Toolbar } from "@mui/material";
 import {
   PostingClerkInformSectionOrganism,
   PostingClerkInformSectionViewModel,
-  PostingClerkInformSectionStyle,
 } from "./PostingClerkInformSectionOrganism";
-
-type LabelStyleType = NonNullable<LabelAtomType["style"]>;
-type ButtonStyleType = NonNullable<ButtonAtomType["style"]>;
-type IconButtonStyleType = NonNullable<IconButtonAtomType["style"]>;
+import { postingClerkTheme } from "@/theme/postingClerk";
 
 export interface UrlItemPanel {
   key: string;
@@ -73,87 +68,47 @@ export interface PostingClerkBodyViewModel {
   quoteItems: QuoteItemPanel[];
 }
 
-export interface UrlItemPanelStyle {
-  nameLabel: LabelStyleType;
-  urlLabel: LabelStyleType;
-  removeButton: IconButtonStyleType;
-}
-
-export interface PlatformPreviewPanelStyle {
-  sectionLabel: LabelStyleType;
-  toggleButton: IconButtonStyleType;
-  titleLabel: LabelStyleType;
-  titleCopyButton: ButtonStyleType;
-  descLabel: LabelStyleType;
-  descCopyButton: ButtonStyleType;
-  urlsLabel: LabelStyleType;
-  urlsAddButton: ButtonStyleType;
-  urlItem: UrlItemPanelStyle;
-  previewLabel: LabelStyleType;
-  previewField: Pick<TextAreaAtomType, "rows">;
-}
-
-export interface QuoteItemPanelStyle {
-  quoteLabel: LabelStyleType;
-  copyButton: ButtonStyleType;
-}
-
-export interface PostingClerkBodyStyle {
-  informSection: PostingClerkInformSectionStyle;
-  clerkingSectionLabel: LabelStyleType;
-  titleJpLabel: LabelStyleType;
-  titleEnLabel: LabelStyleType;
-  symbolLabel: LabelStyleType;
-  picsLabel: LabelStyleType;
-  postingPreviewLabel: LabelStyleType;
-  quotesSectionLabel: LabelStyleType;
-  platformPreview: PlatformPreviewPanelStyle;
-  quoteItem: QuoteItemPanelStyle;
-}
-
 interface PostingClerkBodyOrganismProps {
   props: PostingClerkBodyViewModel;
-  style: PostingClerkBodyStyle;
 }
 
 export function PostingClerkBodyOrganism({
   props,
-  style,
 }: PostingClerkBodyOrganismProps) {
   return (
     <Stack spacing={2} p={3} maxWidth={960} mx="auto">
       <Toolbar />
       <PostingClerkInformSectionOrganism
         props={props.informProps}
-        style={style.informSection}
       />
       {/* Clerking Field */}
       <LabelAtom
-        props={{ text: props.clerkingSectionLabel, style: style.clerkingSectionLabel }}
+        props={{ text: props.clerkingSectionLabel }}
+        style={postingClerkTheme.sectionLabel}
       />
       <DividerAtom />
 
       <Stack spacing={1} pl={2}>
         <Stack direction="row" alignItems="center" spacing={1}>
-          <LabelAtom props={{ text: props.titleJpLabel, style: style.titleJpLabel }} />
+          <LabelAtom props={{ text: props.titleJpLabel }} style={postingClerkTheme.fieldLabel} />
           <Box sx={{ flex: 1, maxWidth: 400 }}>
             <TextFieldAtom props={props.titleJpField} />
           </Box>
         </Stack>
 
         <Stack direction="row" alignItems="center" spacing={1}>
-          <LabelAtom props={{ text: props.titleEnLabel, style: style.titleEnLabel }} />
+          <LabelAtom props={{ text: props.titleEnLabel }} style={postingClerkTheme.fieldLabel} />
           <Box sx={{ flex: 1, maxWidth: 400 }}>
             <TextFieldAtom props={props.titleEnField} />
           </Box>
         </Stack>
 
         <Stack direction="row" alignItems="center" spacing={1}>
-          <LabelAtom props={{ text: props.symbolLabel, style: style.symbolLabel }} />
+          <LabelAtom props={{ text: props.symbolLabel }} style={postingClerkTheme.fieldLabel} />
           <Box sx={{ width: 80 }}>
             <TextFieldAtom props={props.symbolField} />
           </Box>
-          <LabelAtom props={{ text: props.picsLabel, style: style.picsLabel }} />
+          <LabelAtom props={{ text: props.picsLabel }} style={postingClerkTheme.fieldLabel} />
           <Box sx={{ width: 80 }}>
             <TextFieldAtom props={props.picsField} />
           </Box>
@@ -162,7 +117,8 @@ export function PostingClerkBodyOrganism({
 
       {/* Posting Preview */}
       <LabelAtom
-        props={{ text: props.postingPreviewLabel, style: style.postingPreviewLabel }}
+        props={{ text: props.postingPreviewLabel }}
+        style={postingClerkTheme.sectionLabel}
       />
 
       {props.platformPreviews.map((platform) => (
@@ -181,13 +137,12 @@ export function PostingClerkBodyOrganism({
             justifyContent="space-between"
           >
             <LabelAtom
-              props={{
-                text: platform.sectionLabel,
-                style: style.platformPreview.sectionLabel,
-              }}
+              props={{ text: platform.sectionLabel }}
+              style={postingClerkTheme.sectionLabel}
             />
             <IconButtonAtom
-              props={{ ...platform.toggleButton, style: style.platformPreview.toggleButton }}
+              props={platform.toggleButton}
+              style={postingClerkTheme.smallIconButton}
             />
           </Stack>
 
@@ -195,46 +150,34 @@ export function PostingClerkBodyOrganism({
             <Stack spacing={1} pt={1}>
               <Stack direction="row" alignItems="center" spacing={1}>
                 <LabelAtom
-                  props={{
-                    text: platform.titleLabel,
-                    style: style.platformPreview.titleLabel,
-                  }}
+                  props={{ text: platform.titleLabel }}
+                  style={postingClerkTheme.fieldLabel}
                 />
                 <ButtonAtom
-                  props={{
-                    ...platform.titleCopyButton,
-                    style: style.platformPreview.titleCopyButton,
-                  }}
+                  props={platform.titleCopyButton}
+                  style={postingClerkTheme.standardButton}
                 />
               </Stack>
 
               <Stack direction="row" alignItems="center" spacing={1}>
                 <LabelAtom
-                  props={{
-                    text: platform.descLabel,
-                    style: style.platformPreview.descLabel,
-                  }}
+                  props={{ text: platform.descLabel }}
+                  style={postingClerkTheme.fieldLabel}
                 />
                 <ButtonAtom
-                  props={{
-                    ...platform.descCopyButton,
-                    style: style.platformPreview.descCopyButton,
-                  }}
+                  props={platform.descCopyButton}
+                  style={postingClerkTheme.standardButton}
                 />
               </Stack>
 
               <Stack direction="row" alignItems="center" spacing={1}>
                 <LabelAtom
-                  props={{
-                    text: platform.urlsLabel,
-                    style: style.platformPreview.urlsLabel,
-                  }}
+                  props={{ text: platform.urlsLabel }}
+                  style={postingClerkTheme.fieldLabel}
                 />
                 <ButtonAtom
-                  props={{
-                    ...platform.urlsAddButton,
-                    style: style.platformPreview.urlsAddButton,
-                  }}
+                  props={platform.urlsAddButton}
+                  style={postingClerkTheme.standardButton}
                 />
               </Stack>
 
@@ -247,44 +190,33 @@ export function PostingClerkBodyOrganism({
                     spacing={1}
                   >
                     <LabelAtom
-                      props={{
-                        text: urlItem.nameLabel,
-                        style: style.platformPreview.urlItem.nameLabel,
-                      }}
+                      props={{ text: urlItem.nameLabel }}
+                      style={postingClerkTheme.fieldLabel}
                     />
                     <Box sx={{ width: 140 }}>
                       <TextFieldAtom props={urlItem.nameField} />
                     </Box>
                     <LabelAtom
-                      props={{
-                        text: urlItem.urlLabel,
-                        style: style.platformPreview.urlItem.urlLabel,
-                      }}
+                      props={{ text: urlItem.urlLabel }}
+                      style={postingClerkTheme.fieldLabel}
                     />
                     <Box sx={{ flex: 1 }}>
                       <TextFieldAtom props={urlItem.urlField} />
                     </Box>
                     <IconButtonAtom
-                      props={{
-                        ...urlItem.removeButton,
-                        style: style.platformPreview.urlItem.removeButton,
-                      }}
+                      props={urlItem.removeButton}
+                      style={postingClerkTheme.smallIconButton}
                     />
                   </Stack>
                 ))}
               </Stack>
 
               <LabelAtom
-                props={{
-                  text: platform.previewLabel,
-                  style: style.platformPreview.previewLabel,
-                }}
+                props={{ text: platform.previewLabel }}
+                style={postingClerkTheme.fieldLabel}
               />
               <TextAreaAtom
-                props={{
-                  ...platform.previewField,
-                  rows: style.platformPreview.previewField.rows,
-                }}
+                props={{ ...platform.previewField, rows: postingClerkTheme.previewRows }}
               />
             </Stack>
           </Collapse>
@@ -293,7 +225,8 @@ export function PostingClerkBodyOrganism({
 
       {/* Quotes Field */}
       <LabelAtom
-        props={{ text: props.quotesSectionLabel, style: style.quotesSectionLabel }}
+        props={{ text: props.quotesSectionLabel }}
+        style={postingClerkTheme.sectionLabel}
       />
       <DividerAtom />
 
@@ -306,13 +239,15 @@ export function PostingClerkBodyOrganism({
             spacing={1}
           >
             <LabelAtom
-              props={{ text: quoteItem.quoteLabel, style: style.quoteItem.quoteLabel }}
+              props={{ text: quoteItem.quoteLabel }}
+              style={postingClerkTheme.fieldLabel}
             />
             <Box sx={{ flex: 1, maxWidth: 400 }}>
               <TextFieldAtom props={quoteItem.quoteField} />
             </Box>
             <ButtonAtom
-              props={{ ...quoteItem.copyButton, style: style.quoteItem.copyButton }}
+              props={quoteItem.copyButton}
+              style={postingClerkTheme.standardButton}
             />
           </Stack>
         ))}
