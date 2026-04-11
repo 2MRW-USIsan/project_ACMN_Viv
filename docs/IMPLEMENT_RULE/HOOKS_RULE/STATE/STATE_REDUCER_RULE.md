@@ -26,7 +26,7 @@ src/hooks/{page}/state/
 ## 基本構造
 
 ```ts
-"use client";
+
 
 import { SampleFetchItem, SampleRequest } from "@/hooks/sample/state/useSampleService";
 

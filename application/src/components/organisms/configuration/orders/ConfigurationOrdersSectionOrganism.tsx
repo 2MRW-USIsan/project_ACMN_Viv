@@ -1,4 +1,4 @@
-"use client";
+
 
 import { ConfigurationOrdersItemSectionOrganism } from "./ConfigurationOrdersItemSectionOrganism";
 import { DividerAtom } from "@/components/atoms/display/DividerAtom";

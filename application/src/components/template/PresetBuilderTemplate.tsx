@@ -1,4 +1,4 @@
-"use client";
+
 
 import { NavigationLayoutOrganism } from "@/components/organisms/navigation/NavigationLayoutOrganism";
 import { PresetBuilderBodyOrganism } from "@/components/organisms/preset-builder/PresetBuilderBodyOrganism";
@@ -10,8 +10,9 @@ interface PresetBuilderTemplateProps {
 
 export function PresetBuilderTemplate({ props }: PresetBuilderTemplateProps) {
   return (
-    <NavigationLayoutOrganism props={props.navigationLayout}>
-      <PresetBuilderBodyOrganism props={props.presetBuilderBody} />
-    </NavigationLayoutOrganism>
+    <></>
+    // <NavigationLayoutOrganism props={props.navigationLayout}>
+    //   <PresetBuilderBodyOrganism props={props.presetBuilderBody} />
+    // </NavigationLayoutOrganism>
   );
 }

@@ -1,4 +1,4 @@
-"use client";
+
 
 import { Stack, Toolbar } from "@mui/material";
 import { PromptForgerInfoSectionOrganism } from "./PromptForgerInfoSectionOrganism";

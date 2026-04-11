@@ -1,4 +1,4 @@
-"use client";
+
 
 import { usePresetBuilderFetchReducer } from "@/hooks/preset-builder/state/usePresetBuilderFetchReducer";
 

@@ -1,4 +1,4 @@
-"use client";
+
 
 import { usePromptForgerContext } from "@/hooks/promptForger/state/usePromptForgerContext";
 import { usePromptForgerController } from "@/hooks/promptForger/controller/usePromptForgerController";

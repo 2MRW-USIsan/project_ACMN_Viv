@@ -1,4 +1,4 @@
-"use client";
+
 
 // import { usePostingClerkViewModel } from "@/hooks/posting-clerk/viewModel/usePostingClerkViewModel";
 import { usePostingClerkViewModelMocks } from "@/hooks/posting-clerk/mocks/usePostingClerkViewModelMocks";

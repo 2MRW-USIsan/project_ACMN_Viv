@@ -1,4 +1,4 @@
-"use client";
+
 
 import { ChipCheckboxAtomProps } from "@/components/atoms/inputs/ChipCheckboxAtom";
 import { IconButtonAtomProps } from "@/components/atoms/inputs/IconButtonAtom";

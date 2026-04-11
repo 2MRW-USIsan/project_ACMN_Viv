@@ -1,4 +1,4 @@
-"use client";
+
 
 import { Stack } from "@mui/material";
 import { LabelAtom } from "@/components/atoms/display/LabelAtom";

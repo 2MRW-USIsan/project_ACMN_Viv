@@ -1,7 +1,7 @@
-"use client";
+
 
 import { NavigationLayoutOrganism } from "@/components/organisms/navigation/NavigationLayoutOrganism";
-import { PostingClerkBodyOrganism } from "@/components/organisms/posting-clerk/PostingClerkBodyOrganism";
+import { Body as PostingClerkBody } from "@/components/organisms/posting-clerk/Body";
 import { PostingClerkViewModel } from "@/hooks/posting-clerk/viewModel/usePostingClerkComposer";
 
 interface PostingClerkTemplateProps {
@@ -11,9 +11,7 @@ interface PostingClerkTemplateProps {
 export function PostingClerkTemplate({ props }: PostingClerkTemplateProps) {
   return (
     <NavigationLayoutOrganism props={props.navigationLayout}>
-      <PostingClerkBodyOrganism
-        props={props.postingClerkBody}
-      />
+      <PostingClerkBody props={props.postingClerkBody} />
     </NavigationLayoutOrganism>
   );
 }

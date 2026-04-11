@@ -25,7 +25,7 @@ src/hooks/{page}/state/
 ## 基本構造
 
 ```ts
-"use client";
+
 
 export interface {Page}FetchState {
   itemList: {Domain}Item[] | null;

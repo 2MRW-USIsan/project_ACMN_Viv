@@ -1,4 +1,4 @@
-"use client";
+
 
 import { ConfigurationsContexts } from "@/hooks/configurations/state/useConfigurationsContext";
 import { useConfigurationsInitialize } from "@/hooks/configurations/controller/useConfigurationsInitialize";

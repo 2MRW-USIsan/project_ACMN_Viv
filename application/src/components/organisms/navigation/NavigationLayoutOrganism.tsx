@@ -1,4 +1,4 @@
-"use client";
+
 
 import { AppBarAtom } from "@/components/atoms/surface/AppBarAtom";
 import { DrawerAtom } from "@/components/atoms/surface/DrawerAtom";

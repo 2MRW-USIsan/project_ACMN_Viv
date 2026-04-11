@@ -1,4 +1,4 @@
-"use client";
+
 
 import { ButtonAtomProps } from "@/components/atoms/inputs/ButtonAtom";
 import { LabelAtomProps } from "@/components/atoms/display/LabelAtom";

@@ -1,4 +1,4 @@
-"use client";
+
 
 import { PanelFrameAtoms } from "@/components/atoms/layout/PanelFrameAtoms";
 import { ForgerOrdersSection } from "@/hooks/promptForger/viewModel/usePromptForgerComposer";

@@ -65,7 +65,7 @@ Emotion キャッシュの SSR 対応（`useServerInsertedHTML`）と MUI の `T
 `app/layout.tsx` からのみ呼び出します。
 
 ```tsx
-"use client";
+
 
 export function ThemeProvider({ children }: ThemeProviderProps) {
   // Emotion キャッシュの生成と useServerInsertedHTML による注入

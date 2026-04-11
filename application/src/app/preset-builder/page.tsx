@@ -1,4 +1,4 @@
-"use client";
+
 
 // import { usePresetBuilderViewModel } from "@/hooks/preset-builder/viewModel/usePresetBuilderViewModel";
 import { usePresetBuilderViewModelMocks } from "@/hooks/preset-builder/mocks/usePresetBuilderViewModelMocks";

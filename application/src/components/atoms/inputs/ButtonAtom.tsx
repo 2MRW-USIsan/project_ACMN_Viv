@@ -1,4 +1,4 @@
-"use client";
+
 
 import { Button, CircularProgress } from "@mui/material";
 import { ButtonAtomType } from "@/types/ui";

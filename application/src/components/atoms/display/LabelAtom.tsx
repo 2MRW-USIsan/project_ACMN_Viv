@@ -1,4 +1,4 @@
-"use client";
+
 
 import { LabelAtomType } from "@/types/ui";
 import { Typography } from "@mui/material";

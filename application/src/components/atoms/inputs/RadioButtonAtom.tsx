@@ -1,4 +1,4 @@
-"use client";
+
 
 import CheckIcon from "@mui/icons-material/Check";
 import { Chip } from "@mui/material";

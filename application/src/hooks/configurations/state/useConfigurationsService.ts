@@ -1,4 +1,4 @@
-"use client";
+
 
 import { useConfigurationsFetchReducer } from "@/hooks/configurations/state/useConfigurationsFetchReducer";
 

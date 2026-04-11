@@ -1,4 +1,4 @@
-"use client";
+
 
 import { LabelAtom } from "@/components/atoms/display/LabelAtom";
 import { ScriptsSection } from "@/hooks/configurations/viewModel/useConfigurationsComposer";

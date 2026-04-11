@@ -1,5 +1,14 @@
-"use client";
 
+
+import { BodyFrame } from "@/components/atoms/layout/BodyFrame";
+import {
+  ClerkSection,
+  ClerkSectionType,
+} from "@/components/organisms/posting-clerk/section/ClerkSection";
+import {
+  InformSection,
+  InformSectionType,
+} from "@/components/organisms/posting-clerk/section/InformSection";
 import {
   ButtonAtomType,
   IconButtonAtomType,
@@ -7,12 +16,6 @@ import {
   TextAreaAtomType,
   TextFieldAtomType,
 } from "@/types/ui";
-import { Stack, Toolbar } from "@mui/material";
-import { PostingClerkClerkSectionOrganism, PostingClerkClerkSectionViewModel } from "./PostingClerkClerkSectionOrganism";
-import {
-  PostingClerkInformSectionOrganism,
-  PostingClerkInformSectionViewModel,
-} from "./PostingClerkInformSectionOrganism";
 
 export interface UrlItemPanel {
   key: string;
@@ -46,24 +49,20 @@ export interface QuoteItemPanel {
   copyButton: Pick<ButtonAtomType, "label" | "onClick">;
 }
 
-
-export interface PostingClerkBodyViewModel {
-  informProps: PostingClerkInformSectionViewModel;
-  clerkProps: PostingClerkClerkSectionViewModel;
+export interface BodyType {
+  informProps: InformSectionType;
+  clerkProps: ClerkSectionType;
 }
 
-interface PostingClerkBodyOrganismProps {
-  props: PostingClerkBodyViewModel;
+interface BodyProps {
+  props: BodyType;
 }
 
-export function PostingClerkBodyOrganism({
-  props,
-}: PostingClerkBodyOrganismProps) {
+export function Body({ props }: BodyProps) {
   return (
-    <Stack spacing={2} p={3} maxWidth={960} mx="auto">
-      <Toolbar />
-      <PostingClerkInformSectionOrganism props={props.informProps} />
-      <PostingClerkClerkSectionOrganism props={props.clerkProps} />
-    </Stack>
+    <BodyFrame>
+      <InformSection props={props.informProps} />
+      <ClerkSection props={props.clerkProps} />
+    </BodyFrame>
   );
 }

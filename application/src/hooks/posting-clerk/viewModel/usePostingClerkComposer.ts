@@ -1,26 +1,24 @@
-"use client";
 
-import { PostingClerkContexts } from "@/hooks/posting-clerk/state/usePostingClerkContext";
-import { usePostingClerkProperties } from "@/hooks/posting-clerk/viewModel/usePostingClerkProperties";
-import { usePostingClerkHandlers } from "@/hooks/posting-clerk/viewModel/usePostingClerkHandlers";
-import { PostingClerkBodyViewModel } from "@/components/organisms/posting-clerk/PostingClerkBodyOrganism";
+
 import { NavigationOrganismProps } from "@/components/organisms/navigation/NavigationOrganism";
-
-export type { PostingClerkBodyViewModel };
+import { BodyType as PostingClerkBodyType } from "@/components/organisms/posting-clerk/Body";
+import { PostingClerkContexts } from "@/hooks/posting-clerk/state/usePostingClerkContext";
+import { usePostingClerkHandlers } from "@/hooks/posting-clerk/viewModel/usePostingClerkHandlers";
+import { usePostingClerkProperties } from "@/hooks/posting-clerk/viewModel/usePostingClerkProperties";
 
 export interface PostingClerkViewModel {
   navigationLayout: {
     appBar: {
-      title: string;
       onMenuOpen: () => void;
     };
     drawer: {
       open: boolean;
       onClose: () => void;
     };
+    title: string;
     navigation: NavigationOrganismProps["props"];
   };
-  postingClerkBody: PostingClerkBodyViewModel;
+  postingClerkBody: PostingClerkBodyType;
 }
 
 export function usePostingClerkComposer(contexts: PostingClerkContexts) {
@@ -31,13 +29,13 @@ export function usePostingClerkComposer(contexts: PostingClerkContexts) {
     viewModel: {
       navigationLayout: {
         appBar: {
-          title: "ACMN",
           onMenuOpen: () => {},
         },
         drawer: {
           open: false,
           onClose: () => {},
         },
+        title: "ACMN",
         navigation: {
           activeItemLabel: undefined,
           links: [],
@@ -45,28 +43,48 @@ export function usePostingClerkComposer(contexts: PostingClerkContexts) {
       },
       postingClerkBody: {
         informProps: {
-          infoSectionLabel: "Information Field:",
-          idLabel: "ID:",
-          idValueLabel: "#01 - [uuid]",
-          titleLabel: "Title:",
-          titleField: { placeholder: "text field...", value: "", onChange: () => {} },
-          statusLabel: "Status:",
-          statusValueLabel: "- there are some changes... -",
+          infoSectionLabel: { text: "Information Field:" },
+          idLabel: { text: "ID:" },
+          idValueLabel: { text: "#01 - [uuid]" },
+          titleLabel: { text: "Title:" },
+          titleField: {
+            placeholder: "text field...",
+            value: "",
+            onChange: () => {},
+          },
+          statusLabel: { text: "Status:" },
+          statusValueLabel: { text: "- there are some changes... -" },
           saveButton: { label: "Save", onClick: () => {} },
         },
-        clerkingSectionLabel: "Clerking Field:",
-        titleJpLabel: "Title[JP]:",
-        titleJpField: { placeholder: "text field...", value: "", onChange: () => {} },
-        titleEnLabel: "Title[EN]:",
-        titleEnField: { placeholder: "text field...", value: "", onChange: () => {} },
-        symbolLabel: "Symbol:",
-        symbolField: { placeholder: "...", value: "", onChange: () => {} },
-        picsLabel: "Pics:",
-        picsField: { placeholder: "...", value: "", onChange: () => {} },
-        postingPreviewLabel: "Posting Preview:",
-        platformPreviews: [],
-        quotesSectionLabel: "Quotes Field:",
-        quoteItems: [],
+        clerkProps: {
+          label: { text: "Clerking Field:" },
+          clerks: {
+            titleJpLabel: { text: "Title[JP]:" },
+            titleEnLabel: { text: "Title[EN]:" },
+            symbolLabel: { text: "Symbol:" },
+            picsLabel: { text: "Pics:" },
+            titleJpField: {
+              placeholder: "text field...",
+              value: "",
+              onChange: () => {},
+            },
+            titleEnField: {
+              placeholder: "text field...",
+              value: "",
+              onChange: () => {},
+            },
+            symbolField: { placeholder: "...", value: "", onChange: () => {} },
+            picsField: { placeholder: "...", value: "", onChange: () => {} },
+          },
+          previews: {
+            postingPreviewLabel: { text: "Posting Preview:" },
+            platformPreviews: [],
+          },
+          quotes: {
+            quotesSectionLabel: { text: "Quotes Field:" },
+            quoteItems: [],
+          },
+        },
       },
     } satisfies PostingClerkViewModel,
   };

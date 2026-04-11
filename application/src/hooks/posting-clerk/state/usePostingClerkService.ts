@@ -1,4 +1,4 @@
-"use client";
+
 
 import { usePostingClerkFetchReducer } from "@/hooks/posting-clerk/state/usePostingClerkFetchReducer";
 

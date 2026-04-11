@@ -1,4 +1,4 @@
-"use client";
+
 
 import { NavItem } from "@/components/atoms/surface/DrawerAtom";
 import { PromptForgerViewModel } from "@/hooks/promptForger/viewModel/usePromptForgerComposer";

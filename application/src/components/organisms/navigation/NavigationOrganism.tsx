@@ -1,4 +1,4 @@
-"use client";
+
 
 import { DividerAtom } from "@/components/atoms/display/DividerAtom";
 import {

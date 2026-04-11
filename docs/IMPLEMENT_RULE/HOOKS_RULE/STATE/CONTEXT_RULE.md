@@ -28,7 +28,7 @@ src/hooks/{page}/state/
 ## 基本構造
 
 ```ts
-"use client";
+
 
 import { use{Page}Service } from "@/hooks/{page}/state/use{Page}Service";
 import { use{Page}StateReducer, {Page}Contexts } from "@/hooks/{page}/state/use{Page}StateReducer";

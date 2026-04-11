@@ -1,4 +1,4 @@
-"use client";
+
 
 import { PostingClerkContexts } from "@/hooks/posting-clerk/state/usePostingClerkContext";
 

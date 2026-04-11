@@ -1,4 +1,4 @@
-"use client";
+
 
 import { usePresetBuilderContext } from "@/hooks/preset-builder/state/usePresetBuilderContext";
 import { usePresetBuilderController } from "@/hooks/preset-builder/controller/usePresetBuilderController";

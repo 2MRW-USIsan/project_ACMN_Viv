@@ -1,4 +1,4 @@
-"use client";
+
 
 import { CONST } from "@/const/constants";
 import MenuIcon from "@mui/icons-material/Menu";
