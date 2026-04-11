@@ -2,23 +2,19 @@
 
 import { TextField } from "@mui/material";
 import { useEffect, useRef } from "react";
+import { TextFieldAtomType } from "@/types/ui";
 
 export interface TextFieldAtomProps {
-  props: {
-    label?: string;
-    placeholder?: string;
-    value: string;
-    onChange: (value: string) => void;
-    size?: "small" | "medium";
-  };
+  props: TextFieldAtomType;
 }
 
 export function TextFieldAtom({ props }: TextFieldAtomProps) {
   const inputRef = useRef<HTMLInputElement | HTMLTextAreaElement>(null);
+  const currentValue = props.value ?? "";
 
   useEffect(() => {
-    if (inputRef.current) inputRef.current.value = props.value;
-  }, [props.value]);
+    if (inputRef.current) inputRef.current.value = currentValue;
+  }, [currentValue]);
 
   const handleBlur = () => {
     if (!inputRef.current) return;

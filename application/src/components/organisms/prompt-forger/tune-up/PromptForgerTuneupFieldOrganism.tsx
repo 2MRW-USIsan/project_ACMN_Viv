@@ -1,6 +1,9 @@
-import { DividerAtom } from "@/components/atoms/DividerAtom";
-import { LabelAtom, LabelAtomProps } from "@/components/atoms/LabelAtom";
-import { RadioButtonAtom } from "@/components/atoms/RadioButtonAtom";
+import { DividerAtom } from "@/components/atoms/display/DividerAtom";
+import {
+  LabelAtom,
+  LabelAtomProps,
+} from "@/components/atoms/display/LabelAtom";
+import { ChipRadioAtom } from "@/components/atoms/inputs/RadioButtonAtom";
 import { RadioOptionItem } from "@/hooks/promptForger/viewModel/usePromptForgerComposer";
 import { Stack } from "@mui/material";
 
@@ -24,7 +27,7 @@ export function PromptForgerTuneupFieldOrganism({
         <Stack direction="row" alignItems="center" spacing={1}>
           {props.anglesOptions.map((option) => (
             <Stack key={option.key} direction="row" alignItems="center">
-              <RadioButtonAtom props={option.radio} />
+              <ChipRadioAtom props={option.radio} />
               <LabelAtom props={option.label} />
             </Stack>
           ))}
@@ -37,7 +40,7 @@ export function PromptForgerTuneupFieldOrganism({
         <Stack direction="row" alignItems="center" spacing={1}>
           {props.directionsOptions.map((option) => (
             <Stack key={option.key} direction="row" alignItems="center">
-              <RadioButtonAtom props={option.radio} />
+              <ChipRadioAtom props={option.radio} />
               <LabelAtom props={option.label} />
             </Stack>
           ))}

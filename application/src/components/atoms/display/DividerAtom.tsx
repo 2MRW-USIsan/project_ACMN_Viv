@@ -1,11 +1,10 @@
 "use client";
 
 import { Divider } from "@mui/material";
+import { DividerAtomType } from "@/types/ui";
 
-interface DividerAtomProps {
-  props?: {
-    orientation?: "horizontal" | "vertical";
-  };
+export interface DividerAtomProps {
+  props?: DividerAtomType;
 }
 
 export function DividerAtom({

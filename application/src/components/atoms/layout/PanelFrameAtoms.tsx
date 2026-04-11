@@ -1,17 +1,11 @@
-import { DividerAtom } from "@/components/atoms/DividerAtom";
-import {
-  IconButtonAtom,
-  IconButtonAtomProps,
-} from "@/components/atoms/IconButtonAtom";
-import { LabelAtom, LabelAtomProps } from "@/components/atoms/LabelAtom";
+import { DividerAtom } from "@/components/atoms/display/DividerAtom";
+import { IconButtonAtom } from "@/components/atoms/inputs/IconButtonAtom";
+import { LabelAtom } from "@/components/atoms/display/LabelAtom";
 import { Box, Collapse, Stack } from "@mui/material";
+import { PanelFrameAtomsType } from "@/types/ui";
 
-interface PanelFrameAtomsProps {
-  props: {
-    isExpanded: boolean;
-    titleLabel: LabelAtomProps["props"];
-    toggleButton: IconButtonAtomProps["props"];
-  };
+export interface PanelFrameAtomsProps {
+  props: PanelFrameAtomsType;
   children: React.ReactNode;
 }
 export function PanelFrameAtoms({ props, children }: PanelFrameAtomsProps) {

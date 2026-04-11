@@ -1,9 +1,9 @@
 "use client";
 
-import { ButtonAtomProps } from "@/components/atoms/ButtonAtom";
-import { LabelAtomProps } from "@/components/atoms/LabelAtom";
-import { TextFieldAtomProps } from "@/components/atoms/TextFieldAtom";
-import { TextAreaAtomProps } from "@/components/atoms/TextAreaAtom";
+import { ButtonAtomProps } from "@/components/atoms/inputs/ButtonAtom";
+import { LabelAtomProps } from "@/components/atoms/display/LabelAtom";
+import { TextFieldAtomProps } from "@/components/atoms/inputs/TextFieldAtom";
+import { TextAreaAtomProps } from "@/components/atoms/inputs/TextAreaAtom";
 import { Stack, Toolbar } from "@mui/material";
 import { PresetBuilderBuildersSectionOrganism } from "./PresetBuilderBuildersSectionOrganism";
 import { PresetBuilderInformSectionOrganism } from "./PresetBuilderInformSectionOrganism";

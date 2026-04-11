@@ -1,12 +1,10 @@
 "use client";
 
 import { Link } from "@mui/material";
+import { NavLinkAtomType } from "@/types/ui";
 
 export interface NavLinkAtomProps {
-  props: {
-    label: string;
-    onClick: () => void;
-  };
+  props: NavLinkAtomType;
 }
 
 export function NavLinkAtom({ props }: NavLinkAtomProps) {

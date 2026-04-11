@@ -1,12 +1,10 @@
 "use client";
 
 import { Switch } from "@mui/material";
+import { SwitchAtomType } from "@/types/ui";
 
 export interface SwitchAtomProps {
-  props: {
-    checked: boolean;
-    onChange: (checked: boolean) => void;
-  };
+  props: SwitchAtomType;
 }
 
 export function SwitchAtom({ props }: SwitchAtomProps) {

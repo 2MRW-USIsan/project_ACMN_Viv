@@ -1,8 +1,8 @@
 "use client";
 
 import { Stack } from "@mui/material";
-import { LabelAtom } from "@/components/atoms/LabelAtom";
-import { DividerAtom } from "@/components/atoms/DividerAtom";
+import { LabelAtom } from "@/components/atoms/display/LabelAtom";
+import { DividerAtom } from "@/components/atoms/display/DividerAtom";
 import { PromptForgerBlocSectionOrganism } from "@/components/organisms/prompt-forger/bloc/PromptForgerBlocSectionOrganism";
 import { PromptForgerSummaryBlocOrganism } from "@/components/organisms/prompt-forger/summary/PromptForgerSummaryBlocOrganism";
 import { PromptForgerForgersSectionViewModel } from "@/hooks/promptForger/viewModel/usePromptForgerComposer";

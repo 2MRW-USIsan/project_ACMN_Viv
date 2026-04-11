@@ -1,13 +1,16 @@
 "use client";
 
-import { ChipCheckboxAtom } from "@/components/atoms/ChipCheckboxAtom";
-import { DividerAtom } from "@/components/atoms/DividerAtom";
+import { ChipCheckboxAtom } from "@/components/atoms/inputs/ChipCheckboxAtom";
+import { DividerAtom } from "@/components/atoms/display/DividerAtom";
 import {
   IconButtonAtom,
   IconButtonAtomProps,
-} from "@/components/atoms/IconButtonAtom";
-import { LabelAtom, LabelAtomProps } from "@/components/atoms/LabelAtom";
-import { TextFieldAtom } from "@/components/atoms/TextFieldAtom";
+} from "@/components/atoms/inputs/IconButtonAtom";
+import {
+  LabelAtom,
+  LabelAtomProps,
+} from "@/components/atoms/display/LabelAtom";
+import { TextFieldAtom } from "@/components/atoms/inputs/TextFieldAtom";
 import { ConfigBodyBlocPanel } from "@/hooks/configurations/viewModel/useConfigurationsComposer";
 import { ConfigurationOrdersSectionOrganism } from "@/components/organisms/configuration/orders/ConfigurationOrdersSectionOrganism";
 import { ConfigurationSelectSectionOrganism } from "@/components/organisms/configuration/select/ConfigurationSelectSectionOrganism";

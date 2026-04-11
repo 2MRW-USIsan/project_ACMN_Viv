@@ -1,19 +1,29 @@
 "use client";
 
-import { Stack } from "@mui/material";
-import { LabelAtom, LabelAtomProps } from "@/components/atoms/LabelAtom";
-import { DividerAtom } from "@/components/atoms/DividerAtom";
-import { SelectAtom, SelectAtomProps } from "@/components/atoms/SelectAtom";
+import { DividerAtom } from "@/components/atoms/display/DividerAtom";
+import {
+  LabelAtom,
+  LabelAtomProps,
+} from "@/components/atoms/display/LabelAtom";
+import {
+  ButtonAtom,
+  ButtonAtomProps,
+} from "@/components/atoms/inputs/ButtonAtom";
+import { ChipRadioAtom } from "@/components/atoms/inputs/RadioButtonAtom";
+import {
+  SelectAtom,
+  SelectAtomProps,
+} from "@/components/atoms/inputs/SelectAtom";
 import {
   TextFieldAtom,
   TextFieldAtomProps,
-} from "@/components/atoms/TextFieldAtom";
-import { ButtonAtom, ButtonAtomProps } from "@/components/atoms/ButtonAtom";
-import { NavLinkAtom, NavLinkAtomProps } from "@/components/atoms/NavLinkAtom";
+} from "@/components/atoms/inputs/TextFieldAtom";
 import {
-  RadioButtonAtom,
-  RadioButtonAtomProps,
-} from "@/components/atoms/RadioButtonAtom";
+  NavLinkAtom,
+  NavLinkAtomProps,
+} from "@/components/atoms/surface/NavLinkAtom";
+import { ChipRadioAtomType } from "@/types/ui";
+import { Stack } from "@mui/material";
 
 export interface NavigationConfigurations {
   setLabel: LabelAtomProps["props"];
@@ -29,7 +39,7 @@ export interface NavigationConfigurations {
 
 export interface PresetItemPanel {
   key: string;
-  radio: RadioButtonAtomProps["props"];
+  radio: ChipRadioAtomType;
   label: LabelAtomProps["props"];
 }
 
@@ -121,7 +131,7 @@ export function NavigationOrganism({ props }: NavigationOrganismProps) {
           <Stack spacing={0.5}>
             {props.presets.presetItemPanels.map((item) => (
               <Stack key={item.key} direction="row" alignItems="center">
-                <RadioButtonAtom props={item.radio} />
+                <ChipRadioAtom props={item.radio} />
                 <LabelAtom props={item.label} />
               </Stack>
             ))}

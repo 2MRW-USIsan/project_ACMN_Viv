@@ -1,13 +1,10 @@
 "use client";
 
 import { FormControl, MenuItem, Select } from "@mui/material";
+import { SelectAtomType } from "@/types/ui";
 
 export interface SelectAtomProps {
-  props: {
-    value: string;
-    options: string[];
-    onChange: (value: string) => void;
-  };
+  props: SelectAtomType;
 }
 
 export function SelectAtom({ props }: SelectAtomProps) {

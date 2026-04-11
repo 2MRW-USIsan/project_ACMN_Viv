@@ -1,8 +1,9 @@
 "use client";
 
-import { LabelAtom } from "@/components/atoms/LabelAtom";
+import { DividerAtom } from "@/components/atoms/display/DividerAtom";
+import { LabelAtom } from "@/components/atoms/display/LabelAtom";
 import { ColorsSection } from "@/hooks/configurations/viewModel/useConfigurationsComposer";
-import { Box, Divider, Stack } from "@mui/material";
+import { Box, Stack } from "@mui/material";
 
 interface ConfigurationOrdersItemColorsOrganismProps {
   props: ColorsSection;
@@ -19,7 +20,7 @@ export function ConfigurationOrdersItemColorsOrganism({
           <LabelAtom props={props.colorInfoLabel} />
         </Box>
       </Stack>
-      <Divider />
+      <DividerAtom />
     </Box>
   );
 }

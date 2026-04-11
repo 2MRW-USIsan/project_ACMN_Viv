@@ -1,7 +1,16 @@
-import { ButtonAtomProps, ButtonAtom } from "@/components/atoms/ButtonAtom";
-import { DividerAtom } from "@/components/atoms/DividerAtom";
-import { LabelAtomProps, LabelAtom } from "@/components/atoms/LabelAtom";
-import { TextFieldAtomProps, TextFieldAtom } from "@/components/atoms/TextFieldAtom";
+import {
+  ButtonAtomProps,
+  ButtonAtom,
+} from "@/components/atoms/inputs/ButtonAtom";
+import { DividerAtom } from "@/components/atoms/display/DividerAtom";
+import {
+  LabelAtomProps,
+  LabelAtom,
+} from "@/components/atoms/display/LabelAtom";
+import {
+  TextFieldAtomProps,
+  TextFieldAtom,
+} from "@/components/atoms/inputs/TextFieldAtom";
 import { Stack, Box } from "@mui/material";
 
 interface PresetBuilderInformSectionOrganismProps {

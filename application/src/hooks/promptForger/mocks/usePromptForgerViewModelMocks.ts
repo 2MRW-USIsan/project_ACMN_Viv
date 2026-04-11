@@ -1,6 +1,6 @@
 "use client";
 
-import { NavItem } from "@/components/atoms/DrawerAtom";
+import { NavItem } from "@/components/atoms/surface/DrawerAtom";
 import { PromptForgerViewModel } from "@/hooks/promptForger/viewModel/usePromptForgerComposer";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";

@@ -1,17 +1,14 @@
 "use client";
 
-import { Chip } from "@mui/material";
 import CheckIcon from "@mui/icons-material/Check";
+import { Chip } from "@mui/material";
+import { ChipRadioAtomType } from "@/types/ui";
 
-export interface ChipCheckboxAtomProps {
-  props: {
-    label: string;
-    checked: boolean;
-    onChange: () => void;
-  };
+export interface ChipRadioAtomProps {
+  props: ChipRadioAtomType;
 }
 
-export function ChipCheckboxAtom({ props }: ChipCheckboxAtomProps) {
+export function ChipRadioAtom({ props }: ChipRadioAtomProps) {
   return (
     <Chip
       label={props.label}

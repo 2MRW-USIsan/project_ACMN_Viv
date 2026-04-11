@@ -1,17 +1,17 @@
 "use client";
 
-import { ButtonAtomProps } from "@/components/atoms/ButtonAtom";
-import { IconButtonAtomProps } from "@/components/atoms/IconButtonAtom";
-import { LabelAtomProps } from "@/components/atoms/LabelAtom";
-import { RadioButtonAtomProps } from "@/components/atoms/RadioButtonAtom";
-import { SelectAtomProps } from "@/components/atoms/SelectAtom";
-import { SwitchAtomProps } from "@/components/atoms/SwitchAtom";
-import { TextFieldAtomProps } from "@/components/atoms/TextFieldAtom";
-import { TextAreaAtomProps } from "@/components/atoms/TextAreaAtom";
+import { LabelAtomProps } from "@/components/atoms/display/LabelAtom";
+import { ButtonAtomProps } from "@/components/atoms/inputs/ButtonAtom";
+import { IconButtonAtomProps } from "@/components/atoms/inputs/IconButtonAtom";
+import { SelectAtomProps } from "@/components/atoms/inputs/SelectAtom";
+import { SwitchAtomProps } from "@/components/atoms/inputs/SwitchAtom";
+import { TextAreaAtomProps } from "@/components/atoms/inputs/TextAreaAtom";
+import { TextFieldAtomProps } from "@/components/atoms/inputs/TextFieldAtom";
 import { NavigationOrganismProps } from "@/components/organisms/navigation/NavigationOrganism";
 import { PromptForgerContexts } from "@/hooks/promptForger/state/usePromptForgerContext";
 import { usePromptForgerHandlers } from "@/hooks/promptForger/viewModel/usePromptForgerHandlers";
 import { usePromptForgerProperties } from "@/hooks/promptForger/viewModel/usePromptForgerProperties";
+import { ChipRadioAtomType } from "@/types/ui";
 
 // Orders section types
 export interface ForgerOrdersGrpPanel {
@@ -108,7 +108,7 @@ export interface ForgerBlocPanel {
 // Tune-up Composition
 export interface RadioOptionItem {
   key: string;
-  radio: RadioButtonAtomProps["props"];
+  radio: ChipRadioAtomType;
   label: LabelAtomProps["props"];
 }
 

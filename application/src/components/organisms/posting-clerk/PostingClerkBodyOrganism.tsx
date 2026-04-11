@@ -1,17 +1,26 @@
 "use client";
 
-import { ButtonAtom, ButtonAtomProps } from "@/components/atoms/ButtonAtom";
-import { DividerAtom } from "@/components/atoms/DividerAtom";
+import {
+  ButtonAtom,
+  ButtonAtomProps,
+} from "@/components/atoms/inputs/ButtonAtom";
+import { DividerAtom } from "@/components/atoms/display/DividerAtom";
 import {
   IconButtonAtom,
   IconButtonAtomProps,
-} from "@/components/atoms/IconButtonAtom";
-import { LabelAtom, LabelAtomProps } from "@/components/atoms/LabelAtom";
+} from "@/components/atoms/inputs/IconButtonAtom";
+import {
+  LabelAtom,
+  LabelAtomProps,
+} from "@/components/atoms/display/LabelAtom";
 import {
   TextFieldAtom,
   TextFieldAtomProps,
-} from "@/components/atoms/TextFieldAtom";
-import { TextAreaAtom, TextAreaAtomProps } from "@/components/atoms/TextAreaAtom";
+} from "@/components/atoms/inputs/TextFieldAtom";
+import {
+  TextAreaAtom,
+  TextAreaAtomProps,
+} from "@/components/atoms/inputs/TextAreaAtom";
 import { Box, Collapse, Stack, Toolbar } from "@mui/material";
 import { PostingClerkInformSectionOrganism } from "./PostingClerkInformSectionOrganism";
 

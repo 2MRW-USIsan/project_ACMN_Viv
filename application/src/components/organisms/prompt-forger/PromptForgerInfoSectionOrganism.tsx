@@ -1,10 +1,10 @@
 "use client";
 
 import { Box, Stack } from "@mui/material";
-import { LabelAtom } from "@/components/atoms/LabelAtom";
-import { DividerAtom } from "@/components/atoms/DividerAtom";
-import { TextFieldAtom } from "@/components/atoms/TextFieldAtom";
-import { ButtonAtom } from "@/components/atoms/ButtonAtom";
+import { LabelAtom } from "@/components/atoms/display/LabelAtom";
+import { DividerAtom } from "@/components/atoms/display/DividerAtom";
+import { TextFieldAtom } from "@/components/atoms/inputs/TextFieldAtom";
+import { ButtonAtom } from "@/components/atoms/inputs/ButtonAtom";
 import { PromptForgerInfoSectionViewModel } from "@/hooks/promptForger/viewModel/usePromptForgerComposer";
 
 interface PromptForgerInfoSectionOrganismProps {

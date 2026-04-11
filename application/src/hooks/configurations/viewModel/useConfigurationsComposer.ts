@@ -1,11 +1,11 @@
 "use client";
 
-import { ChipCheckboxAtomProps } from "@/components/atoms/ChipCheckboxAtom";
-import { IconButtonAtomProps } from "@/components/atoms/IconButtonAtom";
-import { LabelAtomProps } from "@/components/atoms/LabelAtom";
-import { NavLinkAtomProps } from "@/components/atoms/NavLinkAtom";
-import { SwitchAtomProps } from "@/components/atoms/SwitchAtom";
-import { TextFieldAtomProps } from "@/components/atoms/TextFieldAtom";
+import { ChipCheckboxAtomProps } from "@/components/atoms/inputs/ChipCheckboxAtom";
+import { IconButtonAtomProps } from "@/components/atoms/inputs/IconButtonAtom";
+import { LabelAtomProps } from "@/components/atoms/display/LabelAtom";
+import { NavLinkAtomProps } from "@/components/atoms/surface/NavLinkAtom";
+import { SwitchAtomProps } from "@/components/atoms/inputs/SwitchAtom";
+import { TextFieldAtomProps } from "@/components/atoms/inputs/TextFieldAtom";
 import { NavigationConfigurations } from "@/components/organisms/navigation/NavigationOrganism";
 import { ConfigurationsContexts } from "@/hooks/configurations/state/useConfigurationsContext";
 import { useConfigurationsHandlers } from "@/hooks/configurations/viewModel/useConfigurationsHandlers";

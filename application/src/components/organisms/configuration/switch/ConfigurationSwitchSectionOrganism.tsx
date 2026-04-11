@@ -1,9 +1,9 @@
 "use client";
 
-import { DividerAtom } from "@/components/atoms/DividerAtom";
-import { IconButtonAtom } from "@/components/atoms/IconButtonAtom";
-import { LabelAtom } from "@/components/atoms/LabelAtom";
-import { TextFieldAtom } from "@/components/atoms/TextFieldAtom";
+import { DividerAtom } from "@/components/atoms/display/DividerAtom";
+import { IconButtonAtom } from "@/components/atoms/inputs/IconButtonAtom";
+import { LabelAtom } from "@/components/atoms/display/LabelAtom";
+import { TextFieldAtom } from "@/components/atoms/inputs/TextFieldAtom";
 import { SwitchItemSectionOrganism } from "./SwitchItemSectionOrganism";
 import { ConfigBodySection } from "@/hooks/configurations/viewModel/useConfigurationsComposer";
 import { Box, Collapse, Divider, List, ListItem, Stack } from "@mui/material";

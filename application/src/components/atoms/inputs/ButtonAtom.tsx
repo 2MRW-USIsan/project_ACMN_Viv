@@ -1,17 +1,10 @@
 "use client";
 
 import { Button, CircularProgress } from "@mui/material";
+import { ButtonAtomType } from "@/types/ui";
 
 export interface ButtonAtomProps {
-  props: {
-    label: string;
-    shape: ButtonShape;
-    color: ButtonColor;
-    size: ButtonSize;
-    onClick: () => void;
-    disabled?: boolean;
-    isLoading?: boolean;
-  };
+  props: ButtonAtomType;
 }
 
 type ButtonShape = "FILLED" | "OUTLINED" | "TEXT";
@@ -21,6 +14,7 @@ export function ButtonAtom({ props }: ButtonAtomProps) {
   type MuiButtonVariant = "contained" | "outlined" | "text";
   type MuiButtonColor = "primary" | "secondary" | "error";
   type MuiButtonSize = "small" | "medium" | "large";
+  const { style = { shape: "TEXT", color: "PRIMARY", size: "NORMAL" } } = props;
 
   const buttonVariant: Record<ButtonShape, MuiButtonVariant> = {
     FILLED: "contained",
@@ -32,7 +26,6 @@ export function ButtonAtom({ props }: ButtonAtomProps) {
     ALTERED: "secondary",
     WARNING: "error",
   };
-  const isFullWidth = props.size === "FULL";
   const buttonSize: Record<ButtonSize, MuiButtonSize> = {
     NORMAL: "small",
     WIDE: "large",
@@ -41,10 +34,10 @@ export function ButtonAtom({ props }: ButtonAtomProps) {
   return (
     <Button
       onClick={props.onClick}
-      variant={buttonVariant[props.shape] ?? "text"}
-      color={buttonColor[props.color] ?? "primary"}
-      size={buttonSize[props.size] ?? "small"}
-      fullWidth={isFullWidth}
+      variant={buttonVariant[style.shape] ?? "text"}
+      color={buttonColor[style.color] ?? "primary"}
+      size={buttonSize[style.size] ?? "small"}
+      fullWidth={style.size === "FULL"}
       disabled={props.disabled || props.isLoading}
       startIcon={props.isLoading ? <CircularProgress size={14} /> : undefined}
     >

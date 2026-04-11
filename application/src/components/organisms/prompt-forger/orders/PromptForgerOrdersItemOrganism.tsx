@@ -1,6 +1,6 @@
-import { ButtonAtom } from "@/components/atoms/ButtonAtom";
-import { LabelAtom } from "@/components/atoms/LabelAtom";
-import { TextFieldAtom } from "@/components/atoms/TextFieldAtom";
+import { ButtonAtom } from "@/components/atoms/inputs/ButtonAtom";
+import { LabelAtom } from "@/components/atoms/display/LabelAtom";
+import { TextFieldAtom } from "@/components/atoms/inputs/TextFieldAtom";
 import { ForgerOrdersGrpPanel } from "@/hooks/promptForger/viewModel/usePromptForgerComposer";
 import { Box, Divider, Stack } from "@mui/material";
 

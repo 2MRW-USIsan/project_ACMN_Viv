@@ -2,31 +2,28 @@
 
 import { CONST } from "@/const/constants";
 import MenuIcon from "@mui/icons-material/Menu";
-import { AppBar, IconButton, Toolbar, Typography } from "@mui/material";
+import { AppBar, IconButton, Toolbar } from "@mui/material";
+import { AppBarAtomType } from "@/types/ui";
 
-interface AppBarAtomProps {
-  props: {
-    title: string;
-    onMenuOpen: () => void;
-  };
+export interface AppBarAtomProps {
+  props: AppBarAtomType;
+  children: React.ReactNode;
 }
 
-export function AppBarAtom({ props }: AppBarAtomProps) {
+export function AppBarAtom({ props, children }: AppBarAtomProps) {
   return (
     <AppBar position="fixed" sx={{ height: CONST.AppBar.height }}>
       <Toolbar>
         <IconButton
           edge="start"
-          color="inherit"
+          color="primary"
           aria-label="menu"
           onClick={props.onMenuOpen}
           sx={{ mr: 2 }}
         >
           <MenuIcon />
         </IconButton>
-        <Typography variant="h6" noWrap>
-          {props.title}
-        </Typography>
+        {children}
       </Toolbar>
     </AppBar>
   );

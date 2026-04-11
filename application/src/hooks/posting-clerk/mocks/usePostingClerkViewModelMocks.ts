@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import { NavItem } from "@/components/atoms/DrawerAtom";
+import { NavItem } from "@/components/atoms/surface/DrawerAtom";
 import { PostingClerkViewModel } from "@/hooks/posting-clerk/viewModel/usePostingClerkComposer";
 
 const NAV_ITEMS: NavItem[] = [
