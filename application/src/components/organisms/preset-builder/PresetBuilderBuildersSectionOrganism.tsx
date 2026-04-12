@@ -1,55 +1,55 @@
-import { Stack } from "@mui/material";
-import { DividerAtom } from "../../atoms/display/DividerAtom";
-import { LabelAtom, LabelAtomProps } from "../../atoms/display/LabelAtom";
-import { ButtonAtom, ButtonAtomProps } from "../../atoms/inputs/ButtonAtom";
-import {
-  TextAreaAtom,
-  TextAreaAtomProps,
-} from "../../atoms/inputs/TextAreaAtom";
+import { BuildersSectionType } from "@/types/preset-builder";
+import { LabelAtom } from "../../atoms/display/LabelAtom";
+import { ButtonAtom } from "../../atoms/inputs/ButtonAtom";
+import { TextAreaAtom } from "../../atoms/inputs/TextAreaAtom";
+import { AlignLayout } from "../../atoms/layout/AlignLayout";
+import { GridLayout } from "../../atoms/layout/GridLayout";
+import { SectionLabel } from "../../molecules/SectionLabel";
 
 interface PresetBuilderBuildersSectionOrganismProps {
-  props: {
-    buildersSectionLabel: LabelAtomProps["props"];
-    shuffleButton: ButtonAtomProps["props"];
-    copyButton: ButtonAtomProps["props"];
-    pasteButton: ButtonAtomProps["props"];
-    resetButton: ButtonAtomProps["props"];
-    clearButton: ButtonAtomProps["props"];
-    presetsTemplateLabel: LabelAtomProps["props"];
-    presetsTemplateField: TextAreaAtomProps["props"];
-    orderPresetsLabel: LabelAtomProps["props"];
-    orderPresetsField: TextAreaAtomProps["props"];
-  };
+  props: BuildersSectionType;
 }
 export function PresetBuilderBuildersSectionOrganism({
   props,
 }: PresetBuilderBuildersSectionOrganismProps) {
   return (
-    <>
-      <LabelAtom props={props.buildersSectionLabel} />
-      <DividerAtom />
-      <Stack direction="row" justifyContent="space-between">
-        <Stack direction="row" spacing={1}>
-          <ButtonAtom props={props.shuffleButton} />
-          <ButtonAtom props={props.copyButton} />
-        </Stack>
-        <Stack direction="row" spacing={1}>
-          <ButtonAtom props={props.pasteButton} />
-          <ButtonAtom props={props.resetButton} />
-          <ButtonAtom props={props.clearButton} />
-        </Stack>
-      </Stack>
-      <Stack direction="row" spacing={2} alignItems="flex-start">
-        <Stack spacing={1} flex={1}>
-          <LabelAtom props={props.presetsTemplateLabel} />
-          <TextAreaAtom props={props.presetsTemplateField} />
-        </Stack>
-
-        <Stack spacing={1} flex={1}>
-          <LabelAtom props={props.orderPresetsLabel} />
-          <TextAreaAtom props={props.orderPresetsField} />
-        </Stack>
-      </Stack>
-    </>
+    <AlignLayout column={0.5}>
+      <SectionLabel props={props.label} />
+      <GridLayout style={{ size: "CONTAINER" }}>
+        <GridLayout style={{ size: 6 }}>
+          <AlignLayout style={"START"}>
+            <ButtonAtom props={props.shuffleButton} />
+            <ButtonAtom props={props.copyButton} />
+          </AlignLayout>
+        </GridLayout>
+        <GridLayout style={{ size: 6 }}>
+          <AlignLayout style={"END"}>
+            <ButtonAtom props={props.pasteButton} />
+            <ButtonAtom props={props.resetButton} />
+            <ButtonAtom props={props.clearButton} />
+          </AlignLayout>
+        </GridLayout>
+      </GridLayout>
+      <GridLayout style={{ size: "CONTAINER" }}>
+        <GridLayout style={{ size: 6 }}>
+          <AlignLayout column={0.5}>
+            <LabelAtom props={props.presetsTemplateLabel} style={"LABEL"} />
+            <TextAreaAtom
+              props={props.presetsTemplateField}
+              style={{ rows: 14 }}
+            />
+          </AlignLayout>
+        </GridLayout>
+        <GridLayout style={{ size: 6 }}>
+          <AlignLayout column={0.5}>
+            <LabelAtom props={props.orderPresetsLabel} style={"LABEL"} />
+            <TextAreaAtom
+              props={props.orderPresetsField}
+              style={{ rows: 14 }}
+            />
+          </AlignLayout>
+        </GridLayout>
+      </GridLayout>
+    </AlignLayout>
   );
 }
