@@ -1,10 +1,11 @@
 import { ChipCheckboxAtomProps } from "@/components/atoms/inputs/ChipCheckboxAtom";
 import { IconButtonAtomProps } from "@/components/atoms/inputs/IconButtonAtom";
 import { LabelAtomProps } from "@/components/atoms/display/LabelAtom";
-import { NavLinkAtomProps } from "@/components/atoms/surface/NavLinkAtom";
 import { SwitchAtomProps } from "@/components/atoms/inputs/SwitchAtom";
 import { TextFieldAtomProps } from "@/components/atoms/inputs/TextFieldAtom";
-import { NavigationConfigurations } from "@/components/organisms/navigation/NavigationOrganism";
+import {
+  NavigationOrganismProps,
+} from "@/components/organisms/navigation/NavigationOrganism";
 import { ConfigurationsContexts } from "@/hooks/configurations/state/useConfigurationsContext";
 import { useConfigurationsHandlers } from "@/hooks/configurations/viewModel/useConfigurationsHandlers";
 import { useConfigurationsProperties } from "@/hooks/configurations/viewModel/useConfigurationsProperties";
@@ -243,18 +244,14 @@ export interface ConfigBodyBlocPanel {
 export interface ConfigurationsViewModel {
   navigationLayout: {
     appBar: {
-      title: string;
       onMenuOpen: () => void;
     };
     drawer: {
       open: boolean;
       onClose: () => void;
     };
-    navigation: {
-      activeItemLabel?: LabelAtomProps["props"];
-      links: NavLinkAtomProps["props"][];
-      configurations?: NavigationConfigurations;
-    };
+    title: string;
+    navigation: NavigationOrganismProps["props"];
   };
   configBody: {
     headerLabel: LabelAtomProps["props"];
@@ -273,13 +270,13 @@ export function useConfigurationsComposer(contexts: ConfigurationsContexts) {
       navigationLayout: {
         // NavigationLayout のスタブ実装（工程2〜3で実際の値に置き換える）
         appBar: {
-          title: "ACMN",
           onMenuOpen: () => {},
         },
         drawer: {
           open: false,
           onClose: () => {},
         },
+        title: "ACMN",
         navigation: {
           activeItemLabel: undefined,
           links: [],

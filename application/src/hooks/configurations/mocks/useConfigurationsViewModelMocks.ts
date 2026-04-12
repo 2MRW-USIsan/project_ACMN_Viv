@@ -755,34 +755,46 @@ export function useConfigurationsViewModelMocks(): ConfigurationsViewModelMocksR
     }));
   };
 
+  const linksAbove = NAV_ITEMS.filter(
+    (item) => item.href !== pathname && item.href === "/configurations",
+  ).map((item) => ({
+    label: item.label,
+    onClick: () => handleNavigate(item.href),
+  }));
+
+  const linksBelow = NAV_ITEMS.filter(
+    (item) => item.href !== pathname && item.href !== "/configurations",
+  ).map((item) => ({
+    label: item.label,
+    onClick: () => handleNavigate(item.href),
+  }));
+
+  const activeItemLabel = (() => {
+    const activeItem = NAV_ITEMS.find((item) => item.href === pathname);
+    if (!activeItem) return undefined;
+    return {
+      text: `✓ ${activeItem.label}`,
+      variant: "subtitle1" as const,
+      color: "success.main",
+      fontWeight: "bold" as const,
+    };
+  })();
+
   return {
     viewModel: {
       navigationLayout: {
         appBar: {
-          title: "ACMN",
           onMenuOpen: handleMenuOpen,
         },
         drawer: {
           open: drawerOpen,
           onClose: handleDrawerClose,
         },
+        title: "ACMN",
         navigation: {
-          activeItemLabel: (() => {
-            const activeItem = NAV_ITEMS.find((item) => item.href === pathname);
-            if (!activeItem) return undefined;
-            return {
-              text: `✓ ${activeItem.label}`,
-              variant: "subtitle1",
-              color: "success.main",
-              fontWeight: "bold",
-            };
-          })(),
-          links: NAV_ITEMS.filter((item) => item.href !== pathname).map(
-            (item) => ({
-              label: item.label,
-              onClick: () => handleNavigate(item.href),
-            }),
-          ),
+          linksAbove,
+          activeItemLabel,
+          links: linksBelow,
           configurations: {
             setLabel: { text: "Sets:", variant: "body2" },
             select: {
