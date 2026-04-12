@@ -1,5 +1,5 @@
 import { ForgerSwitchGrpPanel } from "@/hooks/promptForger/viewModel/usePromptForgerComposer";
-import { Stack } from "@mui/material";
+import { AlignLayout } from "../../../atoms/layout/AlignLayout";
 import { PromptForgerSwitchItemOrganism } from "./PromptForgerSwitchItemOrganism";
 
 interface PromptForgerSwitchListOrganismProps {
@@ -12,10 +12,10 @@ export function PromptForgerSwitchListOrganism({
   props,
 }: PromptForgerSwitchListOrganismProps) {
   return (
-    <Stack spacing={2} pt={1}>
+    <AlignLayout column={2}>
       {props.grpPanels.map((grp) => (
         <PromptForgerSwitchItemOrganism key={grp.key} props={grp} />
       ))}
-    </Stack>
+    </AlignLayout>
   );
 }

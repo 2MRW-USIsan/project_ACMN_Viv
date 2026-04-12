@@ -178,13 +178,13 @@ export function usePromptForgerViewModelMocks(): PromptForgerViewModelMocksRetur
     viewModel: {
       navigationLayout: {
         appBar: {
-          title: "ACMN",
           onMenuOpen: handleMenuOpen,
         },
         drawer: {
           open: drawerOpen,
           onClose: handleDrawerClose,
         },
+        title: "ACMN",
         navigation: {
           linksAbove,
           activeItemLabel,
@@ -217,10 +217,11 @@ export function usePromptForgerViewModelMocks(): PromptForgerViewModelMocksRetur
             presetItemPanels: MOCK_FORGER_ITEMS.map((item) => ({
               key: item.id,
               radio: {
+                label: item.label,
                 checked: selectedForgerId === item.id,
                 onChange: () => handleSelectForger(item.id),
               },
-              label: { text: item.label, variant: "body2" as const },
+              label: { text: item.label },
             })),
           },
         },

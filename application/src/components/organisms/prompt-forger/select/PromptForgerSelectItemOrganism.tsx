@@ -1,8 +1,10 @@
 import { ForgerSelectGrpPanel } from "@/hooks/promptForger/viewModel/usePromptForgerComposer";
-import { Box, Divider, Stack } from "@mui/material";
+import { DividerAtom } from "../../../atoms/display/DividerAtom";
 import { LabelAtom } from "../../../atoms/display/LabelAtom";
 import { ButtonAtom } from "../../../atoms/inputs/ButtonAtom";
 import { SelectAtom } from "../../../atoms/inputs/SelectAtom";
+import { AlignLayout } from "../../../atoms/layout/AlignLayout";
+import { GridLayout } from "../../../atoms/layout/GridLayout";
 
 interface PromptForgerSelectItemOrganismProps {
   props: ForgerSelectGrpPanel;
@@ -12,30 +14,34 @@ export function PromptForgerSelectItemOrganism({
   props,
 }: PromptForgerSelectItemOrganismProps) {
   return (
-    <Box>
-      <LabelAtom props={props.grpLabel} />
-      <Divider sx={{ my: 0.5 }} />
-
-      <Stack spacing={0.5} pt={0.5}>
-        <Stack
-          direction="row"
-          alignItems="center"
-          justifyContent="space-between"
-        >
-          <LabelAtom props={props.shuffleAllLabel} />
-          <ButtonAtom props={props.shuffleButton} />
-        </Stack>
-
+    <AlignLayout column={0.1}>
+      <LabelAtom props={props.grpLabel} style={"LABEL"} />
+      <DividerAtom />
+      <AlignLayout column={0.5}>
+        <GridLayout style={{ size: "CONTAINER" }}>
+          <GridLayout style={{ size: 6 }}>
+            <LabelAtom props={props.shuffleAllLabel} />
+          </GridLayout>
+          <GridLayout style={{ size: 6 }}>
+            <AlignLayout style={"END"}>
+              <ButtonAtom props={props.shuffleButton} />
+            </AlignLayout>
+          </GridLayout>
+        </GridLayout>
         {props.selectRows.map((row) => (
-          <Stack key={row.key} direction="row" alignItems="center" spacing={1}>
-            <LabelAtom props={row.label} />
-            <Box sx={{ flex: 1 }}>
+          <GridLayout key={row.key} style={{ size: "CONTAINER" }}>
+            <GridLayout style={{ size: 2 }}>
+              <LabelAtom props={row.label} style={"LABEL"} />
+            </GridLayout>
+            <GridLayout style={{ size: 8 }}>
               <SelectAtom props={row.select} />
-            </Box>
-            <ButtonAtom props={row.reloadButton} />
-          </Stack>
+            </GridLayout>
+            <GridLayout style={{ size: 2 }}>
+              <ButtonAtom props={row.reloadButton} />
+            </GridLayout>
+          </GridLayout>
         ))}
-      </Stack>
-    </Box>
+      </AlignLayout>
+    </AlignLayout>
   );
 }

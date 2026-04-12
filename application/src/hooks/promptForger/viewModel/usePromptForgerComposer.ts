@@ -178,13 +178,13 @@ export interface PromptForgerBodyViewModel {
 export interface PromptForgerViewModel {
   navigationLayout: {
     appBar: {
-      title: string;
       onMenuOpen: () => void;
     };
     drawer: {
       open: boolean;
       onClose: () => void;
     };
+    title: string;
     navigation: NavigationOrganismProps["props"];
   };
   promptForgerBody: PromptForgerBodyViewModel;
@@ -198,13 +198,13 @@ export function usePromptForgerComposer(contexts: PromptForgerContexts) {
     viewModel: {
       navigationLayout: {
         appBar: {
-          title: "ACMN",
           onMenuOpen: () => {},
         },
         drawer: {
           open: false,
           onClose: () => {},
         },
+        title: "ACMN",
         navigation: {
           activeItemLabel: undefined,
           links: [],

@@ -1,10 +1,11 @@
-import { Stack } from "@mui/material";
 import { LabelAtom, LabelAtomProps } from "../../../atoms/display/LabelAtom";
 import { ButtonAtom, ButtonAtomProps } from "../../../atoms/inputs/ButtonAtom";
 import {
   TextAreaAtom,
   TextAreaAtomProps,
 } from "../../../atoms/inputs/TextAreaAtom";
+import { AlignLayout } from "../../../atoms/layout/AlignLayout";
+import { GridLayout } from "../../../atoms/layout/GridLayout";
 
 interface PromptForgerPromptFieldOrganismProps {
   props: {
@@ -19,13 +20,17 @@ export function PromptForgerPromptFieldOrganism({
   props,
 }: PromptForgerPromptFieldOrganismProps) {
   return (
-    <Stack spacing={1} pl={2} pt={1}>
-      <Stack direction="row" spacing={1}>
-        <ButtonAtom props={props.shuffleButton} />
-        <ButtonAtom props={props.copyButton} />
-      </Stack>
+    <AlignLayout column={1}>
+      <GridLayout style={{ size: "CONTAINER" }}>
+        <GridLayout style={{ size: 2 }}>
+          <ButtonAtom props={props.shuffleButton} />
+        </GridLayout>
+        <GridLayout style={{ size: 2 }}>
+          <ButtonAtom props={props.copyButton} />
+        </GridLayout>
+      </GridLayout>
       <LabelAtom props={props.summaryPromptLabel} />
       <TextAreaAtom props={props.summaryPromptField} />
-    </Stack>
+    </AlignLayout>
   );
 }

@@ -3,7 +3,7 @@ import {
   ForgerSelectSection,
   ForgerSwitchSection,
 } from "@/hooks/promptForger/viewModel/usePromptForgerComposer";
-import { Stack } from "@mui/material";
+import { AlignLayout } from "../../../atoms/layout/AlignLayout";
 import { PromptForgerOrdersSectionOrganism } from "../orders/PromptForgerOrdersSectionOrganism";
 import { PromptForgerSelectSectionOrganism } from "../select/PromptForgerSelectSectionOrganism";
 import { PromptForgerSwitchSectionOrganism } from "../switch/PromptForgerSwitchSectionOrganism";
@@ -20,7 +20,7 @@ export function PromptForgerBlocContentsOrganism({
   props,
 }: PromptForgerBlocContentsOrganismProps) {
   return (
-    <Stack spacing={1} pl={2} pt={1}>
+    <AlignLayout column={1}>
       {props.ordersSection && (
         <PromptForgerOrdersSectionOrganism props={props.ordersSection} />
       )}
@@ -30,6 +30,6 @@ export function PromptForgerBlocContentsOrganism({
       {props.selectSection && (
         <PromptForgerSelectSectionOrganism props={props.selectSection} />
       )}
-    </Stack>
+    </AlignLayout>
   );
 }
