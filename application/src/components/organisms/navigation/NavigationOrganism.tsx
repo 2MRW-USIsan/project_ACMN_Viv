@@ -1,29 +1,15 @@
-"use client";
-
-import { DividerAtom } from "@/components/atoms/display/DividerAtom";
-import {
-  LabelAtom,
-  LabelAtomProps,
-} from "@/components/atoms/display/LabelAtom";
-import {
-  ButtonAtom,
-  ButtonAtomProps,
-} from "@/components/atoms/inputs/ButtonAtom";
-import { ChipRadioAtom } from "@/components/atoms/inputs/RadioButtonAtom";
-import {
-  SelectAtom,
-  SelectAtomProps,
-} from "@/components/atoms/inputs/SelectAtom";
+import { ChipRadioAtomType } from "@/types/ui";
+import { Stack } from "@mui/material";
+import { DividerAtom } from "../../atoms/display/DividerAtom";
+import { LabelAtom, LabelAtomProps } from "../../atoms/display/LabelAtom";
+import { ButtonAtom, ButtonAtomProps } from "../../atoms/inputs/ButtonAtom";
+import { ChipRadioAtom } from "../../atoms/inputs/RadioButtonAtom";
+import { SelectAtom, SelectAtomProps } from "../../atoms/inputs/SelectAtom";
 import {
   TextFieldAtom,
   TextFieldAtomProps,
-} from "@/components/atoms/inputs/TextFieldAtom";
-import {
-  NavLinkAtom,
-  NavLinkAtomProps,
-} from "@/components/atoms/surface/NavLinkAtom";
-import { ChipRadioAtomType } from "@/types/ui";
-import { Stack } from "@mui/material";
+} from "../../atoms/inputs/TextFieldAtom";
+import { NavLinkAtom, NavLinkAtomProps } from "../../atoms/surface/NavLinkAtom";
 
 export interface NavigationConfigurations {
   setLabel: LabelAtomProps["props"];

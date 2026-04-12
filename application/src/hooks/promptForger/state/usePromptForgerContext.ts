@@ -1,5 +1,3 @@
-"use client";
-
 import { usePromptForgerService } from "@/hooks/promptForger/state/usePromptForgerService";
 import {
   usePromptForgerStateReducer,

@@ -1,5 +1,3 @@
-"use client";
-
 import { usePromptForgerFetchReducer } from "@/hooks/promptForger/state/usePromptForgerFetchReducer";
 
 export interface PromptForgerFetchItem {

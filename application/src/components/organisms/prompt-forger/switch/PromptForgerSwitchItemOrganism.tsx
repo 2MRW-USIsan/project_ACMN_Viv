@@ -1,7 +1,7 @@
-import { LabelAtom } from "@/components/atoms/display/LabelAtom";
-import { SwitchAtom } from "@/components/atoms/inputs/SwitchAtom";
 import { ForgerSwitchGrpPanel } from "@/hooks/promptForger/viewModel/usePromptForgerComposer";
 import { Box, Divider, Stack } from "@mui/material";
+import { LabelAtom } from "../../../atoms/display/LabelAtom";
+import { SwitchAtom } from "../../../atoms/inputs/SwitchAtom";
 
 interface PromptForgerSwitchItemOrganismProps {
   props: ForgerSwitchGrpPanel;

@@ -1,5 +1,3 @@
-"use client";
-
 import { PromptForgerContexts } from "@/hooks/promptForger/state/usePromptForgerContext";
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type

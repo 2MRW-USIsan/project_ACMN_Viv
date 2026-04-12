@@ -1,9 +1,8 @@
 "use client";
-
-import { useState } from "react";
-import { usePathname, useRouter } from "next/navigation";
 import { NavItem } from "@/components/atoms/surface/DrawerAtom";
 import { PresetBuilderViewModel } from "@/hooks/preset-builder/viewModel/usePresetBuilderComposer";
+import { usePathname, useRouter } from "next/navigation";
+import { useState } from "react";
 
 const NAV_ITEMS: NavItem[] = [
   { href: "/configurations", label: "Configurations" },
@@ -134,46 +133,56 @@ export function usePresetBuilderViewModelMocks(): PresetBuilderViewModelMocksRet
         },
       },
       presetBuilderBody: {
-        infoSectionLabel: { text: "Information Field:", variant: "subtitle1" },
-        idLabel: { text: "ID:", variant: "body2" },
-        idValueLabel: { text: "#01 - [uuid]", variant: "body2" },
-        titleLabel: { text: "Title:", variant: "body2" },
-        titleField: {
-          placeholder: "text field...",
-          defaultValue: titleValue,
-          onBlur: handleTitleBlur,
-          size: "small",
-          fullWidth: true,
+        informProps: {
+          infoSectionLabel: {
+            text: "Information Field:",
+            variant: "subtitle1",
+          },
+          idLabel: { text: "ID:", variant: "body2" },
+          idValueLabel: { text: "#01 - [uuid]", variant: "body2" },
+          titleLabel: { text: "Title:", variant: "body2" },
+          titleField: {
+            placeholder: "text field...",
+            defaultValue: titleValue,
+            onBlur: handleTitleBlur,
+            size: "small",
+            fullWidth: true,
+          },
+          statusLabel: { text: "Status:", variant: "body2" },
+          statusValueLabel: {
+            text: "- there are some changes... -",
+            variant: "body2",
+          },
+          saveButton: { label: "Save", onClick: () => {}, size: "small" },
         },
-        statusLabel: { text: "Status:", variant: "body2" },
-        statusValueLabel: {
-          text: "- there are some changes... -",
-          variant: "body2",
-        },
-        saveButton: { label: "Save", onClick: () => {}, size: "small" },
-        buildersSectionLabel: { text: "Builders Field:", variant: "subtitle1" },
-        shuffleButton: { label: "Shuffle", onClick: () => {}, size: "small" },
-        copyButton: { label: "Copy", onClick: () => {}, size: "small" },
-        pasteButton: { label: "Paste", onClick: () => {}, size: "small" },
-        resetButton: { label: "Reset", onClick: () => {}, size: "small" },
-        clearButton: { label: "Clear", onClick: () => {}, size: "small" },
-        presetsTemplateLabel: { text: "Presets Template:", variant: "body2" },
-        presetsTemplateField: {
-          placeholder: "Text area Field...",
-          defaultValue: presetsTemplateValue,
-          onBlur: handlePresetsTemplateBlur,
-          multiline: true,
-          rows: 14,
-          fullWidth: true,
-        },
-        orderPresetsLabel: { text: "Order Presets:", variant: "body2" },
-        orderPresetsField: {
-          placeholder: "Text area Field...",
-          defaultValue: orderPresetsValue,
-          onBlur: handleOrderPresetsBlur,
-          multiline: true,
-          rows: 14,
-          fullWidth: true,
+        builderProps: {
+          buildersSectionLabel: {
+            text: "Builders Field:",
+            variant: "subtitle1",
+          },
+          shuffleButton: { label: "Shuffle", onClick: () => {}, size: "small" },
+          copyButton: { label: "Copy", onClick: () => {}, size: "small" },
+          pasteButton: { label: "Paste", onClick: () => {}, size: "small" },
+          resetButton: { label: "Reset", onClick: () => {}, size: "small" },
+          clearButton: { label: "Clear", onClick: () => {}, size: "small" },
+          presetsTemplateLabel: { text: "Presets Template:", variant: "body2" },
+          presetsTemplateField: {
+            placeholder: "Text area Field...",
+            defaultValue: presetsTemplateValue,
+            onBlur: handlePresetsTemplateBlur,
+            multiline: true,
+            rows: 14,
+            fullWidth: true,
+          },
+          orderPresetsLabel: { text: "Order Presets:", variant: "body2" },
+          orderPresetsField: {
+            placeholder: "Text area Field...",
+            defaultValue: orderPresetsValue,
+            onBlur: handleOrderPresetsBlur,
+            multiline: true,
+            rows: 14,
+            fullWidth: true,
+          },
         },
       },
     },

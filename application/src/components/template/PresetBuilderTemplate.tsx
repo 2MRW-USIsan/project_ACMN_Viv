@@ -1,5 +1,3 @@
-"use client";
-
 import { NavigationLayoutOrganism } from "@/components/organisms/navigation/NavigationLayoutOrganism";
 import { PresetBuilderBodyOrganism } from "@/components/organisms/preset-builder/PresetBuilderBodyOrganism";
 import { PresetBuilderViewModel } from "@/hooks/preset-builder/viewModel/usePresetBuilderComposer";

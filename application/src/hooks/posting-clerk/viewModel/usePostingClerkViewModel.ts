@@ -1,5 +1,3 @@
-"use client";
-
 import { usePostingClerkContext } from "@/hooks/posting-clerk/state/usePostingClerkContext";
 import { usePostingClerkController } from "@/hooks/posting-clerk/controller/usePostingClerkController";
 import {

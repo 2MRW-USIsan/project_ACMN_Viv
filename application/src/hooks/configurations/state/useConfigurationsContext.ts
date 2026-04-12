@@ -1,5 +1,3 @@
-"use client";
-
 import { useConfigurationsService } from "@/hooks/configurations/state/useConfigurationsService";
 import {
   useConfigurationsStateReducer,

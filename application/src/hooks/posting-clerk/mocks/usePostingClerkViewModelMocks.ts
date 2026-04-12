@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from "react";
-import { usePathname, useRouter } from "next/navigation";
 import { NavItem } from "@/components/atoms/surface/DrawerAtom";
 import { PostingClerkViewModel } from "@/hooks/posting-clerk/viewModel/usePostingClerkComposer";
+import { usePathname, useRouter } from "next/navigation";
+import { useState } from "react";
 
 const NAV_ITEMS: NavItem[] = [
   { href: "/configurations", label: "Configurations" },
@@ -192,187 +192,174 @@ export function usePostingClerkViewModelMocks(): PostingClerkViewModelMocksRetur
 
   const platformPreviews = PLATFORM_KEYS.map((platform) => ({
     key: platform,
-    sectionLabel: {
-      text: PLATFORM_LABELS[platform],
-      variant: "subtitle1" as const,
-    },
-    isExpanded: platformExpanded[platform],
-    toggleButton: {
-      icon: platformExpanded[platform]
-        ? ("expandLess" as const)
-        : ("expandMore" as const),
-      onClick: () => handleTogglePlatform(platform),
-    },
-    titleLabel: { text: "Title:", variant: "body2" as const },
-    titleCopyButton: {
-      label: "Copy",
-      onClick: () => {},
-      size: "small" as const,
-    },
-    descLabel: { text: "Desc:", variant: "body2" as const },
-    descCopyButton: {
-      label: "Copy",
-      onClick: () => {},
-      size: "small" as const,
-    },
-    urlsLabel: { text: "URLs:", variant: "body2" as const },
-    urlsAddButton: {
-      label: "Add",
-      onClick: () => handleAddUrl(platform),
-      size: "small" as const,
-    },
-    urlItems: platformUrlItems[platform].map((urlItem) => ({
-      key: urlItem.id,
-      nameLabel: { text: "Name:", variant: "body2" as const },
-      nameField: {
-        placeholder: "text field...",
-        defaultValue: urlItem.nameValue,
-        onBlur: (value: string) =>
-          handleUrlNameBlur(platform, urlItem.id, value),
-        size: "small" as const,
+    frame: {
+      label: { text: PLATFORM_LABELS[platform] },
+      isExpanded: platformExpanded[platform],
+      toggle: {
+        icon: platformExpanded[platform]
+          ? ("expandLess" as const)
+          : ("expandMore" as const),
+        onClick: () => handleTogglePlatform(platform),
       },
-      urlLabel: { text: "URL:", variant: "body2" as const },
-      urlField: {
-        placeholder: "text field...",
-        defaultValue: urlItem.urlValue,
-        onBlur: (value: string) =>
-          handleUrlValueBlur(platform, urlItem.id, value),
-        size: "small" as const,
-        fullWidth: true,
+    },
+    copyForm: {
+      titleLabel: { text: "Title:" },
+      titleCopyButton: {
+        label: "Copy",
+        onClick: () => {},
       },
-      removeButton: {
-        icon: "removeCircle" as const,
-        onClick: () => handleRemoveUrl(platform, urlItem.id),
+      descLabel: { text: "Desc:" },
+      descCopyButton: {
+        label: "Copy",
+        onClick: () => {},
       },
-    })),
-    previewLabel: { text: "[Preview]", variant: "body2" as const },
-    previewField: {
-      placeholder: "Text area Field...",
-      defaultValue: platformPreviewValues[platform],
-      onBlur: (value: string) => handlePreviewBlur(platform, value),
-      multiline: true,
-      rows: 8,
-      fullWidth: true,
+    },
+    referenceForm: {
+      urlsLabel: { text: "URLs:" },
+      urlsAddButton: {
+        label: "Add",
+        onClick: () => handleAddUrl(platform),
+      },
+      urlItems: platformUrlItems[platform].map((urlItem) => ({
+        key: urlItem.id,
+        nameLabel: { text: "Name:" },
+        nameField: {
+          placeholder: "text field...",
+          value: urlItem.nameValue,
+          onChange: (value: string) =>
+            handleUrlNameBlur(platform, urlItem.id, value),
+        },
+        urlLabel: { text: "URL:" },
+        urlField: {
+          placeholder: "text field...",
+          value: urlItem.urlValue,
+          onChange: (value: string) =>
+            handleUrlValueBlur(platform, urlItem.id, value),
+        },
+        removeButton: {
+          icon: "removeCircle" as const,
+          onClick: () => handleRemoveUrl(platform, urlItem.id),
+        },
+      })),
+    },
+    previewForm: {
+      previewLabel: { text: "[Preview]" },
+      previewField: {
+        placeholder: "Text area Field...",
+        value: platformPreviewValues[platform],
+        onChange: (value: string) => handlePreviewBlur(platform, value),
+      },
     },
   }));
 
   const quoteItems = MOCK_QUOTE_KEYS.map((key) => ({
     key,
-    quoteLabel: { text: "- quote:", variant: "body2" as const },
+    quoteLabel: { text: "- quote:" },
     quoteField: {
       placeholder: "text field...",
-      defaultValue: quoteValues[key],
-      onBlur: (value: string) => handleQuoteBlur(key, value),
-      size: "small" as const,
-      fullWidth: true,
+      value: quoteValues[key],
+      onChange: (value: string) => handleQuoteBlur(key, value),
     },
-    copyButton: { label: "Copy", onClick: () => {}, size: "small" as const },
+    copyButton: { label: "Copy", onClick: () => {} },
   }));
 
   return {
     viewModel: {
       navigationLayout: {
         appBar: {
-          title: "ACMN",
           onMenuOpen: handleMenuOpen,
         },
         drawer: {
           open: drawerOpen,
           onClose: handleDrawerClose,
         },
+        title: "ACMN",
         navigation: {
           linksAbove,
           activeItemLabel,
           links: linksBelow,
           presets: {
-            groupLabel: { text: "Group:", variant: "body2" },
+            groupLabel: { text: "Group:" },
             groupSelect: {
               value: selectedGroup,
               options: MOCK_GROUP_OPTIONS,
               onChange: handleGroupSelect,
             },
-            loadButton: { label: "Load", onClick: () => {}, size: "small" },
-            newButton: { label: "New", onClick: () => {}, size: "small" },
-            nameLabel: { text: "Name:", variant: "body2" },
+            loadButton: { label: "Load", onClick: () => {} },
+            newButton: { label: "New", onClick: () => {} },
+            nameLabel: { text: "Name:" },
             nameField: {
               placeholder: "text field...",
               value: nameEditValue,
               onChange: handleNameEditBlur,
-              size: "small",
             },
-            saveButton: { label: "Save", onClick: () => {}, size: "small" },
-            changeButton: { label: "change", onClick: () => {}, size: "small" },
-            deleteButton: {
-              label: "- Delete ? -",
-              onClick: () => {},
-              size: "small",
-              variant: "text",
-              color: "error",
-            },
+            saveButton: { label: "Save", onClick: () => {} },
+            changeButton: { label: "change", onClick: () => {} },
+            deleteButton: { label: "- Delete ? -", onClick: () => {} },
             presetItemPanels: MOCK_POSTING_ITEMS.map((item) => ({
               key: item.id,
               radio: {
+                label: item.label,
                 checked: selectedItemId === item.id,
                 onChange: () => handleSelectItem(item.id),
               },
-              label: { text: item.label, variant: "body2" as const },
+              label: { text: item.label },
             })),
           },
         },
       },
       postingClerkBody: {
-        infoSectionLabel: { text: "Information Field:", variant: "subtitle1" },
-        idLabel: { text: "ID:", variant: "body2" },
-        idValueLabel: { text: "#01 - [uuid]", variant: "body2" },
-        titleLabel: { text: "Title:", variant: "body2" },
-        titleField: {
-          placeholder: "text field...",
-          defaultValue: titleValue,
-          onBlur: handleTitleBlur,
-          size: "small",
-          fullWidth: true,
+        informProps: {
+          infoSectionLabel: { text: "Information Field:" },
+          idLabel: { text: "ID:" },
+          idValueLabel: { text: "#01 - [uuid]" },
+          titleLabel: { text: "Title:" },
+          titleField: {
+            placeholder: "text field...",
+            value: titleValue,
+            onChange: handleTitleBlur,
+          },
+          statusLabel: { text: "Status:" },
+          statusValueLabel: { text: "- there are some changes... -" },
+          saveButton: { label: "Save", onClick: () => {} },
         },
-        statusLabel: { text: "Status:", variant: "body2" },
-        statusValueLabel: {
-          text: "- there are some changes... -",
-          variant: "body2",
+        clerkProps: {
+          label: { text: "Clerking Field:" },
+          clerks: {
+            titleJpLabel: { text: "Title[JP]:" },
+            titleEnLabel: { text: "Title[EN]:" },
+            symbolLabel: { text: "Symbol:" },
+            picsLabel: { text: "Pics:" },
+            titleJpField: {
+              placeholder: "text field...",
+              value: titleJpValue,
+              onChange: handleTitleJpBlur,
+            },
+            titleEnField: {
+              placeholder: "text field...",
+              value: titleEnValue,
+              onChange: handleTitleEnBlur,
+            },
+            symbolField: {
+              placeholder: "...",
+              value: symbolValue,
+              onChange: handleSymbolBlur,
+            },
+            picsField: {
+              placeholder: "...",
+              value: picsValue,
+              onChange: handlePicsBlur,
+            },
+          },
+          previews: {
+            postingPreviewLabel: { text: "Posting Preview:" },
+            platformPreviews,
+          },
+          quotes: {
+            quotesSectionLabel: { text: "Quotes Field:" },
+            quoteItems,
+          },
         },
-        saveButton: { label: "Save", onClick: () => {}, size: "small" },
-        clerkingSectionLabel: { text: "Clerking Field:", variant: "subtitle1" },
-        titleJpLabel: { text: "Title[JP]:", variant: "body2" },
-        titleJpField: {
-          placeholder: "text field...",
-          value: titleJpValue,
-          onChange: handleTitleJpBlur,
-          size: "small",
-          fullWidth: true,
-        },
-        titleEnLabel: { text: "Title[EN]:", variant: "body2" },
-        titleEnField: {
-          placeholder: "text field...",
-          value: titleEnValue,
-          onChange: handleTitleEnBlur,
-          size: "small",
-          fullWidth: true,
-        },
-        symbolLabel: { text: "Symbol:", variant: "body2" },
-        symbolField: {
-          placeholder: "...",
-          value: symbolValue,
-          onChange: handleSymbolBlur,
-          size: "small",
-        },
-        picsLabel: { text: "Pics:", variant: "body2" },
-        picsField: {
-          placeholder: "...",
-          value: picsValue,
-          onChange: handlePicsBlur,
-          size: "small",
-        },
-        postingPreviewLabel: { text: "Posting Preview:", variant: "subtitle1" },
-        platformPreviews,
-        quotesSectionLabel: { text: "Quotes Field:", variant: "subtitle1" },
-        quoteItems,
       },
     },
   };

@@ -1,7 +1,5 @@
-"use client";
-
-import { PanelFrameAtoms } from "@/components/atoms/layout/PanelFrameAtoms";
 import { PromptIdeaSection } from "@/hooks/promptForger/viewModel/usePromptForgerComposer";
+import { PanelFrameAtoms } from "../../../atoms/layout/PanelFrameAtoms";
 import { PromptForgerPromptFieldOrganism } from "./PromptForgerPromptFieldOrganism";
 
 interface PromptForgerPromptIdeaOrganismProps {

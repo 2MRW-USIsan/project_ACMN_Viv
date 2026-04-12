@@ -1,10 +1,8 @@
-"use client";
-
-import { IconButtonAtom } from "@/components/atoms/inputs/IconButtonAtom";
-import { LabelAtom } from "@/components/atoms/display/LabelAtom";
-import { TextFieldAtom } from "@/components/atoms/inputs/TextFieldAtom";
 import { RandomSection } from "@/hooks/configurations/viewModel/useConfigurationsComposer";
 import { Box, Divider, List, ListItem, Stack } from "@mui/material";
+import { LabelAtom } from "../../../atoms/display/LabelAtom";
+import { IconButtonAtom } from "../../../atoms/inputs/IconButtonAtom";
+import { TextFieldAtom } from "../../../atoms/inputs/TextFieldAtom";
 
 interface OrdersRandomSectionOrganismProps {
   props: RandomSection;

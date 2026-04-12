@@ -1,5 +1,3 @@
-"use client";
-
 import { Switch } from "@mui/material";
 import { SwitchAtomType } from "@/types/ui";
 

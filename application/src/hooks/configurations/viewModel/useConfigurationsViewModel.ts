@@ -1,5 +1,3 @@
-"use client";
-
 import { useConfigurationsContext } from "@/hooks/configurations/state/useConfigurationsContext";
 import { useConfigurationsController } from "@/hooks/configurations/controller/useConfigurationsController";
 import {

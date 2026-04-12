@@ -1,7 +1,5 @@
 "use client";
 
-import { useState } from "react";
-import { usePathname, useRouter } from "next/navigation";
 import { NavItem } from "@/components/atoms/surface/DrawerAtom";
 import {
   BlocItem,
@@ -14,6 +12,8 @@ import {
   SelectorPanel,
   SwitchGrpPanel,
 } from "@/hooks/configurations/viewModel/useConfigurationsComposer";
+import { usePathname, useRouter } from "next/navigation";
+import { useState } from "react";
 
 const NAV_ITEMS: NavItem[] = [
   { href: "/configurations", label: "Configurations" },

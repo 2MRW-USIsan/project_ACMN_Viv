@@ -1,5 +1,3 @@
-"use client";
-
 import { Divider } from "@mui/material";
 import { DividerAtomType } from "@/types/ui";
 

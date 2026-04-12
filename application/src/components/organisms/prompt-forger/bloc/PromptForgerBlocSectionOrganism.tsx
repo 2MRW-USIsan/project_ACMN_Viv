@@ -1,5 +1,3 @@
-"use client";
-
 import { ForgerBlocPanel } from "@/hooks/promptForger/viewModel/usePromptForgerComposer";
 import { PanelFrameAtoms } from "../../../atoms/layout/PanelFrameAtoms";
 import { PromptForgerBlocContentsOrganism } from "./PromptForgerBlocContentsOrganism";

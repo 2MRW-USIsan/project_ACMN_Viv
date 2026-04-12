@@ -1,5 +1,3 @@
-"use client";
-
 import { PromptForgerContexts } from "@/hooks/promptForger/state/usePromptForgerContext";
 
 export function usePromptForgerEffects(_contexts: PromptForgerContexts): void {

@@ -64,7 +64,7 @@
 
 ```ts
 // hooks/xxx/viewModel/use{Page}ViewModel.ts
-"use client";
+
 import { use{Page}Context } from "@/hooks/xxx/state/use{Page}Context";
 import { use{Page}Controller } from "@/hooks/xxx/controller/use{Page}Controller";
 import { use{Page}Composer, {Page}ViewModel } from "@/hooks/xxx/viewModel/use{Page}Composer";
@@ -176,7 +176,7 @@ export default function {Page}Page() {
 
 ```ts
 // hooks/sample/viewModel/useSampleViewModel.ts
-"use client";
+
 import { useSampleContext } from "@/hooks/sample/state/useSampleContext";
 import { useSampleController } from "@/hooks/sample/controller/useSampleController";
 import { useSampleComposer, SampleViewModel } from "@/hooks/sample/viewModel/useSampleComposer";

@@ -1,11 +1,8 @@
-import { DividerAtom } from "@/components/atoms/display/DividerAtom";
-import {
-  LabelAtom,
-  LabelAtomProps,
-} from "@/components/atoms/display/LabelAtom";
-import { ChipRadioAtom } from "@/components/atoms/inputs/RadioButtonAtom";
 import { RadioOptionItem } from "@/hooks/promptForger/viewModel/usePromptForgerComposer";
 import { Stack } from "@mui/material";
+import { DividerAtom } from "../../../atoms/display/DividerAtom";
+import { LabelAtom, LabelAtomProps } from "../../../atoms/display/LabelAtom";
+import { ChipRadioAtom } from "../../../atoms/inputs/RadioButtonAtom";
 
 interface PromptForgerTuneupFieldOrganismProps {
   props: {

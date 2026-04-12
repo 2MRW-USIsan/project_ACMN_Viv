@@ -1,5 +1,3 @@
-"use client";
-
 import { useEffect, useReducer } from "react";
 
 export interface PostingClerkFetchState {

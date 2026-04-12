@@ -1,5 +1,3 @@
-"use client";
-
 import { FormControl, MenuItem, Select } from "@mui/material";
 import { SelectAtomType } from "@/types/ui";
 

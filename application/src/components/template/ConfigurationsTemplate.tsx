@@ -1,5 +1,3 @@
-"use client";
-
 import { ConfigurationBodyOrganism } from "@/components/organisms/configuration/ConfigurationBodyOrganism";
 import { NavigationLayoutOrganism } from "@/components/organisms/navigation/NavigationLayoutOrganism";
 import { ConfigurationsViewModel } from "@/hooks/configurations/viewModel/useConfigurationsComposer";

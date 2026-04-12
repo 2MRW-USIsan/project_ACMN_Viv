@@ -1,8 +1,6 @@
-"use client";
-
-import { AppBarAtom } from "@/components/atoms/surface/AppBarAtom";
-import { DrawerAtom } from "@/components/atoms/surface/DrawerAtom";
 import { Typography } from "@mui/material";
+import { AppBarAtom } from "../../atoms/surface/AppBarAtom";
+import { DrawerAtom } from "../../atoms/surface/DrawerAtom";
 import {
   NavigationOrganism,
   NavigationOrganismProps,
@@ -12,12 +10,13 @@ interface NavigationLayoutOrganismProps {
   props: {
     appBar: {
       onMenuOpen: () => void;
+      title?: string;
     };
     drawer: {
       open: boolean;
       onClose: () => void;
     };
-    title: string;
+    title?: string;
     navigation: NavigationOrganismProps["props"];
   };
   children?: React.ReactNode;
@@ -27,11 +26,13 @@ export function NavigationLayoutOrganism({
   props,
   children,
 }: NavigationLayoutOrganismProps) {
+  const title = props.title ?? props.appBar.title ?? "";
+
   return (
     <>
       <AppBarAtom props={props.appBar}>
         <Typography variant="h6" noWrap>
-          {props.title}
+          {title}
         </Typography>
       </AppBarAtom>
       <DrawerAtom props={props.drawer}>

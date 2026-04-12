@@ -1,5 +1,3 @@
-"use client";
-
 import { usePostingClerkService } from "@/hooks/posting-clerk/state/usePostingClerkService";
 import {
   usePostingClerkStateReducer,

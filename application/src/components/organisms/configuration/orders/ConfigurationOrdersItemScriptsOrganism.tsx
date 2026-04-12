@@ -1,8 +1,6 @@
-"use client";
-
-import { LabelAtom } from "@/components/atoms/display/LabelAtom";
 import { ScriptsSection } from "@/hooks/configurations/viewModel/useConfigurationsComposer";
 import { Box, Divider, Stack } from "@mui/material";
+import { LabelAtom } from "../../../atoms/display/LabelAtom";
 
 interface ConfigurationOrdersItemScriptsOrganismProps {
   props: ScriptsSection;

@@ -1,5 +1,3 @@
-"use client";
-
 import { ConfigurationsContexts } from "@/hooks/configurations/state/useConfigurationsContext";
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type

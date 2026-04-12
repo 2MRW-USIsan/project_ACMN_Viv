@@ -1,5 +1,3 @@
-"use client";
-
 import { Chip } from "@mui/material";
 import CheckIcon from "@mui/icons-material/Check";
 import { ChipCheckboxAtomType } from "@/types/ui";

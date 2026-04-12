@@ -1,8 +1,8 @@
-import { ButtonAtom } from "@/components/atoms/inputs/ButtonAtom";
-import { LabelAtom } from "@/components/atoms/display/LabelAtom";
-import { TextFieldAtom } from "@/components/atoms/inputs/TextFieldAtom";
 import { ForgerOrdersGrpPanel } from "@/hooks/promptForger/viewModel/usePromptForgerComposer";
 import { Box, Divider, Stack } from "@mui/material";
+import { LabelAtom } from "../../../atoms/display/LabelAtom";
+import { ButtonAtom } from "../../../atoms/inputs/ButtonAtom";
+import { TextFieldAtom } from "../../../atoms/inputs/TextFieldAtom";
 
 interface PromptForgerOrdersItemOrganismProps {
   props: ForgerOrdersGrpPanel;

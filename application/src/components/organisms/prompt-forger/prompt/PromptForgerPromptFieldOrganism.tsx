@@ -1,16 +1,10 @@
-import {
-  ButtonAtom,
-  ButtonAtomProps,
-} from "@/components/atoms/inputs/ButtonAtom";
-import {
-  LabelAtom,
-  LabelAtomProps,
-} from "@/components/atoms/display/LabelAtom";
+import { Stack } from "@mui/material";
+import { LabelAtom, LabelAtomProps } from "../../../atoms/display/LabelAtom";
+import { ButtonAtom, ButtonAtomProps } from "../../../atoms/inputs/ButtonAtom";
 import {
   TextAreaAtom,
   TextAreaAtomProps,
-} from "@/components/atoms/inputs/TextAreaAtom";
-import { Stack } from "@mui/material";
+} from "../../../atoms/inputs/TextAreaAtom";
 
 interface PromptForgerPromptFieldOrganismProps {
   props: {
