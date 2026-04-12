@@ -1,7 +1,8 @@
-import { Stack, Toolbar } from "@mui/material";
-import { PromptForgerInfoSectionOrganism } from "./PromptForgerInfoSectionOrganism";
-import { PromptForgerForgersSectionOrganism } from "./PromptForgerForgersSectionOrganism";
+import { AlignLayout } from "@/components/atoms/layout/AlignLayout";
+import { BodyFrame } from "@/components/atoms/layout/BodyFrame";
 import { PromptForgerBodyViewModel } from "@/hooks/promptForger/viewModel/usePromptForgerComposer";
+import { PromptForgerForgersSectionOrganism } from "./PromptForgerForgersSectionOrganism";
+import { PromptForgerInfoSectionOrganism } from "./PromptForgerInfoSectionOrganism";
 
 interface PromptForgerBodyOrganismProps {
   props: PromptForgerBodyViewModel;
@@ -11,10 +12,11 @@ export function PromptForgerBodyOrganism({
   props,
 }: PromptForgerBodyOrganismProps) {
   return (
-    <Stack spacing={2} p={3} maxWidth={960} mx="auto">
-      <Toolbar />
-      <PromptForgerInfoSectionOrganism props={props.infoSection} />
-      <PromptForgerForgersSectionOrganism props={props.forgersSection} />
-    </Stack>
+    <BodyFrame>
+      <AlignLayout column={1}>
+        <PromptForgerInfoSectionOrganism props={props.infoSection} />
+        <PromptForgerForgersSectionOrganism props={props.forgersSection} />
+      </AlignLayout>
+    </BodyFrame>
   );
 }

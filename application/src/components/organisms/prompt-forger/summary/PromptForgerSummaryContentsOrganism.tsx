@@ -2,7 +2,7 @@ import {
   PromptIdeaSection,
   TuneupCompositionSection,
 } from "@/hooks/promptForger/viewModel/usePromptForgerComposer";
-import { Stack } from "@mui/material";
+import { AlignLayout } from "../../../atoms/layout/AlignLayout";
 import { PromptForgerPromptIdeaOrganism } from "../prompt/PromptForgerPromptIdeaOrganism";
 import { PromptForgerTuneupCompositionOrganism } from "../tune-up/PromptForgerTuneupCompositionOrganism";
 
@@ -17,9 +17,9 @@ export function PromptForgerSummaryContentsOrganism({
   props,
 }: PromptForgerSummaryContentsOrganismProps) {
   return (
-    <Stack spacing={1} pl={2} pt={1}>
+    <AlignLayout column={1}>
       <PromptForgerTuneupCompositionOrganism props={props.tuneupComposition} />
       <PromptForgerPromptIdeaOrganism props={props.promptIdea} />
-    </Stack>
+    </AlignLayout>
   );
 }

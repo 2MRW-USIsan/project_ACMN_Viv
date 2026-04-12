@@ -1,8 +1,8 @@
 import { RadioOptionItem } from "@/hooks/promptForger/viewModel/usePromptForgerComposer";
-import { Stack } from "@mui/material";
 import { DividerAtom } from "../../../atoms/display/DividerAtom";
 import { LabelAtom, LabelAtomProps } from "../../../atoms/display/LabelAtom";
 import { ChipRadioAtom } from "../../../atoms/inputs/RadioButtonAtom";
+import { AlignLayout } from "../../../atoms/layout/AlignLayout";
 
 interface PromptForgerTuneupFieldOrganismProps {
   props: {
@@ -17,32 +17,32 @@ export function PromptForgerTuneupFieldOrganism({
   props,
 }: PromptForgerTuneupFieldOrganismProps) {
   return (
-    <Stack spacing={1} pl={2} pt={1}>
-      <Stack spacing={0.5}>
-        <LabelAtom props={props.anglesLabel} />
+    <AlignLayout column={1}>
+      <AlignLayout column={0.5}>
+        <LabelAtom props={props.anglesLabel} style={"LABEL"} />
         <DividerAtom />
-        <Stack direction="row" alignItems="center" spacing={1}>
+        <AlignLayout>
           {props.anglesOptions.map((option) => (
-            <Stack key={option.key} direction="row" alignItems="center">
+            <AlignLayout key={option.key}>
               <ChipRadioAtom props={option.radio} />
               <LabelAtom props={option.label} />
-            </Stack>
+            </AlignLayout>
           ))}
-        </Stack>
-      </Stack>
+        </AlignLayout>
+      </AlignLayout>
 
-      <Stack spacing={0.5}>
-        <LabelAtom props={props.directionsLabel} />
+      <AlignLayout column={0.5}>
+        <LabelAtom props={props.directionsLabel} style={"LABEL"} />
         <DividerAtom />
-        <Stack direction="row" alignItems="center" spacing={1}>
+        <AlignLayout>
           {props.directionsOptions.map((option) => (
-            <Stack key={option.key} direction="row" alignItems="center">
+            <AlignLayout key={option.key}>
               <ChipRadioAtom props={option.radio} />
               <LabelAtom props={option.label} />
-            </Stack>
+            </AlignLayout>
           ))}
-        </Stack>
-      </Stack>
-    </Stack>
+        </AlignLayout>
+      </AlignLayout>
+    </AlignLayout>
   );
 }
