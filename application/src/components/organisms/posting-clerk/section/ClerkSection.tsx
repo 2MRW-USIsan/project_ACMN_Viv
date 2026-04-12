@@ -1,17 +1,18 @@
-import { SectionLabel } from "@/components/molecules/SectionLabel";
+import { LabelAtomType } from "@/types/ui";
+import { SectionLabel } from "../../../molecules/SectionLabel";
 import {
   ClerkField,
   ClerkFieldType,
-} from "@/components/organisms/posting-clerk/field/ClerkField";
+} from "../../../organisms/posting-clerk/field/ClerkField";
 import {
   PreviewField,
   PreviewFieldType,
-} from "@/components/organisms/posting-clerk/field/PreviewField";
+} from "../../../organisms/posting-clerk/field/PreviewField";
 import {
   QuotesField,
   QuotesFieldType,
-} from "@/components/organisms/posting-clerk/field/QuotesField";
-import { LabelAtomType } from "@/types/ui";
+} from "../../../organisms/posting-clerk/field/QuotesField";
+import { AlignLayout } from "@/components/atoms/layout/AlignLayout";
 
 export interface ClerkSectionType {
   label: LabelAtomType;
@@ -26,11 +27,11 @@ interface ClerkSectionProps {
 
 export function ClerkSection({ props }: ClerkSectionProps) {
   return (
-    <>
+    <AlignLayout column={0.5}>
       <SectionLabel props={props.label} />
       <ClerkField props={props.clerks} />
       <PreviewField props={props.previews} />
       <QuotesField props={props.quotes} />
-    </>
+    </AlignLayout>
   );
 }

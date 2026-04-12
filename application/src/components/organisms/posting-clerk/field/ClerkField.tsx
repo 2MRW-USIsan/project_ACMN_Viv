@@ -1,8 +1,8 @@
-import { LabelAtom } from "@/components/atoms/display/LabelAtom";
-import { TextFieldAtom } from "@/components/atoms/inputs/TextFieldAtom";
-import { GridLayout } from "@/components/atoms/layout/GridLayout";
-import { postingClerkTheme } from "@/theme/postingClerk";
 import { LabelAtomType, TextFieldAtomType } from "@/types/ui";
+import { LabelAtom } from "../../../atoms/display/LabelAtom";
+import { TextFieldAtom } from "../../../atoms/inputs/TextFieldAtom";
+import { AlignLayout } from "../../../atoms/layout/AlignLayout";
+import { GridLayout } from "../../../atoms/layout/GridLayout";
 
 export type ClerkFieldType = {
   titleJpLabel: LabelAtomType;
@@ -22,47 +22,45 @@ export function ClerkField({ props }: ClerkFieldProps) {
     <GridLayout style={{ size: "CONTAINER" }}>
       <GridLayout style={{ size: 12 }}>
         <GridLayout style={{ size: 2 }}>
-          <LabelAtom
-            props={props.titleJpLabel}
-            style={postingClerkTheme.fieldLabel}
-          />
+          <LabelAtom props={props.titleJpLabel} style={"LABEL"} />
         </GridLayout>
         <GridLayout style={{ size: 10 }}>
-          <TextFieldAtom props={props.titleJpField} />
+          <AlignLayout style={"START"}>
+            <TextFieldAtom props={props.titleJpField} />
+          </AlignLayout>
         </GridLayout>
       </GridLayout>
       <GridLayout style={{ size: 12 }}>
         <GridLayout style={{ size: 2 }}>
-          <LabelAtom
-            props={props.titleEnLabel}
-            style={postingClerkTheme.fieldLabel}
-          />
+          <LabelAtom props={props.titleEnLabel} style={"LABEL"} />
         </GridLayout>
         <GridLayout style={{ size: 10 }}>
-          <TextFieldAtom props={props.titleEnField} />
+          <AlignLayout style={"START"}>
+            <TextFieldAtom props={props.titleEnField} />
+          </AlignLayout>
         </GridLayout>
       </GridLayout>
-      <GridLayout style={{ size: 12 }}>
-        <GridLayout style={{ size: 6 }}>
-          <GridLayout style={{ size: 2 }}>
-            <LabelAtom
-              props={props.symbolLabel}
-              style={postingClerkTheme.fieldLabel}
-            />
-          </GridLayout>
-          <GridLayout style={{ size: 2 }}>
-            <TextFieldAtom props={props.symbolField} />
+      <GridLayout style={{ size: 6 }}>
+        <GridLayout style={{ size: 4 }}>
+          <LabelAtom props={props.symbolLabel} style={"LABEL"} />
+        </GridLayout>
+        <GridLayout style={{ size: 8 }}>
+          <GridLayout style={{ size: 4 }}>
+            <AlignLayout style={"START"}>
+              <TextFieldAtom props={props.symbolField} />
+            </AlignLayout>
           </GridLayout>
         </GridLayout>
-        <GridLayout style={{ size: 6 }}>
-          <GridLayout style={{ size: 2 }}>
-            <LabelAtom
-              props={props.picsLabel}
-              style={postingClerkTheme.fieldLabel}
-            />
-          </GridLayout>
-          <GridLayout style={{ size: 2 }}>
-            <TextFieldAtom props={props.picsField} />
+      </GridLayout>
+      <GridLayout style={{ size: 6 }}>
+        <GridLayout style={{ size: 4 }}>
+          <LabelAtom props={props.picsLabel} style={"LABEL"} />
+        </GridLayout>
+        <GridLayout style={{ size: 8 }}>
+          <GridLayout style={{ size: 4 }}>
+            <AlignLayout style={"START"}>
+              <TextFieldAtom props={props.picsField} />
+            </AlignLayout>
           </GridLayout>
         </GridLayout>
       </GridLayout>

@@ -1,12 +1,5 @@
-
-
-import { PanelFrameAtoms } from "@/components/atoms/layout/PanelFrameAtoms";
-import {
-  ForgerSwitchGrpPanel,
-  ForgerSwitchSection,
-} from "@/hooks/promptForger/viewModel/usePromptForgerComposer";
-import { Stack } from "@mui/material";
-import { PromptForgerSwitchItemOrganism } from "./PromptForgerSwitchItemOrganism";
+import { ForgerSwitchSection } from "@/hooks/promptForger/viewModel/usePromptForgerComposer";
+import { PanelFrameAtoms } from "../../../atoms/layout/PanelFrameAtoms";
 import { PromptForgerSwitchListOrganism } from "./PromptForgerSwitchListOrganism";
 
 interface PromptForgerSwitchSectionOrganismProps {

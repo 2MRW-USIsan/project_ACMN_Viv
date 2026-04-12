@@ -1,8 +1,6 @@
-
-
-import { AppBarAtom } from "@/components/atoms/surface/AppBarAtom";
-import { DrawerAtom } from "@/components/atoms/surface/DrawerAtom";
 import { Typography } from "@mui/material";
+import { AppBarAtom } from "../../atoms/surface/AppBarAtom";
+import { DrawerAtom } from "../../atoms/surface/DrawerAtom";
 import {
   NavigationOrganism,
   NavigationOrganismProps,

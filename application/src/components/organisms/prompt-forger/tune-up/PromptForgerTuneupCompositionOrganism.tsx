@@ -1,7 +1,5 @@
-
-
-import { PanelFrameAtoms } from "@/components/atoms/layout/PanelFrameAtoms";
 import { TuneupCompositionSection } from "@/hooks/promptForger/viewModel/usePromptForgerComposer";
+import { PanelFrameAtoms } from "../../../atoms/layout/PanelFrameAtoms";
 import { PromptForgerTuneupFieldOrganism } from "./PromptForgerTuneupFieldOrganism";
 
 interface PromptForgerTuneupCompositionOrganismProps {

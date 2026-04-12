@@ -8,8 +8,9 @@ export interface GridLayoutProps {
 export function GridLayout({ style, children }: GridLayoutProps) {
   return (
     <Grid
+      display={"flex"}
       container={style.size === "CONTAINER"}
-      size={style.size === "CONTAINER" ? 1 : style.size}
+      size={style.size === "CONTAINER" ? undefined : style.size}
     >
       {children}
     </Grid>

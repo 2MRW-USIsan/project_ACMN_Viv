@@ -1,11 +1,9 @@
-
-
-import { Stack } from "@mui/material";
-import { LabelAtom } from "@/components/atoms/display/LabelAtom";
-import { DividerAtom } from "@/components/atoms/display/DividerAtom";
-import { PromptForgerBlocSectionOrganism } from "@/components/organisms/prompt-forger/bloc/PromptForgerBlocSectionOrganism";
-import { PromptForgerSummaryBlocOrganism } from "@/components/organisms/prompt-forger/summary/PromptForgerSummaryBlocOrganism";
 import { PromptForgerForgersSectionViewModel } from "@/hooks/promptForger/viewModel/usePromptForgerComposer";
+import { Stack } from "@mui/material";
+import { DividerAtom } from "../..//atoms/display/DividerAtom";
+import { LabelAtom } from "../..//atoms/display/LabelAtom";
+import { PromptForgerBlocSectionOrganism } from "../..//organisms/prompt-forger/bloc/PromptForgerBlocSectionOrganism";
+import { PromptForgerSummaryBlocOrganism } from "../..//organisms/prompt-forger/summary/PromptForgerSummaryBlocOrganism";
 
 interface PromptForgerForgersSectionOrganismProps {
   props: PromptForgerForgersSectionViewModel;

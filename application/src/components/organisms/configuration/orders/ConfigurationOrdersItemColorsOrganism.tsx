@@ -1,9 +1,7 @@
-
-
-import { DividerAtom } from "@/components/atoms/display/DividerAtom";
-import { LabelAtom } from "@/components/atoms/display/LabelAtom";
 import { ColorsSection } from "@/hooks/configurations/viewModel/useConfigurationsComposer";
 import { Box, Stack } from "@mui/material";
+import { DividerAtom } from "../../../atoms/display/DividerAtom";
+import { LabelAtom } from "../../../atoms/display/LabelAtom";
 
 interface ConfigurationOrdersItemColorsOrganismProps {
   props: ColorsSection;

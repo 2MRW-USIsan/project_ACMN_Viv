@@ -1,20 +1,4 @@
-
-
-import { ChipCheckboxAtom } from "@/components/atoms/inputs/ChipCheckboxAtom";
-import { DividerAtom } from "@/components/atoms/display/DividerAtom";
-import {
-  IconButtonAtom,
-  IconButtonAtomProps,
-} from "@/components/atoms/inputs/IconButtonAtom";
-import {
-  LabelAtom,
-  LabelAtomProps,
-} from "@/components/atoms/display/LabelAtom";
-import { TextFieldAtom } from "@/components/atoms/inputs/TextFieldAtom";
 import { ConfigBodyBlocPanel } from "@/hooks/configurations/viewModel/useConfigurationsComposer";
-import { ConfigurationOrdersSectionOrganism } from "@/components/organisms/configuration/orders/ConfigurationOrdersSectionOrganism";
-import { ConfigurationSelectSectionOrganism } from "@/components/organisms/configuration/select/ConfigurationSelectSectionOrganism";
-import { ConfigurationSwitchSectionOrganism } from "@/components/organisms/configuration/switch/ConfigurationSwitchSectionOrganism";
 import {
   Box,
   Collapse,
@@ -24,6 +8,17 @@ import {
   Stack,
   Toolbar,
 } from "@mui/material";
+import { DividerAtom } from "../../atoms/display/DividerAtom";
+import { LabelAtom, LabelAtomProps } from "../../atoms/display/LabelAtom";
+import { ChipCheckboxAtom } from "../../atoms/inputs/ChipCheckboxAtom";
+import {
+  IconButtonAtom,
+  IconButtonAtomProps,
+} from "../../atoms/inputs/IconButtonAtom";
+import { TextFieldAtom } from "../../atoms/inputs/TextFieldAtom";
+import { ConfigurationOrdersSectionOrganism } from "../../organisms/configuration/orders/ConfigurationOrdersSectionOrganism";
+import { ConfigurationSelectSectionOrganism } from "../../organisms/configuration/select/ConfigurationSelectSectionOrganism";
+import { ConfigurationSwitchSectionOrganism } from "../../organisms/configuration/switch/ConfigurationSwitchSectionOrganism";
 
 interface ConfigurationBodyOrganismProps {
   props: {

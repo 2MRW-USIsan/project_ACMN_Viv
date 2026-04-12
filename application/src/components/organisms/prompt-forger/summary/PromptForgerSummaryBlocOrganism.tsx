@@ -1,7 +1,5 @@
-
-
-import { PanelFrameAtoms } from "@/components/atoms/layout/PanelFrameAtoms";
 import { SummaryBlocPanel } from "@/hooks/promptForger/viewModel/usePromptForgerComposer";
+import { PanelFrameAtoms } from "../../../atoms/layout/PanelFrameAtoms";
 import { PromptForgerSummaryContentsOrganism } from "./PromptForgerSummaryContentsOrganism";
 
 interface PromptForgerSummaryBlocOrganismProps {

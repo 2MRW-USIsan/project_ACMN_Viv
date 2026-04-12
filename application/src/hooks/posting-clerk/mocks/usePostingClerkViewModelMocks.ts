@@ -1,9 +1,9 @@
+"use client";
 
-
-import { useState } from "react";
-import { usePathname, useRouter } from "next/navigation";
 import { NavItem } from "@/components/atoms/surface/DrawerAtom";
 import { PostingClerkViewModel } from "@/hooks/posting-clerk/viewModel/usePostingClerkComposer";
+import { usePathname, useRouter } from "next/navigation";
+import { useState } from "react";
 
 const NAV_ITEMS: NavItem[] = [
   { href: "/configurations", label: "Configurations" },
@@ -192,39 +192,42 @@ export function usePostingClerkViewModelMocks(): PostingClerkViewModelMocksRetur
 
   const platformPreviews = PLATFORM_KEYS.map((platform) => ({
     key: platform,
-    sectionLabel: PLATFORM_LABELS[platform],
-    isExpanded: platformExpanded[platform],
-    toggleButton: {
-      icon: platformExpanded[platform]
-        ? ("expandLess" as const)
-        : ("expandMore" as const),
-      onClick: () => handleTogglePlatform(platform),
+    frame: {
+      label: { text: PLATFORM_LABELS[platform] },
+      isExpanded: platformExpanded[platform],
+      toggle: {
+        icon: platformExpanded[platform]
+          ? ("expandLess" as const)
+          : ("expandMore" as const),
+        onClick: () => handleTogglePlatform(platform),
+      },
     },
-    titleLabel: "Title:",
+    sectionLabel: { text: PLATFORM_LABELS[platform] },
+    titleLabel: { text: "Title:" },
     titleCopyButton: {
       label: "Copy",
       onClick: () => {},
     },
-    descLabel: "Desc:",
+    descLabel: { text: "Desc:" },
     descCopyButton: {
       label: "Copy",
       onClick: () => {},
     },
-    urlsLabel: "URLs:",
+    urlsLabel: { text: "URLs:" },
     urlsAddButton: {
       label: "Add",
       onClick: () => handleAddUrl(platform),
     },
     urlItems: platformUrlItems[platform].map((urlItem) => ({
       key: urlItem.id,
-      nameLabel: "Name:",
+      nameLabel: { text: "Name:" },
       nameField: {
         placeholder: "text field...",
         value: urlItem.nameValue,
         onChange: (value: string) =>
           handleUrlNameBlur(platform, urlItem.id, value),
       },
-      urlLabel: "URL:",
+      urlLabel: { text: "URL:" },
       urlField: {
         placeholder: "text field...",
         value: urlItem.urlValue,
@@ -236,7 +239,7 @@ export function usePostingClerkViewModelMocks(): PostingClerkViewModelMocksRetur
         onClick: () => handleRemoveUrl(platform, urlItem.id),
       },
     })),
-    previewLabel: "[Preview]",
+    previewLabel: { text: "[Preview]" },
     previewField: {
       placeholder: "Text area Field...",
       value: platformPreviewValues[platform],
@@ -246,7 +249,7 @@ export function usePostingClerkViewModelMocks(): PostingClerkViewModelMocksRetur
 
   const quoteItems = MOCK_QUOTE_KEYS.map((key) => ({
     key,
-    quoteLabel: "- quote:",
+    quoteLabel: { text: "- quote:" },
     quoteField: {
       placeholder: "text field...",
       value: quoteValues[key],
@@ -259,97 +262,99 @@ export function usePostingClerkViewModelMocks(): PostingClerkViewModelMocksRetur
     viewModel: {
       navigationLayout: {
         appBar: {
-          title: "ACMN",
           onMenuOpen: handleMenuOpen,
         },
         drawer: {
           open: drawerOpen,
           onClose: handleDrawerClose,
         },
+        title: "ACMN",
         navigation: {
           linksAbove,
           activeItemLabel,
           links: linksBelow,
           presets: {
-            groupLabel: { text: "Group:", variant: "body2" },
+            groupLabel: { text: "Group:" },
             groupSelect: {
               value: selectedGroup,
               options: MOCK_GROUP_OPTIONS,
               onChange: handleGroupSelect,
             },
-            loadButton: { label: "Load", onClick: () => {}, size: "small" },
-            newButton: { label: "New", onClick: () => {}, size: "small" },
-            nameLabel: { text: "Name:", variant: "body2" },
+            loadButton: { label: "Load", onClick: () => {} },
+            newButton: { label: "New", onClick: () => {} },
+            nameLabel: { text: "Name:" },
             nameField: {
               placeholder: "text field...",
               value: nameEditValue,
               onChange: handleNameEditBlur,
-              size: "small",
             },
-            saveButton: { label: "Save", onClick: () => {}, size: "small" },
-            changeButton: { label: "change", onClick: () => {}, size: "small" },
-            deleteButton: {
-              label: "- Delete ? -",
-              onClick: () => {},
-              size: "small",
-              variant: "text",
-              color: "error",
-            },
+            saveButton: { label: "Save", onClick: () => {} },
+            changeButton: { label: "change", onClick: () => {} },
+            deleteButton: { label: "- Delete ? -", onClick: () => {} },
             presetItemPanels: MOCK_POSTING_ITEMS.map((item) => ({
               key: item.id,
               radio: {
+                label: item.label,
                 checked: selectedItemId === item.id,
                 onChange: () => handleSelectItem(item.id),
               },
-              label: { text: item.label, variant: "body2" as const },
+              label: { text: item.label },
             })),
           },
         },
       },
       postingClerkBody: {
         informProps: {
-          infoSectionLabel: "Information Field:",
-          idLabel: "ID:",
-          idValueLabel: "#01 - [uuid]",
-          titleLabel: "Title:",
+          infoSectionLabel: { text: "Information Field:" },
+          idLabel: { text: "ID:" },
+          idValueLabel: { text: "#01 - [uuid]" },
+          titleLabel: { text: "Title:" },
           titleField: {
             placeholder: "text field...",
             value: titleValue,
             onChange: handleTitleBlur,
           },
-          statusLabel: "Status:",
-          statusValueLabel: "- there are some changes... -",
+          statusLabel: { text: "Status:" },
+          statusValueLabel: { text: "- there are some changes... -" },
           saveButton: { label: "Save", onClick: () => {} },
         },
-        clerkingSectionLabel: "Clerking Field:",
-        titleJpLabel: "Title[JP]:",
-        titleJpField: {
-          placeholder: "text field...",
-          value: titleJpValue,
-          onChange: handleTitleJpBlur,
+        clerkProps: {
+          label: { text: "Clerking Field:" },
+          clerks: {
+            titleJpLabel: { text: "Title[JP]:" },
+            titleEnLabel: { text: "Title[EN]:" },
+            symbolLabel: { text: "Symbol:" },
+            picsLabel: { text: "Pics:" },
+            titleJpField: {
+              placeholder: "text field...",
+              value: titleJpValue,
+              onChange: handleTitleJpBlur,
+            },
+            titleEnField: {
+              placeholder: "text field...",
+              value: titleEnValue,
+              onChange: handleTitleEnBlur,
+            },
+            symbolField: {
+              placeholder: "...",
+              value: symbolValue,
+              onChange: handleSymbolBlur,
+            },
+            picsField: {
+              placeholder: "...",
+              value: picsValue,
+              onChange: handlePicsBlur,
+            },
+          },
+          previews: {
+            postingPreviewLabel: { text: "Posting Preview:" },
+            platformPreviews,
+          },
+          quotes: {
+            quotesSectionLabel: { text: "Quotes Field:" },
+            quoteItems,
+          },
         },
-        titleEnLabel: "Title[EN]:",
-        titleEnField: {
-          placeholder: "text field...",
-          value: titleEnValue,
-          onChange: handleTitleEnBlur,
-        },
-        symbolLabel: "Symbol:",
-        symbolField: {
-          placeholder: "...",
-          value: symbolValue,
-          onChange: handleSymbolBlur,
-        },
-        picsLabel: "Pics:",
-        picsField: {
-          placeholder: "...",
-          value: picsValue,
-          onChange: handlePicsBlur,
-        },
-        postingPreviewLabel: "Posting Preview:",
-        platformPreviews,
-        quotesSectionLabel: "Quotes Field:",
-        quoteItems,
       },
     },
   };

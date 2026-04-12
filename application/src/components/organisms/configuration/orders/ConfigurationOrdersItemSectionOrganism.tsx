@@ -1,15 +1,13 @@
-
-
-import { ChipCheckboxAtom } from "@/components/atoms/inputs/ChipCheckboxAtom";
-import { IconButtonAtom } from "@/components/atoms/inputs/IconButtonAtom";
-import { LabelAtom } from "@/components/atoms/display/LabelAtom";
-import { TextFieldAtom } from "@/components/atoms/inputs/TextFieldAtom";
-import { ConfigurationComplexSectionOrganism } from "../ConfigurationComplexSectionOrganism";
-import { OrdersRandomSectionOrganism } from "./OrdersRandomSectionOrganism";
-import { ConfigurationOrdersItemColorsOrganism } from "./ConfigurationOrdersItemColorsOrganism";
-import { ConfigurationOrdersItemScriptsOrganism } from "./ConfigurationOrdersItemScriptsOrganism";
 import { OrdersItemSection } from "@/hooks/configurations/viewModel/useConfigurationsComposer";
 import { Box, Collapse, Divider, List, ListItem, Stack } from "@mui/material";
+import { LabelAtom } from "../../../atoms/display/LabelAtom";
+import { ChipCheckboxAtom } from "../../../atoms/inputs/ChipCheckboxAtom";
+import { IconButtonAtom } from "../../../atoms/inputs/IconButtonAtom";
+import { TextFieldAtom } from "../../../atoms/inputs/TextFieldAtom";
+import { ConfigurationComplexSectionOrganism } from "../ConfigurationComplexSectionOrganism";
+import { ConfigurationOrdersItemColorsOrganism } from "./ConfigurationOrdersItemColorsOrganism";
+import { ConfigurationOrdersItemScriptsOrganism } from "./ConfigurationOrdersItemScriptsOrganism";
+import { OrdersRandomSectionOrganism } from "./OrdersRandomSectionOrganism";
 
 const BLANK_LABEL = {
   text: "Blank",

@@ -1,14 +1,4 @@
-
-
-import { BodyFrame } from "@/components/atoms/layout/BodyFrame";
-import {
-  ClerkSection,
-  ClerkSectionType,
-} from "@/components/organisms/posting-clerk/section/ClerkSection";
-import {
-  InformSection,
-  InformSectionType,
-} from "@/components/organisms/posting-clerk/section/InformSection";
+import { AlignLayout } from "@/components/atoms/layout/AlignLayout";
 import {
   ButtonAtomType,
   IconButtonAtomType,
@@ -16,6 +6,15 @@ import {
   TextAreaAtomType,
   TextFieldAtomType,
 } from "@/types/ui";
+import { BodyFrame } from "../../atoms/layout/BodyFrame";
+import {
+  ClerkSection,
+  ClerkSectionType,
+} from "../../organisms/posting-clerk/section/ClerkSection";
+import {
+  InformSection,
+  InformSectionType,
+} from "../../organisms/posting-clerk/section/InformSection";
 
 export interface UrlItemPanel {
   key: string;
@@ -61,8 +60,10 @@ interface BodyProps {
 export function Body({ props }: BodyProps) {
   return (
     <BodyFrame>
-      <InformSection props={props.informProps} />
-      <ClerkSection props={props.clerkProps} />
+      <AlignLayout column={1}>
+        <InformSection props={props.informProps} />
+        <ClerkSection props={props.clerkProps} />
+      </AlignLayout>
     </BodyFrame>
   );
 }

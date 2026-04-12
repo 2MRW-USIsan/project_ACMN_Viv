@@ -1,11 +1,9 @@
-
-
-import { Box, Stack } from "@mui/material";
-import { LabelAtom } from "@/components/atoms/display/LabelAtom";
-import { DividerAtom } from "@/components/atoms/display/DividerAtom";
-import { TextFieldAtom } from "@/components/atoms/inputs/TextFieldAtom";
-import { ButtonAtom } from "@/components/atoms/inputs/ButtonAtom";
 import { PromptForgerInfoSectionViewModel } from "@/hooks/promptForger/viewModel/usePromptForgerComposer";
+import { Box, Stack } from "@mui/material";
+import { DividerAtom } from "../../atoms/display/DividerAtom";
+import { LabelAtom } from "../../atoms/display/LabelAtom";
+import { ButtonAtom } from "../../atoms/inputs/ButtonAtom";
+import { TextFieldAtom } from "../../atoms/inputs/TextFieldAtom";
 
 interface PromptForgerInfoSectionOrganismProps {
   props: PromptForgerInfoSectionViewModel;

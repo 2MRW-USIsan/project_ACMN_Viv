@@ -1,10 +1,11 @@
-import { LabelAtom } from "@/components/atoms/display/LabelAtom";
-import { ButtonAtom } from "@/components/atoms/inputs/ButtonAtom";
-import { TextFieldAtom } from "@/components/atoms/inputs/TextFieldAtom";
-import { GridLayout } from "@/components/atoms/layout/GridLayout";
-import { SectionLabel } from "@/components/molecules/SectionLabel";
+import { AlignLayout } from "@/components/atoms/layout/AlignLayout";
 import { postingClerkTheme } from "@/theme/postingClerk";
 import { ButtonAtomType, LabelAtomType, TextFieldAtomType } from "@/types/ui";
+import { LabelAtom } from "../../../atoms/display/LabelAtom";
+import { ButtonAtom } from "../../../atoms/inputs/ButtonAtom";
+import { TextFieldAtom } from "../../../atoms/inputs/TextFieldAtom";
+import { GridLayout } from "../../../atoms/layout/GridLayout";
+import { SectionLabel } from "../../../molecules/SectionLabel";
 
 export type QuotesItemType = {
   key: string;
@@ -21,21 +22,18 @@ interface QuotesFieldProps {
 }
 export function QuotesField({ props }: QuotesFieldProps) {
   return (
-    <>
+    <AlignLayout column={0.5}>
       <SectionLabel props={props.quotesSectionLabel} />
-      <GridLayout style={{ size: "CONTAINER" }}>
+      <AlignLayout column={0.1}>
         {props.quoteItems.map((quoteItem) => (
           <GridLayout style={{ size: "CONTAINER" }} key={quoteItem.key}>
-            <GridLayout style={{ size: 1 }}>
-              <LabelAtom
-                props={quoteItem.quoteLabel}
-                style={postingClerkTheme.fieldLabel}
-              />
+            <GridLayout style={{ size: 2 }}>
+              <LabelAtom props={quoteItem.quoteLabel} style={"LABEL"} />
             </GridLayout>
-            <GridLayout style={{ size: 10 }}>
+            <GridLayout style={{ size: 8 }}>
               <TextFieldAtom props={quoteItem.quoteField} />
             </GridLayout>
-            <GridLayout style={{ size: 1 }}>
+            <GridLayout style={{ size: 2 }}>
               <ButtonAtom
                 props={quoteItem.copyButton}
                 style={postingClerkTheme.standardButton}
@@ -43,7 +41,7 @@ export function QuotesField({ props }: QuotesFieldProps) {
             </GridLayout>
           </GridLayout>
         ))}
-      </GridLayout>
-    </>
+      </AlignLayout>
+    </AlignLayout>
   );
 }

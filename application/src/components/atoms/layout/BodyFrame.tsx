@@ -1,13 +1,16 @@
-import { Stack, Toolbar } from "@mui/material";
+import { Toolbar } from "@mui/material";
+import { AlignLayout } from "./AlignLayout";
 
 interface BodyFrameProps {
   children: React.ReactNode;
 }
 export function BodyFrame({ children }: BodyFrameProps) {
   return (
-    <Stack spacing={2} p={3} maxWidth={960} mx="auto">
+    <AlignLayout column={0.1}>
       <Toolbar />
       {children}
-    </Stack>
+      <Toolbar />
+      <Toolbar />
+    </AlignLayout>
   );
 }

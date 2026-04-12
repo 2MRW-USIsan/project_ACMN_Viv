@@ -1,18 +1,22 @@
-
-
 import { LabelAtomType } from "@/types/ui";
 import { Typography } from "@mui/material";
 
 export interface LabelAtomProps {
   props: LabelAtomType;
-  style?: LabelAtomType["style"];
+  style?: LabelSize;
+  error?: boolean;
+  primary?: boolean;
 }
 type LabelSize = "TITLE" | "HEADER" | "LABEL" | "BODY" | "INPUT" | "CAPTION";
 
-export function LabelAtom({ props, style: styleProp }: LabelAtomProps) {
+export function LabelAtom({
+  props,
+  style = "BODY",
+  primary,
+  error,
+}: LabelAtomProps) {
   type MaiLabelSize = "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
-  const style = styleProp ?? props.style ?? { color: "info", size: "CAPTION" };
-
+  const labelColor = primary ? "primary" : error ? "error" : "default";
   const labelSize: Record<LabelSize, MaiLabelSize> = {
     TITLE: "h1",
     HEADER: "h2",
@@ -22,7 +26,7 @@ export function LabelAtom({ props, style: styleProp }: LabelAtomProps) {
     CAPTION: "h6",
   };
   return (
-    <Typography variant={labelSize[style.size]} color={style.color}>
+    <Typography variant={labelSize[style]} color={labelColor}>
       {props.text}
     </Typography>
   );

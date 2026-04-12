@@ -1,17 +1,11 @@
-import {
-  ButtonAtomProps,
-  ButtonAtom,
-} from "@/components/atoms/inputs/ButtonAtom";
-import { DividerAtom } from "@/components/atoms/display/DividerAtom";
-import {
-  LabelAtomProps,
-  LabelAtom,
-} from "@/components/atoms/display/LabelAtom";
-import {
-  TextAreaAtomProps,
-  TextAreaAtom,
-} from "@/components/atoms/inputs/TextAreaAtom";
 import { Stack } from "@mui/material";
+import { DividerAtom } from "../../atoms/display/DividerAtom";
+import { LabelAtom, LabelAtomProps } from "../../atoms/display/LabelAtom";
+import { ButtonAtom, ButtonAtomProps } from "../../atoms/inputs/ButtonAtom";
+import {
+  TextAreaAtom,
+  TextAreaAtomProps,
+} from "../../atoms/inputs/TextAreaAtom";
 
 interface PresetBuilderBuildersSectionOrganismProps {
   props: {

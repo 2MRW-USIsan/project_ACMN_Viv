@@ -1,8 +1,8 @@
+"use client";
 
-
+import { TextFieldAtomType } from "@/types/ui";
 import { TextField } from "@mui/material";
 import { useEffect, useRef } from "react";
-import { TextFieldAtomType } from "@/types/ui";
 
 export interface TextFieldAtomProps {
   props: TextFieldAtomType;

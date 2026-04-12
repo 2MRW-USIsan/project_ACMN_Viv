@@ -1,11 +1,9 @@
-
-
-import { DividerAtom } from "@/components/atoms/display/DividerAtom";
-import { IconButtonAtom } from "@/components/atoms/inputs/IconButtonAtom";
-import { LabelAtom } from "@/components/atoms/display/LabelAtom";
-import { TextFieldAtom } from "@/components/atoms/inputs/TextFieldAtom";
 import { ComplexSection } from "@/hooks/configurations/viewModel/useConfigurationsComposer";
 import { Box, Collapse, Divider, List, ListItem, Stack } from "@mui/material";
+import { DividerAtom } from "../../atoms/display/DividerAtom";
+import { LabelAtom } from "../../atoms/display/LabelAtom";
+import { IconButtonAtom } from "../../atoms/inputs/IconButtonAtom";
+import { TextFieldAtom } from "../../atoms/inputs/TextFieldAtom";
 
 interface ConfigurationComplexSectionOrganismProps {
   props: ComplexSection;

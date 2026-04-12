@@ -1,10 +1,8 @@
-
-
-import { ButtonAtomProps } from "@/components/atoms/inputs/ButtonAtom";
-import { LabelAtomProps } from "@/components/atoms/display/LabelAtom";
-import { TextFieldAtomProps } from "@/components/atoms/inputs/TextFieldAtom";
-import { TextAreaAtomProps } from "@/components/atoms/inputs/TextAreaAtom";
 import { Stack, Toolbar } from "@mui/material";
+import { LabelAtomProps } from "../../atoms/display/LabelAtom";
+import { ButtonAtomProps } from "../../atoms/inputs/ButtonAtom";
+import { TextAreaAtomProps } from "../../atoms/inputs/TextAreaAtom";
+import { TextFieldAtomProps } from "../../atoms/inputs/TextFieldAtom";
 import { PresetBuilderBuildersSectionOrganism } from "./PresetBuilderBuildersSectionOrganism";
 import { PresetBuilderInformSectionOrganism } from "./PresetBuilderInformSectionOrganism";
 
