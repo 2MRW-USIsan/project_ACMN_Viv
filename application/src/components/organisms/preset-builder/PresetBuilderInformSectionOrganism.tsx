@@ -1,51 +1,61 @@
-import { Box, Stack } from "@mui/material";
-import { DividerAtom } from "../../atoms/display/DividerAtom";
-import { LabelAtom, LabelAtomProps } from "../../atoms/display/LabelAtom";
-import { ButtonAtom, ButtonAtomProps } from "../../atoms/inputs/ButtonAtom";
-import {
-  TextFieldAtom,
-  TextFieldAtomProps,
-} from "../../atoms/inputs/TextFieldAtom";
+import { presetBuilderTheme } from "@/theme/presetBuilder";
+import { InformSectionType } from "@/types/preset-builder";
+import { LabelAtom } from "../../atoms/display/LabelAtom";
+import { ButtonAtom } from "../../atoms/inputs/ButtonAtom";
+import { TextFieldAtom } from "../../atoms/inputs/TextFieldAtom";
+import { AlignLayout } from "../../atoms/layout/AlignLayout";
+import { GridLayout } from "../../atoms/layout/GridLayout";
+import { SectionLabel } from "../../molecules/SectionLabel";
 
 interface PresetBuilderInformSectionOrganismProps {
-  props: {
-    infoSectionLabel: LabelAtomProps["props"];
-    idLabel: LabelAtomProps["props"];
-    idValueLabel: LabelAtomProps["props"];
-    titleLabel: LabelAtomProps["props"];
-    titleField: TextFieldAtomProps["props"];
-    statusLabel: LabelAtomProps["props"];
-    statusValueLabel: LabelAtomProps["props"];
-    saveButton: ButtonAtomProps["props"];
-  };
+  props: InformSectionType;
 }
 export function PresetBuilderInformSectionOrganism({
   props,
 }: PresetBuilderInformSectionOrganismProps) {
   return (
-    <>
-      <LabelAtom props={props.infoSectionLabel} />
-      <DividerAtom />
-
-      <Stack spacing={1} pl={2}>
-        <Stack direction="row" alignItems="center" spacing={1}>
-          <LabelAtom props={props.idLabel} />
-          <LabelAtom props={props.idValueLabel} />
-        </Stack>
-
-        <Stack direction="row" alignItems="center" spacing={1}>
-          <LabelAtom props={props.titleLabel} />
-          <Box sx={{ flex: 1, maxWidth: 400 }}>
-            <TextFieldAtom props={props.titleField} />
-          </Box>
-          <ButtonAtom props={props.saveButton} />
-        </Stack>
-
-        <Stack direction="row" alignItems="center" spacing={1}>
-          <LabelAtom props={props.statusLabel} />
-          <LabelAtom props={props.statusValueLabel} />
-        </Stack>
-      </Stack>
-    </>
+    <AlignLayout column={0.5}>
+      <SectionLabel props={props.infoSectionLabel} />
+      <GridLayout style={{ size: "CONTAINER" }}>
+        <GridLayout style={{ size: 12 }}>
+          <GridLayout style={{ size: 2 }}>
+            <LabelAtom props={props.idLabel} style={"LABEL"} />
+          </GridLayout>
+          <GridLayout style={{ size: 10 }}>
+            <AlignLayout style={"START"}>
+              <LabelAtom props={props.idValueLabel} style={"BODY"} />
+            </AlignLayout>
+          </GridLayout>
+        </GridLayout>
+        <GridLayout style={{ size: 12 }}>
+          <GridLayout style={{ size: 2 }}>
+            <LabelAtom props={props.titleLabel} style={"LABEL"} />
+          </GridLayout>
+          <GridLayout style={{ size: 10 }}>
+            <AlignLayout style={"END"}>
+              <TextFieldAtom props={props.titleField} />
+            </AlignLayout>
+          </GridLayout>
+        </GridLayout>
+        <GridLayout style={{ size: 12 }}>
+          <GridLayout style={{ size: 2 }}>
+            <LabelAtom props={props.statusLabel} style={"LABEL"} />
+          </GridLayout>
+          <GridLayout style={{ size: 8 }}>
+            <AlignLayout style={"END"}>
+              <LabelAtom props={props.statusValueLabel} style={"CAPTION"} />
+            </AlignLayout>
+          </GridLayout>
+          <GridLayout style={{ size: 2 }}>
+            <AlignLayout style={"END"}>
+              <ButtonAtom
+                props={props.saveButton}
+                style={presetBuilderTheme.standardButton}
+              />
+            </AlignLayout>
+          </GridLayout>
+        </GridLayout>
+      </GridLayout>
+    </AlignLayout>
   );
 }
