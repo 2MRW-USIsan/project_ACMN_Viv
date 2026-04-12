@@ -1,5 +1,3 @@
-
-
 import { LabelAtomProps } from "@/components/atoms/display/LabelAtom";
 import { ButtonAtomProps } from "@/components/atoms/inputs/ButtonAtom";
 import { IconButtonAtomProps } from "@/components/atoms/inputs/IconButtonAtom";

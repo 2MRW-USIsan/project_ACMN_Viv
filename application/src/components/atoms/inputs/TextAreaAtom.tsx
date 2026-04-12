@@ -11,8 +11,8 @@ export interface TextAreaAtomProps {
 
 export function TextAreaAtom({ props, style }: TextAreaAtomProps) {
   const inputRef = useRef<HTMLInputElement | HTMLTextAreaElement>(null);
-  const currentValue = props.value ?? "";
-  const styles = style ?? { rows: 2 };
+  const currentValue = props.value ?? props.defaultValue ?? "";
+  const styles = style ?? { rows: props.rows ?? 2 };
 
   useEffect(() => {
     if (inputRef.current) inputRef.current.value = currentValue;
@@ -23,6 +23,7 @@ export function TextAreaAtom({ props, style }: TextAreaAtomProps) {
 
     const latestValue = inputRef.current.value;
     props.onChange?.(latestValue);
+    props.onBlur?.(latestValue);
   };
 
   return (
@@ -32,9 +33,9 @@ export function TextAreaAtom({ props, style }: TextAreaAtomProps) {
       defaultValue={currentValue}
       label={props.label}
       placeholder={props.placeholder}
-      fullWidth
+      fullWidth={props.fullWidth ?? true}
       size="small"
-      multiline
+      multiline={props.multiline ?? true}
       rows={styles.rows}
     />
   );

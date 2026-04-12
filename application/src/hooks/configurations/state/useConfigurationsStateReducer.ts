@@ -1,5 +1,3 @@
-
-
 import { useEffect, useReducer } from "react";
 import {
   ConfigurationsFetchItem,

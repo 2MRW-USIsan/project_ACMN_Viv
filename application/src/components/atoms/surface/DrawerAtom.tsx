@@ -1,5 +1,3 @@
-
-
 import { Drawer, List, Toolbar } from "@mui/material";
 import { DrawerAtomType } from "@/types/ui";
 

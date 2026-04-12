@@ -1,5 +1,3 @@
-
-
 import { useConfigurationsFetchReducer } from "@/hooks/configurations/state/useConfigurationsFetchReducer";
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type

@@ -1,19 +1,9 @@
-import { LabelAtomType, TextFieldAtomType } from "@/types/ui";
+import { ClerkFieldType } from "@/types/posting-clerk";
 import { LabelAtom } from "../../../atoms/display/LabelAtom";
 import { TextFieldAtom } from "../../../atoms/inputs/TextFieldAtom";
 import { AlignLayout } from "../../../atoms/layout/AlignLayout";
 import { GridLayout } from "../../../atoms/layout/GridLayout";
 
-export type ClerkFieldType = {
-  titleJpLabel: LabelAtomType;
-  titleJpField: TextFieldAtomType;
-  titleEnLabel: LabelAtomType;
-  titleEnField: TextFieldAtomType;
-  symbolLabel: LabelAtomType;
-  symbolField: TextFieldAtomType;
-  picsLabel: LabelAtomType;
-  picsField: TextFieldAtomType;
-};
 interface ClerkFieldProps {
   props: ClerkFieldType;
 }

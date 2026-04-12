@@ -1,10 +1,8 @@
-
-
 import { NavigationOrganismProps } from "@/components/organisms/navigation/NavigationOrganism";
-import { BodyType as PostingClerkBodyType } from "@/components/organisms/posting-clerk/Body";
 import { PostingClerkContexts } from "@/hooks/posting-clerk/state/usePostingClerkContext";
 import { usePostingClerkHandlers } from "@/hooks/posting-clerk/viewModel/usePostingClerkHandlers";
 import { usePostingClerkProperties } from "@/hooks/posting-clerk/viewModel/usePostingClerkProperties";
+import { BodyType } from "@/types/posting-clerk";
 
 export interface PostingClerkViewModel {
   navigationLayout: {
@@ -18,7 +16,7 @@ export interface PostingClerkViewModel {
     title: string;
     navigation: NavigationOrganismProps["props"];
   };
-  postingClerkBody: PostingClerkBodyType;
+  postingClerkBody: BodyType;
 }
 
 export function usePostingClerkComposer(contexts: PostingClerkContexts) {

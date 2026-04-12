@@ -1,5 +1,3 @@
-
-
 import { usePostingClerkFetchReducer } from "@/hooks/posting-clerk/state/usePostingClerkFetchReducer";
 
 export interface PostingClerkFetchItem {

@@ -1,22 +1,12 @@
 import { AlignLayout } from "@/components/atoms/layout/AlignLayout";
 import { postingClerkTheme } from "@/theme/postingClerk";
-import { ButtonAtomType, LabelAtomType, TextFieldAtomType } from "@/types/ui";
+import { QuotesFieldType } from "@/types/posting-clerk";
 import { LabelAtom } from "../../../atoms/display/LabelAtom";
 import { ButtonAtom } from "../../../atoms/inputs/ButtonAtom";
 import { TextFieldAtom } from "../../../atoms/inputs/TextFieldAtom";
 import { GridLayout } from "../../../atoms/layout/GridLayout";
 import { SectionLabel } from "../../../molecules/SectionLabel";
 
-export type QuotesItemType = {
-  key: string;
-  quoteLabel: LabelAtomType;
-  quoteField: TextFieldAtomType;
-  copyButton: ButtonAtomType;
-};
-export type QuotesFieldType = {
-  quotesSectionLabel: LabelAtomType;
-  quoteItems: QuotesItemType[];
-};
 interface QuotesFieldProps {
   props: QuotesFieldType;
 }

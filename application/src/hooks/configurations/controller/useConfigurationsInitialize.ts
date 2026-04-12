@@ -1,5 +1,3 @@
-
-
 import { ConfigurationsContexts } from "@/hooks/configurations/state/useConfigurationsContext";
 
 export function useConfigurationsInitialize(

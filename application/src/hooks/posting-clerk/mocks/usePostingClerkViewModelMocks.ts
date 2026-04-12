@@ -202,48 +202,53 @@ export function usePostingClerkViewModelMocks(): PostingClerkViewModelMocksRetur
         onClick: () => handleTogglePlatform(platform),
       },
     },
-    sectionLabel: { text: PLATFORM_LABELS[platform] },
-    titleLabel: { text: "Title:" },
-    titleCopyButton: {
-      label: "Copy",
-      onClick: () => {},
-    },
-    descLabel: { text: "Desc:" },
-    descCopyButton: {
-      label: "Copy",
-      onClick: () => {},
-    },
-    urlsLabel: { text: "URLs:" },
-    urlsAddButton: {
-      label: "Add",
-      onClick: () => handleAddUrl(platform),
-    },
-    urlItems: platformUrlItems[platform].map((urlItem) => ({
-      key: urlItem.id,
-      nameLabel: { text: "Name:" },
-      nameField: {
-        placeholder: "text field...",
-        value: urlItem.nameValue,
-        onChange: (value: string) =>
-          handleUrlNameBlur(platform, urlItem.id, value),
+    copyForm: {
+      titleLabel: { text: "Title:" },
+      titleCopyButton: {
+        label: "Copy",
+        onClick: () => {},
       },
-      urlLabel: { text: "URL:" },
-      urlField: {
-        placeholder: "text field...",
-        value: urlItem.urlValue,
-        onChange: (value: string) =>
-          handleUrlValueBlur(platform, urlItem.id, value),
+      descLabel: { text: "Desc:" },
+      descCopyButton: {
+        label: "Copy",
+        onClick: () => {},
       },
-      removeButton: {
-        icon: "removeCircle" as const,
-        onClick: () => handleRemoveUrl(platform, urlItem.id),
+    },
+    referenceForm: {
+      urlsLabel: { text: "URLs:" },
+      urlsAddButton: {
+        label: "Add",
+        onClick: () => handleAddUrl(platform),
       },
-    })),
-    previewLabel: { text: "[Preview]" },
-    previewField: {
-      placeholder: "Text area Field...",
-      value: platformPreviewValues[platform],
-      onChange: (value: string) => handlePreviewBlur(platform, value),
+      urlItems: platformUrlItems[platform].map((urlItem) => ({
+        key: urlItem.id,
+        nameLabel: { text: "Name:" },
+        nameField: {
+          placeholder: "text field...",
+          value: urlItem.nameValue,
+          onChange: (value: string) =>
+            handleUrlNameBlur(platform, urlItem.id, value),
+        },
+        urlLabel: { text: "URL:" },
+        urlField: {
+          placeholder: "text field...",
+          value: urlItem.urlValue,
+          onChange: (value: string) =>
+            handleUrlValueBlur(platform, urlItem.id, value),
+        },
+        removeButton: {
+          icon: "removeCircle" as const,
+          onClick: () => handleRemoveUrl(platform, urlItem.id),
+        },
+      })),
+    },
+    previewForm: {
+      previewLabel: { text: "[Preview]" },
+      previewField: {
+        placeholder: "Text area Field...",
+        value: platformPreviewValues[platform],
+        onChange: (value: string) => handlePreviewBlur(platform, value),
+      },
     },
   }));
 

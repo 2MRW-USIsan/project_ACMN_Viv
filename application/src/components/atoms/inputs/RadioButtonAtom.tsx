@@ -1,5 +1,3 @@
-
-
 import CheckIcon from "@mui/icons-material/Check";
 import { Chip } from "@mui/material";
 import { ChipRadioAtomType } from "@/types/ui";

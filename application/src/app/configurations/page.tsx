@@ -1,4 +1,4 @@
-
+"use client";
 
 // import { useConfigurationsViewModel } from "@/hooks/configurations/viewModel/useConfigurationsViewModel";
 import { useConfigurationsViewModelMocks } from "@/hooks/configurations/mocks/useConfigurationsViewModelMocks";

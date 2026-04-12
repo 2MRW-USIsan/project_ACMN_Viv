@@ -1,5 +1,3 @@
-
-
 import { ChipCheckboxAtomProps } from "@/components/atoms/inputs/ChipCheckboxAtom";
 import { IconButtonAtomProps } from "@/components/atoms/inputs/IconButtonAtom";
 import { LabelAtomProps } from "@/components/atoms/display/LabelAtom";

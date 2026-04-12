@@ -1,5 +1,3 @@
-
-
 import { NavigationLayoutOrganism } from "@/components/organisms/navigation/NavigationLayoutOrganism";
 import { Body as PostingClerkBody } from "@/components/organisms/posting-clerk/Body";
 import { PostingClerkViewModel } from "@/hooks/posting-clerk/viewModel/usePostingClerkComposer";

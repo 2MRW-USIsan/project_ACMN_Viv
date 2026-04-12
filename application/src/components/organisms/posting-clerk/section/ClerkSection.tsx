@@ -1,25 +1,9 @@
-import { LabelAtomType } from "@/types/ui";
-import { SectionLabel } from "../../../molecules/SectionLabel";
-import {
-  ClerkField,
-  ClerkFieldType,
-} from "../../../organisms/posting-clerk/field/ClerkField";
-import {
-  PreviewField,
-  PreviewFieldType,
-} from "../../../organisms/posting-clerk/field/PreviewField";
-import {
-  QuotesField,
-  QuotesFieldType,
-} from "../../../organisms/posting-clerk/field/QuotesField";
 import { AlignLayout } from "@/components/atoms/layout/AlignLayout";
-
-export interface ClerkSectionType {
-  label: LabelAtomType;
-  clerks: ClerkFieldType;
-  previews: PreviewFieldType;
-  quotes: QuotesFieldType;
-}
+import { ClerkSectionType } from "@/types/posting-clerk";
+import { SectionLabel } from "../../../molecules/SectionLabel";
+import { ClerkField } from "../../../organisms/posting-clerk/field/ClerkField";
+import { PreviewField } from "../../../organisms/posting-clerk/field/PreviewField";
+import { QuotesField } from "../../../organisms/posting-clerk/field/QuotesField";
 
 interface ClerkSectionProps {
   props: ClerkSectionType;

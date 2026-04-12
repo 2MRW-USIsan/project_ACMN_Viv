@@ -5,6 +5,9 @@ export type DividerAtomType = {
 
 export type LabelAtomType = {
   text: string;
+  variant?: string;
+  color?: string;
+  fontWeight?: string | number;
   style?: {
     size: "TITLE" | "HEADER" | "LABEL" | "BODY" | "INPUT" | "CAPTION";
     color: string;
@@ -17,6 +20,9 @@ export type ButtonAtomType = {
   onClick: () => void;
   disabled?: boolean;
   isLoading?: boolean;
+  size?: "small" | "medium" | "large";
+  variant?: "contained" | "outlined" | "text";
+  color?: "primary" | "secondary" | "error";
   style?: {
     shape: "FILLED" | "OUTLINED" | "TEXT";
     color: "PRIMARY" | "ALTERED" | "WARNING";
@@ -33,6 +39,8 @@ export type ChipCheckboxAtomType = {
 export type IconButtonAtomType = {
   icon: "removeCircle" | "expandMore" | "expandLess" | "add";
   onClick: () => void;
+  color?: "primary" | "secondary" | "default";
+  size?: "small" | "medium" | "large";
   style?: {
     color: "PRIMARY" | "ALTERED" | "DEFAULT";
     size: "SMALL" | "MEDIUM" | "LARGE";
@@ -40,7 +48,7 @@ export type IconButtonAtomType = {
 };
 
 export type ChipRadioAtomType = {
-  label: string;
+  label?: string;
   checked: boolean;
   onChange: () => void;
 };
@@ -60,16 +68,25 @@ export type TextAreaAtomType = {
   label?: string;
   placeholder?: string;
   value?: string;
+  defaultValue?: string;
   onChange?: (value: string) => void;
+  onBlur?: (value: string) => void;
   rows?: number;
+  multiline?: boolean;
+  fullWidth?: boolean;
 };
 
 export type TextFieldAtomType = {
   label?: string;
   placeholder?: string;
-  value: string;
-  onChange: (value: string) => void;
+  value?: string;
+  defaultValue?: string;
+  onChange?: (value: string) => void;
+  onBlur?: (value: string) => void;
   size?: "small" | "medium";
+  fullWidth?: boolean;
+  multiline?: boolean;
+  rows?: number;
 };
 
 // Layout Atoms

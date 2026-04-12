@@ -1,5 +1,3 @@
-
-
 import { Button, CircularProgress } from "@mui/material";
 import { ButtonAtomType } from "@/types/ui";
 
@@ -15,7 +13,8 @@ export function ButtonAtom({ props, style: styleProp }: ButtonAtomProps) {
   type MuiButtonVariant = "contained" | "outlined" | "text";
   type MuiButtonColor = "primary" | "secondary" | "error";
   type MuiButtonSize = "small" | "medium" | "large";
-  const style = styleProp ?? props.style ?? { shape: "TEXT", color: "PRIMARY", size: "NORMAL" };
+  const style = styleProp ??
+    props.style ?? { shape: "TEXT", color: "PRIMARY", size: "NORMAL" };
 
   const buttonVariant: Record<ButtonShape, MuiButtonVariant> = {
     FILLED: "contained",

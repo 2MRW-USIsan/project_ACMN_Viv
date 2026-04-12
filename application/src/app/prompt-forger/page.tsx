@@ -1,4 +1,4 @@
-
+"use client";
 
 // import { usePromptForgerViewModel } from "@/hooks/promptForger/viewModel/usePromptForgerViewModel";
 import { usePromptForgerViewModelMocks } from "@/hooks/promptForger/mocks/usePromptForgerViewModelMocks";

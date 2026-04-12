@@ -1,4 +1,3 @@
-
 import { Box, Collapse, Stack } from "@mui/material";
 import { PanelFrameAtomsType } from "@/types/ui";
 import { DividerAtom } from "../display/DividerAtom";

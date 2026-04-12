@@ -1,28 +1,11 @@
 import { postingClerkTheme } from "@/theme/postingClerk";
-import { ButtonAtomType, LabelAtomType, TextFieldAtomType } from "@/types/ui";
+import { InformSectionType } from "@/types/posting-clerk";
 import { LabelAtom } from "../../../atoms/display/LabelAtom";
 import { ButtonAtom } from "../../../atoms/inputs/ButtonAtom";
 import { TextFieldAtom } from "../../../atoms/inputs/TextFieldAtom";
 import { AlignLayout } from "../../../atoms/layout/AlignLayout";
 import { GridLayout } from "../../../atoms/layout/GridLayout";
 import { SectionLabel } from "../../../molecules/SectionLabel";
-
-export interface InformSectionType {
-  infoSectionLabel: LabelAtomType;
-  idLabel: LabelAtomType;
-  idValueLabel: LabelAtomType;
-  titleLabel: LabelAtomType;
-  titleField: Pick<
-    TextFieldAtomType,
-    "placeholder" | "value" | "onChange" | "label"
-  >;
-  statusLabel: LabelAtomType;
-  statusValueLabel: LabelAtomType;
-  saveButton: Pick<
-    ButtonAtomType,
-    "label" | "onClick" | "disabled" | "isLoading"
-  >;
-}
 
 interface InformSectionProps {
   props: InformSectionType;

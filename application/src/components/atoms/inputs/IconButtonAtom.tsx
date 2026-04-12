@@ -1,11 +1,9 @@
-
-
+import { IconButtonAtomType } from "@/types/ui";
 import AddIcon from "@mui/icons-material/Add";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import { IconButton } from "@mui/material";
-import { IconButtonAtomType } from "@/types/ui";
 
 export interface IconButtonAtomProps {
   props: IconButtonAtomType;
@@ -16,10 +14,13 @@ type IconColor = "PRIMARY" | "ALTERED" | "DEFAULT";
 type IconSize = "SMALL" | "MEDIUM" | "LARGE";
 type IconType = "removeCircle" | "expandMore" | "expandLess" | "add";
 
-export function IconButtonAtom({ props, style: styleProp }: IconButtonAtomProps) {
+export function IconButtonAtom({
+  props,
+  style = { color: "DEFAULT", size: "SMALL" },
+}: IconButtonAtomProps) {
   type MuiIconColor = "primary" | "secondary" | "default";
   type MuiIconSize = "small" | "medium" | "large";
-  const style = styleProp ?? props.style ?? { color: "DEFAULT", size: "SMALL" };
+  const {} = style;
 
   const iconShape: Record<IconType, React.ReactElement> = {
     removeCircle: <RemoveCircleOutlineIcon />,
