@@ -1,5 +1,5 @@
 import { ForgerBlocPanel } from "@/hooks/promptForger/viewModel/usePromptForgerComposer";
-import { PanelFrameAtoms } from "../../../atoms/layout/PanelFrameAtoms";
+import { ExpandFrame } from "../../../atoms/layout/ExpandFrame";
 import { PromptForgerBlocContentsOrganism } from "./PromptForgerBlocContentsOrganism";
 
 interface PromptForgerBlocSectionOrganismProps {
@@ -10,8 +10,8 @@ export function PromptForgerBlocSectionOrganism({
   props,
 }: PromptForgerBlocSectionOrganismProps) {
   return (
-    <PanelFrameAtoms props={props.panelInfo}>
+    <ExpandFrame props={props.panelInfo}>
       <PromptForgerBlocContentsOrganism props={props.blocInfo} />
-    </PanelFrameAtoms>
+    </ExpandFrame>
   );
 }

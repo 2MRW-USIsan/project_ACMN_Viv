@@ -20,7 +20,7 @@ export function PromptForgerBlocContentsOrganism({
   props,
 }: PromptForgerBlocContentsOrganismProps) {
   return (
-    <AlignLayout column={1}>
+    <AlignLayout column={0.1}>
       {props.ordersSection && (
         <PromptForgerOrdersSectionOrganism props={props.ordersSection} />
       )}

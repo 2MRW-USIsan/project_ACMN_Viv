@@ -1,5 +1,5 @@
 import { PromptIdeaSection } from "@/hooks/promptForger/viewModel/usePromptForgerComposer";
-import { PanelFrameAtoms } from "../../../atoms/layout/PanelFrameAtoms";
+import { ExpandFrame } from "../../../atoms/layout/ExpandFrame";
 import { PromptForgerPromptFieldOrganism } from "./PromptForgerPromptFieldOrganism";
 
 interface PromptForgerPromptIdeaOrganismProps {
@@ -10,8 +10,8 @@ export function PromptForgerPromptIdeaOrganism({
   props,
 }: PromptForgerPromptIdeaOrganismProps) {
   return (
-    <PanelFrameAtoms props={props.panelInfo}>
+    <ExpandFrame props={props.panelInfo}>
       <PromptForgerPromptFieldOrganism props={props.promptInfo} />
-    </PanelFrameAtoms>
+    </ExpandFrame>
   );
 }

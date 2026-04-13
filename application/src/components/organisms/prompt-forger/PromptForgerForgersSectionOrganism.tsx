@@ -14,7 +14,7 @@ export function PromptForgerForgersSectionOrganism({
   return (
     <AlignLayout column={0.5}>
       <SectionLabel props={props.forgersSectionLabel} />
-      <AlignLayout column={2}>
+      <AlignLayout column={0.1}>
         {props.blocPanels.map((bloc) => (
           <PromptForgerBlocSectionOrganism key={bloc.key} props={bloc} />
         ))}

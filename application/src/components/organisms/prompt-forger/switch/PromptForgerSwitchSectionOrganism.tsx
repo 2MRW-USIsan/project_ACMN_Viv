@@ -1,5 +1,5 @@
 import { ForgerSwitchSection } from "@/hooks/promptForger/viewModel/usePromptForgerComposer";
-import { PanelFrameAtoms } from "../../../atoms/layout/PanelFrameAtoms";
+import { ExpandFrame } from "../../../atoms/layout/ExpandFrame";
 import { PromptForgerSwitchListOrganism } from "./PromptForgerSwitchListOrganism";
 
 interface PromptForgerSwitchSectionOrganismProps {
@@ -10,8 +10,8 @@ export function PromptForgerSwitchSectionOrganism({
   props,
 }: PromptForgerSwitchSectionOrganismProps) {
   return (
-    <PanelFrameAtoms props={props.panelInfo}>
+    <ExpandFrame props={props.panelInfo}>
       <PromptForgerSwitchListOrganism props={props.listInfo} />
-    </PanelFrameAtoms>
+    </ExpandFrame>
   );
 }

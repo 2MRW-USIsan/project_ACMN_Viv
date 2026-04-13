@@ -26,9 +26,9 @@ export interface ForgerOrdersGrpPanel {
 export interface ForgerOrdersSection {
   key: string;
   panelInfo: {
-    titleLabel: LabelAtomProps["props"];
+    label: LabelAtomProps["props"];
     isExpanded: boolean;
-    toggleButton: IconButtonAtomProps["props"];
+    toggle: IconButtonAtomProps["props"];
   };
   listInfo: {
     grpPanels: ForgerOrdersGrpPanel[];
@@ -51,9 +51,9 @@ export interface ForgerSwitchGrpPanel {
 export interface ForgerSwitchSection {
   key: string;
   panelInfo: {
-    titleLabel: LabelAtomProps["props"];
+    label: LabelAtomProps["props"];
     isExpanded: boolean;
-    toggleButton: IconButtonAtomProps["props"];
+    toggle: IconButtonAtomProps["props"];
   };
   listInfo: {
     grpPanels: ForgerSwitchGrpPanel[];
@@ -79,9 +79,9 @@ export interface ForgerSelectGrpPanel {
 export interface ForgerSelectSection {
   key: string;
   panelInfo: {
-    titleLabel: LabelAtomProps["props"];
+    label: LabelAtomProps["props"];
     isExpanded: boolean;
-    toggleButton: IconButtonAtomProps["props"];
+    toggle: IconButtonAtomProps["props"];
   };
   listInfo: {
     grpPanels: ForgerSelectGrpPanel[];
@@ -92,9 +92,9 @@ export interface ForgerSelectSection {
 export interface ForgerBlocPanel {
   key: string;
   panelInfo: {
-    titleLabel: LabelAtomProps["props"];
+    label: LabelAtomProps["props"];
     isExpanded: boolean;
-    toggleButton: IconButtonAtomProps["props"];
+    toggle: IconButtonAtomProps["props"];
   };
   blocInfo: {
     ordersSection: ForgerOrdersSection | null;
@@ -112,9 +112,9 @@ export interface RadioOptionItem {
 
 export interface TuneupCompositionSection {
   panelInfo: {
-    titleLabel: LabelAtomProps["props"];
+    label: LabelAtomProps["props"];
     isExpanded: boolean;
-    toggleButton: IconButtonAtomProps["props"];
+    toggle: IconButtonAtomProps["props"];
   };
   tunesInfo: {
     anglesLabel: LabelAtomProps["props"];
@@ -127,9 +127,9 @@ export interface TuneupCompositionSection {
 // Prompt Idea
 export interface PromptIdeaSection {
   panelInfo: {
-    titleLabel: LabelAtomProps["props"];
+    label: LabelAtomProps["props"];
     isExpanded: boolean;
-    toggleButton: IconButtonAtomProps["props"];
+    toggle: IconButtonAtomProps["props"];
   };
   promptInfo: {
     shuffleButton: ButtonAtomProps["props"];
@@ -142,9 +142,9 @@ export interface PromptIdeaSection {
 // Summary Bloc
 export interface SummaryBlocPanel {
   panelInfo: {
-    titleLabel: LabelAtomProps["props"];
+    label: LabelAtomProps["props"];
     isExpanded: boolean;
-    toggleButton: IconButtonAtomProps["props"];
+    toggle: IconButtonAtomProps["props"];
   };
   summaryInfo: {
     tuneupComposition: TuneupCompositionSection;
@@ -245,19 +245,19 @@ export function usePromptForgerComposer(contexts: PromptForgerContexts) {
           blocPanels: [],
           summaryBloc: {
             panelInfo: {
-              titleLabel: { text: "Summary Bloc:", variant: "h6" as const },
+              label: { text: "Summary Bloc:", variant: "h6" as const },
               isExpanded: false,
-              toggleButton: { icon: "expandMore" as const, onClick: () => {} },
+              toggle: { icon: "expandMore" as const, onClick: () => {} },
             },
             summaryInfo: {
               tuneupComposition: {
                 panelInfo: {
-                  titleLabel: {
+                  label: {
                     text: "Tune-up Composition:",
                     variant: "subtitle1" as const,
                   },
                   isExpanded: false,
-                  toggleButton: {
+                  toggle: {
                     icon: "expandMore" as const,
                     onClick: () => {},
                   },
@@ -274,12 +274,12 @@ export function usePromptForgerComposer(contexts: PromptForgerContexts) {
               },
               promptIdea: {
                 panelInfo: {
-                  titleLabel: {
+                  label: {
                     text: "Prompt Idea:",
                     variant: "subtitle1" as const,
                   },
                   isExpanded: false,
-                  toggleButton: {
+                  toggle: {
                     icon: "expandMore" as const,
                     onClick: () => {},
                   },

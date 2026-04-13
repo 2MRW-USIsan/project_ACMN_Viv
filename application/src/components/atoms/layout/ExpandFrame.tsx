@@ -7,15 +7,17 @@ import { IconButtonAtom } from "../inputs/IconButtonAtom";
 import { AlignLayout } from "./AlignLayout";
 import { GridLayout } from "./GridLayout";
 
-type ExpandFrameType = {
+export type ExpandFrameType = {
+  isExpanded: boolean;
   label: LabelAtomType;
   toggle: IconButtonAtomType;
-  isExpanded: boolean;
 };
+
 interface ExpandFrameProps {
   props: ExpandFrameType;
   children: React.ReactNode;
 }
+
 export function ExpandFrame({ props, children }: ExpandFrameProps) {
   return (
     <AlignLayout column={0.1}>

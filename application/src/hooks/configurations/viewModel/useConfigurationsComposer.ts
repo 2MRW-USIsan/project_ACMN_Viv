@@ -3,9 +3,7 @@ import { IconButtonAtomProps } from "@/components/atoms/inputs/IconButtonAtom";
 import { LabelAtomProps } from "@/components/atoms/display/LabelAtom";
 import { SwitchAtomProps } from "@/components/atoms/inputs/SwitchAtom";
 import { TextFieldAtomProps } from "@/components/atoms/inputs/TextFieldAtom";
-import {
-  NavigationOrganismProps,
-} from "@/components/organisms/navigation/NavigationOrganism";
+import { NavigationOrganismProps } from "@/components/organisms/navigation/NavigationOrganism";
 import { ConfigurationsContexts } from "@/hooks/configurations/state/useConfigurationsContext";
 import { useConfigurationsHandlers } from "@/hooks/configurations/viewModel/useConfigurationsHandlers";
 import { useConfigurationsProperties } from "@/hooks/configurations/viewModel/useConfigurationsProperties";

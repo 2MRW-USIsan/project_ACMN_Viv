@@ -104,6 +104,9 @@ export function usePromptForgerViewModelMocks(): PromptForgerViewModelMocksRetur
   const [bloc1Grp1SelectValues, setBloc1Grp1SelectValues] = useState<string[]>(
     Array(4).fill(MOCK_SELECT_OPTIONS[0]),
   );
+  const [bloc1Grp2SelectValues, setBloc1Grp2SelectValues] = useState<string[]>(
+    Array(4).fill(MOCK_SELECT_OPTIONS[0]),
+  );
   const [bloc2Grp1SelectValues, setBloc2Grp1SelectValues] = useState<string[]>(
     Array(4).fill(MOCK_SELECT_OPTIONS[0]),
   );
@@ -132,6 +135,73 @@ export function usePromptForgerViewModelMocks(): PromptForgerViewModelMocksRetur
   const handleTitleBlur = (value: string) => setTitleValue(value);
   const handleSummaryPromptBlur = (value: string) =>
     setSummaryPromptValue(value);
+  const handleToggleSummaryBloc = () => setSummaryBlocExpanded((prev) => !prev);
+  const handleToggleTuneup = () => setTuneupExpanded((prev) => !prev);
+  const handleTogglePromptIdea = () => setPromptIdeaExpanded((prev) => !prev);
+  const handleToggleBloc1 = () => setBloc1Expanded((prev) => !prev);
+  const handleToggleBloc2 = () => setBloc2Expanded((prev) => !prev);
+  const handleToggleBloc1Orders = () => setBloc1OrdersExpanded((prev) => !prev);
+  const handleToggleBloc1Switch = () => setBloc1SwitchExpanded((prev) => !prev);
+  const handleToggleBloc1Select = () => setBloc1SelectExpanded((prev) => !prev);
+
+  const handleBloc1Grp1OrdersChange = (value: string) =>
+    setBloc1Grp1OrdersPrompt(value);
+  const handleBloc1Grp2OrdersChange = (value: string) =>
+    setBloc1Grp2OrdersPrompt(value);
+
+  const handleBloc1Grp1SwitchChange = (index: number, checked: boolean) => {
+    setBloc1Grp1Switches((prev) =>
+      prev.map((item, itemIndex) => (itemIndex === index ? checked : item)),
+    );
+  };
+
+  const handleBloc1Grp2SwitchChange = (index: number, checked: boolean) => {
+    setBloc1Grp2Switches((prev) =>
+      prev.map((item, itemIndex) => (itemIndex === index ? checked : item)),
+    );
+  };
+
+  const handleBloc1Grp1SelectChange = (index: number, value: string) => {
+    setBloc1Grp1SelectValues((prev) =>
+      prev.map((item, itemIndex) => (itemIndex === index ? value : item)),
+    );
+  };
+
+  const handleBloc1Grp2SelectChange = (index: number, value: string) => {
+    setBloc1Grp2SelectValues((prev) =>
+      prev.map((item, itemIndex) => (itemIndex === index ? value : item)),
+    );
+  };
+
+  const handleBloc1ShuffleAllGrp1 = () =>
+    setBloc1Grp1SelectValues((prev) => [...prev].reverse());
+  const handleBloc1ShuffleAllGrp2 = () =>
+    setBloc1Grp2SelectValues((prev) => [...prev].reverse());
+
+  const handleBloc1ReloadGrp1Select = (index: number) => {
+    setBloc1Grp1SelectValues((prev) =>
+      prev.map((item, itemIndex) =>
+        itemIndex === index ? MOCK_SELECT_OPTIONS[0] : item,
+      ),
+    );
+  };
+
+  const handleBloc1ReloadGrp2Select = (index: number) => {
+    setBloc1Grp2SelectValues((prev) =>
+      prev.map((item, itemIndex) =>
+        itemIndex === index ? MOCK_SELECT_OPTIONS[0] : item,
+      ),
+    );
+  };
+
+  const handleShuffleSummaryPrompt = () =>
+    setSummaryPromptValue((prev) =>
+      prev ? `${prev} [shuffled]` : "Generated summary prompt...",
+    );
+  const handleCopySummaryPrompt = () => {
+    if (typeof navigator === "undefined" || !summaryPromptValue) return;
+    void navigator.clipboard.writeText(summaryPromptValue);
+  };
 
   const linksAbove = NAV_ITEMS.filter(
     (item) => item.href !== pathname && item.href === "/configurations",
@@ -151,7 +221,7 @@ export function usePromptForgerViewModelMocks(): PromptForgerViewModelMocksRetur
     const activeItem = NAV_ITEMS.find((item) => item.href === pathname);
     if (!activeItem) return undefined;
     return {
-      text: `✓ ${activeItem.label}`,
+      text: `✁E${activeItem.label}`,
       variant: "subtitle1" as const,
       color: "success.main",
       fontWeight: "bold" as const,
@@ -173,6 +243,22 @@ export function usePromptForgerViewModelMocks(): PromptForgerViewModelMocksRetur
     "[Item Label]",
   ];
   const selectRowLabels = ["Label", "Label", "Label", "Label"];
+
+  const angleOptions = [
+    { key: "angle-above", value: "above" as const, label: "Above" },
+    {
+      key: "angle-horizontal",
+      value: "horizontal" as const,
+      label: "Horizontal",
+    },
+    { key: "angle-below", value: "below" as const, label: "Below" },
+  ];
+
+  const directionOptions = [
+    { key: "direction-front", value: "front" as const, label: "Front" },
+    { key: "direction-side", value: "side" as const, label: "Side" },
+    { key: "direction-back", value: "back" as const, label: "Back" },
+  ];
 
   return {
     viewModel: {
@@ -250,102 +336,91 @@ export function usePromptForgerViewModelMocks(): PromptForgerViewModelMocksRetur
           saveButton: { label: "Save", onClick: () => {}, size: "small" },
         },
         forgersSection: {
-          forgersSectionLabel: { text: "Forgers Field:", variant: "subtitle1" },
+          forgersSectionLabel: {
+            text: "Forgers Field:",
+            variant: "subtitle1",
+          },
           blocPanels: [
             {
               key: "bloc-01",
               panelInfo: {
-                titleLabel: { text: "Bloc Label:", variant: "h6" },
+                label: {
+                  text: "# Item 01",
+                  variant: "subtitle1",
+                },
                 isExpanded: bloc1Expanded,
-                toggleButton: {
+                toggle: {
                   icon: bloc1Expanded ? "expandLess" : "expandMore",
-                  onClick: () => setBloc1Expanded((v) => !v),
+                  onClick: handleToggleBloc1,
                 },
               },
               blocInfo: {
                 ordersSection: {
                   key: "bloc-01-orders",
                   panelInfo: {
-                    titleLabel: { text: "Orders:", variant: "subtitle1" },
+                    label: {
+                      text: "Orders:",
+                      variant: "body2",
+                    },
                     isExpanded: bloc1OrdersExpanded,
-                    toggleButton: {
+                    toggle: {
                       icon: bloc1OrdersExpanded ? "expandLess" : "expandMore",
-                      onClick: () => setBloc1OrdersExpanded((v) => !v),
+                      onClick: handleToggleBloc1Orders,
                     },
                   },
                   listInfo: {
                     grpPanels: [
                       {
                         key: "bloc-01-orders-grp-01",
-                        grpLabel: { text: "[Grp Label]:", variant: "body2" },
+                        grpLabel: { text: "Group 1:", variant: "body2" },
                         displayLines: [
-                          {
-                            text: "• [Item Label]: [Random Value] [Random Prompt] [Random Prompt]  • [Item Label]: [Complex Value] [Complex Prompt]",
-                            variant: "body2",
-                          },
-                          {
-                            text: "• [Item Label]: [Color Value]",
-                            variant: "body2",
-                          },
-                          { text: "• [Item Label]:", variant: "body2" },
+                          { text: "Line 01", variant: "body2" },
+                          { text: "Line 02", variant: "body2" },
                         ],
-                        scriptsLabel: {
-                          text: "[-----Scripts Text---------------------------------------------]",
-                          variant: "body2",
-                        },
+                        scriptsLabel: { text: "Scripts:", variant: "body2" },
                         promptLabel: { text: "Prompt:", variant: "body2" },
                         promptField: {
                           placeholder: "text field...",
                           value: bloc1Grp1OrdersPrompt,
-                          onChange: setBloc1Grp1OrdersPrompt,
+                          onChange: handleBloc1Grp1OrdersChange,
                           size: "small",
                           fullWidth: true,
                         },
                         resetButton: {
                           label: "Reset",
-                          onClick: () => {},
+                          onClick: () => setBloc1Grp1OrdersPrompt(""),
                           size: "small",
                         },
                         clearButton: {
                           label: "Clear",
-                          onClick: () => {},
+                          onClick: () => setBloc1Grp1OrdersPrompt(""),
                           size: "small",
                         },
                       },
                       {
                         key: "bloc-01-orders-grp-02",
-                        grpLabel: { text: "[Grp Label]:", variant: "body2" },
+                        grpLabel: { text: "Group 2:", variant: "body2" },
                         displayLines: [
-                          {
-                            text: "• [Item Label]: [Random Value] [Random Prompt] [Random Prompt]  • [Item Label]: [Complex Value] [Complex Prompt]",
-                            variant: "body2",
-                          },
-                          {
-                            text: "• [Item Label]: [Color Value]",
-                            variant: "body2",
-                          },
-                          { text: "• [Item Label]:", variant: "body2" },
+                          { text: "Line 01", variant: "body2" },
+                          { text: "Line 02", variant: "body2" },
                         ],
-                        scriptsLabel: {
-                          text: "[-----Scripts Text---------------------------------------------]",
-                          variant: "body2",
-                        },
+                        scriptsLabel: { text: "Scripts:", variant: "body2" },
                         promptLabel: { text: "Prompt:", variant: "body2" },
                         promptField: {
                           placeholder: "text field...",
                           value: bloc1Grp2OrdersPrompt,
-                          onChange: setBloc1Grp2OrdersPrompt,
+                          onChange: handleBloc1Grp2OrdersChange,
                           size: "small",
                           fullWidth: true,
                         },
                         resetButton: {
                           label: "Reset",
-                          onClick: () => {},
+                          onClick: () => setBloc1Grp2OrdersPrompt(""),
                           size: "small",
                         },
                         clearButton: {
                           label: "Clear",
-                          onClick: () => {},
+                          onClick: () => setBloc1Grp2OrdersPrompt(""),
                           size: "small",
                         },
                       },
@@ -355,44 +430,47 @@ export function usePromptForgerViewModelMocks(): PromptForgerViewModelMocksRetur
                 switchSection: {
                   key: "bloc-01-switch",
                   panelInfo: {
-                    titleLabel: { text: "Switch:", variant: "subtitle1" },
+                    label: {
+                      text: "Switch:",
+                      variant: "body2",
+                    },
                     isExpanded: bloc1SwitchExpanded,
-                    toggleButton: {
+                    toggle: {
                       icon: bloc1SwitchExpanded ? "expandLess" : "expandMore",
-                      onClick: () => setBloc1SwitchExpanded((v) => !v),
+                      onClick: handleToggleBloc1Switch,
                     },
                   },
                   listInfo: {
                     grpPanels: [
                       {
                         key: "bloc-01-switch-grp-01",
-                        grpLabel: { text: "[Grp Label]:", variant: "body2" },
-                        switchItems: bloc1SwitchItemLabels.map((label, i) => ({
-                          key: `bloc-01-switch-grp-01-item-${i}`,
-                          itemLabel: { text: `• ${label}:`, variant: "body2" },
-                          switchControl: {
-                            checked: bloc1Grp1Switches[i] ?? false,
-                            onChange: (checked: boolean) =>
-                              setBloc1Grp1Switches((prev) =>
-                                prev.map((v, idx) => (idx === i ? checked : v)),
-                              ),
-                          },
-                        })),
+                        grpLabel: { text: "Group 1:", variant: "body2" },
+                        switchItems: bloc1SwitchItemLabels
+                          .slice(0, 2)
+                          .map((label, index) => ({
+                            key: `bloc-01-switch-grp-01-item-${index + 1}`,
+                            itemLabel: { text: label, variant: "body2" },
+                            switchControl: {
+                              checked: bloc1Grp1Switches[index],
+                              onChange: (checked: boolean) =>
+                                handleBloc1Grp1SwitchChange(index, checked),
+                            },
+                          })),
                       },
                       {
                         key: "bloc-01-switch-grp-02",
-                        grpLabel: { text: "[Grp Label]:", variant: "body2" },
-                        switchItems: bloc1SwitchItemLabels.map((label, i) => ({
-                          key: `bloc-01-switch-grp-02-item-${i}`,
-                          itemLabel: { text: `• ${label}:`, variant: "body2" },
-                          switchControl: {
-                            checked: bloc1Grp2Switches[i] ?? false,
-                            onChange: (checked: boolean) =>
-                              setBloc1Grp2Switches((prev) =>
-                                prev.map((v, idx) => (idx === i ? checked : v)),
-                              ),
-                          },
-                        })),
+                        grpLabel: { text: "Group 2:", variant: "body2" },
+                        switchItems: bloc2SwitchItemLabels
+                          .slice(0, 2)
+                          .map((label, index) => ({
+                            key: `bloc-01-switch-grp-02-item-${index + 1}`,
+                            itemLabel: { text: label, variant: "body2" },
+                            switchControl: {
+                              checked: bloc1Grp2Switches[index],
+                              onChange: (checked: boolean) =>
+                                handleBloc1Grp2SwitchChange(index, checked),
+                            },
+                          })),
                       },
                     ],
                   },
@@ -400,47 +478,77 @@ export function usePromptForgerViewModelMocks(): PromptForgerViewModelMocksRetur
                 selectSection: {
                   key: "bloc-01-select",
                   panelInfo: {
-                    titleLabel: { text: "Select:", variant: "subtitle1" },
+                    label: {
+                      text: "Select:",
+                      variant: "body2",
+                    },
                     isExpanded: bloc1SelectExpanded,
-                    toggleButton: {
+                    toggle: {
                       icon: bloc1SelectExpanded ? "expandLess" : "expandMore",
-                      onClick: () => setBloc1SelectExpanded((v) => !v),
+                      onClick: handleToggleBloc1Select,
                     },
                   },
                   listInfo: {
                     grpPanels: [
                       {
                         key: "bloc-01-select-grp-01",
-                        grpLabel: { text: "[Grp Label]:", variant: "body2" },
+                        grpLabel: { text: "Group 1:", variant: "body2" },
                         shuffleAllLabel: {
                           text: "Shuffle All:",
                           variant: "body2",
                         },
                         shuffleButton: {
                           label: "Shuffle",
-                          onClick: () => {},
+                          onClick: handleBloc1ShuffleAllGrp1,
                           size: "small",
                         },
-                        selectRows: selectRowLabels.map((label, i) => ({
-                          key: `bloc-01-select-grp-01-row-${i}`,
-                          label: { text: `${label}:`, variant: "body2" },
-                          select: {
-                            value:
-                              bloc1Grp1SelectValues[i] ??
-                              MOCK_SELECT_OPTIONS[0],
-                            options: MOCK_SELECT_OPTIONS,
-                            onChange: (value: string) =>
-                              setBloc1Grp1SelectValues((prev) =>
-                                prev.map((v, idx) => (idx === i ? value : v)),
-                              ),
-                            fullWidth: true,
-                          },
-                          reloadButton: {
-                            label: "Reload",
-                            onClick: () => {},
-                            size: "small",
-                          },
-                        })),
+                        selectRows: selectRowLabels
+                          .slice(0, 2)
+                          .map((label, index) => ({
+                            key: `bloc-01-select-grp-01-row-${index + 1}`,
+                            label: { text: label, variant: "body2" },
+                            select: {
+                              value: bloc1Grp1SelectValues[index],
+                              options: MOCK_SELECT_OPTIONS,
+                              onChange: (value: string) =>
+                                handleBloc1Grp1SelectChange(index, value),
+                            },
+                            reloadButton: {
+                              label: "Reload",
+                              onClick: () => handleBloc1ReloadGrp1Select(index),
+                              size: "small",
+                            },
+                          })),
+                      },
+                      {
+                        key: "bloc-01-select-grp-02",
+                        grpLabel: { text: "Group 2:", variant: "body2" },
+                        shuffleAllLabel: {
+                          text: "Shuffle All:",
+                          variant: "body2",
+                        },
+                        shuffleButton: {
+                          label: "Shuffle",
+                          onClick: handleBloc1ShuffleAllGrp2,
+                          size: "small",
+                        },
+                        selectRows: selectRowLabels
+                          .slice(0, 2)
+                          .map((label, index) => ({
+                            key: `bloc-01-select-grp-02-row-${index + 1}`,
+                            label: { text: label, variant: "body2" },
+                            select: {
+                              value: bloc1Grp2SelectValues[index],
+                              options: MOCK_SELECT_OPTIONS,
+                              onChange: (value: string) =>
+                                handleBloc1Grp2SelectChange(index, value),
+                            },
+                            reloadButton: {
+                              label: "Reload",
+                              onClick: () => handleBloc1ReloadGrp2Select(index),
+                              size: "small",
+                            },
+                          })),
                       },
                     ],
                   },
@@ -450,206 +558,14 @@ export function usePromptForgerViewModelMocks(): PromptForgerViewModelMocksRetur
             {
               key: "bloc-02",
               panelInfo: {
-                titleLabel: { text: "Bloc Label:", variant: "h6" },
+                label: {
+                  text: "# Item 02",
+                  variant: "subtitle1",
+                },
                 isExpanded: bloc2Expanded,
-                toggleButton: {
+                toggle: {
                   icon: bloc2Expanded ? "expandLess" : "expandMore",
-                  onClick: () => setBloc2Expanded((v) => !v),
-                },
-              },
-              blocInfo: {
-                ordersSection: {
-                  key: "bloc-02-orders",
-                  panelInfo: {
-                    titleLabel: { text: "Orders:", variant: "subtitle1" },
-                    isExpanded: bloc2OrdersExpanded,
-                    toggleButton: {
-                      icon: bloc2OrdersExpanded ? "expandLess" : "expandMore",
-                      onClick: () => setBloc2OrdersExpanded((v) => !v),
-                    },
-                  },
-                  listInfo: {
-                    grpPanels: [
-                      {
-                        key: "bloc-02-orders-grp-01",
-                        grpLabel: { text: "[Grp Label]:", variant: "body2" },
-                        displayLines: [
-                          {
-                            text: "• [Item Label]: [Random Value] [Random Prompt] [Random Prompt]  • [Item Label]: [Complex Value] [Complex Prompt]",
-                            variant: "body2",
-                          },
-                          {
-                            text: "• [Item Label]: [Color Value]",
-                            variant: "body2",
-                          },
-                          { text: "• [Item Label]:", variant: "body2" },
-                        ],
-                        scriptsLabel: {
-                          text: "[-----Scripts Text---------------------------------------------]",
-                          variant: "body2",
-                        },
-                        promptLabel: { text: "Prompt:", variant: "body2" },
-                        promptField: {
-                          placeholder: "text field...",
-                          value: bloc2Grp1OrdersPrompt,
-                          onChange: setBloc2Grp1OrdersPrompt,
-                          size: "small",
-                          fullWidth: true,
-                        },
-                        resetButton: {
-                          label: "Reset",
-                          onClick: () => {},
-                          size: "small",
-                        },
-                        clearButton: {
-                          label: "Clear",
-                          onClick: () => {},
-                          size: "small",
-                        },
-                      },
-                      {
-                        key: "bloc-02-orders-grp-02",
-                        grpLabel: { text: "[Grp Label]:", variant: "body2" },
-                        displayLines: [
-                          {
-                            text: "• [Item Label]: [Random Value] [Random Prompt] [Random Prompt]  • [Item Label]: [Complex Value] [Complex Prompt]",
-                            variant: "body2",
-                          },
-                          {
-                            text: "• [Item Label]: [Color Value]",
-                            variant: "body2",
-                          },
-                          { text: "• [Item Label]:", variant: "body2" },
-                        ],
-                        scriptsLabel: {
-                          text: "[-----Scripts Text---------------------------------------------]",
-                          variant: "body2",
-                        },
-                        promptLabel: { text: "Prompt:", variant: "body2" },
-                        promptField: {
-                          placeholder: "text field...",
-                          value: bloc2Grp2OrdersPrompt,
-                          onChange: setBloc2Grp2OrdersPrompt,
-                          size: "small",
-                          fullWidth: true,
-                        },
-                        resetButton: {
-                          label: "Reset",
-                          onClick: () => {},
-                          size: "small",
-                        },
-                        clearButton: {
-                          label: "Clear",
-                          onClick: () => {},
-                          size: "small",
-                        },
-                      },
-                    ],
-                  },
-                },
-                switchSection: {
-                  key: "bloc-02-switch",
-                  panelInfo: {
-                    titleLabel: { text: "Switch:", variant: "subtitle1" },
-                    isExpanded: bloc2SwitchExpanded,
-                    toggleButton: {
-                      icon: bloc2SwitchExpanded ? "expandLess" : "expandMore",
-                      onClick: () => setBloc2SwitchExpanded((v) => !v),
-                    },
-                  },
-                  listInfo: {
-                    grpPanels: [
-                      {
-                        key: "bloc-02-switch-grp-01",
-                        grpLabel: { text: "[Grp Label]:", variant: "body2" },
-                        switchItems: bloc2SwitchItemLabels.map((label, i) => ({
-                          key: `bloc-02-switch-grp-01-item-${i}`,
-                          itemLabel: { text: `• ${label}:`, variant: "body2" },
-                          switchControl: {
-                            checked: bloc2Grp1Switches[i] ?? false,
-                            onChange: (checked: boolean) =>
-                              setBloc2Grp1Switches((prev) =>
-                                prev.map((v, idx) => (idx === i ? checked : v)),
-                              ),
-                          },
-                        })),
-                      },
-                      {
-                        key: "bloc-02-switch-grp-02",
-                        grpLabel: { text: "[Grp Label]:", variant: "body2" },
-                        switchItems: bloc2SwitchItemLabels.map((label, i) => ({
-                          key: `bloc-02-switch-grp-02-item-${i}`,
-                          itemLabel: { text: `• ${label}:`, variant: "body2" },
-                          switchControl: {
-                            checked: bloc2Grp2Switches[i] ?? false,
-                            onChange: (checked: boolean) =>
-                              setBloc2Grp2Switches((prev) =>
-                                prev.map((v, idx) => (idx === i ? checked : v)),
-                              ),
-                          },
-                        })),
-                      },
-                    ],
-                  },
-                },
-                selectSection: {
-                  key: "bloc-02-select",
-                  panelInfo: {
-                    titleLabel: { text: "Select:", variant: "subtitle1" },
-                    isExpanded: bloc2SelectExpanded,
-                    toggleButton: {
-                      icon: bloc2SelectExpanded ? "expandLess" : "expandMore",
-                      onClick: () => setBloc2SelectExpanded((v) => !v),
-                    },
-                  },
-                  listInfo: {
-                    grpPanels: [
-                      {
-                        key: "bloc-02-select-grp-01",
-                        grpLabel: { text: "[Grp Label]:", variant: "body2" },
-                        shuffleAllLabel: {
-                          text: "Shuffle All:",
-                          variant: "body2",
-                        },
-                        shuffleButton: {
-                          label: "Shuffle",
-                          onClick: () => {},
-                          size: "small",
-                        },
-                        selectRows: selectRowLabels.map((label, i) => ({
-                          key: `bloc-02-select-grp-01-row-${i}`,
-                          label: { text: `${label}:`, variant: "body2" },
-                          select: {
-                            value:
-                              bloc2Grp1SelectValues[i] ??
-                              MOCK_SELECT_OPTIONS[0],
-                            options: MOCK_SELECT_OPTIONS,
-                            onChange: (value: string) =>
-                              setBloc2Grp1SelectValues((prev) =>
-                                prev.map((v, idx) => (idx === i ? value : v)),
-                              ),
-                            fullWidth: true,
-                          },
-                          reloadButton: {
-                            label: "Reload",
-                            onClick: () => {},
-                            size: "small",
-                          },
-                        })),
-                      },
-                    ],
-                  },
-                },
-              },
-            },
-            {
-              key: "bloc-03",
-              panelInfo: {
-                titleLabel: { text: "Bloc Label:", variant: "h6" },
-                isExpanded: bloc3Expanded,
-                toggleButton: {
-                  icon: bloc3Expanded ? "expandLess" : "expandMore",
-                  onClick: () => setBloc3Expanded((v) => !v),
+                  onClick: handleToggleBloc2,
                 },
               },
               blocInfo: {
@@ -661,144 +577,79 @@ export function usePromptForgerViewModelMocks(): PromptForgerViewModelMocksRetur
           ],
           summaryBloc: {
             panelInfo: {
-              titleLabel: { text: "Summary Bloc:", variant: "h6" },
+              label: {
+                text: "Summary Bloc:",
+                variant: "h6",
+              },
               isExpanded: summaryBlocExpanded,
-              toggleButton: {
+              toggle: {
                 icon: summaryBlocExpanded ? "expandLess" : "expandMore",
-                onClick: () => setSummaryBlocExpanded((v) => !v),
+                onClick: handleToggleSummaryBloc,
               },
             },
             summaryInfo: {
               tuneupComposition: {
                 panelInfo: {
-                  titleLabel: {
+                  label: {
                     text: "Tune-up Composition:",
                     variant: "subtitle1",
                   },
                   isExpanded: tuneupExpanded,
-                  toggleButton: {
+                  toggle: {
                     icon: tuneupExpanded ? "expandLess" : "expandMore",
-                    onClick: () => setTuneupExpanded((v) => !v),
+                    onClick: handleToggleTuneup,
                   },
                 },
                 tunesInfo: {
-                  anglesLabel: { text: "Angles:", variant: "body2" },
-                  anglesOptions: [
-                    {
-                      key: "angle-above",
-                      radio: {
-                        checked: selectedAngle === "above",
-                        onChange: () => setSelectedAngle("above"),
-                      },
-                      label: {
-                        text: "Above",
-                        variant: "body2",
-                        color:
-                          selectedAngle === "above"
-                            ? "success.main"
-                            : undefined,
-                      },
+                  anglesLabel: {
+                    text: "Angles:",
+                    variant: "body2",
+                  },
+                  anglesOptions: angleOptions.map((option) => ({
+                    key: option.key,
+                    radio: {
+                      checked: selectedAngle === option.value,
+                      onChange: () => setSelectedAngle(option.value),
                     },
-                    {
-                      key: "angle-horizontal",
-                      radio: {
-                        checked: selectedAngle === "horizontal",
-                        onChange: () => setSelectedAngle("horizontal"),
-                      },
-                      label: {
-                        text: "Horizontal",
-                        variant: "body2",
-                        color:
-                          selectedAngle === "horizontal"
-                            ? "success.main"
-                            : undefined,
-                      },
+                    label: { text: option.label, variant: "body2" },
+                  })),
+                  directionsLabel: {
+                    text: "Directions:",
+                    variant: "body2",
+                  },
+                  directionsOptions: directionOptions.map((option) => ({
+                    key: option.key,
+                    radio: {
+                      checked: selectedDirection === option.value,
+                      onChange: () => setSelectedDirection(option.value),
                     },
-                    {
-                      key: "angle-below",
-                      radio: {
-                        checked: selectedAngle === "below",
-                        onChange: () => setSelectedAngle("below"),
-                      },
-                      label: {
-                        text: "Below",
-                        variant: "body2",
-                        color:
-                          selectedAngle === "below"
-                            ? "success.main"
-                            : undefined,
-                      },
-                    },
-                  ],
-                  directionsLabel: { text: "Directions:", variant: "body2" },
-                  directionsOptions: [
-                    {
-                      key: "direction-front",
-                      radio: {
-                        checked: selectedDirection === "front",
-                        onChange: () => setSelectedDirection("front"),
-                      },
-                      label: {
-                        text: "Front",
-                        variant: "body2",
-                        color:
-                          selectedDirection === "front"
-                            ? "success.main"
-                            : undefined,
-                      },
-                    },
-                    {
-                      key: "direction-side",
-                      radio: {
-                        checked: selectedDirection === "side",
-                        onChange: () => setSelectedDirection("side"),
-                      },
-                      label: {
-                        text: "Side",
-                        variant: "body2",
-                        color:
-                          selectedDirection === "side"
-                            ? "success.main"
-                            : undefined,
-                      },
-                    },
-                    {
-                      key: "direction-back",
-                      radio: {
-                        checked: selectedDirection === "back",
-                        onChange: () => setSelectedDirection("back"),
-                      },
-                      label: {
-                        text: "Back",
-                        variant: "body2",
-                        color:
-                          selectedDirection === "back"
-                            ? "success.main"
-                            : undefined,
-                      },
-                    },
-                  ],
+                    label: { text: option.label, variant: "body2" },
+                  })),
                 },
               },
               promptIdea: {
                 panelInfo: {
-                  titleLabel: { text: "Prompt Idea:", variant: "subtitle1" },
+                  label: {
+                    text: "Prompt Idea:",
+                    variant: "subtitle1",
+                  },
                   isExpanded: promptIdeaExpanded,
-                  toggleButton: {
+                  toggle: {
                     icon: promptIdeaExpanded ? "expandLess" : "expandMore",
-                    onClick: () => setPromptIdeaExpanded((v) => !v),
+                    onClick: handleTogglePromptIdea,
                   },
                 },
                 promptInfo: {
                   shuffleButton: {
                     label: "Shuffle",
-                    onClick: () => {},
+                    onClick: handleShuffleSummaryPrompt,
                     size: "small",
                   },
                   copyButton: {
                     label: "Copy",
-                    onClick: () => {},
+                    onClick: handleCopySummaryPrompt,
                     size: "small",
+                    disabled: !summaryPromptValue,
                   },
                   summaryPromptLabel: {
                     text: "Summary Prompt:",
@@ -808,8 +659,9 @@ export function usePromptForgerViewModelMocks(): PromptForgerViewModelMocksRetur
                     placeholder: "Text area Field...",
                     value: summaryPromptValue,
                     onChange: handleSummaryPromptBlur,
-                    multiline: true,
+                    onBlur: handleSummaryPromptBlur,
                     rows: 14,
+                    multiline: true,
                     fullWidth: true,
                   },
                 },
