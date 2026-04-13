@@ -89,13 +89,6 @@ export type TextFieldAtomType = {
   rows?: number;
 };
 
-// Layout Atoms
-export type PanelFrameAtomsType = {
-  isExpanded: boolean;
-  titleLabel: LabelAtomType;
-  toggleButton: IconButtonAtomType;
-};
-
 // Surface Atoms
 export type AppBarAtomType = {
   onMenuOpen: () => void;

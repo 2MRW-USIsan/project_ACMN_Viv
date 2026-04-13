@@ -5,11 +5,12 @@ import { AlignLayout } from "../atoms/layout/AlignLayout";
 
 interface SectionLabelProps {
   props: LabelAtomType;
+  style?: "HEADER" | "LABEL";
 }
-export function SectionLabel({ props }: SectionLabelProps) {
+export function SectionLabel({ props, style = "HEADER" }: SectionLabelProps) {
   return (
     <AlignLayout column={0.1}>
-      <LabelAtom props={props} style={"HEADER"} primary />
+      <LabelAtom props={props} style={style} primary={style === "HEADER"} />
       <DividerAtom />
     </AlignLayout>
   );

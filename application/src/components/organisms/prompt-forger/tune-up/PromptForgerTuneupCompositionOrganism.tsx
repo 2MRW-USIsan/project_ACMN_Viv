@@ -1,5 +1,5 @@
 import { TuneupCompositionSection } from "@/hooks/promptForger/viewModel/usePromptForgerComposer";
-import { PanelFrameAtoms } from "../../../atoms/layout/PanelFrameAtoms";
+import { ExpandFrame } from "../../../atoms/layout/ExpandFrame";
 import { PromptForgerTuneupFieldOrganism } from "./PromptForgerTuneupFieldOrganism";
 
 interface PromptForgerTuneupCompositionOrganismProps {
@@ -10,8 +10,8 @@ export function PromptForgerTuneupCompositionOrganism({
   props,
 }: PromptForgerTuneupCompositionOrganismProps) {
   return (
-    <PanelFrameAtoms props={props.panelInfo}>
+    <ExpandFrame props={props.panelInfo}>
       <PromptForgerTuneupFieldOrganism props={props.tunesInfo} />
-    </PanelFrameAtoms>
+    </ExpandFrame>
   );
 }

@@ -12,7 +12,7 @@ export function PromptForgerSwitchListOrganism({
   props,
 }: PromptForgerSwitchListOrganismProps) {
   return (
-    <AlignLayout column={2}>
+    <AlignLayout column={1}>
       {props.grpPanels.map((grp) => (
         <PromptForgerSwitchItemOrganism key={grp.key} props={grp} />
       ))}

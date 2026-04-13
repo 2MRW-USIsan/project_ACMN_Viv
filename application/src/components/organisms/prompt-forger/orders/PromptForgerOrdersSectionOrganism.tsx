@@ -1,5 +1,5 @@
 import { ForgerOrdersSection } from "@/hooks/promptForger/viewModel/usePromptForgerComposer";
-import { PanelFrameAtoms } from "../../../atoms/layout/PanelFrameAtoms";
+import { ExpandFrame } from "../../../atoms/layout/ExpandFrame";
 import { PromptForgerOrdersListOrganism } from "./PromptForgerOrdersListOrganism";
 
 interface PromptForgerOrdersSectionOrganismProps {
@@ -10,8 +10,8 @@ export function PromptForgerOrdersSectionOrganism({
   props,
 }: PromptForgerOrdersSectionOrganismProps) {
   return (
-    <PanelFrameAtoms props={props.panelInfo}>
+    <ExpandFrame props={props.panelInfo}>
       <PromptForgerOrdersListOrganism props={props.listInfo} />
-    </PanelFrameAtoms>
+    </ExpandFrame>
   );
 }

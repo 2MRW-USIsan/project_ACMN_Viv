@@ -24,6 +24,7 @@ export function AlignLayout({
       width={"100%"}
       display={"flex"}
       justifyContent={aligns[style]}
+      paddingBlock={"0.1rem"}
       paddingInline={"0.25rem"}
       gap={column ? `${column}rem` : 0}
       flexDirection={column ? "column" : "row"}

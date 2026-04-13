@@ -1,5 +1,5 @@
 import { SummaryBlocPanel } from "@/hooks/promptForger/viewModel/usePromptForgerComposer";
-import { PanelFrameAtoms } from "../../../atoms/layout/PanelFrameAtoms";
+import { ExpandFrame } from "../../../atoms/layout/ExpandFrame";
 import { PromptForgerSummaryContentsOrganism } from "./PromptForgerSummaryContentsOrganism";
 
 interface PromptForgerSummaryBlocOrganismProps {
@@ -10,8 +10,8 @@ export function PromptForgerSummaryBlocOrganism({
   props,
 }: PromptForgerSummaryBlocOrganismProps) {
   return (
-    <PanelFrameAtoms props={props.panelInfo}>
+    <ExpandFrame props={props.panelInfo}>
       <PromptForgerSummaryContentsOrganism props={props.summaryInfo} />
-    </PanelFrameAtoms>
+    </ExpandFrame>
   );
 }

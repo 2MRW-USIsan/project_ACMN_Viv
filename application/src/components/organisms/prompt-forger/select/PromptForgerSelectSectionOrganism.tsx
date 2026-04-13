@@ -1,5 +1,5 @@
 import { ForgerSelectSection } from "@/hooks/promptForger/viewModel/usePromptForgerComposer";
-import { PanelFrameAtoms } from "../../../atoms/layout/PanelFrameAtoms";
+import { ExpandFrame } from "../../../atoms/layout/ExpandFrame";
 import { PromptForgerSelectListOrganism } from "./PromptForgerSelectListOrganism";
 
 interface PromptForgerSelectSectionOrganismProps {
@@ -10,8 +10,8 @@ export function PromptForgerSelectSectionOrganism({
   props,
 }: PromptForgerSelectSectionOrganismProps) {
   return (
-    <PanelFrameAtoms props={props.panelInfo}>
+    <ExpandFrame props={props.panelInfo}>
       <PromptForgerSelectListOrganism props={props.listInfo} />
-    </PanelFrameAtoms>
+    </ExpandFrame>
   );
 }
