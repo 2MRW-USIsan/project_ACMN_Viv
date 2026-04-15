@@ -3,17 +3,13 @@ import { PostingClerkContexts } from "@/hooks/posting-clerk/state/usePostingCler
 import { usePostingClerkHandlers } from "@/hooks/posting-clerk/viewModel/usePostingClerkHandlers";
 import { usePostingClerkProperties } from "@/hooks/posting-clerk/viewModel/usePostingClerkProperties";
 import { BodyType } from "@/types/posting-clerk";
+import { AppBarType, DrawerType, LabelAtomType } from "@/types/ui";
 
 export interface PostingClerkViewModel {
   navigationLayout: {
-    appBar: {
-      onMenuOpen: () => void;
-    };
-    drawer: {
-      open: boolean;
-      onClose: () => void;
-    };
-    title: string;
+    appBar: AppBarType;
+    drawer: DrawerType;
+    title: LabelAtomType;
     navigation: NavigationOrganismProps["props"];
   };
   postingClerkBody: BodyType;
@@ -33,7 +29,7 @@ export function usePostingClerkComposer(contexts: PostingClerkContexts) {
           open: false,
           onClose: () => {},
         },
-        title: "ACMN",
+        title: { text: "ACMN" },
         navigation: {
           activeItemLabel: undefined,
           links: [],

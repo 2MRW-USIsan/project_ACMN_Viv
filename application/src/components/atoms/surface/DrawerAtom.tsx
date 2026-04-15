@@ -1,5 +1,5 @@
 import { Drawer, List, Toolbar } from "@mui/material";
-import { DrawerAtomType } from "@/types/ui";
+import { DrawerType } from "@/types/ui";
 
 export interface NavItem {
   href: string;
@@ -7,7 +7,7 @@ export interface NavItem {
 }
 
 export interface DrawerAtomProps {
-  props: DrawerAtomType;
+  props: DrawerType;
   children?: React.ReactNode;
 }
 

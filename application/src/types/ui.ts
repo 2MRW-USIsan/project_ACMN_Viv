@@ -90,14 +90,18 @@ export type TextFieldAtomType = {
 };
 
 // Surface Atoms
-export type AppBarAtomType = {
+export type AppBarType = {
   onMenuOpen: () => void;
 };
 
-export type DrawerAtomType = {
+export type DrawerType = {
   open: boolean;
   onClose: () => void;
 };
+
+export type AppBarAtomType = AppBarType;
+
+export type DrawerAtomType = DrawerType;
 
 export type NavLinkAtomType = {
   label: string;

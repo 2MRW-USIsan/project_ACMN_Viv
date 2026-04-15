@@ -1,6 +1,7 @@
 "use client";
 import { NavItem } from "@/components/atoms/surface/DrawerAtom";
 import { PresetBuilderViewModel } from "@/hooks/preset-builder/viewModel/usePresetBuilderComposer";
+import { AppBarType, DrawerType, LabelAtomType } from "@/types/ui";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -74,24 +75,32 @@ export function usePresetBuilderViewModelMocks(): PresetBuilderViewModelMocksRet
     const activeItem = NAV_ITEMS.find((item) => item.href === pathname);
     if (!activeItem) return undefined;
     return {
-      text: `✓ ${activeItem.label}`,
+      text: `${activeItem.label}`,
       variant: "subtitle1" as const,
       color: "success.main",
       fontWeight: "bold" as const,
     };
   })();
 
+  const appBar: AppBarType = {
+    onMenuOpen: handleMenuOpen,
+  };
+
+  const drawer: DrawerType = {
+    open: drawerOpen,
+    onClose: handleDrawerClose,
+  };
+
+  const title: LabelAtomType = {
+    text: "ACMN",
+  };
+
   return {
     viewModel: {
       navigationLayout: {
-        appBar: {
-          onMenuOpen: handleMenuOpen,
-        },
-        drawer: {
-          open: drawerOpen,
-          onClose: handleDrawerClose,
-        },
-        title: "ACMN",
+        appBar,
+        drawer,
+        title,
         navigation: {
           linksAbove,
           activeItemLabel,

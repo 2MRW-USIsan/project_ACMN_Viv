@@ -2,6 +2,7 @@
 
 import { NavItem } from "@/components/atoms/surface/DrawerAtom";
 import { PromptForgerViewModel } from "@/hooks/promptForger/viewModel/usePromptForgerComposer";
+import { AppBarType, DrawerType, LabelAtomType } from "@/types/ui";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -260,17 +261,25 @@ export function usePromptForgerViewModelMocks(): PromptForgerViewModelMocksRetur
     { key: "direction-back", value: "back" as const, label: "Back" },
   ];
 
+  const appBar: AppBarType = {
+    onMenuOpen: handleMenuOpen,
+  };
+
+  const drawer: DrawerType = {
+    open: drawerOpen,
+    onClose: handleDrawerClose,
+  };
+
+  const title: LabelAtomType = {
+    text: "ACMN",
+  };
+
   return {
     viewModel: {
       navigationLayout: {
-        appBar: {
-          onMenuOpen: handleMenuOpen,
-        },
-        drawer: {
-          open: drawerOpen,
-          onClose: handleDrawerClose,
-        },
-        title: "ACMN",
+        appBar,
+        drawer,
+        title,
         navigation: {
           linksAbove,
           activeItemLabel,

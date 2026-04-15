@@ -6,6 +6,7 @@ import { SwitchAtomProps } from "@/components/atoms/inputs/SwitchAtom";
 import { TextAreaAtomProps } from "@/components/atoms/inputs/TextAreaAtom";
 import { TextFieldAtomProps } from "@/components/atoms/inputs/TextFieldAtom";
 import { NavigationOrganismProps } from "@/components/organisms/navigation/NavigationOrganism";
+import { AppBarType, DrawerType, LabelAtomType } from "@/types/ui";
 import { PromptForgerContexts } from "@/hooks/promptForger/state/usePromptForgerContext";
 import { usePromptForgerHandlers } from "@/hooks/promptForger/viewModel/usePromptForgerHandlers";
 import { usePromptForgerProperties } from "@/hooks/promptForger/viewModel/usePromptForgerProperties";
@@ -177,14 +178,9 @@ export interface PromptForgerBodyViewModel {
 
 export interface PromptForgerViewModel {
   navigationLayout: {
-    appBar: {
-      onMenuOpen: () => void;
-    };
-    drawer: {
-      open: boolean;
-      onClose: () => void;
-    };
-    title: string;
+    appBar: AppBarType;
+    drawer: DrawerType;
+    title: LabelAtomType;
     navigation: NavigationOrganismProps["props"];
   };
   promptForgerBody: PromptForgerBodyViewModel;
@@ -204,7 +200,7 @@ export function usePromptForgerComposer(contexts: PromptForgerContexts) {
           open: false,
           onClose: () => {},
         },
-        title: "ACMN",
+        title: { text: "ACMN" },
         navigation: {
           activeItemLabel: undefined,
           links: [],
