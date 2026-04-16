@@ -1,11 +1,14 @@
+import { DividerAtom } from "@/components/atoms/display/DividerAtom";
 import { LabelAtom } from "@/components/atoms/display/LabelAtom";
 import { ButtonAtom } from "@/components/atoms/inputs/ButtonAtom";
+import { ChipRadioAtom } from "@/components/atoms/inputs/RadioButtonAtom";
 import { SelectAtom } from "@/components/atoms/inputs/SelectAtom";
 import { TextFieldAtom } from "@/components/atoms/inputs/TextFieldAtom";
 import { AlignLayout } from "@/components/atoms/layout/AlignLayout";
 import { GridLayout } from "@/components/atoms/layout/GridLayout";
 import {
   ButtonAtomType,
+  ChipRadioAtomType,
   LabelAtomType,
   SelectAtomType,
   TextFieldAtomType,
@@ -16,6 +19,10 @@ export type DataSelectFieldType = {
   button: Record<string, ButtonAtomType>;
   groupSelect: SelectAtomType;
   nameField: TextFieldAtomType;
+  radioGroup: {
+    radio: ChipRadioAtomType;
+    key: string;
+  }[];
 };
 interface DataSelectFieldProps {
   props: DataSelectFieldType;
@@ -66,6 +73,12 @@ export function DataSelectField({ props }: DataSelectFieldProps) {
           </GridLayout>
         </GridLayout>
       </GridLayout>
+      <DividerAtom />
+      <AlignLayout column={1}>
+        {props.radioGroup.map((item) => (
+          <ChipRadioAtom props={item.radio} key={item.key} />
+        ))}
+      </AlignLayout>
     </AlignLayout>
   );
 }

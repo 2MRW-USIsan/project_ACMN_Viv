@@ -6,8 +6,8 @@ import { NavigationLabel, NavigationLabelType } from "./NavigationLabel";
 export type NavigationItemType = {
   key: string;
   navigation: NavigationLabelType;
-  configSelect: ConfigSelectFieldType;
-  dataSelect: DataSelectFieldType;
+  configSelect: ConfigSelectFieldType | undefined;
+  dataSelect: DataSelectFieldType | undefined;
 };
 export interface NavigationItemProps {
   props: NavigationItemType;
@@ -18,8 +18,8 @@ export function NavigationItem({ props }: NavigationItemProps) {
   return (
     <AlignLayout column={1}>
       <NavigationLabel props={props.navigation} />
-      {isConfigSelector && <ConfigSelectField props={props.configSelect} />}
-      {isDataSelector && <DataSelectField props={props.dataSelect} />}
+      {isConfigSelector && <ConfigSelectField props={props.configSelect!} />}
+      {isDataSelector && <DataSelectField props={props.dataSelect!} />}
     </AlignLayout>
   );
 }
