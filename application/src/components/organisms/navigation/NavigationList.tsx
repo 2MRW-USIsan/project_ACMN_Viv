@@ -1,13 +1,11 @@
 import { AlignLayout } from "@/components/atoms/layout/AlignLayout";
-import { NavigationItem, NavigationItemType } from "./NavigationItem";
+import { NavigationListType } from "@/types/navigation";
+import { NavigationItem } from "./NavigationItem";
 
-export type NavigationListType = {
-  navItemList: NavigationItemType[];
-};
-export interface NavigationOrganismProps {
+export interface NavigationListProps {
   props: NavigationListType;
 }
-export function NavigationList({ props }: NavigationOrganismProps) {
+export function NavigationList({ props }: NavigationListProps) {
   return (
     <AlignLayout column={1}>
       {props.navItemList.map((navItem) => (

@@ -2,14 +2,10 @@ import { DividerAtom } from "@/components/atoms/display/DividerAtom";
 import { LabelAtom } from "@/components/atoms/display/LabelAtom";
 import { AlignLayout } from "@/components/atoms/layout/AlignLayout";
 import { GridLayout } from "@/components/atoms/layout/GridLayout";
-import { LabelAtomType } from "@/types/ui";
-import { CheckMark } from "./CheckMark";
-import { NavMark } from "./NavMark";
+import { NavigationLabelType } from "@/types/navigation";
+import { CheckMark } from "../../atoms/display/CheckMark";
+import { NavMark } from "../../atoms/display/NavMark";
 
-export type NavigationLabelType = {
-  isCurrent: boolean;
-  title: LabelAtomType;
-};
 interface NavigationLabelProps {
   props: NavigationLabelType;
 }

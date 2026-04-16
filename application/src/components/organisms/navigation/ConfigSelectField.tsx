@@ -4,19 +4,8 @@ import { SelectAtom } from "@/components/atoms/inputs/SelectAtom";
 import { TextFieldAtom } from "@/components/atoms/inputs/TextFieldAtom";
 import { AlignLayout } from "@/components/atoms/layout/AlignLayout";
 import { GridLayout } from "@/components/atoms/layout/GridLayout";
-import {
-  ButtonAtomType,
-  LabelAtomType,
-  SelectAtomType,
-  TextFieldAtomType,
-} from "@/types/ui";
+import { ConfigSelectFieldType } from "@/types/navigation";
 
-export type ConfigSelectFieldType = {
-  label: Record<string, LabelAtomType>;
-  button: Record<string, ButtonAtomType>;
-  configSelect: SelectAtomType;
-  nameField: TextFieldAtomType;
-};
 interface ConfigSelectFieldProps {
   props: ConfigSelectFieldType;
 }

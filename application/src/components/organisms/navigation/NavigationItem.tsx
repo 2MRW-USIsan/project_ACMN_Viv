@@ -1,14 +1,9 @@
 import { AlignLayout } from "@/components/atoms/layout/AlignLayout";
-import { ConfigSelectField, ConfigSelectFieldType } from "./ConfigSelectField";
-import { DataSelectField, DataSelectFieldType } from "./DataSelectField";
-import { NavigationLabel, NavigationLabelType } from "./NavigationLabel";
+import { NavigationItemType } from "@/types/navigation";
+import { ConfigSelectField } from "./ConfigSelectField";
+import { DataSelectField } from "./DataSelectField";
+import { NavigationLabel } from "./NavigationLabel";
 
-export type NavigationItemType = {
-  key: string;
-  navigation: NavigationLabelType;
-  configSelect: ConfigSelectFieldType | undefined;
-  dataSelect: DataSelectFieldType | undefined;
-};
 export interface NavigationItemProps {
   props: NavigationItemType;
 }

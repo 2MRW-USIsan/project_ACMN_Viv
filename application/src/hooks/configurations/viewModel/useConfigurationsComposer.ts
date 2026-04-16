@@ -3,7 +3,7 @@ import { IconButtonAtomProps } from "@/components/atoms/inputs/IconButtonAtom";
 import { LabelAtomProps } from "@/components/atoms/display/LabelAtom";
 import { SwitchAtomProps } from "@/components/atoms/inputs/SwitchAtom";
 import { TextFieldAtomProps } from "@/components/atoms/inputs/TextFieldAtom";
-import { NavigationOrganismProps } from "@/components/organisms/navigation/NavigationOrganism";
+import { NavigationLayoutType } from "@/types/navigation";
 import { AppBarType, DrawerType, LabelAtomType } from "@/types/ui";
 import { ConfigurationsContexts } from "@/hooks/configurations/state/useConfigurationsContext";
 import { useConfigurationsHandlers } from "@/hooks/configurations/viewModel/useConfigurationsHandlers";
@@ -245,7 +245,7 @@ export interface ConfigurationsViewModel {
     appBar: AppBarType;
     drawer: DrawerType;
     title: LabelAtomType;
-    navigation: NavigationOrganismProps["props"];
+    navigation: NavigationLayoutType["navigation"];
   };
   configBody: {
     headerLabel: LabelAtomProps["props"];
@@ -272,6 +272,7 @@ export function useConfigurationsComposer(contexts: ConfigurationsContexts) {
         },
         title: { text: "ACMN" },
         navigation: {
+          linksAbove: [],
           activeItemLabel: undefined,
           links: [],
         },

@@ -1,5 +1,5 @@
-import { NavigationOrganismProps } from "@/components/organisms/navigation/NavigationOrganism";
 import { PresetBuilderContexts } from "@/hooks/preset-builder/state/usePresetBuilderContext";
+import { NavigationLayoutType } from "@/types/navigation";
 import { BodyType } from "@/types/preset-builder";
 import { AppBarType, DrawerType, LabelAtomType } from "@/types/ui";
 import { usePresetBuilderHandlers } from "@/hooks/preset-builder/viewModel/usePresetBuilderHandlers";
@@ -10,7 +10,7 @@ export interface PresetBuilderViewModel {
     appBar: AppBarType;
     drawer: DrawerType;
     title: LabelAtomType;
-    navigation: NavigationOrganismProps["props"];
+    navigation: NavigationLayoutType["navigation"];
   };
   presetBuilderBody: BodyType;
 }
@@ -31,6 +31,7 @@ export function usePresetBuilderComposer(contexts: PresetBuilderContexts) {
         },
         title: { text: "ACMN" },
         navigation: {
+          linksAbove: [],
           activeItemLabel: undefined,
           links: [],
         },

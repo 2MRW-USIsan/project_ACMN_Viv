@@ -6,24 +6,8 @@ import { SelectAtom } from "@/components/atoms/inputs/SelectAtom";
 import { TextFieldAtom } from "@/components/atoms/inputs/TextFieldAtom";
 import { AlignLayout } from "@/components/atoms/layout/AlignLayout";
 import { GridLayout } from "@/components/atoms/layout/GridLayout";
-import {
-  ButtonAtomType,
-  ChipRadioAtomType,
-  LabelAtomType,
-  SelectAtomType,
-  TextFieldAtomType,
-} from "@/types/ui";
+import { DataSelectFieldType } from "@/types/navigation";
 
-export type DataSelectFieldType = {
-  label: Record<string, LabelAtomType>;
-  button: Record<string, ButtonAtomType>;
-  groupSelect: SelectAtomType;
-  nameField: TextFieldAtomType;
-  radioGroup: {
-    radio: ChipRadioAtomType;
-    key: string;
-  }[];
-};
 interface DataSelectFieldProps {
   props: DataSelectFieldType;
 }
