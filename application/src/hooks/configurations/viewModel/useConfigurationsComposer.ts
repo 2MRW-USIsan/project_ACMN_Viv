@@ -5,6 +5,7 @@ import { SwitchAtomProps } from "@/components/atoms/inputs/SwitchAtom";
 import { TextFieldAtomProps } from "@/components/atoms/inputs/TextFieldAtom";
 import { NavigationLayoutType } from "@/types/navigation";
 import { AppBarType, DrawerType, LabelAtomType } from "@/types/ui";
+import { BodyType } from "@/types/configurations/blocs";
 import { ConfigurationsContexts } from "@/hooks/configurations/state/useConfigurationsContext";
 import { useConfigurationsHandlers } from "@/hooks/configurations/viewModel/useConfigurationsHandlers";
 import { useConfigurationsProperties } from "@/hooks/configurations/viewModel/useConfigurationsProperties";
@@ -247,12 +248,7 @@ export interface ConfigurationsViewModel {
     title: LabelAtomType;
     navigation: NavigationLayoutType["navigation"];
   };
-  configBody: {
-    headerLabel: LabelAtomProps["props"];
-    blocPanels: ConfigBodyBlocPanel[];
-    addRowLabel: LabelAtomProps["props"];
-    addButton: IconButtonAtomProps["props"];
-  };
+  configBody: BodyType;
 }
 
 export function useConfigurationsComposer(contexts: ConfigurationsContexts) {

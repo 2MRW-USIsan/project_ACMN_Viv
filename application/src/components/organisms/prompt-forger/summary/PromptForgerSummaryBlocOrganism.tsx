@@ -1,5 +1,5 @@
 import { SummaryBlocPanel } from "@/hooks/promptForger/viewModel/usePromptForgerComposer";
-import { ExpandFrame } from "../../../atoms/layout/ExpandFrame";
+import { ExpandFrame } from "../../../molecules/ExpandFrame";
 import { PromptForgerSummaryContentsOrganism } from "./PromptForgerSummaryContentsOrganism";
 
 interface PromptForgerSummaryBlocOrganismProps {

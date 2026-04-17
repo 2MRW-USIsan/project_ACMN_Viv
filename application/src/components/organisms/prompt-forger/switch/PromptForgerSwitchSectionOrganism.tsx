@@ -1,5 +1,5 @@
 import { ForgerSwitchSection } from "@/hooks/promptForger/viewModel/usePromptForgerComposer";
-import { ExpandFrame } from "../../../atoms/layout/ExpandFrame";
+import { ExpandFrame } from "../../../molecules/ExpandFrame";
 import { PromptForgerSwitchListOrganism } from "./PromptForgerSwitchListOrganism";
 
 interface PromptForgerSwitchSectionOrganismProps {

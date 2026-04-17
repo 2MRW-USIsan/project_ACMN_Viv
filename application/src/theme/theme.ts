@@ -27,7 +27,7 @@ export const acmnTheme = createTheme({
     },
     MuiGrid: {
       defaultProps: { rowSpacing: 0.5 },
-      styleOverrides: { root: { paddingLeft: "0.5rem", alignItems: "center" } },
+      styleOverrides: { root: { alignItems: "center" } },
     },
     MuiTextField: {
       defaultProps: {

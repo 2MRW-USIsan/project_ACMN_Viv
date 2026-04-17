@@ -1,5 +1,5 @@
 import { PromptIdeaSection } from "@/hooks/promptForger/viewModel/usePromptForgerComposer";
-import { ExpandFrame } from "../../../atoms/layout/ExpandFrame";
+import { ExpandFrame } from "../../../molecules/ExpandFrame";
 import { PromptForgerPromptFieldOrganism } from "./PromptForgerPromptFieldOrganism";
 
 interface PromptForgerPromptIdeaOrganismProps {

@@ -8,6 +8,7 @@ export interface GridLayoutProps {
 export function GridLayout({ style, children }: GridLayoutProps) {
   return (
     <Grid
+    bgcolor={"#ff000022"}
       display={"flex"}
       container={style.size === "CONTAINER"}
       size={style.size === "CONTAINER" ? undefined : style.size}

@@ -1,5 +1,5 @@
-import { Button, CircularProgress } from "@mui/material";
 import { ButtonAtomType } from "@/types/ui";
+import { Button, CircularProgress } from "@mui/material";
 
 export interface ButtonAtomProps {
   props: ButtonAtomType;

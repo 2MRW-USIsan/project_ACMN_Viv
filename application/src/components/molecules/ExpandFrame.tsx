@@ -1,11 +1,11 @@
 import { postingClerkTheme } from "@/theme/postingClerk";
 import { IconButtonAtomType, LabelAtomType } from "@/types/ui";
-import { Collapse } from "@mui/material";
-import { DividerAtom } from "../display/DividerAtom";
-import { LabelAtom } from "../display/LabelAtom";
-import { IconButtonAtom } from "../inputs/IconButtonAtom";
-import { AlignLayout } from "./AlignLayout";
-import { GridLayout } from "./GridLayout";
+import { DividerAtom } from "../atoms/display/DividerAtom";
+import { LabelAtom } from "../atoms/display/LabelAtom";
+import { IconButtonAtom } from "../atoms/inputs/IconButtonAtom";
+import { AlignLayout } from "../atoms/layout/AlignLayout";
+import { CollapseContainer } from "../atoms/layout/CollapseContainer";
+import { GridLayout } from "../atoms/layout/GridLayout";
 
 export type ExpandFrameType = {
   isExpanded: boolean;
@@ -36,9 +36,7 @@ export function ExpandFrame({ props, children }: ExpandFrameProps) {
         <DividerAtom />
       </AlignLayout>
 
-      <Collapse in={props.isExpanded} timeout="auto" unmountOnExit>
-        {children}
-      </Collapse>
+      <CollapseContainer props={props.isExpanded}>{children}</CollapseContainer>
     </AlignLayout>
   );
 }

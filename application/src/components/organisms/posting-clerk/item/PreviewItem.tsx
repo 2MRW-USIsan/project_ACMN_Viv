@@ -1,5 +1,5 @@
 import { AlignLayout } from "@/components/atoms/layout/AlignLayout";
-import { ExpandFrame } from "@/components/atoms/layout/ExpandFrame";
+import { ExpandFrame } from "@/components/molecules/ExpandFrame";
 import { PreviewItemType } from "@/types/posting-clerk";
 import { CopyFormItem } from "./CopyFormItem";
 import { PreviewFormItem } from "./PreviewFormItem";

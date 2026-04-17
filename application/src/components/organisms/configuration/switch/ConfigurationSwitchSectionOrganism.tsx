@@ -1,103 +1,66 @@
-import { ConfigBodySection } from "@/hooks/configurations/viewModel/useConfigurationsComposer";
-import { Box, Collapse, Divider, List, ListItem, Stack } from "@mui/material";
-import { DividerAtom } from "../../../atoms/display/DividerAtom";
-import { LabelAtom } from "../../../atoms/display/LabelAtom";
-import { IconButtonAtom } from "../../../atoms/inputs/IconButtonAtom";
-import { TextFieldAtom } from "../../../atoms/inputs/TextFieldAtom";
+import { LabelAtom } from "@/components/atoms/display/LabelAtom";
+import { IconButtonAtom } from "@/components/atoms/inputs/IconButtonAtom";
+import { TextFieldAtom } from "@/components/atoms/inputs/TextFieldAtom";
+import { AlignLayout } from "@/components/atoms/layout/AlignLayout";
+import { CollapseContainer } from "@/components/atoms/layout/CollapseContainer";
+import { GridLayout } from "@/components/atoms/layout/GridLayout";
+import { PanelItem } from "@/components/atoms/layout/PanelItem";
+import { PanelList } from "@/components/atoms/layout/PanelList";
+import { SectionLabel } from "@/components/molecules/SectionLabel";
+import type { ConfigurationSwitchSectionOrganismProps } from "@/types/configuration";
 import { SwitchItemSectionOrganism } from "./SwitchItemSectionOrganism";
-
-interface ConfigurationSwitchSectionOrganismProps {
-  props: ConfigBodySection;
-}
 
 export function ConfigurationSwitchSectionOrganism({
   props,
 }: ConfigurationSwitchSectionOrganismProps) {
   return (
-    <Box mt={2}>
-      <LabelAtom props={props.titleLabel} />
-      <DividerAtom />
-
-      <Box
-        sx={{
-          border: "1px solid",
-          borderColor: "divider",
-          borderRadius: 1,
-          overflow: "hidden",
-          mt: 1,
-        }}
-      >
-        <List disablePadding>
-          {props.switchGrpPanels?.map((grp, index) => (
-            <Box key={grp.key}>
-              {index > 0 && <Divider />}
-
-              {/* Switch Grp panel header */}
-              <ListItem
-                disablePadding
-                sx={{
-                  px: 2,
-                  py: 1,
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 1,
-                  flexWrap: "wrap",
-                }}
-              >
-                <LabelAtom props={grp.panelLabel} />
-                <LabelAtom props={grp.keyLabel} />
-                <Box sx={{ width: 160 }}>
+    <AlignLayout column={0.1}>
+      <SectionLabel props={props.titleLabel} />
+      <PanelList>
+        {props.switchGrpPanels?.map((grp) => (
+          <AlignLayout column={0.1} key={grp.key}>
+            <PanelItem>
+              <GridLayout style={{ size: "CONTAINER" }}>
+                <GridLayout style={{ size: 2 }}>
+                  <LabelAtom props={grp.panelLabel} style={"LABEL"} />
+                </GridLayout>
+                <GridLayout style={{ size: 1 }}>
+                  <LabelAtom props={grp.keyLabel} />
+                </GridLayout>
+                <GridLayout style={{ size: 2 }}>
                   <TextFieldAtom props={grp.keyField} />
-                </Box>
-
-                <LabelAtom props={grp.labelLabel} />
-                <Box sx={{ flex: 1, minWidth: 160 }}>
+                </GridLayout>
+                <GridLayout style={{ size: 1 }}>
+                  <LabelAtom props={grp.labelLabel} />
+                </GridLayout>
+                <GridLayout style={{ size: 4 }}>
                   <TextFieldAtom props={grp.labelField} />
-                </Box>
-
-                <IconButtonAtom props={grp.removeButton} />
-                <IconButtonAtom props={grp.toggleButton} />
-              </ListItem>
-
-              {/* Expanded content: Switch Items section */}
-              <Collapse in={grp.isExpanded} timeout="auto" unmountOnExit>
-                <Box
-                  sx={{
-                    borderTop: "1px solid",
-                    borderColor: "divider",
-                    px: 3,
-                    py: 2,
-                  }}
-                >
-                  <LabelAtom props={grp.switchItemsLabel} />
-                  <SwitchItemSectionOrganism props={grp.switchItemSection} />
-                </Box>
-              </Collapse>
-            </Box>
-          ))}
-
-          {/* Add Switch Grp row */}
-          {props.addSwitchGrpRowLabel && props.addSwitchGrpButton && (
-            <>
-              <Divider />
-              <ListItem
-                disablePadding
-                sx={{
-                  px: 2,
-                  py: 1.5,
-                  display: "flex",
-                  justifyContent: "center",
-                }}
-              >
-                <Stack direction="row" alignItems="center" spacing={0.5}>
-                  <LabelAtom props={props.addSwitchGrpRowLabel} />
-                  <IconButtonAtom props={props.addSwitchGrpButton} />
-                </Stack>
-              </ListItem>
-            </>
-          )}
-        </List>
-      </Box>
-    </Box>
+                </GridLayout>
+                <GridLayout style={{ size: 2 }}>
+                  <AlignLayout style={"END"}>
+                    <IconButtonAtom props={grp.removeButton} />
+                    <IconButtonAtom props={grp.toggleButton} />
+                  </AlignLayout>
+                </GridLayout>
+              </GridLayout>
+            </PanelItem>
+            <CollapseContainer props={grp.isExpanded}>
+              <AlignLayout column={0.1}>
+                <SectionLabel props={grp.switchItemsLabel} />
+                <SwitchItemSectionOrganism props={grp.switchItemSection} />
+              </AlignLayout>
+            </CollapseContainer>
+          </AlignLayout>
+        ))}
+        {props.addSwitchGrpRowLabel && props.addSwitchGrpButton && (
+          <PanelItem>
+            <AlignLayout style={"CENTER"}>
+              <LabelAtom props={props.addSwitchGrpRowLabel} style={"LABEL"} primary />
+              <IconButtonAtom props={props.addSwitchGrpButton} />
+            </AlignLayout>
+          </PanelItem>
+        )}
+      </PanelList>
+    </AlignLayout>
   );
 }

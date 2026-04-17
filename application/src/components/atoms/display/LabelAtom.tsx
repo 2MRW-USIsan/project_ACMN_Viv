@@ -27,7 +27,7 @@ export function LabelAtom({
   };
   return (
     <Typography variant={labelSize[style]} color={labelColor}>
-      {props.text}
+      {props?.text ?? "--"}
     </Typography>
   );
 }
