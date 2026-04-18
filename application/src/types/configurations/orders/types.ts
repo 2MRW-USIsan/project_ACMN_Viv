@@ -1,11 +1,11 @@
 import { AddPanelButtonType } from "@/components/molecules/AddPanelButton";
 import { ConfigPanelFormType } from "@/components/molecules/ConfigPanelForm";
-import { LabelAtomType } from "../ui";
+import { LabelAtomType } from "../../ui";
 import { SectionType as ColorsSectionType } from "./colors";
 import { SectionType as ComplexSectionType } from "./complex";
 import { SectionType as RandomSectionType } from "./random";
 import { SectionType as ScriptsSectionType } from "./scripts";
-import { SelectorType } from "./types";
+import { SelectorType } from "../types";
 
 export type SectionType = {
   message: LabelAtomType;

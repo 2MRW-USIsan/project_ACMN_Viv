@@ -282,7 +282,7 @@ export function usePromptForgerViewModelMocks(): PromptForgerViewModelMocksRetur
         title,
         navigation: {
           linksAbove,
-          activeItemLabel,
+          label: activeItemLabel,
           links: linksBelow,
           presets: {
             groupLabel: { text: "Group:", variant: "body2" },

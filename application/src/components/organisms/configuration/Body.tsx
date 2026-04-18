@@ -3,7 +3,7 @@ import { BodyFrame } from "../../atoms/layout/BodyFrame";
 import { PanelList } from "../../atoms/layout/PanelList";
 import { AddPanelButton } from "../../molecules/AddPanelButton";
 import { SectionLabel } from "../../molecules/SectionLabel";
-import { Panel as BlocPanel } from "./Panel";
+import { Panel as BlocPanel } from "./bloc/Panel";
 
 export function Body({ props }: BodyProps) {
   return (

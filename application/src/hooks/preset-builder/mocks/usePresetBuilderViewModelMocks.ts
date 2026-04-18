@@ -103,7 +103,7 @@ export function usePresetBuilderViewModelMocks(): PresetBuilderViewModelMocksRet
         title,
         navigation: {
           linksAbove,
-          activeItemLabel,
+          label: activeItemLabel,
           links: linksBelow,
           presets: {
             groupLabel: { text: "Group:" },

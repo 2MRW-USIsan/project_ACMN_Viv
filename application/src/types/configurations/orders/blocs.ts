@@ -2,8 +2,10 @@ import { LabelAtomProps } from "@/components/atoms/display/LabelAtom";
 import { IconButtonAtomProps } from "@/components/atoms/inputs/IconButtonAtom";
 import { AddPanelButtonType } from "@/components/molecules/AddPanelButton";
 import { ConfigPanelFormType } from "@/components/molecules/ConfigPanelForm";
-import { SectionType as OrdersSectionType_t } from "./orders";
-import { SectionType } from "./types";
+import { SectionType as SelectSectionType_t } from "../select";
+import { SectionType as SwitchSectionType_t } from "../switch";
+import { SectionType as OrdersSectionType_t } from "./types";
+import { SectionType } from "../types";
 
 export interface BodyType {
   add: AddPanelButtonType;
@@ -27,5 +29,5 @@ export interface BodyProps {
 }
 
 export type OrdersSectionType = OrdersSectionType_t;
-export type SwitchSectionType = {};
-export type SelectSectionType = {};
+export type SwitchSectionType = SwitchSectionType_t;
+export type SelectSectionType = SelectSectionType_t;

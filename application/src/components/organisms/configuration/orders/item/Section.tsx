@@ -1,5 +1,5 @@
 import { AlignLayout } from "@/components/atoms/layout/AlignLayout";
-import { ItemSectionProps } from "@/types/configurations/orders";
+import { ItemSectionProps } from "@/types/configurations/orders/types";
 import { Section as ColorsSection } from "../colors/Section";
 import { Section as ComplexSection } from "../complex/Section";
 import { Section as RandomSection } from "../random/Section";

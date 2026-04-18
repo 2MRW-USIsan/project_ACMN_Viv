@@ -285,7 +285,7 @@ export function usePostingClerkViewModelMocks(): PostingClerkViewModelMocksRetur
         title,
         navigation: {
           linksAbove,
-          activeItemLabel,
+          label: activeItemLabel,
           links: linksBelow,
           presets: {
             groupLabel: { text: "Group:" },

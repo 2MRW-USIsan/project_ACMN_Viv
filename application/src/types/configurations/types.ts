@@ -2,13 +2,13 @@ import { LabelAtomProps } from "@/components/atoms/display/LabelAtom";
 import { IconButtonAtomProps } from "@/components/atoms/inputs/IconButtonAtom";
 import { AddPanelButtonType } from "@/components/molecules/AddPanelButton";
 import { ConfigPanelFormType } from "@/components/molecules/ConfigPanelForm";
-import { ChipCheckboxAtomType, LabelAtomType } from "../ui";
+import { ChipCheckboxAtomType, LabelAtomType, SwitchAtomType } from "../ui";
 import {
   BlocPanelItemType,
   OrdersSectionType,
   SelectSectionType,
   SwitchSectionType,
-} from "./blocs";
+} from "./orders/blocs";
 
 export interface BodyType {
   add: AddPanelButtonType;
@@ -23,7 +23,7 @@ export interface BodyProps {
 
 export type SectionPanelType = {
   bloc: SectionType;
-  panel: any;
+  panel: ConfigPanelFormType;
 };
 export interface SectionPanelProps {
   props: SectionPanelType;
@@ -41,6 +41,8 @@ export interface SectionProps {
 }
 
 export type SelectorType = {
+  randomize: SwitchAtomType;
+  shuffle: SwitchAtomType;
   label: {
     sectionSelect: LabelAtomType;
   };

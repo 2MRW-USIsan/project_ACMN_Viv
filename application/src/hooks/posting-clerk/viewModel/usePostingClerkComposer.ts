@@ -32,7 +32,7 @@ export function usePostingClerkComposer(contexts: PostingClerkContexts) {
         title: { text: "ACMN" },
         navigation: {
           linksAbove: [],
-          activeItemLabel: undefined,
+          label: undefined,
           links: [],
         },
       },

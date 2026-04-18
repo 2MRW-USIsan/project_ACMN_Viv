@@ -8,7 +8,7 @@ import { AlignLayout } from "@/components/atoms/layout/AlignLayout";
 import { GridLayout } from "@/components/atoms/layout/GridLayout";
 import { LabelAtomType, TextFieldAtomType } from "@/types/ui";
 
-type RandomItemFormType = {
+type ListItemFormType = {
   field: {
     value: TextFieldAtomType;
     prompt: TextFieldAtomType;
@@ -22,10 +22,10 @@ type RandomItemFormType = {
     weight: LabelAtomType;
   };
 };
-interface RandomItemFormProps {
-  props: RandomItemFormType;
+interface ListItemFormProps {
+  props: ListItemFormType;
 }
-export function RandomItemForm({ props }: RandomItemFormProps) {
+export function ListItemForm({ props }: ListItemFormProps) {
   return (
     <GridLayout style={{ size: "CONTAINER" }}>
       {/* Label */}
@@ -48,21 +48,12 @@ export function RandomItemForm({ props }: RandomItemFormProps) {
             </GridLayout>
           </GridLayout>
           {/* Prompt Forms */}
-          <GridLayout style={{ size: 6 }}>
-            <GridLayout style={{ size: 3 }}>
+          <GridLayout style={{ size: 9 }}>
+            <GridLayout style={{ size: 2 }}>
               <LabelAtom props={props.label.prompt} />
             </GridLayout>
-            <GridLayout style={{ size: 9 }}>
+            <GridLayout style={{ size: 10 }}>
               <TextFieldAtom props={props.field.prompt} />
-            </GridLayout>
-          </GridLayout>
-          {/* Weight Forms */}
-          <GridLayout style={{ size: 3 }}>
-            <GridLayout style={{ size: 6 }}>
-              <LabelAtom props={props.label.weight} />
-            </GridLayout>
-            <GridLayout style={{ size: 6 }}>
-              <TextFieldAtom props={props.field.weight} />
             </GridLayout>
           </GridLayout>
         </GridLayout>

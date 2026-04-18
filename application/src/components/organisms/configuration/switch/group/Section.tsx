@@ -1,17 +1,17 @@
 import { AlignLayout } from "@/components/atoms/layout/AlignLayout";
 import { PanelList } from "@/components/atoms/layout/PanelList";
 import { AddPanelButton } from "@/components/molecules/AddPanelButton";
-import { SectionLabel } from "@/components/molecules/SectionLabel";
-import { SubSectionProps } from "@/types/configurations/orders/complex";
-import { RandomItemForm } from "../../../../molecules/RandomItemForm";
+import { SwitchItemForm } from "@/components/molecules/SwitchItemForm";
+import { SectionProps } from "@/types/configurations/select";
+import { Selector } from "./Selector";
 
-export function SubSection({ props }: SubSectionProps) {
+export function Section({ props }: SectionProps) {
   return (
     <AlignLayout column={0.1} indent>
-      <SectionLabel props={props.label} style={"HEADER"} />
+      <Selector props={props.selector} />
       <PanelList>
         {props.panels.map((panel) => (
-          <RandomItemForm props={panel.props} key={panel.key} />
+          <SwitchItemForm props={panel.props} key={panel.key} />
         ))}
         <AddPanelButton props={props.add} />
       </PanelList>

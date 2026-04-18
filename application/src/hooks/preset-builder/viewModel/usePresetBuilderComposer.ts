@@ -32,7 +32,7 @@ export function usePresetBuilderComposer(contexts: PresetBuilderContexts) {
         title: { text: "ACMN" },
         navigation: {
           linksAbove: [],
-          activeItemLabel: undefined,
+          label: undefined,
           links: [],
         },
       },

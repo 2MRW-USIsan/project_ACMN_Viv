@@ -1,6 +1,6 @@
 import { IconButtonType } from "@/components/atoms/display/DeletionMark";
 import { AddPanelButtonType } from "@/components/molecules/AddPanelButton";
-import { LabelAtomType, TextFieldAtomType } from "../ui";
+import { LabelAtomType, TextFieldAtomType } from "../../ui";
 
 export type RandomItemFormType = {
   field: {

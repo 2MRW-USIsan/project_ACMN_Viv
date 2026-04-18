@@ -1,4 +1,4 @@
-import { LabelAtomType } from "../ui";
+import { LabelAtomType } from "../../ui";
 
 export type SectionType = {
   label: LabelAtomType;

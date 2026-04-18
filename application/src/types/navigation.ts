@@ -80,7 +80,7 @@ export type LegacyPresetsType = {
 
 export type LegacyNavigationType = {
   linksAbove: LegacyLinkType[];
-  activeItemLabel: LabelAtomType | undefined;
+  label: LabelAtomType | undefined;
   links: LegacyLinkType[];
   configurations?: LegacyConfigurationsType;
   presets?: LegacyPresetsType;

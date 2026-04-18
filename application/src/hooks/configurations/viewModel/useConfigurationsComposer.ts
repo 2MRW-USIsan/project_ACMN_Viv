@@ -5,7 +5,7 @@ import { SwitchAtomProps } from "@/components/atoms/inputs/SwitchAtom";
 import { TextFieldAtomProps } from "@/components/atoms/inputs/TextFieldAtom";
 import { NavigationLayoutType } from "@/types/navigation";
 import { AppBarType, DrawerType, LabelAtomType } from "@/types/ui";
-import { BodyType } from "@/types/configurations/blocs";
+import { BodyType } from "@/types/configurations/orders/blocs";
 import { ConfigurationsContexts } from "@/hooks/configurations/state/useConfigurationsContext";
 import { useConfigurationsHandlers } from "@/hooks/configurations/viewModel/useConfigurationsHandlers";
 import { useConfigurationsProperties } from "@/hooks/configurations/viewModel/useConfigurationsProperties";
@@ -269,7 +269,7 @@ export function useConfigurationsComposer(contexts: ConfigurationsContexts) {
         title: { text: "ACMN" },
         navigation: {
           linksAbove: [],
-          activeItemLabel: undefined,
+          label: undefined,
           links: [],
         },
       },

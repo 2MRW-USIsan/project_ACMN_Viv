@@ -1,19 +1,26 @@
 import { AddPanelButtonType } from "@/components/molecules/AddPanelButton";
-import { LabelAtomType } from "../ui";
+import { LabelAtomType } from "../../ui";
 import { ConfigPanelFormType } from "@/components/molecules/ConfigPanelForm";
+import { RandomPanelListType } from "./random";
 
 export type SectionType = {
   add: AddPanelButtonType;
-  panels: any[];
+  panels: ComplexPanelListType;
   label: LabelAtomType;
 };
 export interface SectionProps {
   props: SectionType;
 }
 
+export type ComplexPanelListType = {
+  key: string;
+  props: PanelType;
+}[];
+
 export type PanelType = {
+  itemSection: any;
   panel: ConfigPanelFormType;
-  section: any;
+  section: SubSectionType;
 };
 export interface PanelProps {
   props: PanelType;
@@ -21,7 +28,7 @@ export interface PanelProps {
 
 export type SubSectionType = {
   label: LabelAtomType;
-  panels: any[];
+  panels: RandomPanelListType;
   add: AddPanelButtonType;
 };
 export interface SubSectionProps {

@@ -2,7 +2,7 @@ import { AlignLayout } from "@/components/atoms/layout/AlignLayout";
 import { PanelList } from "@/components/atoms/layout/PanelList";
 import { AddPanelButton } from "@/components/molecules/AddPanelButton";
 import { SectionLabel } from "@/components/molecules/SectionLabel";
-import { SectionProps } from "@/types/configurations/complex";
+import { SectionProps } from "@/types/configurations/orders/complex";
 import { Panel } from "./Panel";
 
 export function Section({ props }: SectionProps) {

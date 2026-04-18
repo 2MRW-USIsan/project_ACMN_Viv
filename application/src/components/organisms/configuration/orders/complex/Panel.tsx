@@ -1,7 +1,7 @@
 import { AlignLayout } from "@/components/atoms/layout/AlignLayout";
 import { CollapseContainer } from "@/components/atoms/layout/CollapseContainer";
 import { ConfigPanelForm } from "@/components/molecules/ConfigPanelForm";
-import { PanelProps } from "@/types/configurations/complex";
+import { PanelProps } from "@/types/configurations/orders/complex";
 import { SubSection } from "./SubSection";
 
 export function Panel({ props }: PanelProps) {

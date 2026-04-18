@@ -203,7 +203,7 @@ export function usePromptForgerComposer(contexts: PromptForgerContexts) {
         title: { text: "ACMN" },
         navigation: {
           linksAbove: [],
-          activeItemLabel: undefined,
+          label: undefined,
           links: [],
         },
       },

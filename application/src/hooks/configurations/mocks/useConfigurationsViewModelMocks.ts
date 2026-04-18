@@ -1,19 +1,15 @@
 "use client";
 
 import { NavItem } from "@/components/atoms/surface/DrawerAtom";
-import { AppBarType, DrawerType, LabelAtomType } from "@/types/ui";
+import { ConfigPanelFormType } from "@/components/molecules/ConfigPanelForm";
 import {
   BlocItem,
-  ComplexSection,
-  ConfigBodySectionType,
   ConfigurationsViewModel,
   OrdersGrpItem,
   OrdersTypeOption,
-  SelectGrpPanel,
-  SelectorPanel,
-  SwitchGrpPanel,
 } from "@/hooks/configurations/viewModel/useConfigurationsComposer";
-import { ConfigPanelFormType } from "@/components/molecules/ConfigPanelForm";
+import { SectionType as SelectSectionType } from "@/types/configurations/select";
+import { SectionType as SwitchSectionType } from "@/types/configurations/switch";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -36,6 +32,38 @@ const MOCK_CONFIG_ITEMS = [
   "config-production",
   "config-staging",
 ];
+
+const SELECT_SECTION_ITEMS = [
+  {
+    key: "select-mode-manual",
+    props: {
+      label: "Manual",
+      checked: true,
+      onChange: () => {},
+    },
+  },
+  {
+    key: "select-mode-auto",
+    props: {
+      label: "Auto",
+      checked: false,
+      onChange: () => {},
+    },
+  },
+];
+
+const createSelectDetailPanel = (id: string) => ({
+  id,
+  keyValue: "default-selector-key",
+  labelValue: "Default Selector",
+});
+
+const createSelectListItem = (id: string) => ({
+  id,
+  valueValue: "default-list-item-value",
+  promptValue: "default list item prompt",
+  weightValue: "1",
+});
 
 const INITIAL_BLOCS: BlocItem[] = [
   {
@@ -155,17 +183,25 @@ export function useConfigurationsViewModelMocks(): ConfigurationsViewModelMocksR
   const [selectShuffle, setSelectShuffle] = useState<Record<string, boolean>>(
     {},
   );
-  const [selectorItems, setSelectorItems] = useState<
+  const [selectDetailPanels, setSelectDetailPanels] = useState<
     Record<string, Array<{ id: string; keyValue: string; labelValue: string }>>
   >({});
-  const [selectorExpandedIds, setSelectorExpandedIds] = useState<
+  const [selectDetailExpandedIds, setSelectDetailExpandedIds] = useState<
     Record<string, Set<string>>
   >({});
-  const [listItems, setListItems] = useState<
+  const [selectListItems, setSelectListItems] = useState<
     Record<
       string,
-      Array<{ id: string; valueValue: string; promptValue: string }>
+      Array<{
+        id: string;
+        valueValue: string;
+        promptValue: string;
+        weightValue: string;
+      }>
     >
+  >({});
+  const [selectListItemExpandedIds, setSelectListItemExpandedIds] = useState<
+    Record<string, Set<string>>
   >({});
   const pathname = usePathname();
   const router = useRouter();
@@ -625,12 +661,23 @@ export function useConfigurationsViewModelMocks(): ConfigurationsViewModelMocksR
 
   const handleAddSelectGrp = (sectionKey: string) => {
     const newId = `select-grp-${Date.now()}`;
+    const detailId = `${newId}-selector-1`;
+    const listItemId = `${detailId}-list-item-1`;
+
     setSelectGrpItems((prev) => ({
       ...prev,
       [sectionKey]: [
         ...(prev[sectionKey] ?? []),
         { id: newId, keyValue: "", labelValue: "" },
       ],
+    }));
+    setSelectDetailPanels((prev) => ({
+      ...prev,
+      [newId]: [createSelectDetailPanel(detailId)],
+    }));
+    setSelectListItems((prev) => ({
+      ...prev,
+      [detailId]: [createSelectListItem(listItemId)],
     }));
   };
   const handleRemoveSelectGrp = (sectionKey: string, grpId: string) => {
@@ -677,94 +724,130 @@ export function useConfigurationsViewModelMocks(): ConfigurationsViewModelMocksR
   const handleToggleSelectShuffle = (grpId: string, checked: boolean) => {
     setSelectShuffle((prev) => ({ ...prev, [grpId]: checked }));
   };
-  const handleAddSelector = (grpId: string) => {
+  const handleAddSelectDetailPanel = (grpId: string) => {
     const newId = `selector-${Date.now()}`;
-    setSelectorItems((prev) => ({
+
+    setSelectDetailPanels((prev) => ({
       ...prev,
       [grpId]: [
         ...(prev[grpId] ?? []),
         { id: newId, keyValue: "", labelValue: "" },
       ],
     }));
-  };
-  const handleRemoveSelector = (grpId: string, selectorId: string) => {
-    setSelectorItems((prev) => ({
+    setSelectListItems((prev) => ({
       ...prev,
-      [grpId]: (prev[grpId] ?? []).filter((s) => s.id !== selectorId),
+      [newId]: [createSelectListItem(`${newId}-list-item-1`)],
     }));
   };
-  const handleToggleSelectorExpanded = (grpId: string, selectorId: string) => {
-    setSelectorExpandedIds((prev) => {
+  const handleRemoveSelectDetailPanel = (grpId: string, panelId: string) => {
+    setSelectDetailPanels((prev) => ({
+      ...prev,
+      [grpId]: (prev[grpId] ?? []).filter((p) => p.id !== panelId),
+    }));
+    setSelectListItems((prev) => ({
+      ...prev,
+      [panelId]: [],
+    }));
+  };
+  const handleToggleSelectDetailExpanded = (grpId: string, panelId: string) => {
+    setSelectDetailExpandedIds((prev) => {
       const current = new Set(prev[grpId] ?? []);
-      if (current.has(selectorId)) {
-        current.delete(selectorId);
+      if (current.has(panelId)) {
+        current.delete(panelId);
       } else {
-        current.add(selectorId);
+        current.add(panelId);
       }
       return { ...prev, [grpId]: current };
     });
   };
-  const handleSelectorKeyChange = (
+  const handleSelectDetailKeyChange = (
     grpId: string,
-    selectorId: string,
+    panelId: string,
     value: string,
   ) => {
-    setSelectorItems((prev) => ({
+    setSelectDetailPanels((prev) => ({
       ...prev,
-      [grpId]: (prev[grpId] ?? []).map((s) =>
-        s.id === selectorId ? { ...s, keyValue: value } : s,
+      [grpId]: (prev[grpId] ?? []).map((p) =>
+        p.id === panelId ? { ...p, keyValue: value } : p,
       ),
     }));
   };
-  const handleSelectorLabelChange = (
+  const handleSelectDetailLabelChange = (
     grpId: string,
-    selectorId: string,
+    panelId: string,
     value: string,
   ) => {
-    setSelectorItems((prev) => ({
+    setSelectDetailPanels((prev) => ({
       ...prev,
-      [grpId]: (prev[grpId] ?? []).map((s) =>
-        s.id === selectorId ? { ...s, labelValue: value } : s,
+      [grpId]: (prev[grpId] ?? []).map((p) =>
+        p.id === panelId ? { ...p, labelValue: value } : p,
       ),
     }));
   };
-  const handleAddListItem = (selectorId: string) => {
+  const handleAddSelectListItem = (detailId: string) => {
     const newId = `list-item-${Date.now()}`;
-    setListItems((prev) => ({
+
+    setSelectListItems((prev) => ({
       ...prev,
-      [selectorId]: [
-        ...(prev[selectorId] ?? []),
-        { id: newId, valueValue: "", promptValue: "" },
+      [detailId]: [
+        ...(prev[detailId] ?? []),
+        { id: newId, valueValue: "", promptValue: "", weightValue: "" },
       ],
     }));
   };
-  const handleRemoveListItem = (selectorId: string, itemId: string) => {
-    setListItems((prev) => ({
+  const handleRemoveSelectListItem = (detailId: string, itemId: string) => {
+    setSelectListItems((prev) => ({
       ...prev,
-      [selectorId]: (prev[selectorId] ?? []).filter((i) => i.id !== itemId),
+      [detailId]: (prev[detailId] ?? []).filter((item) => item.id !== itemId),
     }));
   };
-  const handleListItemValueChange = (
-    selectorId: string,
+  const handleToggleSelectListItemExpanded = (
+    detailId: string,
+    itemId: string,
+  ) => {
+    setSelectListItemExpandedIds((prev) => {
+      const current = new Set(prev[detailId] ?? []);
+      if (current.has(itemId)) {
+        current.delete(itemId);
+      } else {
+        current.add(itemId);
+      }
+      return { ...prev, [detailId]: current };
+    });
+  };
+  const handleSelectListItemValueChange = (
+    detailId: string,
     itemId: string,
     value: string,
   ) => {
-    setListItems((prev) => ({
+    setSelectListItems((prev) => ({
       ...prev,
-      [selectorId]: (prev[selectorId] ?? []).map((i) =>
-        i.id === itemId ? { ...i, valueValue: value } : i,
+      [detailId]: (prev[detailId] ?? []).map((item) =>
+        item.id === itemId ? { ...item, valueValue: value } : item,
       ),
     }));
   };
-  const handleListItemPromptChange = (
-    selectorId: string,
+  const handleSelectListItemPromptChange = (
+    detailId: string,
     itemId: string,
     value: string,
   ) => {
-    setListItems((prev) => ({
+    setSelectListItems((prev) => ({
       ...prev,
-      [selectorId]: (prev[selectorId] ?? []).map((i) =>
-        i.id === itemId ? { ...i, promptValue: value } : i,
+      [detailId]: (prev[detailId] ?? []).map((item) =>
+        item.id === itemId ? { ...item, promptValue: value } : item,
+      ),
+    }));
+  };
+  const handleSelectListItemWeightChange = (
+    detailId: string,
+    itemId: string,
+    value: string,
+  ) => {
+    setSelectListItems((prev) => ({
+      ...prev,
+      [detailId]: (prev[detailId] ?? []).map((item) =>
+        item.id === itemId ? { ...item, weightValue: value } : item,
       ),
     }));
   };
@@ -776,8 +859,9 @@ export function useConfigurationsViewModelMocks(): ConfigurationsViewModelMocksR
     onSelectType?: (typeName: string) => void,
   ) => ({
     label: {
-      sectionSelect: { text: "Section:", variant: "body2" },
+      sectionSelect: { text: "Section:" },
     },
+    shuffle: { checked: false, onChange: () => {} },
     sectionSelect: typeNames.map((typeName) => ({
       key: `${blocId}-${typeName}`,
       props: {
@@ -808,9 +892,9 @@ export function useConfigurationsViewModelMocks(): ConfigurationsViewModelMocksR
   ): ConfigPanelFormType => ({
     onToggle: { onClick: onToggle },
     label: {
-      value: { text: "Label:", variant: "body2" },
-      key: { text: "Key:", variant: "body2" },
-      panel: { text: panelLabel, variant: "body2" },
+      value: { text: "Label:" },
+      key: { text: "Key:" },
+      panel: { text: panelLabel },
     },
     field: {
       value: {
@@ -836,10 +920,10 @@ export function useConfigurationsViewModelMocks(): ConfigurationsViewModelMocksR
     }
 
     return {
-      message: { text: "", variant: "body2" },
-      label: { text: "Orders Groups:", variant: "body2" },
+      message: { text: "" },
+      label: { text: "Orders Groups:" },
       add: {
-        label: { text: "Add Orders Group:", variant: "body2" },
+        label: { text: "Add Orders Group:" },
         onClick: () => handleAddOrdersGrp(blocId),
       },
       panels: (ordersGrpItems[blocId] ?? []).map((grp) => ({
@@ -856,24 +940,24 @@ export function useConfigurationsViewModelMocks(): ConfigurationsViewModelMocksR
             () => handleRemoveOrdersGrp(blocId, grp.id),
           ),
           itemSection: {
-            label: { text: "Order Items:", variant: "body2" },
+            label: { text: "Order Items:" },
             add: {
-              label: { text: "Add Orders Item:", variant: "body2" },
+              label: { text: "Add Orders Item:" },
               onClick: () => handleAddOrdersItem(grp.id),
             },
             panels: (ordersItemItems[grp.id] ?? []).map((item) => {
               const selectedType =
                 selectedOrdersItemTypes[item.id] ?? ORDERS_TYPE_OPTIONS[0];
               const randomSection = {
-                label: { text: "Random:", variant: "body2" },
+                label: { text: "Random:" },
                 panels: (randomItems[item.id] ?? []).map((row) => ({
                   key: row.id,
                   props: {
                     label: {
-                      item: { text: `Row ${row.id}:`, variant: "body2" },
-                      value: { text: "Value:", variant: "body2" },
-                      prompt: { text: "Prompt:", variant: "body2" },
-                      weight: { text: "Weight:", variant: "body2" },
+                      item: { text: `Row ${row.id}:` },
+                      value: { text: "Value:" },
+                      prompt: { text: "Prompt:" },
+                      weight: { text: "Weight:" },
                     },
                     field: {
                       value: {
@@ -904,12 +988,12 @@ export function useConfigurationsViewModelMocks(): ConfigurationsViewModelMocksR
                   },
                 })),
                 add: {
-                  label: { text: "Add Random:", variant: "body2" },
+                  label: { text: "Add Random:" },
                   onClick: () => handleAddRandomRow(item.id),
                 },
               };
               const complexSection = {
-                label: { text: "Complex:", variant: "body2" },
+                label: { text: "Complex:" },
                 panels: (complexCategoryItems[item.id] ?? []).map((cat) => ({
                   key: cat.id,
                   props: {
@@ -917,22 +1001,28 @@ export function useConfigurationsViewModelMocks(): ConfigurationsViewModelMocksR
                       `Category ${cat.id}:`,
                       cat.value,
                       cat.prompt,
-                      (complexCategoryExpandedIds[item.id] ?? new Set<string>()).has(cat.id),
-                      () => handleToggleComplexCategoryExpanded(item.id, cat.id),
-                      (v) => handleComplexCategoryValueChange(item.id, cat.id, v),
-                      (v) => handleComplexCategoryPromptChange(item.id, cat.id, v),
+                      (
+                        complexCategoryExpandedIds[item.id] ?? new Set<string>()
+                      ).has(cat.id),
+                      () =>
+                        handleToggleComplexCategoryExpanded(item.id, cat.id),
+                      (v) =>
+                        handleComplexCategoryValueChange(item.id, cat.id, v),
+                      (v) =>
+                        handleComplexCategoryPromptChange(item.id, cat.id, v),
                       () => handleRemoveComplexCategory(item.id, cat.id),
                     ),
+                    itemSection: undefined,
                     section: {
-                      label: { text: "Random Items:", variant: "body2" },
+                      label: { text: "Random Items:" },
                       panels: (complexRandomItems[cat.id] ?? []).map((r) => ({
                         key: r.id,
                         props: {
                           label: {
-                            item: { text: `Row ${r.id}:`, variant: "body2" },
-                            value: { text: "Value:", variant: "body2" },
-                            prompt: { text: "Prompt:", variant: "body2" },
-                            weight: { text: "Weight:", variant: "body2" },
+                            item: { text: `Row ${r.id}:` },
+                            value: { text: "Value:" },
+                            prompt: { text: "Prompt:" },
+                            weight: { text: "Weight:" },
                           },
                           field: {
                             value: {
@@ -958,30 +1048,29 @@ export function useConfigurationsViewModelMocks(): ConfigurationsViewModelMocksR
                             },
                           },
                           remove: {
-                            onClick: () =>
-                              handleRemoveRandomItem(cat.id, r.id),
+                            onClick: () => handleRemoveRandomItem(cat.id, r.id),
                           },
                         },
                       })),
                       add: {
-                        label: { text: "Add Random Item:", variant: "body2" },
+                        label: { text: "Add Random Item:" },
                         onClick: () => handleAddRandomItem(cat.id),
                       },
                     },
                   },
                 })),
                 add: {
-                  label: { text: "Add Complex:", variant: "body2" },
+                  label: { text: "Add Complex:" },
                   onClick: () => handleAddComplexCategory(item.id),
                 },
               };
               const colorsSection = {
-                label: { text: "Colors:", variant: "body2" },
-                message: { text: "", variant: "body2" },
+                label: { text: "Colors:" },
+                message: { text: "" },
               };
               const scriptsSection = {
-                label: { text: "Scripts:", variant: "body2" },
-                message: { text: "", variant: "body2" },
+                label: { text: "Scripts:" },
+                message: { text: "" },
               };
 
               return {
@@ -1020,9 +1109,9 @@ export function useConfigurationsViewModelMocks(): ConfigurationsViewModelMocksR
                       selectedType === "colors" ? colorsSection : undefined,
                     scriptsSection:
                       selectedType === "scripts" ? scriptsSection : undefined,
-                    label: { text: "", variant: "body2" },
+                    label: { text: "" },
                     add: {
-                      label: { text: "", variant: "body2" },
+                      label: { text: "" },
                       onClick: () => {},
                     },
                     panels: [],
@@ -1031,33 +1120,262 @@ export function useConfigurationsViewModelMocks(): ConfigurationsViewModelMocksR
               };
             }),
             sectionSelector: buildSectionSelector(grp.id, ORDERS_TYPE_OPTIONS),
-            randomSection: {
-              label: { text: "", variant: "body2" },
-              panels: [],
-              add: {
-                label: { text: "", variant: "body2" },
-                onClick: () => {},
+            randomSection: undefined,
+            complexSection: undefined,
+            colorsSection: undefined,
+            scriptsSection: undefined,
+          },
+        },
+      })),
+    };
+  };
+
+  const buildSwitchSection = (
+    blocId: string,
+  ): SwitchSectionType | undefined => {
+    if (!(selectedBlocTypes[blocId] ?? new Set<string>()).has("Switch")) {
+      return undefined;
+    }
+
+    return {
+      titleLabel: { text: "Switch Groups:" },
+      switchGrpPanels: (switchGrpItems[blocId] ?? []).map((grp) => ({
+        key: grp.id,
+        panelLabel: { text: `Group ${grp.id}:` },
+        keyLabel: { text: "Key:" },
+        keyField: {
+          value: grp.keyValue,
+          placeholder: "text field...",
+          onChange: (value: string) =>
+            handleSwitchGrpKeyChange(blocId, grp.id, value),
+          size: "small" as const,
+        },
+        labelLabel: { text: "Label:" },
+        labelField: {
+          value: grp.labelValue,
+          placeholder: "text field...",
+          onChange: (value: string) =>
+            handleSwitchGrpLabelChange(blocId, grp.id, value),
+          size: "small" as const,
+        },
+        removeButton: {
+          icon: "removeCircle",
+          onClick: () => handleRemoveSwitchGrp(blocId, grp.id),
+        },
+        toggleButton: {
+          icon: "expandMore",
+          onClick: () => handleToggleSwitchGrpExpanded(blocId, grp.id),
+        },
+        isExpanded: (switchGrpExpandedIds[blocId] ?? new Set<string>()).has(
+          grp.id,
+        ),
+        switchItemsLabel: {
+          text: "Switch Items:",
+        },
+        switchItemSection: {
+          randomizeLabel: { text: "Randomize:" },
+          randomizeSwitch: {
+            checked: switchRandomize[grp.id] ?? false,
+            onChange: (checked: boolean) =>
+              handleToggleSwitchRandomize(grp.id, checked),
+          },
+          switchItemPanels: (switchItems[grp.id] ?? []).map((item) => ({
+            key: item.id,
+            labelLabel: { text: "Label:" },
+            labelField: {
+              value: item.labelValue,
+              placeholder: "text field...",
+              onChange: (value: string) =>
+                handleSwitchItemLabelChange(grp.id, item.id, value),
+              size: "small" as const,
+            },
+            valueLabel: { text: "Value:" },
+            valueField: {
+              value: item.valueValue,
+              placeholder: "text field...",
+              onChange: (value: string) =>
+                handleSwitchItemValueChange(grp.id, item.id, value),
+              size: "small" as const,
+            },
+            altLabel: { text: "Alt:" },
+            altField: {
+              value: item.altValue,
+              placeholder: "text field...",
+              onChange: (value: string) =>
+                handleSwitchItemAltChange(grp.id, item.id, value),
+              size: "small" as const,
+            },
+            removeButton: {
+              icon: "removeCircle",
+              onClick: () => handleRemoveSwitchItem(grp.id, item.id),
+            },
+          })),
+          addSwitchRowLabel: {
+            text: "Add Switch Item:",
+          },
+          addSwitchButton: {
+            icon: "add",
+            onClick: () => handleAddSwitchItem(grp.id),
+          },
+        },
+      })),
+      addSwitchGrpRowLabel: {
+        text: "Add Switch Group:",
+      },
+      addSwitchGrpButton: {
+        icon: "add",
+        onClick: () => handleAddSwitchGrp(blocId),
+      },
+    };
+  };
+
+  const buildSelectSection = (
+    blocId: string,
+  ): SelectSectionType | undefined => {
+    if (!(selectedBlocTypes[blocId] ?? new Set<string>()).has("Select")) {
+      return undefined;
+    }
+
+    return {
+      label: { text: "Select Groups:" },
+      panels: (selectGrpItems[blocId] ?? []).map((grp) => ({
+        key: grp.id,
+        props: {
+          panel: buildPanelForm(
+            `Group ${grp.id}:`,
+            grp.keyValue,
+            grp.labelValue,
+            (selectGrpExpandedIds[blocId] ?? new Set<string>()).has(grp.id),
+            () => handleToggleSelectGrpExpanded(blocId, grp.id),
+            (value) => handleSelectGrpKeyChange(blocId, grp.id, value),
+            (value) => handleSelectGrpLabelChange(blocId, grp.id, value),
+            () => handleRemoveSelectGrp(blocId, grp.id),
+          ),
+          itemSection: {
+            selector: {
+              label: { sectionSelect: { text: "Shuffle:" } },
+              sectionSelect: SELECT_SECTION_ITEMS,
+              shuffle: {
+                checked: selectShuffle[grp.id] ?? false,
+                onChange: (checked: boolean) =>
+                  handleToggleSelectShuffle(grp.id, checked),
               },
-            },
-            complexSection: {
-              label: { text: "", variant: "body2" },
-              panels: [],
-              add: {
-                label: { text: "", variant: "body2" },
-                onClick: () => {},
+            } as any,
+            label: { text: "Selectors:" },
+            panels: (
+              selectDetailPanels[grp.id] ?? [
+                createSelectDetailPanel(`${grp.id}-selector-default`),
+              ]
+            ).map((detailPanel) => ({
+              key: detailPanel.id,
+              props: {
+                panel: buildPanelForm(
+                  `Selector ${detailPanel.id}:`,
+                  detailPanel.keyValue,
+                  detailPanel.labelValue,
+                  (selectDetailExpandedIds[grp.id] ?? new Set<string>()).has(
+                    detailPanel.id,
+                  ),
+                  () =>
+                    handleToggleSelectDetailExpanded(grp.id, detailPanel.id),
+                  (value) =>
+                    handleSelectDetailKeyChange(grp.id, detailPanel.id, value),
+                  (value) =>
+                    handleSelectDetailLabelChange(
+                      grp.id,
+                      detailPanel.id,
+                      value,
+                    ),
+                  () => handleRemoveSelectDetailPanel(grp.id, detailPanel.id),
+                ),
+                itemSection: {
+                  selector: {
+                    label: { sectionSelect: { text: "Shuffle:" } },
+                    sectionSelect: SELECT_SECTION_ITEMS,
+                    shuffle: {
+                      checked: selectShuffle[grp.id] ?? false,
+                      onChange: (checked: boolean) =>
+                        handleToggleSelectShuffle(grp.id, checked),
+                    },
+                  } as any,
+                  label: { text: "ListItems:" },
+                  panels: (
+                    selectListItems[detailPanel.id] ?? [
+                      createSelectListItem(
+                        `${detailPanel.id}-list-item-default`,
+                      ),
+                    ]
+                  ).map((listItem) => ({
+                    key: listItem.id,
+                    props: {
+                      label: {
+                        item: { text: `Item ${listItem.id}:` },
+                        value: { text: "Value:" },
+                        prompt: { text: "Prompt:" },
+                        weight: { text: "Weight:" },
+                      },
+                      field: {
+                        value: {
+                          value: listItem.valueValue,
+                          placeholder: "value...",
+                          onChange: (value: string) =>
+                            handleSelectListItemValueChange(
+                              detailPanel.id,
+                              listItem.id,
+                              value,
+                            ),
+                          size: "small" as const,
+                        },
+                        prompt: {
+                          value: listItem.promptValue,
+                          placeholder: "prompt...",
+                          onChange: (value: string) =>
+                            handleSelectListItemPromptChange(
+                              detailPanel.id,
+                              listItem.id,
+                              value,
+                            ),
+                          size: "small" as const,
+                        },
+                        weight: {
+                          value: listItem.weightValue,
+                          placeholder: "weight...",
+                          onChange: (value: string) =>
+                            handleSelectListItemWeightChange(
+                              detailPanel.id,
+                              listItem.id,
+                              value,
+                            ),
+                          size: "small" as const,
+                        },
+                      },
+                      remove: {
+                        onClick: () =>
+                          handleRemoveSelectListItem(
+                            detailPanel.id,
+                            listItem.id,
+                          ),
+                      },
+                    },
+                  })),
+                  add: {
+                    label: { text: "Add ListItem:" },
+                    onClick: () => handleAddSelectListItem(detailPanel.id),
+                  },
+                },
               },
-            },
-            colorsSection: {
-              label: { text: "", variant: "body2" },
-              message: { text: "", variant: "body2" },
-            },
-            scriptsSection: {
-              label: { text: "", variant: "body2" },
-              message: { text: "", variant: "body2" },
+            })),
+            add: {
+              label: { text: "Add Selector:" },
+              onClick: () => handleAddSelectDetailPanel(grp.id),
             },
           },
         },
       })),
+      add: {
+        label: { text: "Add Select Group:" },
+        onClick: () => handleAddSelectGrp(blocId),
+      },
     };
   };
 
@@ -1089,62 +1407,42 @@ export function useConfigurationsViewModelMocks(): ConfigurationsViewModelMocksR
         ),
         sectionSelector: buildSectionSelector(bloc.id, bloc.availableBlocTypes),
         ordersSection: buildOrdersSection(bloc.id),
-        switchSection: undefined,
-        selectSection: undefined,
+        switchSection: buildSwitchSection(bloc.id),
+        selectSection: buildSelectSection(bloc.id),
       },
     };
   });
 
-  const linksAbove = NAV_ITEMS.filter(
-    (item) => item.href !== pathname && item.href === "/configurations",
-  ).map((item) => ({
-    label: item.label,
-    onClick: () => handleNavigate(item.href),
-  }));
-
-  const linksBelow = NAV_ITEMS.filter(
-    (item) => item.href !== pathname && item.href !== "/configurations",
-  ).map((item) => ({
-    label: item.label,
-    onClick: () => handleNavigate(item.href),
-  }));
-
-  const activeItemLabel = (() => {
-    const activeItem = NAV_ITEMS.find((item) => item.href === pathname);
-    if (!activeItem) return undefined;
-    return {
-      text: `${activeItem.label}`,
-      variant: "subtitle1" as const,
-      color: "success.main",
-      fontWeight: "bold" as const,
-    };
-  })();
-
-  const appBar: AppBarType = {
-    onMenuOpen: handleMenuOpen,
-  };
-
-  const drawer: DrawerType = {
-    open: drawerOpen,
-    onClose: handleDrawerClose,
-  };
-
-  const title: LabelAtomType = {
-    text: "ACMN",
-  };
-
   return {
     viewModel: {
       navigationLayout: {
-        appBar,
-        drawer,
-        title,
+        appBar: { onMenuOpen: handleMenuOpen },
+        drawer: { open: drawerOpen, onClose: handleDrawerClose },
+        title: { text: "ACMN-Configurations" },
         navigation: {
-          linksAbove,
-          activeItemLabel,
-          links: linksBelow,
+          linksAbove: NAV_ITEMS.filter(
+            (item) => item.href !== pathname && item.href === "/configurations",
+          ).map((item) => ({
+            label: item.label,
+            onClick: () => handleNavigate(item.href),
+          })),
+          label: (() => {
+            const activeItem = NAV_ITEMS.find((item) => item.href === pathname);
+            if (!activeItem) return undefined;
+            return {
+              text: `${activeItem.label}`,
+              color: "success.main",
+              fontWeight: "bold" as const,
+            };
+          })(),
+          links: NAV_ITEMS.filter(
+            (item) => item.href !== pathname && item.href !== "/configurations",
+          ).map((item) => ({
+            label: item.label,
+            onClick: () => handleNavigate(item.href),
+          })),
           configurations: {
-            setLabel: { text: "Sets:", variant: "body2" },
+            setLabel: { text: "Sets:" },
             select: {
               value: selectedConfig,
               options: MOCK_CONFIG_ITEMS,
@@ -1160,7 +1458,7 @@ export function useConfigurationsViewModelMocks(): ConfigurationsViewModelMocksR
               onClick: () => {},
               size: "small",
             },
-            nameLabel: { text: "Name:", variant: "body2" },
+            nameLabel: { text: "Name:" },
             editField: {
               placeholder: "text field...",
               value: configEditValue,
@@ -1191,17 +1489,14 @@ export function useConfigurationsViewModelMocks(): ConfigurationsViewModelMocksR
         add: {
           label: {
             text: "Add Bloc:",
-            variant: "body2",
           },
           onClick: handleAddBloc,
         },
         headerLabel: {
           text: "Configurations Form:",
-          variant: "subtitle1",
         },
         addRowLabel: {
           text: "Add Bloc:",
-          variant: "body2",
         },
         addButton: {
           icon: "add",
