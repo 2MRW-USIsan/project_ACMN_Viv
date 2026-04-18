@@ -5,6 +5,7 @@ export interface LabelAtomProps {
   props: LabelAtomType;
   style?: LabelSize;
   error?: boolean;
+  grey?: boolean;
   primary?: boolean;
 }
 type LabelSize = "TITLE" | "HEADER" | "LABEL" | "BODY" | "INPUT" | "CAPTION";
@@ -12,11 +13,18 @@ type LabelSize = "TITLE" | "HEADER" | "LABEL" | "BODY" | "INPUT" | "CAPTION";
 export function LabelAtom({
   props,
   style = "BODY",
-  primary,
   error,
+  grey,
+  primary,
 }: LabelAtomProps) {
   type MaiLabelSize = "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
-  const labelColor = primary ? "primary" : error ? "error" : "default";
+  const labelColor = grey
+    ? "grey"
+    : primary
+      ? "primary"
+      : error
+        ? "error"
+        : "default";
   const labelSize: Record<LabelSize, MaiLabelSize> = {
     TITLE: "h1",
     HEADER: "h2",

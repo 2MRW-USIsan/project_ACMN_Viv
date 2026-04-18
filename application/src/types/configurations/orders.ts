@@ -1,13 +1,14 @@
 import { AddPanelButtonType } from "@/components/molecules/AddPanelButton";
 import { ConfigPanelFormType } from "@/components/molecules/ConfigPanelForm";
 import { LabelAtomType } from "../ui";
-import { SectionSelectorType } from "./blocs";
 import { SectionType as ColorsSectionType } from "./colors";
 import { SectionType as ComplexSectionType } from "./complex";
 import { SectionType as RandomSectionType } from "./random";
 import { SectionType as ScriptsSectionType } from "./scripts";
+import { SelectorType } from "./types";
 
 export type SectionType = {
+  message: LabelAtomType;
   add: AddPanelButtonType;
   panels: GroupListType;
   label: LabelAtomType;
@@ -29,11 +30,11 @@ export type ItemPanelType = {
   panel: ConfigPanelFormType;
 };
 export type ItemSectionType = {
-  randomSection: RandomSectionType;
-  complexSection: ComplexSectionType;
-  colorsSection: ColorsSectionType;
-  scriptsSection: ScriptsSectionType;
-  sectionSelector: SectionSelectorType;
+  randomSection: RandomSectionType | undefined;
+  complexSection: ComplexSectionType | undefined;
+  colorsSection: ColorsSectionType | undefined;
+  scriptsSection: ScriptsSectionType | undefined;
+  sectionSelector: SelectorType;
   add: AddPanelButtonType;
   panels: ItemListType;
   label: LabelAtomType;

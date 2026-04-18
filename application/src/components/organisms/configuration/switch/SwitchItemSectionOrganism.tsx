@@ -49,7 +49,11 @@ export function SwitchItemSectionOrganism({
         ))}
         <PanelItem>
           <AlignLayout style={"CENTER"}>
-            <LabelAtom props={props.addSwitchRowLabel} style={"LABEL"} primary />
+            <LabelAtom
+              props={props.addSwitchRowLabel}
+              style={"LABEL"}
+              primary
+            />
             <IconButtonAtom props={props.addSwitchButton} />
           </AlignLayout>
         </PanelItem>

@@ -8,8 +8,8 @@ interface DeletionMarkProps {
 }
 export function DeletionMark({ props }: DeletionMarkProps) {
   return (
-    <IconButton onClick={props.onClick}>
-      <RemoveCircleOutlineIcon fontSize={"medium"} color={"info"} />
+    <IconButton onClick={props.onClick} sx={{padding:"0.1rem"}}>
+      <RemoveCircleOutlineIcon sx={{padding:"0"}} fontSize={"medium"} color={"info"} />
     </IconButton>
   );
 }

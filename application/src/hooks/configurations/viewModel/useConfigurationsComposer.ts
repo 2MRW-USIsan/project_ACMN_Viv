@@ -278,7 +278,7 @@ export function useConfigurationsComposer(contexts: ConfigurationsContexts) {
           text: "Configurations Form:",
           variant: "subtitle1",
         },
-        blocPanels: [],
+        panels: [],
         addRowLabel: {
           text: "Add Bloc:",
           variant: "body2",
@@ -286,6 +286,18 @@ export function useConfigurationsComposer(contexts: ConfigurationsContexts) {
         addButton: {
           icon: "add",
           onClick: () => {},
+        },
+        add: {
+          label: {
+            text: "",
+            variant: undefined,
+            color: undefined,
+            fontWeight: undefined,
+            style: undefined,
+          },
+          onClick: function (): void {
+            throw new Error("Function not implemented.");
+          },
         },
       },
     } satisfies ConfigurationsViewModel,

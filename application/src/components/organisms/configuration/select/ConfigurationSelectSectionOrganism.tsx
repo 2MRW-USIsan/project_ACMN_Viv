@@ -55,7 +55,11 @@ export function ConfigurationSelectSectionOrganism({
         {props.addSelectGrpRowLabel && props.addSelectGrpButton && (
           <PanelItem>
             <AlignLayout style={"CENTER"}>
-              <LabelAtom props={props.addSelectGrpRowLabel} style={"LABEL"} primary />
+              <LabelAtom
+                props={props.addSelectGrpRowLabel}
+                style={"LABEL"}
+                primary
+              />
               <IconButtonAtom props={props.addSelectGrpButton} />
             </AlignLayout>
           </PanelItem>

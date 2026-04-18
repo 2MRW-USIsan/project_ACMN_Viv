@@ -28,13 +28,12 @@ export function ConfigPanelForm({ props }: ConfigPanelFormProps) {
   return (
     <GridLayout style={{ size: "CONTAINER" }}>
       <PanelItem props={props.onToggle}>
-        {/* Icon */}
+        {/* Label */}
         <GridLayout style={{ size: 2 }}>
           <AlignLayout style={"START"}>
             <LabelAtom props={props.label.panel} style={"LABEL"} />
           </AlignLayout>
         </GridLayout>
-        {/* Label */}
         {/* Panel */}
         <GridLayout style={{ size: 9 }}>
           {/* Forms */}
@@ -50,17 +49,17 @@ export function ConfigPanelForm({ props }: ConfigPanelFormProps) {
             </GridLayout>
             {/* Value Forms */}
             <GridLayout style={{ size: 8 }}>
-              <GridLayout style={{ size: 3 }}>
+              <GridLayout style={{ size: 2 }}>
                 <LabelAtom props={props.label.value} />
               </GridLayout>
-              <GridLayout style={{ size: 9 }}>
+              <GridLayout style={{ size: 10 }}>
                 <TextFieldAtom props={props.field.value} />
               </GridLayout>
             </GridLayout>
           </GridLayout>
           {/* Deletion */}
           <GridLayout style={{ size: 1 }}>
-            <AlignLayout style={"END"}>
+            <AlignLayout style={"START"}>
               <DeletionMark props={props.remove} />
             </AlignLayout>
           </GridLayout>

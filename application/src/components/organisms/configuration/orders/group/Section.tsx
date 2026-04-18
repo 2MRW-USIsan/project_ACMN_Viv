@@ -2,16 +2,16 @@ import { AlignLayout } from "@/components/atoms/layout/AlignLayout";
 import { PanelList } from "@/components/atoms/layout/PanelList";
 import { AddPanelButton } from "@/components/molecules/AddPanelButton";
 import { SectionLabel } from "@/components/molecules/SectionLabel";
-import { SectionProps } from "@/types/configurations/orders";
-import { Panel as GroupPanel } from "./group/Panel";
+import { ItemSectionProps } from "@/types/configurations/orders";
+import { Panel as ItemPanel } from "../item/Panel";
 
-export function Section({ props }: SectionProps) {
+export function Section({ props }: ItemSectionProps) {
   return (
     <AlignLayout column={0.1} indent>
-      <SectionLabel props={props.label} style={"HEADER"} />
+      <SectionLabel props={props.label} />
       <PanelList>
         {props.panels.map((panel) => (
-          <GroupPanel props={panel.props} key={panel.key} />
+          <ItemPanel key={panel.key} props={panel.props} />
         ))}
         <AddPanelButton props={props.add} />
       </PanelList>

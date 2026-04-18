@@ -55,7 +55,11 @@ export function ConfigurationSwitchSectionOrganism({
         {props.addSwitchGrpRowLabel && props.addSwitchGrpButton && (
           <PanelItem>
             <AlignLayout style={"CENTER"}>
-              <LabelAtom props={props.addSwitchGrpRowLabel} style={"LABEL"} primary />
+              <LabelAtom
+                props={props.addSwitchGrpRowLabel}
+                style={"LABEL"}
+                primary
+              />
               <IconButtonAtom props={props.addSwitchGrpButton} />
             </AlignLayout>
           </PanelItem>

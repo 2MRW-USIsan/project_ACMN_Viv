@@ -13,6 +13,7 @@ import {
   SelectorPanel,
   SwitchGrpPanel,
 } from "@/hooks/configurations/viewModel/useConfigurationsComposer";
+import { ConfigPanelFormType } from "@/components/molecules/ConfigPanelForm";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -63,6 +64,14 @@ const INITIAL_BLOCS: BlocItem[] = [
   },
 ];
 
+const INITIAL_SELECTED_BLOC_TYPES: Record<
+  string,
+  Set<string>
+> = INITIAL_BLOCS.reduce<Record<string, Set<string>>>((acc, bloc) => {
+  acc[bloc.id] = new Set(["Orders"]);
+  return acc;
+}, {});
+
 interface ConfigurationsViewModelMocksReturns {
   viewModel: ConfigurationsViewModel;
 }
@@ -75,7 +84,7 @@ export function useConfigurationsViewModelMocks(): ConfigurationsViewModelMocksR
   const [expandedIds, setExpandedIds] = useState<Set<string>>(new Set());
   const [selectedBlocTypes, setSelectedBlocTypes] = useState<
     Record<string, Set<string>>
-  >({});
+  >(INITIAL_SELECTED_BLOC_TYPES);
   const [ordersGrpItems, setOrdersGrpItems] = useState<
     Record<string, OrdersGrpItem[]>
   >({});
@@ -216,6 +225,10 @@ export function useConfigurationsViewModelMocks(): ConfigurationsViewModelMocksR
         availableBlocTypes: ["Orders", "Switch", "Select"],
       },
     ]);
+    setSelectedBlocTypes((prev) => ({
+      ...prev,
+      [newId]: new Set(["Orders"]),
+    }));
   };
 
   const handleAddOrdersGrp = (sectionKey: string) => {
@@ -756,6 +769,332 @@ export function useConfigurationsViewModelMocks(): ConfigurationsViewModelMocksR
     }));
   };
 
+  const buildSectionSelector = (
+    blocId: string,
+    typeNames: string[],
+    selectedTypeName?: string,
+    onSelectType?: (typeName: string) => void,
+  ) => ({
+    label: {
+      sectionSelect: { text: "Section:", variant: "body2" },
+    },
+    sectionSelect: typeNames.map((typeName) => ({
+      key: `${blocId}-${typeName}`,
+      props: {
+        label: typeName,
+        checked: selectedTypeName
+          ? selectedTypeName === typeName
+          : (selectedBlocTypes[blocId] ?? new Set<string>()).has(typeName),
+        onChange: () => {
+          if (onSelectType) {
+            onSelectType(typeName);
+            return;
+          }
+          handleToggleBlocType(blocId, typeName);
+        },
+      },
+    })),
+  });
+
+  const buildPanelForm = (
+    panelLabel: string,
+    keyValue: string,
+    labelValue: string,
+    isExpanded: boolean,
+    onToggle: () => void,
+    onKeyChange: (value: string) => void,
+    onLabelChange: (value: string) => void,
+    onRemove: () => void,
+  ): ConfigPanelFormType => ({
+    onToggle: { onClick: onToggle },
+    label: {
+      value: { text: "Label:", variant: "body2" },
+      key: { text: "Key:", variant: "body2" },
+      panel: { text: panelLabel, variant: "body2" },
+    },
+    field: {
+      value: {
+        value: labelValue,
+        placeholder: "text field...",
+        onChange: onLabelChange,
+        size: "small" as const,
+      },
+      key: {
+        value: keyValue,
+        placeholder: "text field...",
+        onChange: onKeyChange,
+        size: "small" as const,
+      },
+    },
+    remove: { onClick: onRemove },
+    isExpanded,
+  });
+
+  const buildOrdersSection = (blocId: string) => {
+    if (!(selectedBlocTypes[blocId] ?? new Set<string>()).has("Orders")) {
+      return undefined;
+    }
+
+    return {
+      message: { text: "", variant: "body2" },
+      label: { text: "Orders Groups:", variant: "body2" },
+      add: {
+        label: { text: "Add Orders Group:", variant: "body2" },
+        onClick: () => handleAddOrdersGrp(blocId),
+      },
+      panels: (ordersGrpItems[blocId] ?? []).map((grp) => ({
+        key: grp.id,
+        props: {
+          panel: buildPanelForm(
+            `Group ${grp.id}:`,
+            grp.keyValue,
+            grp.labelValue,
+            (ordersGrpExpandedIds[blocId] ?? new Set<string>()).has(grp.id),
+            () => handleToggleOrdersGrpExpanded(blocId, grp.id),
+            (value) => handleOrdersGrpKeyChange(blocId, grp.id, value),
+            (value) => handleOrdersGrpLabelChange(blocId, grp.id, value),
+            () => handleRemoveOrdersGrp(blocId, grp.id),
+          ),
+          itemSection: {
+            label: { text: "Order Items:", variant: "body2" },
+            add: {
+              label: { text: "Add Orders Item:", variant: "body2" },
+              onClick: () => handleAddOrdersItem(grp.id),
+            },
+            panels: (ordersItemItems[grp.id] ?? []).map((item) => {
+              const selectedType =
+                selectedOrdersItemTypes[item.id] ?? ORDERS_TYPE_OPTIONS[0];
+              const randomSection = {
+                label: { text: "Random:", variant: "body2" },
+                panels: (randomItems[item.id] ?? []).map((row) => ({
+                  key: row.id,
+                  props: {
+                    label: {
+                      item: { text: `Row ${row.id}:`, variant: "body2" },
+                      value: { text: "Value:", variant: "body2" },
+                      prompt: { text: "Prompt:", variant: "body2" },
+                      weight: { text: "Weight:", variant: "body2" },
+                    },
+                    field: {
+                      value: {
+                        value: row.valueValue,
+                        placeholder: "value...",
+                        onChange: (v: string) =>
+                          handleRandomValueChange(item.id, row.id, v),
+                        size: "small" as const,
+                      },
+                      prompt: {
+                        value: row.promptValue,
+                        placeholder: "prompt...",
+                        onChange: (v: string) =>
+                          handleRandomPromptChange(item.id, row.id, v),
+                        size: "small" as const,
+                      },
+                      weight: {
+                        value: row.weightValue,
+                        placeholder: "weight...",
+                        onChange: (v: string) =>
+                          handleRandomWeightChange(item.id, row.id, v),
+                        size: "small" as const,
+                      },
+                    },
+                    remove: {
+                      onClick: () => handleRemoveRandomRow(item.id, row.id),
+                    },
+                  },
+                })),
+                add: {
+                  label: { text: "Add Random:", variant: "body2" },
+                  onClick: () => handleAddRandomRow(item.id),
+                },
+              };
+              const complexSection = {
+                label: { text: "Complex:", variant: "body2" },
+                panels: (complexCategoryItems[item.id] ?? []).map((cat) => ({
+                  key: cat.id,
+                  props: {
+                    panel: buildPanelForm(
+                      `Category ${cat.id}:`,
+                      cat.value,
+                      cat.prompt,
+                      (complexCategoryExpandedIds[item.id] ?? new Set<string>()).has(cat.id),
+                      () => handleToggleComplexCategoryExpanded(item.id, cat.id),
+                      (v) => handleComplexCategoryValueChange(item.id, cat.id, v),
+                      (v) => handleComplexCategoryPromptChange(item.id, cat.id, v),
+                      () => handleRemoveComplexCategory(item.id, cat.id),
+                    ),
+                    section: {
+                      label: { text: "Random Items:", variant: "body2" },
+                      panels: (complexRandomItems[cat.id] ?? []).map((r) => ({
+                        key: r.id,
+                        props: {
+                          label: {
+                            item: { text: `Row ${r.id}:`, variant: "body2" },
+                            value: { text: "Value:", variant: "body2" },
+                            prompt: { text: "Prompt:", variant: "body2" },
+                            weight: { text: "Weight:", variant: "body2" },
+                          },
+                          field: {
+                            value: {
+                              value: r.value,
+                              placeholder: "value...",
+                              onChange: (v: string) =>
+                                handleRandomItemValueChange(cat.id, r.id, v),
+                              size: "small" as const,
+                            },
+                            prompt: {
+                              value: r.prompt,
+                              placeholder: "prompt...",
+                              onChange: (v: string) =>
+                                handleRandomItemPromptChange(cat.id, r.id, v),
+                              size: "small" as const,
+                            },
+                            weight: {
+                              value: r.weight,
+                              placeholder: "weight...",
+                              onChange: (v: string) =>
+                                handleRandomItemWeightChange(cat.id, r.id, v),
+                              size: "small" as const,
+                            },
+                          },
+                          remove: {
+                            onClick: () =>
+                              handleRemoveRandomItem(cat.id, r.id),
+                          },
+                        },
+                      })),
+                      add: {
+                        label: { text: "Add Random Item:", variant: "body2" },
+                        onClick: () => handleAddRandomItem(cat.id),
+                      },
+                    },
+                  },
+                })),
+                add: {
+                  label: { text: "Add Complex:", variant: "body2" },
+                  onClick: () => handleAddComplexCategory(item.id),
+                },
+              };
+              const colorsSection = {
+                label: { text: "Colors:", variant: "body2" },
+                message: { text: "", variant: "body2" },
+              };
+              const scriptsSection = {
+                label: { text: "Scripts:", variant: "body2" },
+                message: { text: "", variant: "body2" },
+              };
+
+              return {
+                key: item.id,
+                props: {
+                  panel: buildPanelForm(
+                    `Item ${item.id}:`,
+                    item.keyValue,
+                    item.labelValue,
+                    (ordersItemExpandedIds[grp.id] ?? new Set<string>()).has(
+                      item.id,
+                    ),
+                    () => handleToggleOrdersItemExpanded(grp.id, item.id),
+                    (value) =>
+                      handleOrdersItemKeyChange(grp.id, item.id, value),
+                    (value) =>
+                      handleOrdersItemLabelChange(grp.id, item.id, value),
+                    () => handleRemoveOrdersItem(grp.id, item.id),
+                  ),
+                  itemSection: {
+                    sectionSelector: buildSectionSelector(
+                      item.id,
+                      ORDERS_TYPE_OPTIONS,
+                      selectedType,
+                      (typeName) =>
+                        handleSelectOrdersItemType(
+                          item.id,
+                          typeName as OrdersTypeOption,
+                        ),
+                    ),
+                    randomSection:
+                      selectedType === "random" ? randomSection : undefined,
+                    complexSection:
+                      selectedType === "complex" ? complexSection : undefined,
+                    colorsSection:
+                      selectedType === "colors" ? colorsSection : undefined,
+                    scriptsSection:
+                      selectedType === "scripts" ? scriptsSection : undefined,
+                    label: { text: "", variant: "body2" },
+                    add: {
+                      label: { text: "", variant: "body2" },
+                      onClick: () => {},
+                    },
+                    panels: [],
+                  },
+                },
+              };
+            }),
+            sectionSelector: buildSectionSelector(grp.id, ORDERS_TYPE_OPTIONS),
+            randomSection: {
+              label: { text: "", variant: "body2" },
+              panels: [],
+              add: {
+                label: { text: "", variant: "body2" },
+                onClick: () => {},
+              },
+            },
+            complexSection: {
+              label: { text: "", variant: "body2" },
+              panels: [],
+              add: {
+                label: { text: "", variant: "body2" },
+                onClick: () => {},
+              },
+            },
+            colorsSection: {
+              label: { text: "", variant: "body2" },
+              message: { text: "", variant: "body2" },
+            },
+            scriptsSection: {
+              label: { text: "", variant: "body2" },
+              message: { text: "", variant: "body2" },
+            },
+          },
+        },
+      })),
+    };
+  };
+
+  const blocPanels = blocs.map((bloc) => {
+    const isExpanded = expandedIds.has(bloc.id);
+
+    return {
+      key: bloc.id,
+      panel: buildPanelForm(
+        `Bloc ${bloc.id}:`,
+        bloc.keyValue,
+        bloc.labelValue,
+        isExpanded,
+        () => handleToggleExpanded(bloc.id),
+        (value) => handleKeyChange(bloc.id, value),
+        (value) => handleLabelChange(bloc.id, value),
+        () => handleRemoveBloc(bloc.id),
+      ),
+      bloc: {
+        panel: buildPanelForm(
+          `Bloc ${bloc.id}:`,
+          bloc.keyValue,
+          bloc.labelValue,
+          isExpanded,
+          () => handleToggleExpanded(bloc.id),
+          (value) => handleKeyChange(bloc.id, value),
+          (value) => handleLabelChange(bloc.id, value),
+          () => handleRemoveBloc(bloc.id),
+        ),
+        sectionSelector: buildSectionSelector(bloc.id, bloc.availableBlocTypes),
+        ordersSection: buildOrdersSection(bloc.id),
+        switchSection: undefined,
+        selectSection: undefined,
+      },
+    };
+  });
+
   const linksAbove = NAV_ITEMS.filter(
     (item) => item.href !== pathname && item.href === "/configurations",
   ).map((item) => ({
@@ -868,7 +1207,7 @@ export function useConfigurationsViewModelMocks(): ConfigurationsViewModelMocksR
           icon: "add",
           onClick: handleAddBloc,
         },
-        blocPanels: []
+        panels: blocPanels,
       },
     },
   };

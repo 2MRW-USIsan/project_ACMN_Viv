@@ -77,7 +77,11 @@ export function SelectItemSectionOrganism({
                   ))}
                   <PanelItem>
                     <AlignLayout style={"CENTER"}>
-                      <LabelAtom props={selector.addListItemRowLabel} style={"LABEL"} primary />
+                      <LabelAtom
+                        props={selector.addListItemRowLabel}
+                        style={"LABEL"}
+                        primary
+                      />
                       <IconButtonAtom props={selector.addListItemButton} />
                     </AlignLayout>
                   </PanelItem>
@@ -88,7 +92,11 @@ export function SelectItemSectionOrganism({
         ))}
         <PanelItem>
           <AlignLayout style={"CENTER"}>
-            <LabelAtom props={props.addSelectorRowLabel} style={"LABEL"} primary />
+            <LabelAtom
+              props={props.addSelectorRowLabel}
+              style={"LABEL"}
+              primary
+            />
             <IconButtonAtom props={props.addSelectorButton} />
           </AlignLayout>
         </PanelItem>

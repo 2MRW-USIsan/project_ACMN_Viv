@@ -2,8 +2,8 @@ import { AlignLayout } from "@/components/atoms/layout/AlignLayout";
 import { PanelList } from "@/components/atoms/layout/PanelList";
 import { AddPanelButton } from "@/components/molecules/AddPanelButton";
 import { SectionLabel } from "@/components/molecules/SectionLabel";
-import { SectionProps } from "@/types/configurations/orders";
-import { Panel as GroupPanel } from "./group/Panel";
+import { SectionProps } from "@/types/configurations/complex";
+import { Panel } from "./Panel";
 
 export function Section({ props }: SectionProps) {
   return (
@@ -11,7 +11,7 @@ export function Section({ props }: SectionProps) {
       <SectionLabel props={props.label} style={"HEADER"} />
       <PanelList>
         {props.panels.map((panel) => (
-          <GroupPanel props={panel.props} key={panel.key} />
+          <Panel props={panel.props} key={panel.key} />
         ))}
         <AddPanelButton props={props.add} />
       </PanelList>
