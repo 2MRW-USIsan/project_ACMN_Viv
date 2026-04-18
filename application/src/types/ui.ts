@@ -1,18 +1,4 @@
 // Display Atoms
-export type DividerAtomType = {
-  orientation?: "horizontal" | "vertical";
-};
-
-export type LabelAtomType = {
-  text: string;
-  variant?: string;
-  color?: string;
-  fontWeight?: string | number;
-  style?: {
-    size: "TITLE" | "HEADER" | "LABEL" | "BODY" | "INPUT" | "CAPTION";
-    color: string;
-  };
-};
 
 // Input Atoms
 export type ButtonAtomType = {

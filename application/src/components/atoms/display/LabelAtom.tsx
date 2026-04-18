@@ -1,4 +1,4 @@
-import { LabelAtomType } from "@/types/ui";
+import { LabelAtomType } from "@/types/components/ui";
 import { Typography } from "@mui/material";
 
 export interface LabelAtomProps {
@@ -9,6 +9,7 @@ export interface LabelAtomProps {
   primary?: boolean;
 }
 type LabelSize = "TITLE" | "HEADER" | "LABEL" | "BODY" | "INPUT" | "CAPTION";
+type MuiLabelSize = "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
 
 export function LabelAtom({
   props,
@@ -17,7 +18,6 @@ export function LabelAtom({
   grey,
   primary,
 }: LabelAtomProps) {
-  type MaiLabelSize = "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
   const labelColor = grey
     ? "grey"
     : primary
@@ -25,7 +25,7 @@ export function LabelAtom({
       : error
         ? "error"
         : "default";
-  const labelSize: Record<LabelSize, MaiLabelSize> = {
+  const labelSize: Record<LabelSize, MuiLabelSize> = {
     TITLE: "h1",
     HEADER: "h2",
     LABEL: "h3",

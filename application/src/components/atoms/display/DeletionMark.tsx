@@ -1,8 +1,7 @@
+import { IconButtonType } from "@/types/components/ui";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import { IconButton } from "@mui/material";
-export type IconButtonType = {
-  onClick: () => void;
-};
+
 interface DeletionMarkProps {
   props: IconButtonType;
 }

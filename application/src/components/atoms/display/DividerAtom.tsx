@@ -1,5 +1,5 @@
+import { DividerAtomType } from "@/types/components/ui";
 import { Divider } from "@mui/material";
-import { DividerAtomType } from "@/types/ui";
 
 export interface DividerAtomProps {
   props?: DividerAtomType;
