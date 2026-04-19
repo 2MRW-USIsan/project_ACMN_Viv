@@ -1,13 +1,9 @@
-import { LabelAtomType } from "@/types/ui";
+import { AddPanelButtonType } from "@/types/components/ui";
 import { Label } from "../atoms/display/Label";
 import { PlusMark } from "../atoms/display/PlusMark";
 import { AlignLayout } from "../atoms/layout/AlignLayout";
 import { PanelItem } from "../atoms/layout/PanelItem";
 
-export type AddPanelButtonType = {
-  label: LabelAtomType;
-  onClick: () => void;
-};
 interface AddPanelButtonProps {
   props: AddPanelButtonType;
 }

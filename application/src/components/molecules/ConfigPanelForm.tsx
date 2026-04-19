@@ -1,71 +1,57 @@
-import { LabelAtomType, TextFieldAtomType } from "@/types/ui";
-import { DeletionMark, IconButtonType } from "../atoms/display/DeletionMark";
+import { ConfigPanelFormType } from "@/types/components/ui";
+import { DeletionMark } from "../atoms/display/DeletionMark";
 import { ExpandMark } from "../atoms/display/ExpandMark";
 import { Label } from "../atoms/display/Label";
 import { TextField } from "../atoms/inputs/TextField";
 import { AlignLayout } from "../atoms/layout/AlignLayout";
 import { GridLayout } from "../atoms/layout/GridLayout";
-import { PanelItem, PanelItemType } from "../atoms/layout/PanelItem";
+import { PanelItem } from "../atoms/layout/PanelItem";
 
-export type ConfigPanelFormType = {
-  onToggle: PanelItemType;
-  label: {
-    value: LabelAtomType;
-    key: LabelAtomType;
-    panel: LabelAtomType;
-  };
-  field: {
-    value: TextFieldAtomType;
-    key: TextFieldAtomType;
-  };
-  remove: IconButtonType;
-  isExpanded: boolean;
-};
 interface ConfigPanelFormProps {
   props: ConfigPanelFormType;
 }
 export function ConfigPanelForm({ props }: ConfigPanelFormProps) {
   return (
-    <GridLayout style={{ size: "CONTAINER" }}>
+    <GridLayout style={"CONTAINER"}>
       <PanelItem props={props.onToggle}>
         {/* Label */}
-        <GridLayout style={{ size: 2 }}>
+        <GridLayout style={2}>
           <AlignLayout style={"START"}>
-            <Label props={props.label.panel} style={"LABEL"} />
+            <Label props={props.label.title} style={"LABEL"} />
           </AlignLayout>
         </GridLayout>
         {/* Panel */}
-        <GridLayout style={{ size: 9 }}>
+        <GridLayout style={9}>
           {/* Forms */}
-          <GridLayout style={{ size: 11 }}>
+          <GridLayout style={11}>
             {/* Key Forms */}
-            <GridLayout style={{ size: 4 }}>
-              <GridLayout style={{ size: 3 }}>
+            <GridLayout style={4}>
+              <GridLayout style={3}>
                 <Label props={props.label.key} />
               </GridLayout>
-              <GridLayout style={{ size: 9 }}>
+              <GridLayout style={9}>
                 <TextField props={props.field.key} />
               </GridLayout>
             </GridLayout>
             {/* Value Forms */}
-            <GridLayout style={{ size: 8 }}>
-              <GridLayout style={{ size: 2 }}>
+            <GridLayout style={8}>
+              <GridLayout style={2}>
                 <Label props={props.label.value} />
               </GridLayout>
-              <GridLayout style={{ size: 10 }}>
+              <GridLayout style={10}>
                 <TextField props={props.field.value} />
               </GridLayout>
             </GridLayout>
           </GridLayout>
           {/* Deletion */}
-          <GridLayout style={{ size: 1 }}>
+          <GridLayout style={1}>
             <AlignLayout style={"START"}>
               <DeletionMark props={props.remove} />
             </AlignLayout>
           </GridLayout>
         </GridLayout>
         {/* Icon */}
-        <GridLayout style={{ size: 1 }}>
+        <GridLayout style={1}>
           <AlignLayout style={"END"}>
             <ExpandMark props={props.isExpanded} />
           </AlignLayout>
