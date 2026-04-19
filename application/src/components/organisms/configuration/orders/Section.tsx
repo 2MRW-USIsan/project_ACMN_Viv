@@ -2,9 +2,12 @@ import { AlignLayout } from "@/components/atoms/layout/AlignLayout";
 import { PanelList } from "@/components/atoms/layout/PanelList";
 import { AddPanelButton } from "@/components/molecules/AddPanelButton";
 import { SectionLabel } from "@/components/molecules/SectionLabel";
-import { SectionProps } from "@/types/configurations/orders/types";
-import { Panel as GroupPanel } from "./group/Panel";
+import { Panel as GroupPanel } from "./Group.Panel";
+import { SectionType } from "@/types/components/configurations/orders.types";
 
+interface SectionProps {
+  props: SectionType;
+}
 export function Section({ props }: SectionProps) {
   return (
     <AlignLayout column={0.1} indent>

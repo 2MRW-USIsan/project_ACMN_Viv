@@ -23,7 +23,7 @@ export type ChipRadioType = {
   checked: boolean;
   onChange: () => void;
 };
-export type SelectorType = {
+export type SelectType = {
   value: string;
   options: string[];
   onChange: (value: string) => void;

@@ -10,17 +10,6 @@ import {
   SwitchSectionType,
 } from "./orders/blocs";
 
-export interface BodyType {
-  add: AddPanelButtonType;
-  headerLabel: LabelProps["props"];
-  panels: BlocPanelItemType[];
-  addRowLabel: LabelProps["props"];
-  addButton: IconButtonAtomProps["props"];
-}
-export interface BodyProps {
-  props: BodyType;
-}
-
 export type SectionPanelType = {
   bloc: SectionType;
   panel: ConfigPanelFormType;

@@ -1,14 +1,14 @@
-import { SelectorType } from "@/types/components/ui";
-import { FormControl, MenuItem, Select } from "@mui/material";
+import { SelectType } from "@/types/components/ui";
+import { FormControl, MenuItem, Select as MuiSelect } from "@mui/material";
 
-export interface SelectorProps {
-  props: SelectorType;
+export interface SelectProps {
+  props: SelectType;
 }
 
-export function Selector({ props }: SelectorProps) {
+export function Select({ props }: SelectProps) {
   return (
     <FormControl fullWidth>
-      <Select
+      <MuiSelect
         value={props.options.length > 0 ? props.value : "-"}
         onChange={(e) => props.onChange(e.target.value)}
         size="small"
@@ -24,7 +24,7 @@ export function Selector({ props }: SelectorProps) {
             {"-"}
           </MenuItem>
         )}
-      </Select>
+      </MuiSelect>
     </FormControl>
   );
 }
