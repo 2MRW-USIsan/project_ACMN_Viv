@@ -1,9 +1,6 @@
+import { PanelItemType } from "@/types/components/ui";
 import { ListItem } from "@mui/material";
-import { AlignLayout } from "./AlignLayout";
 
-export type PanelItemType = {
-  onClick: () => void;
-};
 interface PanelItemProps {
   props?: PanelItemType;
   children: React.ReactNode;

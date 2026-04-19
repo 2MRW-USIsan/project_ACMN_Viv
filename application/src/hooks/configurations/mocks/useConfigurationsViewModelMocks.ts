@@ -1,6 +1,6 @@
 "use client";
 
-import { NavItem } from "@/components/atoms/surface/DrawerAtom";
+import { NavItem } from "@/components/atoms/surface/Drawer";
 import { ConfigPanelFormType } from "@/components/molecules/ConfigPanelForm";
 import {
   BlocItem,

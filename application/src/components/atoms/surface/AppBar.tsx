@@ -1,16 +1,19 @@
 import { CONST } from "@/const/constants";
-import { AppBarType } from "@/types/ui";
+import { AppBarType } from "@/types/components/ui";
 import MenuIcon from "@mui/icons-material/Menu";
-import { AppBar, IconButton, Toolbar } from "@mui/material";
+import { IconButton, AppBar as MuiAppBar, Toolbar } from "@mui/material";
 
-export interface AppBarAtomProps {
+export interface AppBarProps {
   props: AppBarType;
   children: React.ReactNode;
 }
 
-export function AppBarAtom({ props, children }: AppBarAtomProps) {
+export function AppBar({ props, children }: AppBarProps) {
   return (
-    <AppBar position="fixed" sx={{ height: CONST.AppBar.height, zIndex: 9999 }}>
+    <MuiAppBar
+      position="fixed"
+      sx={{ height: CONST.AppBar.height, zIndex: 9999 }}
+    >
       <Toolbar sx={{ display: "flex", alignItems: "center" }}>
         <IconButton
           edge="start"
@@ -23,6 +26,6 @@ export function AppBarAtom({ props, children }: AppBarAtomProps) {
         </IconButton>
         {children}
       </Toolbar>
-    </AppBar>
+    </MuiAppBar>
   );
 }

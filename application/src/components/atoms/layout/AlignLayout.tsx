@@ -7,20 +7,19 @@ interface AlignLayoutProps {
   children: React.ReactNode;
 }
 type AlignType = "START" | "CENTER" | "END";
+type MuiAlignType = "start" | "center" | "end";
+
 export function AlignLayout({
   children,
   column,
   indent,
   style = "START",
 }: AlignLayoutProps) {
-  type MuiAlignType = "start" | "center" | "end";
-
   const aligns: Record<AlignType, MuiAlignType> = {
     START: "start",
     CENTER: "center",
     END: "end",
   };
-
   return (
     <Box
       width={"100%"}

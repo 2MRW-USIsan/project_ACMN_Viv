@@ -1,16 +1,9 @@
+// Atoms ==========
 // Display Atoms ----------
-export type IconButtonType = {
-  onClick: () => void;
-};
-export type DividerLineType = {
-  orientation?: "horizontal" | "vertical";
-};
-export type ExpandMarkType = {
-  isExpanded: boolean;
-};
-export type LabelType = {
-  text: string;
-};
+export type IconButtonType = { onClick: () => void };
+export type DividerLineType = { orientation?: "horizontal" | "vertical" };
+export type ExpandMarkType = { isExpanded: boolean };
+export type LabelType = { text: string };
 // Input Atoms ----------
 export type ButtonType = {
   label: string;
@@ -42,3 +35,9 @@ export type TextFieldType = {
   onChange: (value: string) => void;
 };
 export type TextAreaType = TextFieldType & { rows?: number };
+// Input Atoms ----------
+export type CollapseContainerType = { isExpanded: boolean };
+export type PanelItemType = { onClick: () => void };
+// Surface Atoms ----------
+export type AppBarType = { onMenuOpen: () => void };
+export type DrawerType = { open: boolean; onClose: () => void };

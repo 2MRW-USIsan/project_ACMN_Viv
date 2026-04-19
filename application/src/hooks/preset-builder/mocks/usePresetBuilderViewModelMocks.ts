@@ -1,5 +1,5 @@
 "use client";
-import { NavItem } from "@/components/atoms/surface/DrawerAtom";
+import { NavItem } from "@/components/atoms/surface/Drawer";
 import { PresetBuilderViewModel } from "@/hooks/preset-builder/viewModel/usePresetBuilderComposer";
 import { AppBarType, DrawerType, LabelAtomType } from "@/types/ui";
 import { usePathname, useRouter } from "next/navigation";

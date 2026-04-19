@@ -1,6 +1,6 @@
 "use client";
 
-import { NavItem } from "@/components/atoms/surface/DrawerAtom";
+import { NavItem } from "@/components/atoms/surface/Drawer";
 import { PromptForgerViewModel } from "@/hooks/promptForger/viewModel/usePromptForgerComposer";
 import { AppBarType, DrawerType, LabelAtomType } from "@/types/ui";
 import { usePathname, useRouter } from "next/navigation";
