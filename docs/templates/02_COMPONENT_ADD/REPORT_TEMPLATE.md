@@ -101,8 +101,8 @@ app/xxx/page.tsx
        ├─ {Name}ListOrganism（一覧表示）
        │    └─ {Name}CardMolecule × N
        └─ {Name}EditorOrganism（編集フォーム）
-            ├─ TextFieldAtom（タイトル）
-            └─ TextFieldAtom（詳細）
+            ├─ TextField（タイトル）
+            └─ TextField（詳細）
 ```
 
 ---

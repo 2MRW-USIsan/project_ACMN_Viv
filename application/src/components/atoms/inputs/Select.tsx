@@ -1,11 +1,11 @@
+import { SelectorType } from "@/types/components/ui";
 import { FormControl, MenuItem, Select } from "@mui/material";
-import { SelectAtomType } from "@/types/ui";
 
-export interface SelectAtomProps {
-  props: SelectAtomType;
+export interface SelectorProps {
+  props: SelectorType;
 }
 
-export function SelectAtom({ props }: SelectAtomProps) {
+export function Selector({ props }: SelectorProps) {
   return (
     <FormControl fullWidth>
       <Select

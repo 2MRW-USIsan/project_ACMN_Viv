@@ -1,10 +1,10 @@
-import { LabelAtomProps } from "@/components/atoms/display/LabelAtom";
-import { ButtonAtomProps } from "@/components/atoms/inputs/ButtonAtom";
+import { LabelProps } from "@/components/atoms/display/Label";
+import { ButtonAtomProps } from "@/components/atoms/inputs/Button";
 import { IconButtonAtomProps } from "@/components/atoms/inputs/IconButtonAtom";
-import { SelectAtomProps } from "@/components/atoms/inputs/SelectAtom";
-import { SwitchAtomProps } from "@/components/atoms/inputs/SwitchAtom";
-import { TextAreaAtomProps } from "@/components/atoms/inputs/TextAreaAtom";
-import { TextFieldAtomProps } from "@/components/atoms/inputs/TextFieldAtom";
+import { SelectAtomProps } from "@/components/atoms/inputs/Select";
+import { SwitchAtomProps } from "@/components/atoms/inputs/Switcher";
+import { TextAreaAtomProps } from "@/components/atoms/inputs/TextArea";
+import { TextFieldAtomProps } from "@/components/atoms/inputs/TextField";
 import { NavigationLayoutType } from "@/types/navigation";
 import { AppBarType, DrawerType, LabelAtomType } from "@/types/ui";
 import { PromptForgerContexts } from "@/hooks/promptForger/state/usePromptForgerContext";
@@ -15,10 +15,10 @@ import { ChipRadioAtomType } from "@/types/ui";
 // Orders section types
 export interface ForgerOrdersGrpPanel {
   key: string;
-  grpLabel: LabelAtomProps["props"];
-  displayLines: LabelAtomProps["props"][];
-  scriptsLabel: LabelAtomProps["props"];
-  promptLabel: LabelAtomProps["props"];
+  grpLabel: LabelProps["props"];
+  displayLines: LabelProps["props"][];
+  scriptsLabel: LabelProps["props"];
+  promptLabel: LabelProps["props"];
   promptField: TextFieldAtomProps["props"];
   resetButton: ButtonAtomProps["props"];
   clearButton: ButtonAtomProps["props"];
@@ -27,7 +27,7 @@ export interface ForgerOrdersGrpPanel {
 export interface ForgerOrdersSection {
   key: string;
   panelInfo: {
-    label: LabelAtomProps["props"];
+    label: LabelProps["props"];
     isExpanded: boolean;
     toggle: IconButtonAtomProps["props"];
   };
@@ -39,20 +39,20 @@ export interface ForgerOrdersSection {
 // Switch section types
 export interface ForgerSwitchItem {
   key: string;
-  itemLabel: LabelAtomProps["props"];
+  itemLabel: LabelProps["props"];
   switchControl: SwitchAtomProps["props"];
 }
 
 export interface ForgerSwitchGrpPanel {
   key: string;
-  grpLabel: LabelAtomProps["props"];
+  grpLabel: LabelProps["props"];
   switchItems: ForgerSwitchItem[];
 }
 
 export interface ForgerSwitchSection {
   key: string;
   panelInfo: {
-    label: LabelAtomProps["props"];
+    label: LabelProps["props"];
     isExpanded: boolean;
     toggle: IconButtonAtomProps["props"];
   };
@@ -64,15 +64,15 @@ export interface ForgerSwitchSection {
 // Select section types
 export interface ForgerSelectRow {
   key: string;
-  label: LabelAtomProps["props"];
+  label: LabelProps["props"];
   select: SelectAtomProps["props"];
   reloadButton: ButtonAtomProps["props"];
 }
 
 export interface ForgerSelectGrpPanel {
   key: string;
-  grpLabel: LabelAtomProps["props"];
-  shuffleAllLabel: LabelAtomProps["props"];
+  grpLabel: LabelProps["props"];
+  shuffleAllLabel: LabelProps["props"];
   shuffleButton: ButtonAtomProps["props"];
   selectRows: ForgerSelectRow[];
 }
@@ -80,7 +80,7 @@ export interface ForgerSelectGrpPanel {
 export interface ForgerSelectSection {
   key: string;
   panelInfo: {
-    label: LabelAtomProps["props"];
+    label: LabelProps["props"];
     isExpanded: boolean;
     toggle: IconButtonAtomProps["props"];
   };
@@ -93,7 +93,7 @@ export interface ForgerSelectSection {
 export interface ForgerBlocPanel {
   key: string;
   panelInfo: {
-    label: LabelAtomProps["props"];
+    label: LabelProps["props"];
     isExpanded: boolean;
     toggle: IconButtonAtomProps["props"];
   };
@@ -108,19 +108,19 @@ export interface ForgerBlocPanel {
 export interface RadioOptionItem {
   key: string;
   radio: ChipRadioAtomType;
-  label: LabelAtomProps["props"];
+  label: LabelProps["props"];
 }
 
 export interface TuneupCompositionSection {
   panelInfo: {
-    label: LabelAtomProps["props"];
+    label: LabelProps["props"];
     isExpanded: boolean;
     toggle: IconButtonAtomProps["props"];
   };
   tunesInfo: {
-    anglesLabel: LabelAtomProps["props"];
+    anglesLabel: LabelProps["props"];
     anglesOptions: RadioOptionItem[];
-    directionsLabel: LabelAtomProps["props"];
+    directionsLabel: LabelProps["props"];
     directionsOptions: RadioOptionItem[];
   };
 }
@@ -128,14 +128,14 @@ export interface TuneupCompositionSection {
 // Prompt Idea
 export interface PromptIdeaSection {
   panelInfo: {
-    label: LabelAtomProps["props"];
+    label: LabelProps["props"];
     isExpanded: boolean;
     toggle: IconButtonAtomProps["props"];
   };
   promptInfo: {
     shuffleButton: ButtonAtomProps["props"];
     copyButton: ButtonAtomProps["props"];
-    summaryPromptLabel: LabelAtomProps["props"];
+    summaryPromptLabel: LabelProps["props"];
     summaryPromptField: TextAreaAtomProps["props"];
   };
 }
@@ -143,7 +143,7 @@ export interface PromptIdeaSection {
 // Summary Bloc
 export interface SummaryBlocPanel {
   panelInfo: {
-    label: LabelAtomProps["props"];
+    label: LabelProps["props"];
     isExpanded: boolean;
     toggle: IconButtonAtomProps["props"];
   };
@@ -154,18 +154,18 @@ export interface SummaryBlocPanel {
 }
 
 export interface PromptForgerInfoSectionViewModel {
-  infoSectionLabel: LabelAtomProps["props"];
-  idLabel: LabelAtomProps["props"];
-  idValueLabel: LabelAtomProps["props"];
-  titleLabel: LabelAtomProps["props"];
+  infoSectionLabel: LabelProps["props"];
+  idLabel: LabelProps["props"];
+  idValueLabel: LabelProps["props"];
+  titleLabel: LabelProps["props"];
   titleField: TextFieldAtomProps["props"];
-  statusLabel: LabelAtomProps["props"];
-  statusValueLabel: LabelAtomProps["props"];
+  statusLabel: LabelProps["props"];
+  statusValueLabel: LabelProps["props"];
   saveButton: ButtonAtomProps["props"];
 }
 
 export interface PromptForgerForgersSectionViewModel {
-  forgersSectionLabel: LabelAtomProps["props"];
+  forgersSectionLabel: LabelProps["props"];
   blocPanels: ForgerBlocPanel[];
   summaryBloc: SummaryBlocPanel;
 }

@@ -1,7 +1,5 @@
-import {
-  NavigationLayoutType
-} from "@/types/navigation";
-import { LabelAtom } from "../../atoms/display/LabelAtom";
+import { NavigationLayoutType } from "@/types/navigation";
+import { Label } from "../../atoms/display/Label";
 import { AlignLayout } from "../../atoms/layout/AlignLayout";
 import { AppBarAtom } from "../../atoms/surface/AppBarAtom";
 import { DrawerAtom } from "../../atoms/surface/DrawerAtom";
@@ -19,7 +17,7 @@ export function NavigationLayoutOrganism({
   return (
     <AlignLayout>
       <AppBarAtom props={props.appBar}>
-        <LabelAtom props={props.title} style={"TITLE"} />
+        <Label props={props.title} style={"TITLE"} />
       </AppBarAtom>
       <DrawerAtom props={props.drawer}>
         <NavigationList props={navigationProps} />

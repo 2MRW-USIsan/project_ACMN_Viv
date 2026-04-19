@@ -1,11 +1,11 @@
+import { SwitcherType } from "@/types/components/ui";
 import { Switch } from "@mui/material";
-import { SwitchAtomType } from "@/types/ui";
 
-export interface SwitchAtomProps {
-  props: SwitchAtomType;
+export interface SwitcherProps {
+  props: SwitcherType;
 }
 
-export function SwitchAtom({ props }: SwitchAtomProps) {
+export function Switcher({ props }: SwitcherProps) {
   return (
     <Switch
       checked={props.checked}

@@ -2,8 +2,8 @@ import {
   DeletionMark,
   IconButtonType,
 } from "@/components/atoms/display/DeletionMark";
-import { LabelAtom } from "@/components/atoms/display/LabelAtom";
-import { TextFieldAtom } from "@/components/atoms/inputs/TextFieldAtom";
+import { Label } from "@/components/atoms/display/Label";
+import { TextField } from "@/components/atoms/inputs/TextField";
 import { AlignLayout } from "@/components/atoms/layout/AlignLayout";
 import { GridLayout } from "@/components/atoms/layout/GridLayout";
 import { LabelAtomType, TextFieldAtomType } from "@/types/ui";
@@ -31,7 +31,7 @@ export function SwitchItemForm({ props }: ListItemFormProps) {
       {/* Label */}
       <GridLayout style={{ size: 2 }}>
         <AlignLayout style={"START"}>
-          <LabelAtom props={props.label.item} style={"LABEL"} />
+          <Label props={props.label.item} style={"LABEL"} />
         </AlignLayout>
       </GridLayout>
       {/* Panel */}
@@ -41,19 +41,19 @@ export function SwitchItemForm({ props }: ListItemFormProps) {
           {/* Value Forms */}
           <GridLayout style={{ size: 3 }}>
             <GridLayout style={{ size: 3 }}>
-              <LabelAtom props={props.label.value} />
+              <Label props={props.label.value} />
             </GridLayout>
             <GridLayout style={{ size: 9 }}>
-              <TextFieldAtom props={props.field.value} />
+              <TextField props={props.field.value} />
             </GridLayout>
           </GridLayout>
           {/* Prompt Forms */}
           <GridLayout style={{ size: 9 }}>
             <GridLayout style={{ size: 2 }}>
-              <LabelAtom props={props.label.prompt} />
+              <Label props={props.label.prompt} />
             </GridLayout>
             <GridLayout style={{ size: 10 }}>
-              <TextFieldAtom props={props.field.prompt} />
+              <TextField props={props.field.prompt} />
             </GridLayout>
           </GridLayout>
         </GridLayout>

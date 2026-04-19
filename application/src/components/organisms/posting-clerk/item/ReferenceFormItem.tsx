@@ -1,8 +1,8 @@
-import { DividerAtom } from "@/components/atoms/display/DividerAtom";
-import { LabelAtom } from "@/components/atoms/display/LabelAtom";
-import { ButtonAtom } from "@/components/atoms/inputs/ButtonAtom";
+import { DividerLine } from "@/components/atoms/display/DividerLine";
+import { Label } from "@/components/atoms/display/Label";
+import { Button } from "@/components/atoms/inputs/Button";
 import { IconButtonAtom } from "@/components/atoms/inputs/IconButtonAtom";
-import { TextFieldAtom } from "@/components/atoms/inputs/TextFieldAtom";
+import { TextField } from "@/components/atoms/inputs/TextField";
 import { AlignLayout } from "@/components/atoms/layout/AlignLayout";
 import { GridLayout } from "@/components/atoms/layout/GridLayout";
 import { postingClerkTheme } from "@/theme/postingClerk";
@@ -17,10 +17,10 @@ export function ReferenceFormItem({ props }: ReferenceFormItemProps) {
         <GridLayout style={{ size: "CONTAINER" }}>
           <GridLayout style={{ size: 12 }}>
             <GridLayout style={{ size: 10 }}>
-              <LabelAtom props={props.urlsLabel} style={"LABEL"} />
+              <Label props={props.urlsLabel} style={"LABEL"} />
             </GridLayout>
             <GridLayout style={{ size: 2 }}>
-              <ButtonAtom
+              <Button
                 props={props.urlsAddButton}
                 style={postingClerkTheme.standardButton}
               />
@@ -28,7 +28,7 @@ export function ReferenceFormItem({ props }: ReferenceFormItemProps) {
           </GridLayout>
           <GridLayout style={{ size: 12 }}>
             <AlignLayout column={0.1}>
-              <DividerAtom />
+              <DividerLine />
             </AlignLayout>
           </GridLayout>
         </GridLayout>
@@ -37,18 +37,18 @@ export function ReferenceFormItem({ props }: ReferenceFormItemProps) {
           <GridLayout style={{ size: "CONTAINER" }} key={urlItem.key}>
             <GridLayout style={{ size: 4 }}>
               <GridLayout style={{ size: 3 }}>
-                <LabelAtom props={urlItem.nameLabel} style={"LABEL"} />
+                <Label props={urlItem.nameLabel} style={"LABEL"} />
               </GridLayout>
               <GridLayout style={{ size: 9 }}>
-                <TextFieldAtom props={urlItem.nameField} />
+                <TextField props={urlItem.nameField} />
               </GridLayout>
             </GridLayout>
             <GridLayout style={{ size: 7 }}>
               <GridLayout style={{ size: 3 }}>
-                <LabelAtom props={urlItem.urlLabel} style={"LABEL"} />
+                <Label props={urlItem.urlLabel} style={"LABEL"} />
               </GridLayout>
               <GridLayout style={{ size: 9 }}>
-                <TextFieldAtom props={urlItem.urlField} />
+                <TextField props={urlItem.urlField} />
               </GridLayout>
             </GridLayout>
             <GridLayout style={{ size: 1 }}>

@@ -131,7 +131,7 @@ export function LabeledInputMolecule({ props }: LabeledInputMoleculeProps) {
   return (
     <Stack direction="row" alignItems="center">
       <LabelAtom props={{ text: props.label }} />
-      <TextFieldAtom props={{ value: props.value, onChange: props.onChange }} />
+      <TextField props={{ value: props.value, onChange: props.onChange }} />
     </Stack>
   );
 }
@@ -144,7 +144,7 @@ export function LabeledInputMolecule({ props }: LabeledInputMoleculeProps) {
 - 例外②：テキストフィールドなど、ViewModel のハンドラをそのまま利用するとパフォーマンスに影響が出る場合は、**DOM操作による制御**を許可する。ただし、`useRef` や `useEffect` を適切に用いて疎結合を保ち、外部インターフェースには影響を与えないこと。
 
 ```tsx
-// 例: /components/atoms/TextFieldAtom.tsx（MUIラッパー）
+// 例: /components/atoms/TextField.tsx（MUIラッパー）
 interface TextFieldAtomProps {
   props: {
     value: string;
@@ -152,11 +152,11 @@ interface TextFieldAtomProps {
   };
 }
 
-export function TextFieldAtom({ props }: TextFieldAtomProps) {
+export function TextField({ props }: TextFieldAtomProps) {
   return <TextField value={props.value} onChange={props.onChange} />;
 }
 
-// 例: /components/atoms/TextFieldAtom.tsx（例外②：パフォーマンス最適化のため非制御 + DOM操作）
+// 例: /components/atoms/TextField.tsx（例外②：パフォーマンス最適化のため非制御 + DOM操作）
 // ViewModel の onChange を毎キー入力で呼ぶとパフォーマンスに影響が出る場合に適用する。
 // useRef で DOM を直接操作し、外部インターフェース（props）は変えない。
 interface TextFieldAtomProps {
@@ -166,7 +166,7 @@ interface TextFieldAtomProps {
   };
 }
 
-export function TextFieldAtom({ props }: TextFieldAtomProps) {
+export function TextField({ props }: TextFieldAtomProps) {
   const inputRef = useRef<HTMLInputElement>(null);
   useEffect(() => {
     if (inputRef.current) inputRef.current.value = props.defaultValue;

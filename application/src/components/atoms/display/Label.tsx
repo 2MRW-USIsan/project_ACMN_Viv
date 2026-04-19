@@ -1,8 +1,8 @@
-import { LabelAtomType } from "@/types/components/ui";
+import { LabelType } from "@/types/components/ui";
 import { Typography } from "@mui/material";
 
-export interface LabelAtomProps {
-  props: LabelAtomType;
+export interface LabelProps {
+  props: LabelType;
   style?: LabelSize;
   error?: boolean;
   grey?: boolean;
@@ -11,20 +11,13 @@ export interface LabelAtomProps {
 type LabelSize = "TITLE" | "HEADER" | "LABEL" | "BODY" | "INPUT" | "CAPTION";
 type MuiLabelSize = "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
 
-export function LabelAtom({
+export function Label({
   props,
   style = "BODY",
   error,
   grey,
   primary,
-}: LabelAtomProps) {
-  const labelColor = grey
-    ? "grey"
-    : primary
-      ? "primary"
-      : error
-        ? "error"
-        : "default";
+}: LabelProps) {
   const labelSize: Record<LabelSize, MuiLabelSize> = {
     TITLE: "h1",
     HEADER: "h2",
@@ -34,7 +27,10 @@ export function LabelAtom({
     CAPTION: "h6",
   };
   return (
-    <Typography variant={labelSize[style]} color={labelColor}>
+    <Typography
+      variant={labelSize[style]}
+      color={grey ? "grey" : primary ? "primary" : error ? "error" : "default"}
+    >
       {props?.text ?? "--"}
     </Typography>
   );

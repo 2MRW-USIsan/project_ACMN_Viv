@@ -1,6 +1,6 @@
-import { DividerAtom } from "@/components/atoms/display/DividerAtom";
-import { LabelAtom } from "@/components/atoms/display/LabelAtom";
-import { ButtonAtom } from "@/components/atoms/inputs/ButtonAtom";
+import { DividerLine } from "@/components/atoms/display/DividerLine";
+import { Label } from "@/components/atoms/display/Label";
+import { Button } from "@/components/atoms/inputs/Button";
 import { AlignLayout } from "@/components/atoms/layout/AlignLayout";
 import { GridLayout } from "@/components/atoms/layout/GridLayout";
 import { postingClerkTheme } from "@/theme/postingClerk";
@@ -14,10 +14,10 @@ export function CopyFormItem({ props }: CopyFormItemProps) {
     <GridLayout style={{ size: "CONTAINER" }}>
       <GridLayout style={{ size: 12 }}>
         <GridLayout style={{ size: 10 }}>
-          <LabelAtom props={props.titleLabel} style={"LABEL"} />
+          <Label props={props.titleLabel} style={"LABEL"} />
         </GridLayout>
         <GridLayout style={{ size: 2 }}>
-          <ButtonAtom
+          <Button
             props={props.titleCopyButton}
             style={postingClerkTheme.standardButton}
           />
@@ -25,10 +25,10 @@ export function CopyFormItem({ props }: CopyFormItemProps) {
       </GridLayout>
       <GridLayout style={{ size: 12 }}>
         <GridLayout style={{ size: 10 }}>
-          <LabelAtom props={props.descLabel} style={"LABEL"} />
+          <Label props={props.descLabel} style={"LABEL"} />
         </GridLayout>
         <GridLayout style={{ size: 2 }}>
-          <ButtonAtom
+          <Button
             props={props.descCopyButton}
             style={postingClerkTheme.standardButton}
           />
@@ -36,7 +36,7 @@ export function CopyFormItem({ props }: CopyFormItemProps) {
       </GridLayout>
       <GridLayout style={{ size: 12 }}>
         <AlignLayout column={0.1}>
-          <DividerAtom />
+          <DividerLine />
         </AlignLayout>
       </GridLayout>
     </GridLayout>

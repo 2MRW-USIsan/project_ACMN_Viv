@@ -1,8 +1,8 @@
 import { LabelAtomType, TextFieldAtomType } from "@/types/ui";
 import { DeletionMark, IconButtonType } from "../atoms/display/DeletionMark";
 import { ExpandMark } from "../atoms/display/ExpandMark";
-import { LabelAtom } from "../atoms/display/LabelAtom";
-import { TextFieldAtom } from "../atoms/inputs/TextFieldAtom";
+import { Label } from "../atoms/display/Label";
+import { TextField } from "../atoms/inputs/TextField";
 import { AlignLayout } from "../atoms/layout/AlignLayout";
 import { GridLayout } from "../atoms/layout/GridLayout";
 import { PanelItem, PanelItemType } from "../atoms/layout/PanelItem";
@@ -31,7 +31,7 @@ export function ConfigPanelForm({ props }: ConfigPanelFormProps) {
         {/* Label */}
         <GridLayout style={{ size: 2 }}>
           <AlignLayout style={"START"}>
-            <LabelAtom props={props.label.panel} style={"LABEL"} />
+            <Label props={props.label.panel} style={"LABEL"} />
           </AlignLayout>
         </GridLayout>
         {/* Panel */}
@@ -41,19 +41,19 @@ export function ConfigPanelForm({ props }: ConfigPanelFormProps) {
             {/* Key Forms */}
             <GridLayout style={{ size: 4 }}>
               <GridLayout style={{ size: 3 }}>
-                <LabelAtom props={props.label.key} />
+                <Label props={props.label.key} />
               </GridLayout>
               <GridLayout style={{ size: 9 }}>
-                <TextFieldAtom props={props.field.key} />
+                <TextField props={props.field.key} />
               </GridLayout>
             </GridLayout>
             {/* Value Forms */}
             <GridLayout style={{ size: 8 }}>
               <GridLayout style={{ size: 2 }}>
-                <LabelAtom props={props.label.value} />
+                <Label props={props.label.value} />
               </GridLayout>
               <GridLayout style={{ size: 10 }}>
-                <TextFieldAtom props={props.field.value} />
+                <TextField props={props.field.value} />
               </GridLayout>
             </GridLayout>
           </GridLayout>

@@ -1,9 +1,6 @@
-import { LabelAtom, LabelAtomProps } from "../../../atoms/display/LabelAtom";
-import { ButtonAtom, ButtonAtomProps } from "../../../atoms/inputs/ButtonAtom";
-import {
-  TextAreaAtom,
-  TextAreaAtomProps,
-} from "../../../atoms/inputs/TextAreaAtom";
+import { Label, LabelProps } from "../../../atoms/display/Label";
+import { Button, ButtonAtomProps } from "../../../atoms/inputs/Button";
+import { TextArea, TextAreaAtomProps } from "../../../atoms/inputs/TextArea";
 import { AlignLayout } from "../../../atoms/layout/AlignLayout";
 import { GridLayout } from "../../../atoms/layout/GridLayout";
 
@@ -11,7 +8,7 @@ interface PromptForgerPromptFieldOrganismProps {
   props: {
     shuffleButton: ButtonAtomProps["props"];
     copyButton: ButtonAtomProps["props"];
-    summaryPromptLabel: LabelAtomProps["props"];
+    summaryPromptLabel: LabelProps["props"];
     summaryPromptField: TextAreaAtomProps["props"];
   };
 }
@@ -23,14 +20,14 @@ export function PromptForgerPromptFieldOrganism({
     <AlignLayout column={1}>
       <GridLayout style={{ size: "CONTAINER" }}>
         <GridLayout style={{ size: 2 }}>
-          <ButtonAtom props={props.shuffleButton} />
+          <Button props={props.shuffleButton} />
         </GridLayout>
         <GridLayout style={{ size: 2 }}>
-          <ButtonAtom props={props.copyButton} />
+          <Button props={props.copyButton} />
         </GridLayout>
       </GridLayout>
-      <LabelAtom props={props.summaryPromptLabel} />
-      <TextAreaAtom props={props.summaryPromptField} />
+      <Label props={props.summaryPromptLabel} />
+      <TextArea props={props.summaryPromptField} />
     </AlignLayout>
   );
 }

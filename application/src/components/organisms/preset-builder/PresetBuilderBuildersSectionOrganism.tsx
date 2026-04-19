@@ -1,7 +1,7 @@
 import { BuildersSectionType } from "@/types/preset-builder";
-import { LabelAtom } from "../../atoms/display/LabelAtom";
-import { ButtonAtom } from "../../atoms/inputs/ButtonAtom";
-import { TextAreaAtom } from "../../atoms/inputs/TextAreaAtom";
+import { Label } from "../../atoms/display/Label";
+import { Button } from "../../atoms/inputs/Button";
+import { TextArea } from "../../atoms/inputs/TextArea";
 import { AlignLayout } from "../../atoms/layout/AlignLayout";
 import { GridLayout } from "../../atoms/layout/GridLayout";
 import { SectionLabel } from "../../molecules/SectionLabel";
@@ -18,35 +18,29 @@ export function PresetBuilderBuildersSectionOrganism({
       <GridLayout style={{ size: "CONTAINER" }}>
         <GridLayout style={{ size: 6 }}>
           <AlignLayout style={"START"}>
-            <ButtonAtom props={props.shuffleButton} />
-            <ButtonAtom props={props.copyButton} />
+            <Button props={props.shuffleButton} />
+            <Button props={props.copyButton} />
           </AlignLayout>
         </GridLayout>
         <GridLayout style={{ size: 6 }}>
           <AlignLayout style={"END"}>
-            <ButtonAtom props={props.pasteButton} />
-            <ButtonAtom props={props.resetButton} />
-            <ButtonAtom props={props.clearButton} />
+            <Button props={props.pasteButton} />
+            <Button props={props.resetButton} />
+            <Button props={props.clearButton} />
           </AlignLayout>
         </GridLayout>
       </GridLayout>
       <GridLayout style={{ size: "CONTAINER" }}>
         <GridLayout style={{ size: 6 }}>
           <AlignLayout column={0.5}>
-            <LabelAtom props={props.presetsTemplateLabel} style={"LABEL"} />
-            <TextAreaAtom
-              props={props.presetsTemplateField}
-              style={{ rows: 14 }}
-            />
+            <Label props={props.presetsTemplateLabel} style={"LABEL"} />
+            <TextArea props={props.presetsTemplateField} style={{ rows: 14 }} />
           </AlignLayout>
         </GridLayout>
         <GridLayout style={{ size: 6 }}>
           <AlignLayout column={0.5}>
-            <LabelAtom props={props.orderPresetsLabel} style={"LABEL"} />
-            <TextAreaAtom
-              props={props.orderPresetsField}
-              style={{ rows: 14 }}
-            />
+            <Label props={props.orderPresetsLabel} style={"LABEL"} />
+            <TextArea props={props.orderPresetsField} style={{ rows: 14 }} />
           </AlignLayout>
         </GridLayout>
       </GridLayout>

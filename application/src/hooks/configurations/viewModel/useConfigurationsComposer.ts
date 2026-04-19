@@ -1,8 +1,8 @@
-import { ChipCheckboxAtomProps } from "@/components/atoms/inputs/ChipCheckboxAtom";
+import { ChipCheckProps } from "@/components/atoms/inputs/ChipCheck";
 import { IconButtonAtomProps } from "@/components/atoms/inputs/IconButtonAtom";
-import { LabelAtomProps } from "@/components/atoms/display/LabelAtom";
-import { SwitchAtomProps } from "@/components/atoms/inputs/SwitchAtom";
-import { TextFieldAtomProps } from "@/components/atoms/inputs/TextFieldAtom";
+import { LabelProps } from "@/components/atoms/display/Label";
+import { SwitchAtomProps } from "@/components/atoms/inputs/Switcher";
+import { TextFieldAtomProps } from "@/components/atoms/inputs/TextField";
 import { NavigationLayoutType } from "@/types/navigation";
 import { AppBarType, DrawerType, LabelAtomType } from "@/types/ui";
 import { BodyType } from "@/types/configurations/orders/blocs";
@@ -27,80 +27,80 @@ export type OrdersTypeOption = "random" | "complex" | "scripts" | "colors";
 
 export interface RandomRowItem {
   key: string;
-  valueLabel: LabelAtomProps["props"];
+  valueLabel: LabelProps["props"];
   valueField: TextFieldAtomProps["props"];
-  promptLabel: LabelAtomProps["props"];
+  promptLabel: LabelProps["props"];
   promptField: TextFieldAtomProps["props"];
-  weightLabel: LabelAtomProps["props"];
+  weightLabel: LabelProps["props"];
   weightField: TextFieldAtomProps["props"];
   removeButton: IconButtonAtomProps["props"];
 }
 
 export interface RandomSection {
-  headerLabel: LabelAtomProps["props"];
+  headerLabel: LabelProps["props"];
   randomRows: RandomRowItem[];
-  addRowLabel: LabelAtomProps["props"];
+  addRowLabel: LabelProps["props"];
   addRowButton: IconButtonAtomProps["props"];
 }
 
 export interface ScriptsSection {
-  scriptLabel: LabelAtomProps["props"];
-  scriptInfoLabel: LabelAtomProps["props"];
+  scriptLabel: LabelProps["props"];
+  scriptInfoLabel: LabelProps["props"];
 }
 
 export interface ColorsSection {
-  colorLabel: LabelAtomProps["props"];
-  colorInfoLabel: LabelAtomProps["props"];
+  colorLabel: LabelProps["props"];
+  colorInfoLabel: LabelProps["props"];
 }
 
 export interface ComplexRandomItemPanel {
   key: string;
-  valueLabel: LabelAtomProps["props"];
+  valueLabel: LabelProps["props"];
   valueField: TextFieldAtomProps["props"];
-  promptLabel: LabelAtomProps["props"];
+  promptLabel: LabelProps["props"];
   promptField: TextFieldAtomProps["props"];
-  weightLabel: LabelAtomProps["props"];
+  weightLabel: LabelProps["props"];
   weightField: TextFieldAtomProps["props"];
   removeButton: IconButtonAtomProps["props"];
 }
 
 export interface ComplexCategoryPanel {
   key: string;
-  categoryLabel: LabelAtomProps["props"];
-  valueLabel: LabelAtomProps["props"];
+  categoryLabel: LabelProps["props"];
+  valueLabel: LabelProps["props"];
   valueField: TextFieldAtomProps["props"];
-  promptLabel: LabelAtomProps["props"];
+  promptLabel: LabelProps["props"];
   promptField: TextFieldAtomProps["props"];
-  weightLabel: LabelAtomProps["props"];
+  weightLabel: LabelProps["props"];
   weightField: TextFieldAtomProps["props"];
   removeButton: IconButtonAtomProps["props"];
   toggleButton: IconButtonAtomProps["props"];
   isExpanded: boolean;
-  randomSectionLabel: LabelAtomProps["props"];
+  randomSectionLabel: LabelProps["props"];
   randomItemPanels: ComplexRandomItemPanel[];
-  addRandomItemRowLabel: LabelAtomProps["props"];
+  addRandomItemRowLabel: LabelProps["props"];
   addRandomItemButton: IconButtonAtomProps["props"];
 }
 
 export interface ComplexSection {
   categoryPanels: ComplexCategoryPanel[];
-  addCategoryRowLabel: LabelAtomProps["props"];
+  addCategoryRowLabel: LabelProps["props"];
   addCategoryButton: IconButtonAtomProps["props"];
 }
 
 export interface OrdersItemPanel {
   key: string;
-  panelLabel: LabelAtomProps["props"];
-  keyLabel: LabelAtomProps["props"];
+  panelLabel: LabelProps["props"];
+  keyLabel: LabelProps["props"];
   keyField: TextFieldAtomProps["props"];
-  labelLabel: LabelAtomProps["props"];
+  labelLabel: LabelProps["props"];
   labelField: TextFieldAtomProps["props"];
   removeButton: IconButtonAtomProps["props"];
   toggleButton: IconButtonAtomProps["props"];
   isExpanded: boolean;
-  ordersTypeLabel: LabelAtomProps["props"];
-  ordersTypeChips: Array<ChipCheckboxAtomProps["props"] & { key: string }>;
-  selectedTypeLabel: LabelAtomProps["props"] | null;
+  ordersTypeLabel: LabelProps["props"];
+  ordersTypeChips: Array<ChipCheckProps["props"] & { key: string }>;
+  selectedTypeLabel: LabelProps["props"] | null;
   randomSection: RandomSection | null;
   complexSection: ComplexSection | null;
   scriptsSection: ScriptsSection | null;
@@ -109,102 +109,102 @@ export interface OrdersItemPanel {
 
 export interface OrdersItemSection {
   ordersItemPanels: OrdersItemPanel[];
-  addItemRowLabel: LabelAtomProps["props"];
+  addItemRowLabel: LabelProps["props"];
   addItemButton: IconButtonAtomProps["props"];
 }
 
 export interface OrdersGrpPanel {
   key: string;
-  panelLabel: LabelAtomProps["props"];
-  keyLabel: LabelAtomProps["props"];
+  panelLabel: LabelProps["props"];
+  keyLabel: LabelProps["props"];
   keyField: TextFieldAtomProps["props"];
-  labelLabel: LabelAtomProps["props"];
+  labelLabel: LabelProps["props"];
   labelField: TextFieldAtomProps["props"];
   removeButton: IconButtonAtomProps["props"];
   toggleButton: IconButtonAtomProps["props"];
   isExpanded: boolean;
-  orderItemsLabel: LabelAtomProps["props"];
+  orderItemsLabel: LabelProps["props"];
   ordersItemSection: OrdersItemSection;
 }
 
 export interface SwitchItemPanel {
   key: string;
-  labelLabel: LabelAtomProps["props"];
+  labelLabel: LabelProps["props"];
   labelField: TextFieldAtomProps["props"];
-  valueLabel: LabelAtomProps["props"];
+  valueLabel: LabelProps["props"];
   valueField: TextFieldAtomProps["props"];
-  altLabel: LabelAtomProps["props"];
+  altLabel: LabelProps["props"];
   altField: TextFieldAtomProps["props"];
   removeButton: IconButtonAtomProps["props"];
 }
 
 export interface SwitchItemSection {
-  randomizeLabel: LabelAtomProps["props"];
+  randomizeLabel: LabelProps["props"];
   randomizeSwitch: SwitchAtomProps["props"];
   switchItemPanels: SwitchItemPanel[];
-  addSwitchRowLabel: LabelAtomProps["props"];
+  addSwitchRowLabel: LabelProps["props"];
   addSwitchButton: IconButtonAtomProps["props"];
 }
 
 export interface SwitchGrpPanel {
   key: string;
-  panelLabel: LabelAtomProps["props"];
-  keyLabel: LabelAtomProps["props"];
+  panelLabel: LabelProps["props"];
+  keyLabel: LabelProps["props"];
   keyField: TextFieldAtomProps["props"];
-  labelLabel: LabelAtomProps["props"];
+  labelLabel: LabelProps["props"];
   labelField: TextFieldAtomProps["props"];
   removeButton: IconButtonAtomProps["props"];
   toggleButton: IconButtonAtomProps["props"];
   isExpanded: boolean;
-  switchItemsLabel: LabelAtomProps["props"];
+  switchItemsLabel: LabelProps["props"];
   switchItemSection: SwitchItemSection;
 }
 
 export interface ListItemPanel {
   key: string;
-  valueLabel: LabelAtomProps["props"];
+  valueLabel: LabelProps["props"];
   valueField: TextFieldAtomProps["props"];
-  promptLabel: LabelAtomProps["props"];
+  promptLabel: LabelProps["props"];
   promptField: TextFieldAtomProps["props"];
   removeButton: IconButtonAtomProps["props"];
 }
 
 export interface SelectorPanel {
   key: string;
-  panelLabel: LabelAtomProps["props"];
-  keyLabel: LabelAtomProps["props"];
+  panelLabel: LabelProps["props"];
+  keyLabel: LabelProps["props"];
   keyField: TextFieldAtomProps["props"];
-  labelLabel: LabelAtomProps["props"];
+  labelLabel: LabelProps["props"];
   labelField: TextFieldAtomProps["props"];
   removeButton: IconButtonAtomProps["props"];
   toggleButton: IconButtonAtomProps["props"];
   isExpanded: boolean;
-  listItemsLabel: LabelAtomProps["props"];
+  listItemsLabel: LabelProps["props"];
   listItemPanels: ListItemPanel[];
-  addListItemRowLabel: LabelAtomProps["props"];
+  addListItemRowLabel: LabelProps["props"];
   addListItemButton: IconButtonAtomProps["props"];
 }
 
 export interface SelectItemSection {
-  shuffleLabel: LabelAtomProps["props"];
+  shuffleLabel: LabelProps["props"];
   shuffleSwitch: SwitchAtomProps["props"];
-  selectorsLabel: LabelAtomProps["props"];
+  selectorsLabel: LabelProps["props"];
   selectorPanels: SelectorPanel[];
-  addSelectorRowLabel: LabelAtomProps["props"];
+  addSelectorRowLabel: LabelProps["props"];
   addSelectorButton: IconButtonAtomProps["props"];
 }
 
 export interface SelectGrpPanel {
   key: string;
-  panelLabel: LabelAtomProps["props"];
-  keyLabel: LabelAtomProps["props"];
+  panelLabel: LabelProps["props"];
+  keyLabel: LabelProps["props"];
   keyField: TextFieldAtomProps["props"];
-  labelLabel: LabelAtomProps["props"];
+  labelLabel: LabelProps["props"];
   labelField: TextFieldAtomProps["props"];
   removeButton: IconButtonAtomProps["props"];
   toggleButton: IconButtonAtomProps["props"];
   isExpanded: boolean;
-  selectItemsLabel: LabelAtomProps["props"];
+  selectItemsLabel: LabelProps["props"];
   selectItemSection: SelectItemSection;
 }
 
@@ -213,31 +213,31 @@ export type ConfigBodySectionType = "Orders" | "Switch" | "Select";
 export interface ConfigBodySection {
   key: string;
   type: ConfigBodySectionType;
-  titleLabel: LabelAtomProps["props"];
-  placeholderLabel: LabelAtomProps["props"];
+  titleLabel: LabelProps["props"];
+  placeholderLabel: LabelProps["props"];
   ordersGrpPanels?: OrdersGrpPanel[];
-  addGrpRowLabel?: LabelAtomProps["props"];
+  addGrpRowLabel?: LabelProps["props"];
   addGrpButton?: IconButtonAtomProps["props"];
   switchGrpPanels?: SwitchGrpPanel[];
-  addSwitchGrpRowLabel?: LabelAtomProps["props"];
+  addSwitchGrpRowLabel?: LabelProps["props"];
   addSwitchGrpButton?: IconButtonAtomProps["props"];
   selectGrpPanels?: SelectGrpPanel[];
-  addSelectGrpRowLabel?: LabelAtomProps["props"];
+  addSelectGrpRowLabel?: LabelProps["props"];
   addSelectGrpButton?: IconButtonAtomProps["props"];
 }
 
 export interface ConfigBodyBlocPanel {
   key: string;
-  panelLabel: LabelAtomProps["props"];
-  keyLabel: LabelAtomProps["props"];
+  panelLabel: LabelProps["props"];
+  keyLabel: LabelProps["props"];
   keyField: TextFieldAtomProps["props"];
-  labelLabel: LabelAtomProps["props"];
+  labelLabel: LabelProps["props"];
   labelField: TextFieldAtomProps["props"];
   removeButton: IconButtonAtomProps["props"];
   toggleButton: IconButtonAtomProps["props"];
   isExpanded: boolean;
-  blocSelectLabel: LabelAtomProps["props"];
-  blocTypeChips: Array<ChipCheckboxAtomProps["props"] & { key: string }>;
+  blocSelectLabel: LabelProps["props"];
+  blocTypeChips: Array<ChipCheckProps["props"] & { key: string }>;
   sections: ConfigBodySection[];
 }
 

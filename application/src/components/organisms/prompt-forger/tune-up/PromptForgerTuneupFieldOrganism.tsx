@@ -1,14 +1,14 @@
 import { RadioOptionItem } from "@/hooks/promptForger/viewModel/usePromptForgerComposer";
-import { DividerAtom } from "../../../atoms/display/DividerAtom";
-import { LabelAtom, LabelAtomProps } from "../../../atoms/display/LabelAtom";
-import { ChipRadioAtom } from "../../../atoms/inputs/RadioButtonAtom";
+import { DividerAtom } from "../../../atoms/display/DividerLine";
+import { Label, LabelProps } from "../../../atoms/display/Label";
+import { ChipRadioAtom } from "../../../atoms/inputs/ChipRadio";
 import { AlignLayout } from "../../../atoms/layout/AlignLayout";
 
 interface PromptForgerTuneupFieldOrganismProps {
   props: {
-    anglesLabel: LabelAtomProps["props"];
+    anglesLabel: LabelProps["props"];
     anglesOptions: RadioOptionItem[];
-    directionsLabel: LabelAtomProps["props"];
+    directionsLabel: LabelProps["props"];
     directionsOptions: RadioOptionItem[];
   };
 }
@@ -19,26 +19,26 @@ export function PromptForgerTuneupFieldOrganism({
   return (
     <AlignLayout column={1}>
       <AlignLayout column={0.5}>
-        <LabelAtom props={props.anglesLabel} style={"LABEL"} />
+        <Label props={props.anglesLabel} style={"LABEL"} />
         <DividerAtom />
         <AlignLayout>
           {props.anglesOptions.map((option) => (
             <AlignLayout key={option.key}>
               <ChipRadioAtom props={option.radio} />
-              <LabelAtom props={option.label} />
+              <Label props={option.label} />
             </AlignLayout>
           ))}
         </AlignLayout>
       </AlignLayout>
 
       <AlignLayout column={0.5}>
-        <LabelAtom props={props.directionsLabel} style={"LABEL"} />
+        <Label props={props.directionsLabel} style={"LABEL"} />
         <DividerAtom />
         <AlignLayout>
           {props.directionsOptions.map((option) => (
             <AlignLayout key={option.key}>
               <ChipRadioAtom props={option.radio} />
-              <LabelAtom props={option.label} />
+              <Label props={option.label} />
             </AlignLayout>
           ))}
         </AlignLayout>

@@ -1,4 +1,4 @@
-import { LabelAtomProps } from "@/components/atoms/display/LabelAtom";
+import { LabelProps } from "@/components/atoms/display/Label";
 import { IconButtonAtomProps } from "@/components/atoms/inputs/IconButtonAtom";
 import { AddPanelButtonType } from "@/components/molecules/AddPanelButton";
 import { ConfigPanelFormType } from "@/components/molecules/ConfigPanelForm";
@@ -12,9 +12,9 @@ import {
 
 export interface BodyType {
   add: AddPanelButtonType;
-  headerLabel: LabelAtomProps["props"];
+  headerLabel: LabelProps["props"];
   panels: BlocPanelItemType[];
-  addRowLabel: LabelAtomProps["props"];
+  addRowLabel: LabelProps["props"];
   addButton: IconButtonAtomProps["props"];
 }
 export interface BodyProps {

@@ -1,5 +1,5 @@
 import { LabelAtomType } from "@/types/ui";
-import { LabelAtom } from "../atoms/display/LabelAtom";
+import { Label } from "../atoms/display/Label";
 import { PlusMark } from "../atoms/display/PlusMark";
 import { AlignLayout } from "../atoms/layout/AlignLayout";
 import { PanelItem } from "../atoms/layout/PanelItem";
@@ -16,7 +16,7 @@ export function AddPanelButton({ props }: AddPanelButtonProps) {
     <AlignLayout style={"CENTER"}>
       <PanelItem props={{ onClick: props.onClick }}>
         <AlignLayout style={"CENTER"}>
-          <LabelAtom props={props.label} style={"LABEL"} primary />
+          <Label props={props.label} style={"LABEL"} primary />
           <PlusMark />
         </AlignLayout>
       </PanelItem>

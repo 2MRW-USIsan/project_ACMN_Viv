@@ -1,16 +1,17 @@
 "use client";
 
-import { TextFieldAtomType } from "@/types/ui";
+import { TextAreaType } from "@/types/components/ui";
 import { TextField } from "@mui/material";
 import { useEffect, useRef } from "react";
 
-export interface TextFieldAtomProps {
-  props: TextFieldAtomType;
+export interface TextAreaProps {
+  props: TextAreaType;
+  style?: number;
 }
 
-export function TextFieldAtom({ props }: TextFieldAtomProps) {
+export function TextArea({ props, style = 2 }: TextAreaProps) {
   const inputRef = useRef<HTMLInputElement | HTMLTextAreaElement>(null);
-  const currentValue = props.value ?? props.defaultValue ?? "";
+  const currentValue = props.value ?? "";
 
   useEffect(() => {
     if (inputRef.current) inputRef.current.value = currentValue;
@@ -21,7 +22,6 @@ export function TextFieldAtom({ props }: TextFieldAtomProps) {
 
     const latestValue = inputRef.current.value;
     props.onChange?.(latestValue);
-    props.onBlur?.(latestValue);
   };
 
   return (
@@ -29,12 +29,10 @@ export function TextFieldAtom({ props }: TextFieldAtomProps) {
       inputRef={inputRef}
       onBlur={handleBlur}
       defaultValue={currentValue}
-      label={props.label}
-      placeholder={props.placeholder}
-      fullWidth={props.fullWidth ?? true}
-      size={props.size ?? "small"}
-      multiline={props.multiline ?? false}
-      rows={props.rows}
+      size="small"
+      fullWidth={true}
+      multiline={true}
+      rows={style}
     />
   );
 }

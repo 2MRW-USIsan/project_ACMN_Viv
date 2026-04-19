@@ -1,7 +1,7 @@
 import { SectionLabel } from "@/components/molecules/SectionLabel";
 import { ForgerSwitchGrpPanel } from "@/hooks/promptForger/viewModel/usePromptForgerComposer";
-import { LabelAtom } from "../../../atoms/display/LabelAtom";
-import { SwitchAtom } from "../../../atoms/inputs/SwitchAtom";
+import { Label } from "../../../atoms/display/Label";
+import { Switcher } from "../../../atoms/inputs/Switcher";
 import { AlignLayout } from "../../../atoms/layout/AlignLayout";
 import { GridLayout } from "../../../atoms/layout/GridLayout";
 
@@ -19,8 +19,8 @@ export function PromptForgerSwitchItemOrganism({
       <GridLayout style={{ size: "CONTAINER" }}>
         {props.switchItems.map((item) => (
           <GridLayout key={item.key} style={{ size: 6 }}>
-            <LabelAtom props={item.itemLabel} />
-            <SwitchAtom props={item.switchControl} />
+            <Label props={item.itemLabel} />
+            <Switcher props={item.switchControl} />
           </GridLayout>
         ))}
       </GridLayout>

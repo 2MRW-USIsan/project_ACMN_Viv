@@ -1,48 +1,48 @@
-import { LabelAtomProps } from "@/components/atoms/display/LabelAtom";
+import { LabelProps } from "@/components/atoms/display/Label";
 import { IconButtonAtomProps } from "@/components/atoms/inputs/IconButtonAtom";
-import { SwitchAtomProps } from "@/components/atoms/inputs/SwitchAtom";
-import { TextFieldAtomProps } from "@/components/atoms/inputs/TextFieldAtom";
+import { SwitchAtomProps } from "@/components/atoms/inputs/Switcher";
+import { TextFieldAtomProps } from "@/components/atoms/inputs/TextField";
 import { AddPanelButtonType } from "@/components/molecules/AddPanelButton";
 
 export type SwitchItemPanelType = {
   key: string;
-  labelLabel: LabelAtomProps["props"];
+  labelLabel: LabelProps["props"];
   labelField: TextFieldAtomProps["props"];
-  valueLabel: LabelAtomProps["props"];
+  valueLabel: LabelProps["props"];
   valueField: TextFieldAtomProps["props"];
-  altLabel: LabelAtomProps["props"];
+  altLabel: LabelProps["props"];
   altField: TextFieldAtomProps["props"];
   removeButton: IconButtonAtomProps["props"];
 };
 
 export type SwitchItemSectionType = {
-  randomizeLabel: LabelAtomProps["props"];
+  randomizeLabel: LabelProps["props"];
   randomizeSwitch: SwitchAtomProps["props"];
   switchItemPanels: SwitchItemPanelType[];
-  addSwitchRowLabel: LabelAtomProps["props"];
+  addSwitchRowLabel: LabelProps["props"];
   addSwitchButton: IconButtonAtomProps["props"];
 };
 
 export type SwitchGroupPanelType = {
   key: string;
-  panelLabel: LabelAtomProps["props"];
-  keyLabel: LabelAtomProps["props"];
+  panelLabel: LabelProps["props"];
+  keyLabel: LabelProps["props"];
   keyField: TextFieldAtomProps["props"];
-  labelLabel: LabelAtomProps["props"];
+  labelLabel: LabelProps["props"];
   labelField: TextFieldAtomProps["props"];
   removeButton: IconButtonAtomProps["props"];
   toggleButton: IconButtonAtomProps["props"];
   isExpanded: boolean;
-  switchItemsLabel: LabelAtomProps["props"];
+  switchItemsLabel: LabelProps["props"];
   switchItemSection: SwitchItemSectionType;
 };
 
 export type SectionType = {
   add: AddPanelButtonType;
   panels: any[];
-  titleLabel: LabelAtomProps["props"];
+  titleLabel: LabelProps["props"];
   switchGrpPanels?: SwitchGroupPanelType[];
-  addSwitchGrpRowLabel?: LabelAtomProps["props"];
+  addSwitchGrpRowLabel?: LabelProps["props"];
   addSwitchGrpButton?: IconButtonAtomProps["props"];
 };
 

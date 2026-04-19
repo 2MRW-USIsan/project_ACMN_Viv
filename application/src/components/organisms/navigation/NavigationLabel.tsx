@@ -1,5 +1,5 @@
-import { DividerAtom } from "@/components/atoms/display/DividerAtom";
-import { LabelAtom } from "@/components/atoms/display/LabelAtom";
+import { DividerAtom } from "@/components/atoms/display/DividerLine";
+import { Label } from "@/components/atoms/display/Label";
 import { AlignLayout } from "@/components/atoms/layout/AlignLayout";
 import { GridLayout } from "@/components/atoms/layout/GridLayout";
 import { NavigationLabelType } from "@/types/navigation";
@@ -15,7 +15,7 @@ export function NavigationLabel({ props }: NavigationLabelProps) {
       <AlignLayout column={1}>
         <AlignLayout>
           {props.isCurrent ? <CheckMark /> : <NavMark />}
-          <LabelAtom
+          <Label
             props={props.title}
             style={props.isCurrent ? "HEADER" : "LABEL"}
             primary={!props.isCurrent}

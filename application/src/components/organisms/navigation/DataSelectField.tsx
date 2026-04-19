@@ -1,9 +1,9 @@
-import { DividerAtom } from "@/components/atoms/display/DividerAtom";
-import { LabelAtom } from "@/components/atoms/display/LabelAtom";
-import { ButtonAtom } from "@/components/atoms/inputs/ButtonAtom";
-import { ChipRadioAtom } from "@/components/atoms/inputs/RadioButtonAtom";
-import { SelectAtom } from "@/components/atoms/inputs/SelectAtom";
-import { TextFieldAtom } from "@/components/atoms/inputs/TextFieldAtom";
+import { DividerAtom } from "@/components/atoms/display/DividerLine";
+import { Label } from "@/components/atoms/display/Label";
+import { Button } from "@/components/atoms/inputs/Button";
+import { ChipRadioAtom } from "@/components/atoms/inputs/ChipRadio";
+import { SelectAtom } from "@/components/atoms/inputs/Select";
+import { TextField } from "@/components/atoms/inputs/TextField";
 import { AlignLayout } from "@/components/atoms/layout/AlignLayout";
 import { GridLayout } from "@/components/atoms/layout/GridLayout";
 import { DataSelectFieldType } from "@/types/navigation";
@@ -18,7 +18,7 @@ export function DataSelectField({ props }: DataSelectFieldProps) {
         <GridLayout style={{ size: 12 }}>
           <GridLayout style={{ size: 6 }}>
             <GridLayout style={{ size: 4 }}>
-              <LabelAtom props={props.label.group} style={"LABEL"} />
+              <Label props={props.label.group} style={"LABEL"} />
             </GridLayout>
             <GridLayout style={{ size: 8 }}>
               <SelectAtom props={props.groupSelect} />
@@ -26,33 +26,33 @@ export function DataSelectField({ props }: DataSelectFieldProps) {
           </GridLayout>
           <GridLayout style={{ size: 6 }}>
             <GridLayout style={{ size: 6 }}>
-              <ButtonAtom props={props.button.load} />
+              <Button props={props.button.load} />
             </GridLayout>
             <GridLayout style={{ size: 6 }}>
-              <ButtonAtom props={props.button.new} />
+              <Button props={props.button.new} />
             </GridLayout>
           </GridLayout>
         </GridLayout>
         <GridLayout style={{ size: 12 }}>
           <GridLayout style={{ size: 6 }}>
             <GridLayout style={{ size: 4 }}>
-              <LabelAtom props={props.label.name} style={"LABEL"} />
+              <Label props={props.label.name} style={"LABEL"} />
             </GridLayout>
             <GridLayout style={{ size: 8 }}>
-              <TextFieldAtom props={props.nameField} />
+              <TextField props={props.nameField} />
             </GridLayout>
           </GridLayout>
           <GridLayout style={{ size: 6 }}>
             <GridLayout style={{ size: 6 }}>
-              <ButtonAtom props={props.button.load} />
+              <Button props={props.button.load} />
             </GridLayout>
             <GridLayout style={{ size: 6 }}>
-              <ButtonAtom props={props.button.new} />
+              <Button props={props.button.new} />
             </GridLayout>
           </GridLayout>
           <GridLayout style={{ size: 12 }}>
             <AlignLayout style={"END"}>
-              <ButtonAtom props={props.button.deletion} />
+              <Button props={props.button.deletion} />
             </AlignLayout>
           </GridLayout>
         </GridLayout>

@@ -1,5 +1,5 @@
-import { LabelAtom } from "@/components/atoms/display/LabelAtom";
-import { TextAreaAtom } from "@/components/atoms/inputs/TextAreaAtom";
+import { Label } from "@/components/atoms/display/Label";
+import { TextArea } from "@/components/atoms/inputs/TextArea";
 import { AlignLayout } from "@/components/atoms/layout/AlignLayout";
 import { GridLayout } from "@/components/atoms/layout/GridLayout";
 import { PreviewFormItemType } from "@/types/posting-clerk";
@@ -12,8 +12,8 @@ export function PreviewFormItem({ props }: PreviewFormItemProps) {
     <GridLayout style={{ size: "CONTAINER" }}>
       <GridLayout style={{ size: 12 }}>
         <AlignLayout column={0.5}>
-          <LabelAtom props={props.previewLabel} style={"LABEL"} />
-          <TextAreaAtom props={props.previewField} style={{ rows: 8 }} />
+          <Label props={props.previewLabel} style={"LABEL"} />
+          <TextArea props={props.previewField} style={8} />
         </AlignLayout>
       </GridLayout>
     </GridLayout>
