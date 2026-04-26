@@ -22,18 +22,28 @@ export function WikipediaSearch() {
   const [selected, setSelected] = useState<WikipediaSearchResult | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
   const [searched, setSearched] = useState(false);
+  const [fetchError, setFetchError] = useState(false);
 
   const handleSearch = async () => {
     const trimmed = query.trim();
     if (!trimmed) return;
     setLoading(true);
     setSearched(true);
+    setFetchError(false);
     try {
       const res = await fetch(
         `/api/wikipedia?q=${encodeURIComponent(trimmed)}`,
       );
+      if (!res.ok) {
+        setFetchError(true);
+        setResults([]);
+        return;
+      }
       const data = (await res.json()) as { results: WikipediaSearchResult[] };
       setResults(data.results ?? []);
+    } catch {
+      setFetchError(true);
+      setResults([]);
     } finally {
       setLoading(false);
     }
@@ -79,7 +89,13 @@ export function WikipediaSearch() {
         />
       </Box>
 
-      {searched && !loading && results.length === 0 && (
+      {fetchError && (
+        <Typography variant="caption" color="error">
+          検索中にエラーが発生しました。再度お試しください。
+        </Typography>
+      )}
+
+      {!fetchError && searched && !loading && results.length === 0 && (
         <Typography variant="caption" color="text.secondary">
           結果が見つかりませんでした。
         </Typography>

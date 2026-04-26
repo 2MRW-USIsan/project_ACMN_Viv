@@ -46,12 +46,15 @@ export async function GET(req: NextRequest) {
 
   const pages: WikiPage[] = Object.values(detailData.query?.pages ?? {});
 
+  const stripHtml = (html: string): string =>
+    html.replace(/<[^>]*>/g, "").replace(/[<>]/g, "");
+
   const results = searchItems.map((item) => {
     const page = pages.find((p) => p.title === item.title);
     return {
       pageid: item.pageid,
       title: item.title,
-      snippet: item.snippet.replace(/<[^>]+>/g, ""),
+      snippet: stripHtml(item.snippet),
       thumbnail: page?.thumbnail?.source,
       extract: page?.extract,
       url: `https://ja.wikipedia.org/wiki/${encodeURIComponent(item.title)}`,
